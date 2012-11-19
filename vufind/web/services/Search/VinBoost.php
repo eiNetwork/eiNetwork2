@@ -26,7 +26,7 @@ require_once 'Drivers/marmot_inc/Prospector.php';
 require_once 'sys/SolrStats.php';
 require_once 'sys/Pager.php';
 
-class Results extends Action {
+class VinBoost extends Action {
 
 	private $solrStats = false;
 	private $query;
@@ -41,25 +41,6 @@ class Results extends Action {
 		// Include Search Engine Class
 		require_once 'sys/' . $configArray['Index']['engine'] . '.php';
 		$timer->logTime('Include search engine');
-
-		if ($user->hasRole('epubAdmin')){
-			require_once "services/Search/VinBoost.php";
-			$module = 'Search';
-                        $interface->assign('module', $module);
-                        $action = 'VinBoost';
-                        $interface->assign('action', $action);
-                        if ($searchSource == 'econtent'){
-                                if (!isset($_REQUEST['shard'])){
-                                        $_SESSION['shards'] = array('eContent');
-                                }
-                        }else{
-                                if (!isset($_REQUEST['shard'])){
-                                        $_SESSION['shards'] = array('eContent', 'Main Catalog');
-                                }
-                        }
-                        $results = new VinBoost();
-                        return $results->launch();
-                }
 
 		//Check to see if the year has been set and if so, convert to a filter and resend.
 		$dateFilters = array('publishDate');
@@ -108,7 +89,7 @@ class Results extends Action {
 					$queryParamStrings[] = "&filter[]=$dateFilter:[$yearFrom+TO+$yearTo]";
 				}
 				$queryParamString = join('&', $queryParamStrings);
-				header("Location: {$configArray['Site']['path']}/Search/Results?$queryParamString");
+				header("Location: {$configArray['Site']['path']}/Search/VinBoost?$queryParamString");
 				exit;
 			}
 		}
@@ -148,7 +129,7 @@ class Results extends Action {
 					$queryParamStrings[] = "&filter[]=$filter:[$from+TO+$to]";
 				}
 				$queryParamString = join('&', $queryParamStrings);
-				header("Location: {$configArray['Site']['path']}/Search/Results?$queryParamString");
+				header("Location: {$configArray['Site']['path']}/Search/VinBoost?$queryParamString");
 				exit;
 			}
 		}
@@ -282,7 +263,9 @@ class Results extends Action {
 
 		} else if ($searchObject->getResultTotal() == 1){
 			//Redirect to the home page for the record
-			$recordSet = $searchObject->getResultRecordSet();
+			
+$recordSet = $searchObject->getResultRecordSet();
+                        
 			$record = reset($recordSet);
 			if ($record['recordtype'] == 'list'){
 				$listId = substr($record['id'], 4);
@@ -292,9 +275,7 @@ class Results extends Action {
 				header("Location: " . $interface->getUrl() . "/EcontentRecord/$shortId/Home");
 			}else{
 				header("Location: " . $interface->getUrl() . "/Record/{$record['id']}/Home");
-				echo($record['id']);
 			}
-
 			
 		} else {
 			$timer->logTime('save search');
@@ -337,6 +318,90 @@ class Results extends Action {
 			$interface->assign('recordSet', $recordSet);
 			$timer->logTime('load result records');
 
+			// Get the Title
+			$title = $searchObject->getTitle();
+
+			$IntialPos;
+			$FinalPos;
+
+			$InitialPos =  $_POST['Init'];
+			$FinalPos =  $_POST['bookID'];
+
+			// Construct the array and diaplay it
+			// if we are boosting up, then finalposition will be lesser than initial
+
+			/*$PositionArray = array();
+			if($FinalPos < $InitialPos)//Boosting up
+			{
+				for($ind=0;$ind<$FinalPos-1;$ind++)
+				{
+					$PositionArray[$ind]=$recordId[$ind];
+				}
+				$PositionArray[$FinalPos-1]=$recordId[$InitialPos-1];
+			}
+			else //else condition, Boosting Down
+			{
+				for($ind=0, $inc=0;$ind<=$FinalPos-1;$ind++)
+				{
+					if($recordId[$ind]==$recordId[$InitialPos-1])
+					{
+					}
+					else
+					{
+						$PositionArray[$inc]=$recordId[$ind];
+						$inc++;
+					}
+				}
+				$PositionArray[$FinalPos-1]=$recordId[$InitialPos-1];
+			} */
+
+			if($_POST['Boost'])
+			{
+				$recordSet = $searchObject->getRecordSortedHTML($InitialPos-1, $FinalPos-1);
+				$interface->assign('recordSet', $recordSet);
+				$recordId = $searchObject->getRecordID($InitialPos-1, $FinalPos-1);
+				$interface->assign('recordId', $recordId);
+			/*	$PositionArray = array();
+				for($incr = 0; $incr<$FinalPos; $incr++)
+				{
+					$PostionArray[$incr] = $recordId[$incr];
+					//echo($PostionArray[$incr]);
+				} */
+				$myFile = array("/usr/local/VuFind-Plus/sites/vufindplus3.einetwork.net/solr/biblio/conf/elevate.xml",
+						"/usr/local/VuFind-Plus/sites/vufindplus3.einetwork.net/solr/biblio2/conf/elevate.xml",
+						"/usr/local/VuFind-Plus/sites/vufindplus3.einetwork.net/solr/econtent/conf/elevate.xml");
+				foreach($myFile as &$myFile)
+				{
+					$this->elevate_xml($myFile, $title, $recordId, $FinalPos);
+				} 
+			}
+
+			// Get the record ids
+
+			if($_POST['Commit'])
+			{
+				echo("Done");
+				exec('vufindplus.sh restart', $output);
+			} /*
+				$recordId = $searchObject->getRecordID($InitialPos-1, $FinalPos-1);
+				$interface->assign('recordId', $recordId);
+				$PositionArray = array();
+				echo("HIT".$FinalPos);
+				for($incr = 0; $incr<$FinalPos; $incr++)
+				{
+					$PostionArray[$incr] = $recordId[$incr];
+					echo($PostionArray[$incr]);
+				}
+				$myFile = array("/usr/local/VuFind-Plus/sites/vufindplus3.einetwork.net/solr/biblio/conf/elevate.xml",
+                                                "/usr/local/VuFind-Plus/sites/vufindplus3.einetwork.net/solr/biblio2/conf/elevate.xml",
+                                                "/usr/local/VuFind-Plus/sites/vufindplus3.einetwork.net/solr/econtent/conf/elevate.xml");
+                                foreach($myFile as &$myFile)
+                                {
+                                        $this->elevate_xml($myFile, $PositionArray, $title);
+                                }
+			}*/
+
+
 			// Setup Display
 			$interface->assign('sitepath', $configArray['Site']['path']);
 			if(isset($_REQUEST["iscart"])) //szheng: modified
@@ -345,7 +410,7 @@ class Results extends Action {
 				$interface->setTemplate('../ei_tpl/Cart/list.tpl');
 			}
 			else{
-				$interface->assign('subpage', 'Search/list-list.tpl');
+				$interface->assign('subpage', 'Search/prioritize-list.tpl');
 				$interface->setTemplate('list.tpl');
 			}
 			
@@ -415,5 +480,52 @@ class Results extends Action {
 				die();
 			}
 		}
+	}
+
+	/**
+	 * Function elevate_xml().
+	 *
+	 * @access  private
+	 * @param   array       $bookid 	Array of Book IDs for the searched result
+	 */
+	private function elevate_xml($myFile, $title, $recordId, $FinalPos)
+	{
+		$bookid = array();
+		for($incr = 0; $incr<$FinalPos; $incr++)
+                {
+                	$bookid[$incr] = $recordId[$incr];
+                }
+		$arr = file($myFile);
+		$i = 0;
+		$elevate_count = 0;
+		$arr_count = count($arr);
+		while($i< $arr_count){
+		        if(preg_match("/\b".$title."\b/", $arr[$i]) && preg_match("/query/", $arr[$i])) {
+		                unset($arr[$i]);
+		                $i++;
+		                while(!preg_match("/query/", $arr[$i])) {
+		                        unset($arr[$i]);
+		                        $i++;
+		                }
+		                unset($arr[$i]);
+		        }
+		        $i++;
+		        if($i == $arr_count)
+		                unset($arr[$arr_count-1]);
+		}
+		$arr = array_values($arr);
+		file_put_contents($myFile,implode($arr));
+		$fh = fopen($myFile, 'a') or die("Can't open file");
+		$stringData = "<query text=\"".$title."\">\n";
+		fwrite($fh, $stringData);
+		foreach ($bookid as &$bookid) {
+			$stringData = "\t<doc id=\"".$bookid."\"/>\n";
+			fwrite($fh, $stringData);
+		}
+		$stringData = "</query>\n";
+		fwrite($fh, $stringData);
+		$stringData = "</elevate>";
+		fwrite($fh, $stringData);
+		fclose($fh);
 	}
 }
