@@ -186,15 +186,16 @@ abstract class SearchObject_Base
 	{
 		// Extract field and value from URL string:
 		list($field, $value) = $this->parseFilter($oldFilter);
-
 		// Make sure the field exists
 		if (isset($this->filterList[$field])) {
 			// Loop through all filters on the field
-			for ($i = 0; $i < count($this->filterList[$field]); $i++) {
-				// Does it contain the value we don't want?
-				if ($this->filterList[$field][$i] == $value) {
-					// If so remove it.
-					unset($this->filterList[$field][$i]);
+			if (count($this->filterList[$field]) > 0 && !isset($this->filterList[$field][1])){
+				for ($i = 0; $i < count($this->filterList[$field]); $i++) {
+					// Does it contain the value we don't want?
+					if ($this->filterList[$field][$i] == $value) {
+						// If so remove it.
+						unset($this->filterList[$field][$i]);
+					}
 				}
 			}
 		}
@@ -249,15 +250,6 @@ abstract class SearchObject_Base
 					}else{
 						$display = $translate ? translate($value) : $value;
 					}
-                                        //copy the building filter to the available_at filter
-                                        if ($field == 'building') {
-                                            $list['Available At'][] = array(
-                                                'display' => $value,
-                                                'field' => 'available_at',
-                                                'removalUrl' => $this->renderLinkWithoutFilter('available_at:'.$value)
-                                                );
-                                        }
-					
 					$list[$facetLabel][] = array(
                         'value'      => $value,     // raw value for use with Solr
                         'display'    => $display,   // version to display to user
@@ -669,6 +661,10 @@ abstract class SearchObject_Base
 
 		if (isset($_REQUEST['searchSource'])){
 			$params[] = "searchSource=" . urlencode(strip_tags($_REQUEST['searchSource']));
+		}
+
+		if (isset($_REQUEST['limit_avail'])){
+			$params[] = "limit_avail=" . urlencode(strip_tags($_REQUEST['limit_avail']));
 		}
 		
 		// Join all parameters with an escaped ampersand,

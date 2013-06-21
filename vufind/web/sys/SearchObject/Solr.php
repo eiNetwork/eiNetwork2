@@ -186,7 +186,7 @@ class SearchObject_Solr extends SearchObject_Base
 		// Use the default behavior of the parent class,
 		parent::initFilters();
                 
-                //Current location add building filter by default
+        //Current location add building filter by default
 		$searchLocation = Location::getSearchLocation();
 		if ($searchLocation != null){
 			$useLocation = isset($_SESSION['useLocation'])?$_SESSION['useLocation']:false;
@@ -200,6 +200,29 @@ class SearchObject_Solr extends SearchObject_Base
 				$this->addFilter("building:\"{$searchLocation->defaultLocationFacet}\"");
 			}
 		}
+
+		$buildings = $this->getFilterList();
+
+		if (isset($_REQUEST['limit_avail']) && $_REQUEST['limit_avail'] == 1){
+
+			if (isset($buildings['Building']) && count($buildings['Building']) > 0){
+
+				if ($this->hasFilter("available_at:['' TO *]")){
+					$this->removeFilter("available_at:['' TO *]");
+				}
+
+				foreach($buildings['Building'] as $key => $value){
+					$this->addFilter("available_at:\"" . $value['value'] . "\"");
+				}
+
+			} else {
+				$this->addFilter("available_at:['' TO *]");
+			}
+
+		} else {
+			$this->removeFilter("available_at:['' TO *]");
+		}
+
 	}
 
 	/**

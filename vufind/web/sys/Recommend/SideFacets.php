@@ -274,6 +274,9 @@ class SideFacets implements RecommendationInterface
 
 			}
 		}
+
+		unset($filterList['Available At']); // no need to display available at to side facet
+
 		$interface->assign('filterList', $filterList);
 		$interface->assign('useLocation', $useLocation);
 		$interface->assign('searchLibrary', $searchLibrary);
