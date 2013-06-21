@@ -2380,45 +2380,58 @@ class MillenniumDriver implements DriverInterface
 
 	protected function _getHoldResult($holdResultPage){
 		global $logger;
-		//$logger->log("getholdresult ", PEAR_LOG_INFO);
+		//$logger->log("hold result page", PEAR_LOG_INFO);
+		//$logger->log($holdResultPage, PEAR_LOG_INFO);
 		$hold_result = array();
 		//Get rid of header and footer information and just get the main content
 		$matches = array();
 
-		$numMatches = preg_match('/<td.*?class="pageMainArea">(.*)?<\/td>/s', $holdResultPage, $matches);
+		//$numMatches = preg_match('/<\/form>(.*)?<\<div id="botlogo">/s', $holdResultPage, $matches);
 		$itemMatches = preg_match('/Choose one item from the list below/', $holdResultPage);
 
-		if ($numMatches > 0 && $itemMatches == 0){
-			//$logger->log('Place Hold Body Text\n' . $matches[1], PEAR_LOG_INFO);
-			$cleanResponse = preg_replace("^\n|\r|&nbsp;^", "", $matches[1]);
-			$cleanResponse = preg_replace("^<br\s*/>^", "\n", $cleanResponse);
-			$cleanResponse = trim(strip_tags($cleanResponse));
-			//$logger->log("Clean Response\n".$cleanResponse."\nEnd Clean Response", PEAR_LOG_INFO);
-			if (strpos($cleanResponse, "\n") > 0){
-				list($book,$reason)= explode("\n",$cleanResponse);
-			}else{
-				$book = $cleanResponse;
-				$reason = '';
-			}
-
-			if (preg_match('/success/', $cleanResponse) && preg_match('/request denied/', $cleanResponse) == 0){
-				//Hold was successful
-				$hold_result['result'] = true;
-				if (!isset($reason) || strlen($reason) == 0){
-					$hold_result['message'] = 'Your hold was placed successfully';
-				}else{
-					$hold_result['message'] = $reason;
-				}
-			}else if (!isset($reason) || strlen($reason) == 0){
-				//Didn't get a reason back.  This really shouldn't happen.
+		if ($itemMatches == 0){
+			//not prompting to select a specific item for a volume hold	
+			//hold responses start after the form is closed
+			$responseStart = strpos($holdResultPage,'</form>');
+			if ($responseStart === false) {
 				$hold_result['result'] = false;
 				$hold_result['message'] = 'Did not receive a response from the circulation system.  Please try again in a few minutes.';
-			}else{
-				//Got an error message back.
-				$hold_result['result'] = false;
-				$hold_result['message'] = $reason;
-			}
+				$reason = '';
+			} else {
+				//get the part of the response page that contains the response to placing the hold
+				$responseText = substr($holdResultPage,$responseStart);
+				
+				//Hold was successful
+				if (strpos($responseText,'was successful') > 1 && strpos($responseText,'You will be notified when the status of this item says Ready For Pickup') > 0) {
+					$hold_result['result'] = true;
+					$hold_result['message'] = 'Your hold was placed successfully';
+					$reason = '';
+				//Check for reasons why a hold is not successful
+				} else {
+					if (strpos($responseText,'Request denied - already on hold for or checked out to you') > 1) {
+						$hold_result['result'] = false;
+						$hold_result['message'] = 'Already on hold or checked out';
+					} elseif  (strpos($responseText,'No requestable items are available') > 1) {
+						$hold_result['result'] = false;
+						$hold_result['message'] = 'There are no requestable items available';
+					} elseif  (strpos($responseText,'No items requestable, request denied') > 1) {
+						$hold_result['result'] = false;
+						$hold_result['message'] = 'There are no requestable items available';		
+					} elseif  (strpos($responseText,'Sorry, request cannot be accepted. Local copy is available.') > 1) {
+						$hold_result['result'] = false;
+						$hold_result['message'] = 'There is a copy available on the shelf at this location';
+					} elseif  (strpos($responseText,'There is a problem with your library record. Please see a librarian') > 1) {
+						$hold_result['result'] = false;
+						$hold_result['message'] = 'Your patron record is blocked or expired';
+					// generic error message
+					} else {
+						$hold_result['result'] = false;
+						$hold_result['message'] = 'There was an error placing your hold';
+					}
+				}
+			}	
 		}else{
+			//Need to prompt for an item level hold
 			if ($itemMatches > 0){
 				//Get information about the items that are available for holds
 				preg_match_all('/<tr\\s+class="bibItemsEntry">.*?<input type="radio" name="radio" value="(.*?)".*?>.*?<td.*?>(.*?)<\/td>.*?<td.*?>(.*?)<\/td>.*?<td.*?>(.*?)<\/td>.*?<\/tr>/s', $holdResultPage, $itemInfo, PREG_PATTERN_ORDER);

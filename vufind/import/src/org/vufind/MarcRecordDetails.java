@@ -3096,14 +3096,16 @@ public class MarcRecordDetails {
 				Subfield statusSubfield = dataField.getSubfield(statusSubFieldChar);
 				if (statusSubfield != null) {
 					String status = statusSubfield.getData().trim();
-					Subfield dueDateField = dataField.getSubfield('m');
+					Subfield dueDateField = dataField.getSubfield('4');
 					String dueDate = dueDateField == null ? "" : dueDateField.getData().trim();
 					Subfield locationSubfield = dataField.getSubfield(locationSubFieldChar);
 					String location = locationSubfield == null ? "" : locationSubfield.getData().toLowerCase().trim();
 					if (status.matches(availableStatus)) {
 						// If the book is available (status of -)
-						// Check the due date subfield m to see if it is out
-						if (dueDate.length() == 0){
+						// Check the due date subfield 4 to see if it is out
+						//logger.debug("due date " + dueDate);
+						//if the item is not checked out the due date is '-  -'
+						if (dueDate.length() < 5){
 							String locationFacet = getLocationFacetForLocation(location);
 							result.add(locationFacet);
 							//logger.debug("adding available at location " + locationFacet  );
