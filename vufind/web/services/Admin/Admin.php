@@ -79,17 +79,23 @@ abstract class Admin extends Action
 					}
 				}
 			}
-			//Figure out if we should show a link to classic opac to pay holds.
+			//always show the ecommcerce link
 			$ecommerceLink = $configArray['Site']['ecommerceLink'];
+			$interface->assign('showEcommerceLink', true);
+			$interface->assign('ecommerceLink', $ecommerceLink);
+			$interface->assign('minimumFineAmount', 0);
 			$homeLibrary = Library::getLibraryForLocation($user->homeLocationId);
-			if (strlen($ecommerceLink) > 0 && isset($homeLibrary) && $homeLibrary->showEcommerceLink == 1){
-				$interface->assign('showEcommerceLink', true);
-				$interface->assign('minimumFineAmount', $homeLibrary->minimumFineAmount);
-				$interface->assign('ecommerceLink', $ecommerceLink);
-			}else{
-				$interface->assign('showEcommerceLink', false);
-				$interface->assign('minimumFineAmount', 0);
-			}
+			////Figure out if we should show a link to classic opac to pay holds.
+			//$ecommerceLink = $configArray['Site']['ecommerceLink'];
+			//$homeLibrary = Library::getLibraryForLocation($user->homeLocationId);
+			//if (strlen($ecommerceLink) > 0 && isset($homeLibrary) && $homeLibrary->showEcommerceLink == 1){
+			//	$interface->assign('showEcommerceLink', true);
+			//	$interface->assign('minimumFineAmount', $homeLibrary->minimumFineAmount);
+			//	$interface->assign('ecommerceLink', $ecommerceLink);
+			//}else{
+			//	$interface->assign('showEcommerceLink', false);
+			//	$interface->assign('minimumFineAmount', 0);
+			//}
 		}
 
 		if (!$userCanAccess){
