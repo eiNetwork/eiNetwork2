@@ -72,7 +72,6 @@ $(document).ready(function() {
 			</table>
 		</p>
 	{/if}
-	<div style="padding-left: 10px; padding-top: 5px; font-weight: bold;">Limit to available<input id="limitToAvail" type="checkbox"></div>
 	{if $filterList} 
 		<dl class="narrowList navmenu narrow_begin">
 			<dt>{translate text='Remove Filters'}</dt>
