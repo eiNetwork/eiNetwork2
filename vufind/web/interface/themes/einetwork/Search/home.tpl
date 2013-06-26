@@ -1,3 +1,4 @@
+<!-- test2 -->
 <div id="loginHome2">
 {literal}
 <script type="text/javascript">
