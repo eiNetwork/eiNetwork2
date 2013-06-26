@@ -864,7 +864,10 @@ class OverDriveDriver {
 			if (strpos($checkoutResultPage,'Digital Media Catalog - Error page') == 0) {
 				$checkoutResult['result'] = true;
 				$checkoutResult['message'] = "Your title was checked out successfully. Please go to Checked Out Items to download the title from your Account.";
-			}elseif (strpos($checkoutResultPage,'reached your checkout limit') > 0) {
+			}elseif (strpos($checkoutResultPage,'You have already checked out this title. To access it, return to your Bookshelf from the Account page') > 0) {
+				$checkoutResult['result'] = false;
+				$checkoutResult['message'] = "You have already checked this title out";
+			}elseif (strpos($checkoutResultPage,"You've reached your checkout limit") > 0) {
 				$checkoutResult['result'] = false;
 				$checkoutResult['message'] = "Sorry, you have reached your checkout limit";				
 			}else{
