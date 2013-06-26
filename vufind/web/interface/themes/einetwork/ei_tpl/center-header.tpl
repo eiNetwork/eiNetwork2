@@ -68,7 +68,7 @@
     </div>
     <div class="availFilter"><input id="limitToAvail" type="checkbox"> Limit to available</div>
   {/if}
-  
+  	<div class="availFilter NoFilter"><input id="limitToAvail" type="checkbox"> Limit to available</div>
   </form>
     {if false && strlen($lookfor) > 0 && count($repeatSearchOptions) > 0}
     <div class='repeatSearchBox'>

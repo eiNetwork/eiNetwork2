@@ -189,7 +189,7 @@ abstract class SearchObject_Base
 		// Make sure the field exists
 		if (isset($this->filterList[$field])) {
 			// Loop through all filters on the field
-			if (count($this->filterList[$field]) > 0 && !isset($this->filterList[$field][1])){
+			if (count($this->filterList[$field]) > 0){
 				for ($i = 0; $i < count($this->filterList[$field]); $i++) {
 					// Does it contain the value we don't want?
 					if ($this->filterList[$field][$i] == $value) {
@@ -308,7 +308,6 @@ abstract class SearchObject_Base
 	 */
 	public function renderLinkWithoutFilters($filters)
 	{
-		// Stash our old data for a minute
 		$oldFilterList = $this->filterList;
 		$oldPage       = $this->page;
 		// Remove the old filter
