@@ -7,13 +7,8 @@
 	margin-left: 20px;
 }
 
-.center-header-top{
-    height: 20px;
-    min-width:538px;
-    max-width:794px;
-}
-
 .center-header-middle{
+	margin:20px 0 0 0;
     height: 55px;
 }
 
