@@ -14,8 +14,6 @@
 </script>
 {/literal}
 
-<div class="center-header-top">&nbsp;</div>
-
 <div class="center-header-middle">
 	{*}
 	{if $searchType == 'advanced'}
@@ -68,6 +66,7 @@
 	{/foreach}
       </div>
     </div>
+    <div class="availFilter"><input id="limitToAvail" type="checkbox"> Limit to available</div>
   {/if}
   
   </form>
