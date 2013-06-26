@@ -208,7 +208,7 @@ class SearchObject_Solr extends SearchObject_Base
 			if (isset($buildings['Building']) && count($buildings['Building']) > 0){
 
 				if ($this->hasFilter("available_at:['' TO *]")){
-					$this->removeFilter("available_at:['' TO *]");
+					unset($this->filterList['available_at']);
 				}
 
 				foreach($buildings['Building'] as $key => $value){
@@ -216,12 +216,19 @@ class SearchObject_Solr extends SearchObject_Base
 				}
 
 			} else {
+				unset($this->filterList['available_at']);
 				$this->addFilter("available_at:['' TO *]");
 			}
 
 		} else {
-			$this->removeFilter("available_at:['' TO *]");
+			
+			unset($this->filterList['available_at']);
+
 		}
+
+		//echo "<pre>";
+		//print_r($this->filterList);
+		//echo "</pre>";
 
 	}
 

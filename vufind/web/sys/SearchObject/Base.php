@@ -597,20 +597,29 @@ abstract class SearchObject_Base
 	 *
 	 * @access  protected
 	 */
-	protected function initFilters()
-	{
-                if (isset($_REQUEST['filter'])) {
-			if (is_array($_REQUEST['filter'])) {
-				foreach($_REQUEST['filter'] as $filter) {
+	protected function initFilters(){
+
+		if (isset($_REQUEST['filter'])){
+			if (is_array($_REQUEST['filter'])){
+
+				foreach($_REQUEST['filter'] as $filter){
 					$this->addFilter(strip_tags($filter));
 				}
+
 			} else {
+
 				$this->addFilter(strip_tags($_REQUEST['filter']));
+
 			}
 		}
+
+		//echo "<pre>";
+		//print_r($this->filterList);
+		//echo "</pre>";
                 
-            // hardcoded now for limit to available
-            //$this->addFilter("available_at:['' TO *]");    
+        //hardcoded now for limit to available
+        //$this->addFilter("available_at:['' TO *]");
+
 	}
 
 	/**
