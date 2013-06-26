@@ -1,4 +1,5 @@
 $(document).ready(function(){
+	
 	if($("#searchForm") != null && $("#lookfor") != null){
 		$("#lookfor").focus();
 	}
@@ -43,7 +44,54 @@ $(document).ready(function(){
 			collapsible.addClass('fieldset-collapsed');
 		});
 	}
+
+	// availability filter
+	url = document.location.href;
+	url_parts = getUrlVars();
+
+	if (url_parts.limit_avail == 1){
+		$("#limitToAvail").prop('checked', true);
+	} else {
+		$("#limitToAvail").prop('checked', false);
+	}
+
+	$("#limitToAvail").click(function(){
+
+		var avail = $(this);
+
+		if (avail.prop('checked') == false) {
+
+			if (typeof url_parts.limit_avail!='undefined'){
+				document.location.href = url.replace('limit_avail=1','limit_avail=0');
+			} else {
+				document.location.href = window.location.href + '&limit_avail=0';
+			}
+			
+		} else {
+			
+			if (typeof url_parts.limit_avail!='undefined'){
+				document.location.href = url.replace('limit_avail=0','limit_avail=1');
+			} else {
+				document.location.href = window.location.href + '&limit_avail=1';
+			}
+
+		}
+
+	});
+
 });
+
+function getUrlVars(){
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for(var i = 0; i < hashes.length; i++)
+    {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+    }
+    return vars;
+}
 
 function getLightbox(module, action, id, lookfor, message, followupModule,
 		followupAction, followupId, left, width, top, height) {
