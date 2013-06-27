@@ -2,6 +2,7 @@
 <html lang="{$userLang}">{strip}
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=9" />
     <title>{$pageTitle|truncate:64:"..."}</title>
     {if $addHeader}{$addHeader}{/if}
     <link rel="search" type="application/opensearchdescription+xml" title="Library Catalog Search" href="{$url}/Search/OpenSearch?method=describe" />
