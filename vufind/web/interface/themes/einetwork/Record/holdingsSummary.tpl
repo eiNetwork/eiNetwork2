@@ -66,7 +66,7 @@
 		{if $holdingsSummary.holdQueueLength > 0}
 			{$holdingsSummary.holdQueueLength} {if $holdingsSummary.holdQueueLength == 1}person {else}people {/if} on waitlist for 
 		{/if}
-		{$holdingsSummary.numCopies} total {if $holdingsSummary.numCopies == 1}copy{else}copies{/if}.
+		{$holdingsSummary.numCopies} total {if $holdingsSummary.numCopies == 1}copy{else}copies{/if}{if $holdingsSummary.availableCopies}, {$holdingsSummary.availableCopies} available. {/if}
 	</div>
 			
 	{if $showOtherEditionsPopup}

@@ -676,13 +676,13 @@ class Record extends Action
 
 		$millennium = new MillenniumDriver();
 
-		echo "<pre>";
-		print_r($millennium->getStatus('.b26192007'));
-		echo "</pre>";
+		//echo "<pre>";
+		//print_r($millennium->getStatus('.b26192007'));
+		//echo "</pre>";
 
-		echo "<pre>";
-		print_r($record['available_at']);
-		echo "</pre>";
+		//echo "<pre>";
+		//print_r($record['available_at']);
+		//echo "</pre>";
 
 
 
