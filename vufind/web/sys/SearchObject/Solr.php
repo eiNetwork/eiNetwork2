@@ -205,31 +205,36 @@ class SearchObject_Solr extends SearchObject_Base
 
 		if (isset($_REQUEST['limit_avail']) && $_REQUEST['limit_avail'] == 1){
 
-			$found_avail_filter = 0;
+			if (isset($filters['Building'])){
 
-			if (isset($filters['Available At'])){
-				foreach($filters['Available At'] as $key => $value){
-					if ($value['value'] != "['' TO *]") $found_avail_filter++;
+				// replace building filters with available at filters
+				foreach($filters['Building'] as $key => $value){
+					$this->addFilter("available_at:" . $value['value']);
 				}
-			}
 
-			if ($found_avail_filter > 0){
-				$this->removeFilter("available_at:['' TO *]");
-			} else {
+				unset($this->filterList['building']); // make sure building list is cleared out
+
+			} elseif(!isset($filters['Available At'])) {
 				$this->addFilter("available_at:['' TO *]");
 			}
 
-		} else {
+			if (isset($filters['Available At'])){
+				if (count($filters['Available At']) > 1){
+					foreach($filters['Available At'] as $key => $value){
+						if ($value['value'] == "['' TO *]") $this->removeFilter("available_at:['' TO *]");
+					}
+				}
+			}
 
-			$this->removeFilter("available_at:['' TO *]");
-			
+		} else {
+			unset($this->filterList['available_at']);
 		}
 
-		/*$filters = $this->getFilterList();
 
-		echo "<pre>";
-		print_r($this->filterList);
-		echo "</pre>";*/
+
+		// echo "<pre>";
+		// print_r($this->getFilterList());
+		// echo "</pre>";
 
 	}
 

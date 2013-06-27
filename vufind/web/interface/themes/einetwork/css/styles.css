@@ -273,13 +273,12 @@ b.bbot b,b.gbot b {
 .availFilter {
 	color: #FDFDFD;
 	display: inline-block;
-	float:left;
-	padding-right: 16px;
+	float:right;
+	padding-right: 140px;
 	font-size: 13px;
 	font-weight: bold;
 	vertical-align: top;
 	zoom: 1;
-	display: inline;
 	width:150px !important;
 }
 

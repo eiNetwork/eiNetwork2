@@ -66,9 +66,15 @@
 	{/foreach}
       </div>
     </div>
-    <div class="availFilter"><input id="limitToAvail" type="checkbox"> Limit to available</div>
+    
   {/if}
-  	<div class="availFilter NoFilter"><input id="limitToAvail" type="checkbox"> Limit to available</div>
+    {php}
+
+      if (strpos($_SERVER['REQUEST_URI'], 'Search', 0) > 0){
+        echo '<div class="availFilter"><input id="limitToAvail" type="checkbox"> Limit to available</div>';
+      }
+
+    {/php}
   </form>
     {if false && strlen($lookfor) > 0 && count($repeatSearchOptions) > 0}
     <div class='repeatSearchBox'>
