@@ -192,7 +192,7 @@ abstract class SearchObject_Base
 			if (count($this->filterList[$field]) > 0){
 				for ($i = 0; $i < count($this->filterList[$field]); $i++) {
 					// Does it contain the value we don't want?
-					if ($this->filterList[$field][$i] == $value) {
+					if (isset($this->filterList[$field][$i]) && $this->filterList[$field][$i] == $value) {
 						// If so remove it.
 						unset($this->filterList[$field][$i]);
 					}
