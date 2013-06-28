@@ -20,7 +20,7 @@
 	<div class="holdableCopiesSummary">
 		{if $holdingsSummary.numHoldings == 0}
 			No copies available yet.
-			<br/>{$holdingsSummary.wishListSize} {if $holdingsSummary.wishListSize == 1}person has{else}people have{/if} added the record to their wish list.
+			<!--<br/>{$holdingsSummary.wishListSize} {if $holdingsSummary.wishListSize == 1}person has{else}people have{/if} added the record to their wish list.-->
 		{else}
 			{if strcasecmp($holdingsSummary.source, 'OverDrive') == 0}
 				{*Available for use from OverDrive.*}
