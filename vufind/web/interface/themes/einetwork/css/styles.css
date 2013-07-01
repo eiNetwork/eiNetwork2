@@ -2717,8 +2717,8 @@ table.tablesorter thead tr .headerSortDown,table.tablesorter thead tr .headerSor
 	margin:0 0 30px 0;
 }
 
-ul.new-bulleted li {
-	list-style-type: circle;
+ol.decimal li {
+	list-style-type: decimal;
 }
 
 ol.alpha li {

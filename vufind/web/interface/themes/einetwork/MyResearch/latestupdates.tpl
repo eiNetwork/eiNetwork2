@@ -8,7 +8,7 @@
   <div class="releases">
     <h2>Release version 2.0</h2>
 Release date 7/2/2013
-<ul class="new-bulleted">
+<ol class="decimal">
 <li><span class="bold">Enable ability for users to retain filters between searches.</span><br />
 Provided ability to retain filters across multiple searches.  A checkbox under the search box supports this feature.</li>
 <li><span class="bold">Improve searching from within the library.</span><br />
@@ -27,20 +27,20 @@ Provided the ability to retain My Account login credentials in the browsers.</li
 </ol>
 </li>
 
-</ul>
+</ol>
   </div>
   <div class="releases">
     <h2><span class="bold">Previous Releases</span></h2>
     <h2>Release version 1.1</h2>
 Release date 6/10/2013
-<ul class="new-bulleted">
+<ol class="decimal">
 <li>Provided instructions on My Account login for users who haven't set up a PIN.</li>
 <li>Provided instructions for users to migrate wish lists from the old catalog to the new catalog.</li>
 <li>Added 'Latest Website Updates page to communicate new features and updates to users.</li>
 <li>Added 'First Time Using the Catalog? page to provide information about using the new catalog.</li>
 <li>Added 'Donate to Your Library' link to the bottom of website pages.</li>
 <li>Miscellaneous bug fixes.</li>
-</ul>
+</ol>
   </div>
   </div>
   <div id="right-bar">
