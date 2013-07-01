@@ -24,6 +24,10 @@ html,body {
 	background-color: white;
 }
 
+span.bold {
+	font-weight: bold;
+}
+
 
 .crumbs {
 	background-color: #000;
@@ -2707,4 +2711,16 @@ table.tablesorter thead tr .headerSortDown,table.tablesorter thead tr .headerSor
 	color:#f00;
 	font-size:11pt;
 	font-weight:bold;
+}
+
+.releases {
+	margin:0 0 30px 0;
+}
+
+ul.new-bulleted li {
+	list-style-type: circle;
+}
+
+ol.alpha li {
+	list-style-type: lower-alpha;
 }
