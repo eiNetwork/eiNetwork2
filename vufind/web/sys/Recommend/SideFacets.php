@@ -176,7 +176,7 @@ class SideFacets implements RecommendationInterface
 		$filters = $this->searchObject->getFilterList();
 
 		
-		if (isset($_REQUEST['limit_avail']) && $_REQUEST['limit_avail'] != 1){
+		if (isset($_REQUEST['limit_avail']) && $_REQUEST['limit_avail'] != 1 && $_REQUEST['limit_avail'] != 'on'){
 
 			if (isset($sideFacets['available_at'])){
 				//Mangle the availability facets
@@ -295,7 +295,7 @@ class SideFacets implements RecommendationInterface
 		//unset($filterList['Available At']); // no need to display available at to side facet
 		//unset($sideFacets['available_at']); // we need the available_at count but we dont want to display the available at filter.
 
-		if (isset($_REQUEST['limit_avail']) && $_REQUEST['limit_avail'] == 1){
+		if (isset($_REQUEST['limit_avail']) && ($_REQUEST['limit_avail'] == 1 || $_REQUEST['limit_avail'] == 'on')){
 			unset($sideFacets['available_at']['list']['']);
 			unset($sideFacets['building']);
 		} else {
@@ -309,6 +309,7 @@ class SideFacets implements RecommendationInterface
 
 				if ($value['value'] == "['' TO *]"){
 					$filterList['Available At'][$x]['removalUrl'] = str_replace('limit_avail=1', 'limit_avail=0', $value['removalUrl']);
+					$filterList['Available At'][$x]['removalUrl'] = str_replace('limit_avail=on', 'limit_avail=0', $value['removalUrl']);
 				}
 
 				$x++;

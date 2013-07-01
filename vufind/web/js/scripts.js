@@ -63,6 +63,7 @@ $(document).ready(function(){
 
 			if (typeof url_parts.limit_avail!='undefined'){
 				document.location.href = url.replace('limit_avail=1','limit_avail=0');
+				document.location.href = url.replace('limit_avail=on','limit_avail=0');
 			} else {
 				document.location.href = window.location.href + '&limit_avail=0';
 			}

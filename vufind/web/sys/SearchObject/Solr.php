@@ -203,7 +203,7 @@ class SearchObject_Solr extends SearchObject_Base
 
 		$filters = $this->getFilterList();
 
-		if (isset($_REQUEST['limit_avail']) && $_REQUEST['limit_avail'] == 1){
+		if (isset($_REQUEST['limit_avail']) && ($_REQUEST['limit_avail'] == 1 || $_REQUEST['limit_avail'] == 'on')){
 
 			if (isset($filters['Building'])){
 
