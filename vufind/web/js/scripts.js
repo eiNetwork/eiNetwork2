@@ -49,7 +49,7 @@ $(document).ready(function(){
 	url = document.location.href;
 	url_parts = getUrlVars();
 
-	if (url_parts.limit_avail == 1){
+	if (url_parts.limit_avail == 1 || url_parts.limit_avail == 'on'){
 		$("#limitToAvail").prop('checked', true);
 	} else {
 		$("#limitToAvail").prop('checked', false);
