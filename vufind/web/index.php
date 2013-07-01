@@ -531,7 +531,7 @@ if ($action == "AJAX" || $action == "JSON"){
 	$searchSources = new SearchSources();
 	$interface->assign('searchSources', $searchSources->getSearchSources());
 
-	if (isset($configArray['Genealogy'])){
+	if (isset($configArray['Genealogy'])){ 
 		//Do not allow genealogy search in mobile theme
 		$genealogySearchObject = SearchObjectFactory::initSearchObject('Genealogy');
 		$interface->assign('genealogySearchTypes', is_object($genealogySearchObject) ? $genealogySearchObject->getBasicTypes() : array());
@@ -544,7 +544,7 @@ if ($action == "AJAX" || $action == "JSON"){
 			$interface->assign('lookfor',             $savedSearch->displayQuery());
 			$interface->assign('searchType',          $savedSearch->getSearchType());
 			$interface->assign('searchIndex',         $savedSearch->getSearchIndex());
-			$interface->assign('filterList', $savedSearch->getFilterList());
+			//$interface->assign('filterList', $savedSearch->getFilterList()); // TODO removed because not being used @MD 21 June 2013 (Friday) 10:42
 		}
 		$timer->logTime('Load last search for redisplay');
 	}
