@@ -122,7 +122,13 @@
 				<img src="/interface/themes/einetwork/images/Art/Slider/slider4.jpg"  data-transition="slideInLeft">
 				<img src="/interface/themes/einetwork/images/Art/Slider/slider5.jpg"  data-transition="slideInLeft">
 				<img src="/interface/themes/einetwork/images/Art/Slider/slider6.jpg"  data-transition="slideInLeft">
-			        <img src="/interface/themes/einetwork/images/Art/Slider/slider7.jpg"  data-transition="slideInLeft">		
+			        <img src="/interface/themes/einetwork/images/Art/Slider/slider7.jpg"  data-transition="slideInLeft">
+				<img src="/interface/themes/einetwork/images/Art/Slider/slider10.jpg"  data-transition="slideInLeft">
+				<img src="/interface/themes/einetwork/images/Art/Slider/slider11.jpg"  data-transition="slideInLeft">
+				<img src="/interface/themes/einetwork/images/Art/Slider/slider12.jpg"  data-transition="slideInLeft">
+				<img src="/interface/themes/einetwork/images/Art/Slider/slider14.jpg"  data-transition="slideInLeft">
+				<img src="/interface/themes/einetwork/images/Art/Slider/slider15.jpg"  data-transition="slideInLeft">
+				<img src="/interface/themes/einetwork/images/Art/Slider/slider16.jpg"  data-transition="slideInLeft">
 				</div>
 			</div>
 		</div>
