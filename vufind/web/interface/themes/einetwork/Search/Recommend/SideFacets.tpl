@@ -1,28 +1,3 @@
-{if $recordCount}
-<script>
-{literal}
-function checkFilters(){
-	return window.location.search.toString().indexOf("filter");
-}
-function showRemove(){
-	if(checkFilters() != -1){
-		$("#removeFilters").show();
-	}  
-}
-function removeFilters(){
-	var qs = parseQS();
-	if(qs["filter[]"]){
-		delete qs["filter[]"];
-	}
-	window.location = "/Search/Results?"+serialize(qs);
-}
-$(document).ready(function() {
- 	showRemove();
- 	setTimeout('getHeight();', 1500);
-});
-{/literal}
-</script>
-{/if}
 {if $recordCount >= 0 || $filterList || ($sideFacetSet && $recordCount >= 0)}
 	<div class="sidegroup">
 		<div class="filters" id="wishLists">
@@ -52,6 +27,18 @@ $(document).ready(function() {
 				</dd>
 				<dd>
 					<input type="button" class="button yellow" onclick="window.location = '/List/Import';" class="button navmenu dd" value="Import List From Old Catalog" style="width:auto"/>
+				</dd>
+			 </dl>
+		{/if}
+		{if $recordCount}
+			<dl class="narrowList navmenu narrowbegin">
+				<dt>{translate text='Sort'}</dt>
+				<dd>
+					<select name="sort" onchange="document.location.href = this.options[this.selectedIndex].value;">
+					{foreach from=$sortList item=sortData key=sortLabel}
+					  <option value="{$sortData.sortUrl|escape}"{if $sortData.selected} selected="selected"{/if}>{translate text=$sortData.desc}</option>
+					{/foreach}
+					</select>
 				</dd>
 			 </dl>
 		{/if}
@@ -86,7 +73,6 @@ $(document).ready(function() {
 				{/foreach}
 			{/foreach}
 			</ul>
-			<span style="display:none" id="removeFilters"><div style="padding-left: 19px; padding-top: 5px"><a href="#" onclick="removeFilters();">remove all filters</a></div></span>
 		</dl>
 	{/if}
 	{if $sideFacetSet && $recordCount > 0}

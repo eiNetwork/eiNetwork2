@@ -245,8 +245,8 @@ abstract class SearchObject_Base
 				// Add to the list unless it's in the list of fields to skip:
 				if (!in_array($field, $skipList)) {
 					$facetLabel = $this->getFacetLabel($field);
-					if ($field == 'available_at' && $value == "['' TO *]"){
-						$display = 'Any Location';
+					if ($field == 'veteranOf' && $value == '[* TO *]'){
+						$display = 'Any War';
 					}else{
 						$display = $translate ? translate($value) : $value;
 					}
@@ -596,6 +596,7 @@ abstract class SearchObject_Base
 	 *
 	 * @access  protected
 	 */
+
 	protected function initFilters(){
 
 		if (isset($_REQUEST['filter'])){
@@ -611,14 +612,12 @@ abstract class SearchObject_Base
 
 			}
 		}
-
 		//echo "<pre>";
 		//print_r($this->filterList);
 		//echo "</pre>";
                 
         //hardcoded now for limit to available
         //$this->addFilter("available_at:['' TO *]");
-
 	}
 
 	/**

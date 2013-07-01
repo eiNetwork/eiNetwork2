@@ -41,15 +41,14 @@
       <input id="GoButton" class="button" type="submit" value=""/>
     </div>
 
-   {* Do we have any checkbox filters? *}
-  {assign var="hasCheckboxFilters" value="0"}
-  {if isset($checkboxFilters) && count($checkboxFilters) > 0}
-    {foreach from=$checkboxFilters item=current}
-      {if $current.selected}
-	{assign var="hasCheckboxFilters" value="1"}
+     {assign var="hasCheckboxFilters" value="0"}
+      {if isset($checkboxFilters) && count($checkboxFilters) > 0}
+        {foreach from=$checkboxFilters item=current}
+          {if $current.selected}
+            {assign var="hasCheckboxFilters" value="1"}
+          {/if}
+        {/foreach}
       {/if}
-    {/foreach}
-  {/if}
   {if $filterList || $hasCheckboxFilters}
     <div class="keepFilters">
       <input type="checkbox" checked="checked" onclick="filterAll(this);" /> {translate text="basic_search_keep_filters"}
@@ -88,6 +87,3 @@
     </div>
     {/if}
 </div>
-
-<div class="center-header-buttom">&nbsp;</div>
-

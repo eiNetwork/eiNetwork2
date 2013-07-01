@@ -172,7 +172,6 @@ class SideFacets implements RecommendationInterface
 			$interface->assign('ratingLabels', $ratingLabels);
 		}
 
-
 		$filters = $this->searchObject->getFilterList();
 
 		
