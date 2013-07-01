@@ -124,7 +124,7 @@
 					<td>{translate text='My Home Library'}</td>
 				</tr>
 				<tr>
-					<td>{$profile.address1|escape} {$profile.state|escape} {$profile.zip|escape}</td>
+					<td>{$profile.address1|escape}<br />{$profile.city|escape} {$profile.state|escape} {$profile.zip|escape}</td>
 					<td>{$profile.homeLocation|escape}</td>
 				</tr>
 				</table>

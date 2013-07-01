@@ -183,6 +183,7 @@
 .profile_row table td{
 	padding: 5px;
 	width:200px;
+	vertical-align: top;
 }
 /***** END My Account--->Profile *****/
 

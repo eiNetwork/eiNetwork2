@@ -172,54 +172,85 @@ class SideFacets implements RecommendationInterface
 			$interface->assign('ratingLabels', $ratingLabels);
 		}
 
-		if (isset($sideFacets['available_at'])){
-			//Mangle the availability facets
-			$oldFacetValues = $sideFacets['available_at']['list'];
-			ksort($oldFacetValues);
-			global $locationSingleton;
-			global $user;
-			global $librarySingleton;
+
+		$filters = $this->searchObject->getFilterList();
+
+		
+		if (isset($_REQUEST['limit_avail']) && $_REQUEST['limit_avail'] != 1){
+
+			if (isset($sideFacets['available_at'])){
+				//Mangle the availability facets
+				$oldFacetValues = $sideFacets['available_at']['list'];
+				ksort($oldFacetValues);
+				global $locationSingleton;
+				global $user;
+				global $librarySingleton;
+				$filters = $this->searchObject->getFilterList();
+				$appliedAvailability = array();
+				foreach ($filters as $appliedFilters){
+					foreach ($appliedFilters as $filter){
+						if ($filter['field'] == 'available_at'){
+							$appliedAvailability[$filter['value']] = $filter['removalUrl'];
+						}
+					}
+				}
+			
+				$availableAtFacets = array();
+				foreach ($oldFacetValues as $facetKey => $facetInfo){
+					if (strlen($facetKey) > 1){
+						$sortIndicator = substr($facetKey, 0, 1);
+						if ($sortIndicator >= '1' && $sortIndicator <= '4'){
+							$availableAtFacets[$facetKey] = $facetInfo;
+						}
+					}
+				}
+			
+				$includeAnyLocationFacet = $this->searchObject->getFacetSetting("Availability", "includeAnyLocationFacet");
+				//print_r ("includeAnyLocationFacet = $includeAnyLocationFacet");
+				if ($includeAnyLocationFacet == '' || $includeAnyLocationFacet == true){
+					$anyLocationLabel = $this->searchObject->getFacetSetting("Availability", "anyLocationLabel");
+					//print_r ("anyLocationLabel = $anyLocationLabel");
+					$availableAtFacets['*'] = array(
+						'value' => '*',
+						'display' => $anyLocationLabel == '' ? "Any Library Location" : $anyLocationLabel,
+						'count' => $this->searchObject->getResultTotal() - (isset($oldFacetValues['']['count']) ? $oldFacetValues['']['count'] : 0),
+						'url' => $this->searchObject->renderLinkWithFilter('available_at:*'),
+						'isApplied' => array_key_exists('*', $appliedAvailability),
+						'removalUrl' => array_key_exists('*', $appliedAvailability) ? $appliedAvailability['*'] : null
+					);
+				}
+				$sideFacets['available_at']['list'] = $availableAtFacets;
+			}
+
+		}
+		
+		if (isset($sideFacets['building'])){
 			$filters = $this->searchObject->getFilterList();
-			$appliedAvailability = array();
-			foreach ($filters as $appliedFilters){
-				foreach ($appliedFilters as $filter){
-					if ($filter['field'] == 'available_at'){
+			foreach ($filters as $availableFilters){
+				foreach ($availableFilters as $filter){
+					if ($filter['field'] == 'building'){
 						$appliedAvailability[$filter['value']] = $filter['removalUrl'];
 					}
 				}
 			}
-
-			$availableAtFacets = array();
-			foreach ($oldFacetValues as $facetKey => $facetInfo){
-				if (strlen($facetKey) > 1){
-					$sortIndicator = substr($facetKey, 0, 1);
-					if ($sortIndicator >= '1' && $sortIndicator <= '4'){
-						$availableAtFacets[$facetKey] = $facetInfo;
-					}
-				}
-			}
-
-			$includeAnyLocationFacet = $this->searchObject->getFacetSetting("Availability", "includeAnyLocationFacet");
-			//print_r ("includeAnyLocationFacet = $includeAnyLocationFacet");
-			if ($includeAnyLocationFacet == '' || $includeAnyLocationFacet == true){
-				$anyLocationLabel = $this->searchObject->getFacetSetting("Availability", "anyLocationLabel");
-				//print_r ("anyLocationLabel = $anyLocationLabel");
-				$availableAtFacets['*'] = array(
-					'value' => '*',
-					'display' => $anyLocationLabel == '' ? "Any Library Location" : $anyLocationLabel,
-					'count' => $this->searchObject->getResultTotal() - (isset($oldFacetValues['']['count']) ? $oldFacetValues['']['count'] : 0),
-					'url' => $this->searchObject->renderLinkWithFilter('available_at:*'),
-					'isApplied' => array_key_exists('*', $appliedAvailability),
-					'removalUrl' => array_key_exists('*', $appliedAvailability) ? $appliedAvailability['*'] : null
-				);
-			}
-			$sideFacets['available_at']['list'] = $availableAtFacets;
-			//print_r($sideFacets['available_at']);
 		}
+
 		$useLocation = isset($_SESSION['useLocation'])?$_SESSION['useLocation']:false;
 		$searchLocation = Location::getSearchLocation();
 		$filterList = $this->searchObject->getFilterList(true);
+
+
+		// TODO - Quickfix. Removal URL not constructed correctly, so hacking a fix here.
+		if (isset($filterList['Available At'])){
+			if (count($filterList) == 1){
+				$remove_filter_string = '&filter[]=' . urlencode('available_at:"' . $filterList['Available At'][0]['value'] . '"');
+				$filterList['Available At'][0]['removalUrl'] = str_replace($remove_filter_string, '', $filterList['Available At'][0]['removalUrl']);
+			}
+
+		}
+
 		if(isset($searchLocation) && !is_null($searchLocation)){
+
 			foreach($sideFacets as $key=>$filter){
 				if($key == 'building'){
 					foreach($filter as $k=>$f){
@@ -234,6 +265,7 @@ class SideFacets implements RecommendationInterface
 					
 				}
 			}
+
 			
 			foreach($filterList as $key=>$filter){
 				if($key == 'Location'){
@@ -259,6 +291,32 @@ class SideFacets implements RecommendationInterface
 
 			}
 		}
+
+		//unset($filterList['Available At']); // no need to display available at to side facet
+		//unset($sideFacets['available_at']); // we need the available_at count but we dont want to display the available at filter.
+
+		if (isset($_REQUEST['limit_avail']) && $_REQUEST['limit_avail'] == 1){
+			unset($sideFacets['available_at']['list']['']);
+			unset($sideFacets['building']);
+		} else {
+			unset($sideFacets['available_at']);
+		}
+
+		if (isset($filterList['Available At'])){
+
+			$x = 0;
+			foreach($filterList['Available At'] as $key => $value){
+
+				if ($value['value'] == "['' TO *]"){
+					$filterList['Available At'][$x]['removalUrl'] = str_replace('limit_avail=1', 'limit_avail=0', $value['removalUrl']);
+				}
+
+				$x++;
+
+			}
+
+		}
+
 		$interface->assign('filterList', $filterList);
 		$interface->assign('useLocation', $useLocation);
 		$interface->assign('searchLibrary', $searchLibrary);
