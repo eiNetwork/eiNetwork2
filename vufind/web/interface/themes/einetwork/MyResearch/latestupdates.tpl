@@ -13,8 +13,6 @@ Release date 7/2/2013
 Provided ability to retain filters across multiple searches.  A checkbox under the search box supports this feature.</li>
 <li><span class="bold">Improve searching from within the library.</span><br />
 Filters are now being displayed in left panel even if there is only a single search result;  therefore, searches can more easily be modified by adding or removing filters.</li>
-<li><span class="bold">Remember My Account login information in the user browser.</span><br />
-Provided the ability to retain My Account login credentials in the browsers.</li>
 <li><span class="bold">Misc. bug fixes:</span><br />
 <ol class="alpha">
 <li>While in My Account/Account Settings,  the city, state, and zipcode information is not  displaying.</li>
