@@ -112,7 +112,6 @@ class Holds extends MyResearch
 		//BEGIN for OverdriveHolds
 		$overDriveDriver = new OverDriveDriver();
 		$overDriveHolds = $overDriveDriver->getOverDriveHolds($user);
-
 		foreach ($overDriveHolds as $sectionKey => $sectionData){
 			foreach ($sectionData as $key => $item){
 				if ($item['recordId'] != -1){
@@ -124,7 +123,7 @@ class Holds extends MyResearch
 					$item['record'] = null;
 				}
 				if ($sectionKey == 'available'){
-					$item['numRows'] = count($item['formats']) + 1;
+					//$item['numRows'] = count($item['formats']) + 1; // md - not sure why this is needed in holds
 				}
 				$overDriveHolds[$sectionKey][$key] = $item;
 			}
