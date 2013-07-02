@@ -652,10 +652,6 @@ class OverDriveDriver {
 					$waitingListConfirm = curl_exec($overDriveInfo['ch']);
 					$logger->log("Submitting email for notification {$secureBaseUrl}BANGAuthenticate.dll?Action=LibraryWaitingList  $post_string"  , PEAR_LOG_INFO);
 					//$logger->log("overdrive waiting list confirm {$waitingListConfirm}"  , PEAR_LOG_INFO);
-					
-					echo "<pre>";
-					print_r($waitingListConfirm);
-					echo "</pre>";
 
 					$waitingListConfirm = strip_tags($waitingListConfirm, "'<p><a><li><ul><div><em><b>'");
 					if (preg_match('/<section id="mainContent" class=".*?">(.*?)<\/section>/is', $waitingListConfirm, $matches)){
