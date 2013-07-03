@@ -61,9 +61,17 @@ $(document).ready(function(){
 
 		if (avail.prop('checked') == false) {
 
+			console.log('test');
+
 			if (typeof url_parts.limit_avail!='undefined'){
-				document.location.href = url.replace('limit_avail=1','limit_avail=0');
-				document.location.href = url.replace('limit_avail=on','limit_avail=0');
+
+				console.log('test2')
+
+				url = url.replace('limit_avail=1','limit_avail=0');
+				url = url.replace('limit_avail=on','limit_avail=0');
+
+				document.location.href = url;
+			
 			} else {
 				document.location.href = window.location.href + '&limit_avail=0';
 			}

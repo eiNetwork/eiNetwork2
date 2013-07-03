@@ -257,7 +257,7 @@ class SideFacets implements RecommendationInterface
 						if($k == 'list'){
 							foreach($f as $y=>$x){
 								if($x['value'] == $searchLocation->defaultLocationFacet && $useLocation){
-									$sideFacets[$key][$k][$y]['removalUrl'] = $sideFacets[$key][$k][$y]['removalUrl']."&useLocation=0";
+									$sideFacets[$key][$k][$y]['removalUrl'] = isset($sideFacets[$key][$k][$y]['removalUrl']) ? $sideFacets[$key][$k][$y]['removalUrl']."&useLocation=0" : null;
 								}
 							}
 						}
