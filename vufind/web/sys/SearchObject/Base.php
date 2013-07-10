@@ -186,15 +186,16 @@ abstract class SearchObject_Base
 	{
 		// Extract field and value from URL string:
 		list($field, $value) = $this->parseFilter($oldFilter);
-
 		// Make sure the field exists
 		if (isset($this->filterList[$field])) {
 			// Loop through all filters on the field
-			for ($i = 0; $i < count($this->filterList[$field]); $i++) {
-				// Does it contain the value we don't want?
-				if ($this->filterList[$field][$i] == $value) {
-					// If so remove it.
-					unset($this->filterList[$field][$i]);
+			if (count($this->filterList[$field]) > 0){
+				for ($i = 0; $i < count($this->filterList[$field]); $i++) {
+					// Does it contain the value we don't want?
+					if (isset($this->filterList[$field][$i]) && $this->filterList[$field][$i] == $value) {
+						// If so remove it.
+						unset($this->filterList[$field][$i]);
+					}
 				}
 			}
 		}
@@ -244,12 +245,11 @@ abstract class SearchObject_Base
 				// Add to the list unless it's in the list of fields to skip:
 				if (!in_array($field, $skipList)) {
 					$facetLabel = $this->getFacetLabel($field);
-					if ($field == 'veteranOf' && $value == '[* TO *]'){
-						$display = 'Any War';
+					if ($field == 'available_at' && $value == "['' TO *]"){
+						$display = 'Any Location';
 					}else{
 						$display = $translate ? translate($value) : $value;
 					}
-					
 					$list[$facetLabel][] = array(
                         'value'      => $value,     // raw value for use with Solr
                         'display'    => $display,   // version to display to user
@@ -308,7 +308,6 @@ abstract class SearchObject_Base
 	 */
 	public function renderLinkWithoutFilters($filters)
 	{
-		// Stash our old data for a minute
 		$oldFilterList = $this->filterList;
 		$oldPage       = $this->page;
 		// Remove the old filter
@@ -597,17 +596,29 @@ abstract class SearchObject_Base
 	 *
 	 * @access  protected
 	 */
-	protected function initFilters()
-	{
-		if (isset($_REQUEST['filter'])) {
-			if (is_array($_REQUEST['filter'])) {
-				foreach($_REQUEST['filter'] as $filter) {
+	protected function initFilters(){
+
+		if (isset($_REQUEST['filter'])){
+			if (is_array($_REQUEST['filter'])){
+
+				foreach($_REQUEST['filter'] as $filter){
 					$this->addFilter(strip_tags($filter));
 				}
+
 			} else {
+
 				$this->addFilter(strip_tags($_REQUEST['filter']));
+
 			}
 		}
+
+		//echo "<pre>";
+		//print_r($this->filterList);
+		//echo "</pre>";
+                
+        //hardcoded now for limit to available
+        //$this->addFilter("available_at:['' TO *]");
+
 	}
 
 	/**
@@ -658,6 +669,10 @@ abstract class SearchObject_Base
 
 		if (isset($_REQUEST['searchSource'])){
 			$params[] = "searchSource=" . urlencode(strip_tags($_REQUEST['searchSource']));
+		}
+
+		if (isset($_REQUEST['limit_avail'])){
+			$params[] = "limit_avail=" . urlencode(strip_tags($_REQUEST['limit_avail']));
 		}
 		
 		// Join all parameters with an escaped ampersand,

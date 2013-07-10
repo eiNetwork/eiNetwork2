@@ -24,6 +24,10 @@ html,body {
 	background-color: white;
 }
 
+span.bold {
+	font-weight: bold;
+}
+
 
 .crumbs {
 	background-color: #000;
@@ -259,14 +263,31 @@ b.bbot b,b.gbot b {
 .keepFilters {
 	color: #FDFDFD;
 	display: inline-block;
-	float:right;
+	float:left;
 	padding-right: 16px;
+	margin:0 0 20px 230px;
 	font-size: 13px;
 	font-weight: bold;
-	text-shadow: 1px 1px 1px #553810;
 	vertical-align: top;
 	zoom: 1;
 	display: inline;
+	width:120px !important;
+}
+
+.availFilter {
+	color: #FDFDFD;
+	display: inline-block;
+	float:right;
+	padding-right: 140px;
+	font-size: 13px;
+	font-weight: bold;
+	vertical-align: top;
+	zoom: 1;
+	width:150px !important;
+}
+
+.NoFilter {
+	margin:0 0 20px 230px;
 }
 
 .searchcontent {
@@ -2690,4 +2711,16 @@ table.tablesorter thead tr .headerSortDown,table.tablesorter thead tr .headerSor
 	color:#f00;
 	font-size:11pt;
 	font-weight:bold;
+}
+
+.releases {
+	margin:0 0 30px 0;
+}
+
+ol.decimal li {
+	list-style-type: decimal;
+}
+
+ol.alpha li {
+	list-style-type: lower-alpha;
 }

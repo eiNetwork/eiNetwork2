@@ -527,12 +527,12 @@ class MillenniumDriver implements DriverInterface
 				}
 			}
 			//Get the library display name for the holding location
-			/*foreach ($locationLabels as $holdingLabel => $displayName){
-			 if (strpos($holding['location'], $holdingLabel) !== false){
-			 $holding['libraryDisplayName'] = $displayName;
-			 break;
+			foreach ($locationLabels as $holdingLabel => $displayName){
+				 if (strpos($holding['location'], $holdingLabel) !== false){
+					 $holding['libraryDisplayName'] = $displayName;
+					 break;
+				 }
 			 }
-			 }*/
 			if (!isset($holding['libraryDisplayName'])){
 				$holding['libraryDisplayName'] = $holding['location'];
 			}

@@ -215,7 +215,7 @@ class OverDriveDriver {
 		//Trim to the first li
 		$firstTitlePos = strpos($holdsSection, '<li class="mobile-four">');
 		$holdsSection = substr($holdsSection, $firstTitlePos);
-		$heldTitles = explode('<li class="mobile-four">', $holdsSection);
+		$heldTitles = explode('<li class="mobile-four"', $holdsSection);
 		$i = 0;
 		foreach ($heldTitles as $titleHtml){
 			//echo("\r\nSection " . $i++ . "\r\n$titleHtml");
@@ -238,15 +238,16 @@ class OverDriveDriver {
 
 				$holdDetails = $holdInfo[$grpCtr++];
 
-				if (preg_match('/<h6 class="holds-wait-position">(.*?)<\/h6>.*?<h6 class="holds-wait-email">(.*?)<\/h6>/si', $holdDetails, $holdDetailInfo)) {
-					$notificationInformation = $holdDetailInfo[1];
+				if (preg_match('/<h6 class="holds-wait-position" id="(.*?)">(.*?)<\/h6>.*?<h6 class="holds-wait-email" title="(.*?)">(.*?)<\/h6>/si', $holdDetails, $holdDetailInfo)) {
+					
+					$notificationInformation = $holdDetailInfo[2];
 					if (preg_match('/You are (?:patron|user) <b>(\\d+)<\/b> out of <b>(\\d+)<\/b> on the waiting list/si', $notificationInformation, $notifyInfo)) {
 						$hold['holdQueuePosition'] = $notifyInfo[1];
 						$hold['holdQueueLength'] = $notifyInfo[2];
 					}else{
 						echo($notificationInformation);
 					}
-					$hold['notifyEmail'] = $holdDetailInfo[2];
+					$hold['notifyEmail'] = $holdDetailInfo[3];
 					$holds['unavailable'][] = $hold;
 				}elseif (preg_match('/<div id="borrowingPeriodHold"><div>(.*?)<\/div>.*?new Date \("(.*?)"\)/si', $holdDetails, $holdDetailInfo)){
 					///print_r($holdDetails);
@@ -404,7 +405,6 @@ class OverDriveDriver {
 		global $configArray;
 		global $timer;
 		global $logger;
-
 		$holds = $memcache->get('overdrive_holds_' . $user->id);
 
 		if ($holds == false){
@@ -518,7 +518,6 @@ class OverDriveDriver {
 				$summary['checkedOut'] = $checkedOut;
 			}
 
-			//Get holds
 			if (preg_match('/<li .*?id="myAccount2Tab".*?>(.*?)<li [^>\/]*?id="myAccount3Tab".*?>/s', $accountPage, $matches)) {
 				$holdsSection = $matches[1];
 				//print_r($holdsSection);
@@ -653,7 +652,7 @@ class OverDriveDriver {
 					$waitingListConfirm = curl_exec($overDriveInfo['ch']);
 					$logger->log("Submitting email for notification {$secureBaseUrl}BANGAuthenticate.dll?Action=LibraryWaitingList  $post_string"  , PEAR_LOG_INFO);
 					//$logger->log("overdrive waiting list confirm {$waitingListConfirm}"  , PEAR_LOG_INFO);
-					
+
 					$waitingListConfirm = strip_tags($waitingListConfirm, "'<p><a><li><ul><div><em><b>'");
 					if (preg_match('/<section id="mainContent" class=".*?">(.*?)<\/section>/is', $waitingListConfirm, $matches)){
 						$logger->log("Found main content section", PEAR_LOG_INFO);

@@ -672,6 +672,9 @@ class Record extends Action
 
 		$this->getNextPrevLinks();
 
+		include_once 'Drivers/Millennium.php';
+
+		$millennium = new MillenniumDriver();
 		//Load Staff Details
 		$interface->assign('staffDetails', $this->recordDriver->getStaffView());
 	}
