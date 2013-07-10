@@ -1257,14 +1257,16 @@ table.datagrid tr.oddrow {
 }
 .overdriveAvailable{
 	color:#00B253;
+	font-weight: bold;
 }
 
 .unavailable {
-	color: #cc0000;
+	color: #EE3224;
 }
 
 .holdingsSummary span {
 	text-align:left;
+	font-weight: bold;
 }
 .here{
 	color:#00B253;

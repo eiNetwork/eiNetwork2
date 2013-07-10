@@ -203,6 +203,10 @@ function doGetStatusSummaries()
 							$("#downloadLink" + elemId).show();
 						}
 					}
+					if($("#limitToAvail").prop('checked') == true){
+						$('.checkedOut span:eq(1)').text('Recently Checked Out');
+					}
+
 				}catch (err){
 					//alert("Unexpected error " + err);
 				}
@@ -249,7 +253,7 @@ function doGetStatusSummaries()
 				var sta = $(data).find('status').text();
 				var items = $(data).find('item');
 				$(items).each(function(index, item){
-					var elemId = $(item).attr("id") ;
+					var elemId = $(item).attr("id");
 					//alert(sta);
 					if(sta =="Available from OverDrive"){
 						$("#RequestWord"+elemId).text("Checkout Now");
@@ -267,6 +271,10 @@ function doGetStatusSummaries()
 						$("#RequestWord"+elemId).text("Access Online");
 					}
 					$('#holdingsEContentSummary' + elemId).replaceWith($(item).find('formattedHoldingsSummary').text());
+					//console.log(sta)
+					if(sta == "Checked Out" && $("#limitToAvail").prop('checked') == true){
+						$('.availability .overdriveCheckedOut').text('Recently Checked Out');
+					}
 					if ($(item).find('showplacehold').text() == 1){
 						$("#placeEcontentHold" + elemId).show();
 					}else if ($(item).find('showcheckout').text() == 1){
