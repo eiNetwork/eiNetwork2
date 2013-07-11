@@ -600,12 +600,13 @@ class OverDriveDriver {
 			$waitingListUrl .= '%3FID=' . $overDriveId . '%26Format=' . $format;
 			//$logger->log("Wait list URL ". $waitingListUrl, PEAR_LOG_INFO);
 			curl_setopt($overDriveInfo['ch'], CURLOPT_URL, $waitingListUrl);
-			$logger->log("Click place a hold button " . $waitingListUrl, PEAR_LOG_DEBUG);			
+			//$logger->log("Click place a hold button " . $waitingListUrl, PEAR_LOG_DEBUG);			
 			$setEmailPage = curl_exec($overDriveInfo['ch']);
+			//$logger->log("set email page info " . $setEmailPage . " end set email page", PEAR_LOG_DEBUG);	
 			$setEmailPageInfo = curl_getinfo($ch);
 			if (preg_match('/already placed a hold or borrowed this title/', $setEmailPage)){
 				$holdResult['result'] = false;
-				$holdResult['message'] = "We're sorry, but you are already on the waiting list for the selected title or have it checked out.";
+				$holdResult['message'] = "You are already on the waiting list for this title.";
 
 			}else{
 
@@ -745,18 +746,26 @@ class OverDriveDriver {
 		//Navigate to the holds page
 		curl_setopt($overDriveInfo['ch'], CURLOPT_URL, $overDriveInfo['holdsUrl']);
 		$holdsPage = curl_exec($overDriveInfo['ch']);
-
+		//get the edit URL with the format id from the holds page
+		//$logger->log("overdrive holdsPage---> ". $holdsPage." end overdrive holdsPage", PEAR_LOG_INFO);
+		$waitingListEditUrlStart = strpos($holdsPage,"BANGAuthenticate.dll?Action=AuthCheck&amp;ForceLoginFlag=0&URL=WaitingListEdit.htm%3FID=".$overDriveId);
+		$waitingListEditUrlEnd = strpos($holdsPage,"Format=",$waitingListEditUrlStart);
+		$waitinglistEditFormat = substr($holdsPage,$waitingListEditUrlEnd+7,3);
+		//$logger->log("overdrive waiting list edit format ---> ". $waitinglistEditFormat." end waiting list format", PEAR_LOG_INFO);
+		
 		//Navigate to edit email page
-		$editEmailUrl = $overDriveInfo['baseUrl'] . "WaitingListEdit.htm?ID=" . $overDriveId . "&Format=420";
+		//$editEmailUrl = $overDriveInfo['baseUrl'] . "WaitingListEdit.htm?ID=" . $overDriveId . "&Format=420";
+		$editEmailUrl = $overDriveInfo['baseUrl'] . "WaitingListEdit.htm?ID=" . $overDriveId ."&Format=". $waitinglistEditFormat;
 		curl_setopt($overDriveInfo['ch'], CURLOPT_URL, $editEmailUrl);
 		$editPage = curl_exec($overDriveInfo['ch']);
 
+		//$logger->log("overdrive info ---> ". print_r($overDriveInfo, true), PEAR_LOG_INFO);
 		//$logger->log("editURLXXX---> ". $editEmailUrl, PEAR_LOG_INFO);
-		//$logger->log("editPage---> ". $editPage, PEAR_LOG_INFO);
+		//$logger->log("overdrive editPage---> ". $editPage." end overdrive editPage", PEAR_LOG_INFO);
 		
 		$postParams = array(
 			'ID' => $overDriveId,
-			'Format' => '420',
+			'Format' => $waitinglistEditFormat,
 			'URL' => 'WaitingListConfirm.htm',
 			'Email' => $email,
 			'Email2' => $email,
@@ -774,7 +783,10 @@ class OverDriveDriver {
 		$waitingListConfirm = curl_exec($overDriveInfo['ch']);
 		//$logger->log("waiting list ZZZ---> ". $waitingListConfirm, PEAR_LOG_INFO);
 		
-		 if (preg_match('/You will receive an email from donotreply@overdrive.com when the title becomes available/', $waitingListConfirm)){
+		if (preg_match('/The following system error occurred.../', $waitingListConfirm)) {
+			$editResult['result'] = false;
+			$editResult['message'] = 'There was an error updating your email address.  Your email was not changed.';
+		} elseif (preg_match('/You will receive an email from donotreply@overdrive.com when the title becomes available/', $waitingListConfirm)){
 			$editResult['result'] = true;
 			$editResult['message'] = 'Your email was changed successfully.';
 			global $memcache;
@@ -859,7 +871,7 @@ class OverDriveDriver {
 			
 			//Send the command and process the result
 			$checkoutResultPage = curl_exec($ch);
-			//$logger->log("Checkout Result ".$checkoutResultPage." end OD checkout result", PEAR_LOG_INFO);
+			$logger->log("Checkout Result ".$checkoutResultPage." end OD checkout result", PEAR_LOG_INFO);
 			if (strpos($checkoutResultPage,'Digital Media Catalog - Error page') == 0) {
 				$checkoutResult['result'] = true;
 				$checkoutResult['message'] = "Your title was checked out successfully. Please go to Checked Out Items to download the title from your Account.";
@@ -989,7 +1001,7 @@ class OverDriveDriver {
 				'bookshelfUrl' => str_replace('Default.htm', 'MyAccount.htm?PerPage=80&ForceLoginFlag=0',  $urlWithSessionSSL),
 				'placeHoldUrl' => str_replace('Default.htm', 'BANGAuthenticate.dll?Action=AuthCheck&amp;ForceLoginFlag=0&amp;URL=WaitingListForm.htm',  $urlWithSessionSSL),
 				'baseLoginUrl' => str_replace('Default.htm', 'BANGAuthenticate.dll',  $urlWithSessionSSL),
-				'editLendingOptionsUrl' => str_replace('BANGAuthenticate.dll', '', $loginUrl),
+				'baseUrl' => str_replace('BANGAuthenticate.dll', '', $loginUrl),
 				'downloadUrl' => str_replace('Default.htm', '',  $urlWithSessionSSL),
 				'waitingListUrl' => str_replace('Default.htm', 'BANGAuthenticate.dll?Action=AuthCheck&ForceLoginFlag=0&URL=WaitingListForm.htm',  $urlWithSession),
 				'contentInfoPage' => str_replace('Default.htm', 'ContentDetails.htm',  $urlWithSessionSSL),
@@ -1155,7 +1167,7 @@ class OverDriveDriver {
 		$overDriveInfo = $this->_loginToOverDrive($ch, $user);
 		$closeSession = true;
 
-		$updateSettingsUrl = $overDriveInfo['editLendingOptionsUrl']  . 'BANGAuthenticate.dll?Action=EditUserLendingPeriodsFormatClass';
+		$updateSettingsUrl = $overDriveInfo['baseUrl']  . 'BANGAuthenticate.dll?Action=EditUserLendingPeriodsFormatClass';
 		$postParams = array(
 			'URL' => 'MyAccount.htm?PerPage=80#myAccount4',
 		);
