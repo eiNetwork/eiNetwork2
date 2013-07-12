@@ -498,6 +498,12 @@ class Results extends Action {
 			// Big one - our results
 			$recordSet = $searchObject->getResultRecordHTML();
 			$interface->assign('recordSet', $recordSet);
+			$page = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;
+                                                $list_id = $_REQUEST['goToListID'];
+ 
+                                                if (count($recordSet) < 1) {
+                                                                header( 'Location: /List/Results?goToListID=' . $list_id . '&view=list&searchSource=local&page=' . ($page - 1)) ;
+                                                }
 			$timer->logTime('load result records');
 
 			// Setup Display
