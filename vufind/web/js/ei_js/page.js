@@ -293,6 +293,7 @@ function deleteItemInList(itemId,source){
 			    });
                         document.body.style.cursor = 'default';
                         getBookCartItemCount();
+			location.reload();
 		},
 		error: function() {
 			$('#popupbox').html(failMsg);
