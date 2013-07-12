@@ -3046,6 +3046,10 @@ class MillenniumDriver implements DriverInterface
 							$renew_success = false;
 							$message = 'Your item could not be renewed because another user has requested it';
 							$hold_request_count++;
+						}  else if (strpos($status, 'A renewal for this item is not allowed') > 0){
+							$renew_success = false;
+							$message = 'A renewal for this item is not allowed.';
+							$hold_request_count++;
 						}
 
 						//$test[$n]['raw'] = $status;
