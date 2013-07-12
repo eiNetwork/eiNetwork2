@@ -267,12 +267,12 @@ public class MarcRecordDetails {
 			for (DataField curItem : itemFields) {
 				Subfield urlField = curItem.getSubfield(marcProcessor.getUrlSubfield().charAt(0));
 				if (urlField != null) {
-					logger.info("Found item based url " + urlField.getData());
+					//logger.debug("Found item based url " + urlField.getData());
 					Subfield locationField = curItem.getSubfield(marcProcessor.getLocationSubfield().charAt(0));
 					if (locationField != null) {
-						logger.info("  Location is " + locationField.getData());
+						//logger.debug("  Location is " + locationField.getData());
 						long libraryId = getLibrarySystemIdForLocation(locationField.getData());
-						logger.info("Adding local url " + urlField.getData() + " library system: " + libraryId);
+						//logger.debug("Adding local url " + urlField.getData() + " library system: " + libraryId);
 						Subfield notesField = curItem.getSubfield('3');
 						String notesText = notesField == null ? "" : notesField.getData();
 						Subfield iTypeField = curItem.getSubfield('j');
@@ -1707,14 +1707,14 @@ public class MarcRecordDetails {
 	public String getRating(String recordIdSpec) {
 		if (rating == null) {
 			String recordId = getFirstFieldVal(recordIdSpec);
-			// logger.info("Getting rating for " + recordId);
+			// logger.debug("Getting rating for " + recordId);
 			// Check to see if the record has an eContent Record
 			rating = marcProcessor.getPrintRatings().get(recordId);
 			if (rating == null) {
 				rating = -2.5f;
 			}
 
-			// logger.info("Rating = " + rating.toString());
+			// logger.debug("Rating = " + rating.toString());
 		}
 		return Float.toString(rating);
 	}
@@ -1729,14 +1729,14 @@ public class MarcRecordDetails {
 	
 	public String getEContentRating(Long eContentRecordId) {
 		if (rating == null) {
-			// logger.info("Getting rating for " + recordId);
+			// logger.debug("Getting rating for " + recordId);
 			// Check to see if the record has an eContent Record
 			rating = marcProcessor.getEcontentRatings().get(eContentRecordId);
 			if (rating == null) {
 				rating = -2.5f;
 			}
 
-			// logger.info("Rating = " + rating.toString());
+			// logger.debug("Rating = " + rating.toString());
 		}
 		return Float.toString(rating);
 	}
@@ -3263,7 +3263,7 @@ public class MarcRecordDetails {
 		// 1) Get the facet name from the translation map
 		Map<String, String> systemMap = marcProcessor.findMap("system_map");
 		if (systemMap == null){
-			logger.debug("Unable to load system map!");
+			logger.error("Unable to load system map!");
 			return -1L;
 		}
 		String librarySystemFacet = Utils.remap(locationCode, systemMap, true);
@@ -3293,7 +3293,7 @@ public class MarcRecordDetails {
 		// 2) Now that we have the facet, get the id of the system
 		Long locationId = marcProcessor.getLocationIdFromFacet(locationFacet);
 		if (locationId == null) {
-			//logger.debug("Did not get locationId for location " + locationCode + " " + locationFacet);
+			logger.error("Did not get locationId for location " + locationCode + " " + locationFacet);
 			locationId = -1L;
 		}else{
 			//logger.debug("Found locationId " + locationId + " for location " + locationCode + " " + locationFacet);
@@ -3310,7 +3310,7 @@ public class MarcRecordDetails {
 		}
 		String locationFacet = Utils.remap(locationCode, locationMap, true);
 		if (locationFacet == null) {
-			//logger.debug("Did not get locationFacet for location " + locationCode + " " + locationFacet);
+			logger.error("Did not get locationFacet for location " + locationCode + " " + locationFacet);
 			locationFacet = "Unknown";
 		}else{
 			//logger.debug("Found locationFacet " + locationFacet + " for location " + locationCode);

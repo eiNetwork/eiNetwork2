@@ -744,7 +744,7 @@ public class MarcProcessor {
 								//logger.debug("Record is changed - backup econtent");
 								recordStatus = RECORD_CHANGED_SECONDARY;
 							} else {
-								// logger.info("Record is unchanged");
+								// logger.debug("Record is unchanged");
 								recordStatus = RECORD_UNCHANGED;
 							}
 						} else {
