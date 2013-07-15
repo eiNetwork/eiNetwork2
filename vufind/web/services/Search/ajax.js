@@ -203,8 +203,15 @@ function doGetStatusSummaries()
 							$("#downloadLink" + elemId).show();
 						}
 					}
+
 					if($("#limitToAvail").prop('checked') == true){
-						$('.checkedOut span:eq(1)').text('Recently Checked Out');
+						
+						var checked_out = $('.checkedOut');
+
+						$.each( checked_out, function( key, value ){
+							$(this).find('span').eq(1).text('Recently Checked Out');
+						});
+
 					}
 
 				}catch (err){

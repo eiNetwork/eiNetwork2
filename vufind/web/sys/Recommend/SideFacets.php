@@ -307,12 +307,13 @@ class SideFacets implements RecommendationInterface
 			$x = 0;
 			foreach($filterList['Available At'] as $key => $value){
 
-				if ($value['value'] == "['' TO *]"){
-					//echo $value['removalUrl'];
-					$filterList['Available At'][$x]['removalUrl'] = str_replace('limit_avail=1', 'limit_avail=0', $value['removalUrl']);
-					$filterList['Available At'][$x]['removalUrl'] = str_replace('limit_avail=on', 'limit_avail=0', $value['removalUrl']);
-					echo $filterList['Available At'][$x]['removalUrl'];
-				}
+				//if ($value['value'] == "['' TO *]"){
+
+					$removal_url = str_replace('limit_avail=1', 'limit_avail=0', $value['removalUrl']);
+					$removal_url = str_replace('limit_avail=1', 'limit_avail=0', $removal_url);
+
+					$filterList['Available At'][$x]['removalUrl'] = $removal_url;
+				//}
 
 				$x++;
 
