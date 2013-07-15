@@ -176,7 +176,7 @@ class SideFacets implements RecommendationInterface
 		$filters = $this->searchObject->getFilterList();
 
 		
-		if (isset($_REQUEST['limit_avail']) && $_REQUEST['limit_avail'] != 1){
+		if (isset($_REQUEST['limit_avail']) && $_REQUEST['limit_avail'] != 1 && $_REQUEST['limit_avail'] != 'on'){
 
 			if (isset($sideFacets['available_at'])){
 				//Mangle the availability facets
@@ -257,7 +257,7 @@ class SideFacets implements RecommendationInterface
 						if($k == 'list'){
 							foreach($f as $y=>$x){
 								if($x['value'] == $searchLocation->defaultLocationFacet && $useLocation){
-									$sideFacets[$key][$k][$y]['removalUrl'] = $sideFacets[$key][$k][$y]['removalUrl']."&useLocation=0";
+									$sideFacets[$key][$k][$y]['removalUrl'] = isset($sideFacets[$key][$k][$y]['removalUrl']) ? $sideFacets[$key][$k][$y]['removalUrl'] . "&useLocation=0" : null;
 								}
 							}
 						}
@@ -295,7 +295,7 @@ class SideFacets implements RecommendationInterface
 		//unset($filterList['Available At']); // no need to display available at to side facet
 		//unset($sideFacets['available_at']); // we need the available_at count but we dont want to display the available at filter.
 
-		if (isset($_REQUEST['limit_avail']) && $_REQUEST['limit_avail'] == 1){
+		if (isset($_REQUEST['limit_avail']) && ($_REQUEST['limit_avail'] == 1 || $_REQUEST['limit_avail'] == 'on')){
 			unset($sideFacets['available_at']['list']['']);
 			unset($sideFacets['building']);
 		} else {
@@ -307,9 +307,13 @@ class SideFacets implements RecommendationInterface
 			$x = 0;
 			foreach($filterList['Available At'] as $key => $value){
 
-				if ($value['value'] == "['' TO *]"){
-					$filterList['Available At'][$x]['removalUrl'] = str_replace('limit_avail=1', 'limit_avail=0', $value['removalUrl']);
-				}
+				//if ($value['value'] == "['' TO *]"){
+
+					$removal_url = str_replace('limit_avail=1', 'limit_avail=0', $value['removalUrl']);
+					$removal_url = str_replace('limit_avail=1', 'limit_avail=0', $removal_url);
+
+					$filterList['Available At'][$x]['removalUrl'] = $removal_url;
+				//}
 
 				$x++;
 

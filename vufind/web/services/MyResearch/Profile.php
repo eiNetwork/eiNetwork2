@@ -27,6 +27,7 @@ class Profile extends MyResearch
 		global $configArray;
 		global $interface;
 		global $user;
+		global $profile;
 
 		if (isset($_POST['update'])) {
 			$result = $this->catalog->updatePatronInfo($user->cat_password);

@@ -410,7 +410,7 @@ class AJAX extends Action {
 		$eContentRecord->id = $elemId;
 		$eContentRecord->find(true);
 		$holdings = $driver->getHolding($elemId);
-		$overDriveId = $holdings[0]->links[0][overDriveId];
+		$overDriveId = $holdings[0]->links[0]['overDriveId'];
 		
 		if ($user && !PEAR::isError($user)){
 			require_once('Drivers/OverDriveDriver.php');

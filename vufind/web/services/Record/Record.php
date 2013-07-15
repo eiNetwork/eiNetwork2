@@ -675,17 +675,6 @@ class Record extends Action
 		include_once 'Drivers/Millennium.php';
 
 		$millennium = new MillenniumDriver();
-
-		//echo "<pre>";
-		//print_r($millennium->getStatus('.b26192007'));
-		//echo "</pre>";
-
-		//echo "<pre>";
-		//print_r($record['available_at']);
-		//echo "</pre>";
-
-
-
 		//Load Staff Details
 		$interface->assign('staffDetails', $this->recordDriver->getStaffView());
 	}
