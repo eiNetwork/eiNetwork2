@@ -24,12 +24,12 @@
 	{css filename="holdingsSummary.css"}
       {/if}
       {css filename="jqueryui.css"}
-      {css filename="styles.css"}
+      <link rel="stylesheet" href="/interface/themes/einetwork/css/styles.css?v2.1" type="text/css" media="screen" />
       {css filename="basicHtml.css"}
       {css filename="top-menu.css"}
       {css filename="ei_css/Record/record.css"}
       {css filename="/ei_css/search_result/search-results.css"}
-      {css filename="/ei_css/holdingsSummary.css"}
+      <link rel="stylesheet" href="/interface/themes/einetwork/css/ei_css/holdingsSummary.css?v2.1" type="text/css" media="screen" />
       {css filename="/ei_css/center-header.css"}
       {css filename="/ei_css/right-header.css"}
       {css filename="/ei_css/right-bar.css"}
@@ -67,9 +67,9 @@
       <script type="text/javascript" src="{$path}/js/jquery-1.7.1.min.js"></script>
       <script type="text/javascript" src="{$path}/js/jqueryui/jquery-ui-1.8.18.custom.min.js"></script>
       <script type="text/javascript" src="{$path}/js/jquery.plugins.js"></script>
-      <script type="text/javascript" src="{$path}/js/scripts.js"></script>
+      <script type="text/javascript" src="{$path}/js/scripts.js?v2.1"></script>
       <script type="text/javascript" src="{$path}/js/tablesorter/jquery.tablesorter.min.js"></script>
-      <script type="text/javascript" src="{$path}/js/ei_js/page.js"></script>
+      <script type="text/javascript" src="{$path}/js/ei_js/page.js?v2.1"></script>
       {if $enableBookCart}
       <script type="text/javascript" src="{$path}/js/bookcart/json2.js"></script>
       <script type="text/javascript" src="{$path}/js/bookcart/bookcart.js"></script>
@@ -77,10 +77,10 @@
       
       {* Code for description pop-up and other tooltips.*}
       <script type="text/javascript" src="{$path}/js/title-scroller.js"></script>
-      <script type="text/javascript" src="{$path}/services/Search/ajax.js"></script>
-      <script type="text/javascript" src="{$path}/services/Record/ajax.js"></script>
-      <script type="text/javascript" src="{$path}/js/ei_js/bookcart.js"></script>  
-      <script type="text/javascript" src="{$path}/js/overdrive.js"></script>
+      <script type="text/javascript" src="{$path}/services/Search/ajax.js?v2.1"></script>
+      <script type="text/javascript" src="{$path}/services/Record/ajax.js?v2.1"></script>
+      <script type="text/javascript" src="{$path}/js/ei_js/bookcart.js?v2.1"></script>  
+      <script type="text/javascript" src="{$path}/js/overdrive.js?v2.1"></script>
     {/if}
     
     {* Files that should not be combined *}

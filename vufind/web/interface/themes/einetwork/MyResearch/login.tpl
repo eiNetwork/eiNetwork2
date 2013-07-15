@@ -101,17 +101,19 @@
 			<p style="font-size:55%">We are receiving reports about some users not receiving email notices for upcoming due dates, hold pickups, or overdue items.         You may wish to check My Account or contact your local library for this information.   Please contact your email provider if you believe you are not receiving these notices.</p>
 		</div>
 		<div class="login">
-			<form id="loginForm" action="{$path}/MyResearch/Home" method="post">
+			<form id="loginForm" action="{$path}/MyResearch/Home" method="post" autocomplete="on">
 				<div><b>I have a Library Card</b></div>
 				{if $message}
 					<div class="error">Sorry, the account information you entered does not match our records. Please check and try again.</div>
 				{/if}
 				<div id="email">
-					<input id="card" class="text" type="text" name="username" title="Library Card Number"  value="{$username|escape}" placeholder="Library Card Number" maxlength="14"/>
+					Library Card Number:
+					<input id="card" class="text" type="text" name="username" value="{$username|escape}" maxlength="14"/>
 					<div id="cardError">&nbsp;</div>
 				</div>
 				<div id="password">
-					<input id="pin" class="text" type="text" name="password" title="4 digit PIN number" placeholder="4 digit PIN number" maxlength="8"/>
+					4 digit PIN number:
+					<input id="pin" class="text" type="password" name="password" number" maxlength="8"/>
 					<div id="pinError">&nbsp;</div>
 					<div><a href="/MyResearch/PinReset"> I forgot or don't have my PIN <br> I need to get a PIN for the first time.</a></div>
 				</div>

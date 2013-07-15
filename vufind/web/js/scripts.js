@@ -49,11 +49,22 @@ $(document).ready(function(){
 	url = document.location.href;
 	url_parts = getUrlVars();
 
-	if (url_parts.limit_avail == 1){
+	if (url_parts.limit_avail == 1 || url_parts.limit_avail == 'on'){
 		$("#limitToAvail").prop('checked', true);
 	} else {
 		$("#limitToAvail").prop('checked', false);
 	}
+
+	// check to see if retain filters unchecked then limit to avail should be unchecked
+	$(".keepFilters").children(":input").click(function(){
+
+		var retain = $(this);
+
+		if (retain.prop('checked') == false){
+			$("#limitToAvail").prop('checked', false);
+		}
+
+	});
 
 	$("#limitToAvail").click(function(){
 
@@ -61,15 +72,18 @@ $(document).ready(function(){
 
 		if (avail.prop('checked') == false) {
 
-			if (typeof url_parts.limit_avail!='undefined'){
-				document.location.href = url.replace('limit_avail=1','limit_avail=0');
+			if (typeof url_parts.limit_avail != 'undefined'){
+				new_url = url.replace('limit_avail=1','limit_avail=0');
+				new_url = new_url.replace('limit_avail=on','limit_avail=0');
+				document.location.href = new_url
+
 			} else {
 				document.location.href = window.location.href + '&limit_avail=0';
 			}
 			
 		} else {
 			
-			if (typeof url_parts.limit_avail!='undefined'){
+			if (typeof url_parts.limit_avail != 'undefined'){
 				document.location.href = url.replace('limit_avail=0','limit_avail=1');
 			} else {
 				document.location.href = window.location.href + '&limit_avail=1';

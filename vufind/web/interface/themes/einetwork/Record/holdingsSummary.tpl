@@ -3,7 +3,7 @@
 		{if $holdingsSummary.callnumber}
 			<div class='callNumber'>
 				<span><img class="format_img" src="/interface/themes/einetwork/images/Art/AvailabilityIcons/Available.png"/ alt="Available"></span>
-				<a style="cursor:pointer" onclick="findInLibrary('{$holdingsSummary.recordId|escape:"url"}',false,'150px','570px','auto')">It's here {$holdingsSummary.callnumber}</a>
+				<a style="cursor:pointer" onclick="findInLibrary('{$holdingsSummary.recordId|escape:"url"}',false,'150px','570px','auto')">It's Here {$holdingsSummary.callnumber}</a>
 			</div>
 		{elseif $holdingsSummary.isDownloadable}
 			<div><span><img class="format_img" src="/interface/themes/einetwork/images/Art/AvailabilityIcons/Available.png"/ alt="Available"></span>
@@ -12,7 +12,7 @@
 	{elseif $holdingsSummary.inLibraryUseOnly}
 		<div>
 			<span><img class="format_img" src="/interface/themes/einetwork/images/Art/AvailabilityIcons/Noncirculating.png"/ alt="Noncirculating"></span>
-			<span style="cursor:pointer" onclick="findInLibrary('{$holdingsSummary.recordId|escape:"url"}',false,'150px','570px','auto')">Available for in library use only</span>
+			<span style="cursor:pointer" onclick="findInLibrary('{$holdingsSummary.recordId|escape:"url"}',false,'150px','570px','auto')">Available for in Library use Only</span>
 		</div>
 		<script>
 			var n = "{$holdingsSummary.recordId}".replace(/\./g, "");
@@ -33,7 +33,7 @@
 	{elseif $holdingsSummary.class == 'nearby'}
 		<div>
 			<span><img class="format_img" src="/interface/themes/einetwork/images/Art/AvailabilityIcons/Available.png"/ alt="Available"></span>
-			<span style="cursor:pointer" onclick="findInLibrary('{$holdingsSummary.recordId|escape:"url"}',false,'150px','570px','auto')">Available at your preferred libraries</span>
+			<span style="cursor:pointer" onclick="findInLibrary('{$holdingsSummary.recordId|escape:"url"}',false,'150px','570px','auto')">Available at your preferred Libraries</span>
 		</div>
 	{elseif $holdingsSummary.status == "On Order"}
 		<div>
@@ -44,22 +44,22 @@
 	{elseif $holdingsSummary.class == 'available'}
 		<div>
 			<span><img class="format_img" src="/interface/themes/einetwork/images/Art/AvailabilityIcons/Available.png"/ alt="Available"></span>
-			<span style="cursor:pointer" onclick="findInLibrary('{$holdingsSummary.recordId|escape:"url"}',false,'150px','570px','auto')">Available at other libraries</span>
+			<span style="cursor:pointer" onclick="findInLibrary('{$holdingsSummary.recordId|escape:"url"}',false,'150px','570px','auto')">Available at other Libraries</span>
 		</div>
 	{elseif $holdingsSummary.class == 'unavailable'}
 		<div>
 			<span><img class="format_img" src="/interface/themes/einetwork/images/Art/AvailabilityIcons/CheckedOut.png"/ alt="CheckedOut"></span>
-			No copies available
+			<span>No copies Available</span>
 		</div>
 	{elseif $holdingsSummary.class == 'reserve' or $holdingsSummary.numCopies == 0}
 		<div>
 			<span><img class="format_img" src="/interface/themes/einetwork/images/Art/AvailabilityIcons/CheckedOut.png"/ alt="CheckedOut"></span>
-			<span style="cursor:pointer" onclick="findInLibrary('{$holdingsSummary.recordId|escape:"url"}',false,'150px','570px','auto')">All copies checked out</span>
+			<span style="cursor:pointer" onclick="findInLibrary('{$holdingsSummary.recordId|escape:"url"}',false,'150px','570px','auto')">Checked Out</span>
 		</div>
 	{else $holdingsSummary.class == 'checkedOut'}
 		<div>
 			<span><img class="format_img" src="/interface/themes/einetwork/images/Art/AvailabilityIcons/CheckedOut.png"/ alt="CheckedOut"></span>
-			<span style="cursor:pointer" onclick="findInLibrary('{$holdingsSummary.recordId|escape:"url"}',false,'150px','570px','auto')">All copies checked out</span>
+			<span style="cursor:pointer" onclick="findInLibrary('{$holdingsSummary.recordId|escape:"url"}',false,'150px','570px','auto')">Checked Out</span>
 		</div>
 	{/if}
 	<div class="holdableCopiesSummary">
