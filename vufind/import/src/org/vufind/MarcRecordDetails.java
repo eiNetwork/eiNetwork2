@@ -3221,7 +3221,7 @@ public class MarcRecordDetails {
 						try {
 							ArrayList<LibrarySpecificLink> urls = this.getSourceUrls();
 							if (urls.size() == 0){
-								//logger.debug("Marking record as not eContent because we did not find any source urls for the external content");
+								logger.debug("Marking record as not eContent because we did not find any source urls for the external content");
 								isEContent = false;
 								isMatch = false;
 							}
