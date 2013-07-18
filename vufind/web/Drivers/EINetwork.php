@@ -535,10 +535,12 @@ class EINetwork extends MillenniumDriver{
 	 *  Rename this when that work is ready to begin
 	 *  also remember to check the mobile site andmake sure it works
 	 */
-	function _getMyFines(){
+	function getMyFines(){
 		global $user;
+		//global $logger;
 		
 		$r = $this->iiiWebServiceRequest("searchPatrons", "b".$user->cat_username);	
+		$logger->log("fine request results".print_r($r,true), PEAR_LOG_DEBUG);
 		return $r->patronFines;
 	}
 	private function iiiWebServiceRequest($method, $patron){	
