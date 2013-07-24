@@ -93,6 +93,10 @@ $(document).ready(function(){
 
 	});
 
+	$('.results-action-btns a').click(function(e){
+		e.preventDefault();
+	})
+
 });
 
 function getUrlVars(){

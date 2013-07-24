@@ -196,6 +196,7 @@ $timer->logTime('Updated config for active location');
 
 // Start Interface
 $interface = new UInterface();
+$interface->force_compile = true;
 $timer->logTime('Create interface');
 if (isset($configArray['Site']['theme_css'])){
 	$interface->assign('theme_css', $configArray['Site']['theme_css']);

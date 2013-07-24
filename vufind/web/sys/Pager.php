@@ -56,14 +56,13 @@ class VuFindPager
             'append'          => false,
             'clearIfVoid'     => true,
             'urlVar'          => 'page',
-            'curPageSpanPre'  => '<span>',
-            'curPageSpanPost' => '</span>');
+            'curPageSpanPre'  => '<li class="active"><a>',
+            'curPageSpanPost' => '</a></li>');
 
 		// Override defaults with user-provided values:
 		foreach($options as $optionName => $optionValue) {
 			$finalOptions[$optionName] = $optionValue;
 		}
-
 		// Create the pager object:
 		$this->pager =& Pager::factory($finalOptions);
 	}
