@@ -237,6 +237,8 @@ class OverDriveDriver {
 				$hold['author'] = $holdInfo[$grpCtr++];
 
 				$holdDetails = $holdInfo[$grpCtr++];
+				
+				//$logger->log("parseoverdriveholds hold ".print_r($hold,true), PEAR_LOG_INFO);
 
 				if (preg_match('/<h6 class="holds-wait-position" id="(.*?)">(.*?)<\/h6>.*?<h6 class="holds-wait-email" title="(.*?)">(.*?)<\/h6>/si', $holdDetails, $holdDetailInfo)) {
 					
@@ -249,11 +251,15 @@ class OverDriveDriver {
 					}
 					$hold['notifyEmail'] = $holdDetailInfo[3];
 					$holds['unavailable'][] = $hold;
-				}elseif (preg_match('/<div id="borrowingPeriodHold"><div>(.*?)<\/div>.*?new Date \("(.*?)"\)/si', $holdDetails, $holdDetailInfo)){
-					///print_r($holdDetails);
-					$hold['emailSent'] = $holdDetailInfo[2];
+					//$logger->log("parseoverdriveholds unavailable hold ".print_r($hold,true), PEAR_LOG_INFO);
+				}elseif (strpos($holdDetails,"This title can be borrowed for") > 0) {
+					$holdDetailInfoStart = strpos($holdDetails,"This title can be borrowed for");
+					$notifyDateStart = strpos($holdDetails,"new Date (",$holdDetailInfoStart) + 11;
+					$notifyDateEnd = strpos($holdDetails,");",$notifyDateStart);
+					$hold['emailSent'] = substr($holdDetails,$notifyDateStart,$notifyDateEnd-$notifyDateStart-1);
 					$hold['notificationDate'] = strtotime($hold['emailSent']);
 					$hold['expirationDate'] = $hold['notificationDate'] + 3 * 24 * 60 * 60;
+					//$logger->log("parseoverdriveholds available hold ".print_r($hold,true), PEAR_LOG_INFO);
 					$holds['available'][] = $hold;
 				}
 			}
@@ -633,7 +639,7 @@ class OverDriveDriver {
 				$waitingListPageInfo = curl_getinfo($overDriveInfo['ch']);
 				if (preg_match('/already on/', $waitingListPage)){
 					$holdResult['result'] = false;
-					$holdResult['message'] = "We're sorry, but you are already on the waiting list for the selected title or have it checked out.";
+					$holdResult['message'] = "You are already on the waiting list for the selected title or have it checked out.";
 				}else{
 
 					//Fill out the email address to use for notification
@@ -655,9 +661,16 @@ class OverDriveDriver {
 					//$logger->log("overdrive waiting list confirm {$waitingListConfirm}"  , PEAR_LOG_INFO);
 
 					$waitingListConfirm = strip_tags($waitingListConfirm, "'<p><a><li><ul><div><em><b>'");
-					if (preg_match('/<section id="mainContent" class=".*?">(.*?)<\/section>/is', $waitingListConfirm, $matches)){
-						$logger->log("Found main content section", PEAR_LOG_INFO);
-						$mainSection = $matches[1];
+					
+					if (strpos($waitingListConfirm,"You will receive an email from donotreply@overdrive.com when the title becomes available") > 0){
+						$holdResult['result'] = true;
+						$holdResult['message'] = 'Your hold was placed successfully.';
+						$memcache->delete('overdrive_summary_' . $user->id);
+						
+					}elseif (strpos($waitingListConfirm, "Carnegie Library of Pittsburgh/Allegheny County Library Association Digital Media Catalog - Error page") > 0){
+						//$logger->log("Found main content section", PEAR_LOG_INFO);
+						$mainSectionStart = strpos($waitingListConfirm,'<div id="contentContainer"');
+						$mainSection = substr($waitingListConfirm,$mainSectionStart);
 						
 						if (preg_match('/already on/si', $mainSection)){
 							$holdResult['result'] = false;
@@ -668,9 +681,9 @@ class OverDriveDriver {
 						}elseif (preg_match('/did not complete all of the required fields/', $mainSection)){
 							$holdResult['result'] = false;
 							$holdResult['message'] = 'You must provide an e-mail address to request titles from OverDrive.  Please add an e-mail address to your profile.';
-						}elseif (preg_match('/reached the request \(hold\) limit of \d+ titles./', $mainSection)){
+						}elseif (preg_match('/reached the Holds limit of \d+ titles./', $mainSection)){
 							$holdResult['result'] = false;
-							$holdResult['message'] = 'You have reached the maximum number of holds for your account.';
+							$holdResult['message'] = 'You have reached the maximum number of holds for your OverDrive account.';
 						}elseif (preg_match('/Some of our digital titles are only available for a limited time\. This title may be available in the future\. Be sure to check back/', $waitingListConfirm)){
 							$holdResult['result'] = false;
 							$holdResult['message'] = 'This title is no longer available.  Some of our digital titles are only available for a limited time. This title may be available in the future. Be sure to check back.';
@@ -681,26 +694,21 @@ class OverDriveDriver {
 							$holdResult['result'] = false;
 							$holdResult['message'] = 'There was an error placing your hold.';
 							global $logger;
-							$logger->log("Placing hold on OverDrive item. OverDriveId ". $overDriveId, PEAR_LOG_INFO);
-							$logger->log('URL: '.$secureBaseUrl . "BANGAuthenticate.dll?Action=LibraryWaitingList $post_string\r\n" . $mainSection ,PEAR_LOG_INFO);
+							$logger->log("Error placing hold, OverDrive error page response ".$mainSection, PEAR_LOG_INFO);
+							//$logger->log("Placing hold on OverDrive item. OverDriveId ". $overDriveId, PEAR_LOG_INFO);
+							//$logger->log('URL: '.$secureBaseUrl . "BANGAuthenticate.dll?Action=LibraryWaitingList $post_string\r\n" . $mainSection ,PEAR_LOG_INFO);
 						}
-					}elseif (preg_match('/You will receive an email from donotreply@overdrive.com when the title becomes available./', $waitingListConfirm)){
-						$holdResult['result'] = true;
-						$holdResult['message'] = 'Your hold was placed successfully.';
-
-						$memcache->delete('overdrive_summary_' . $user->id);
 						
 					}elseif (preg_match("/You did not complete all of the required fields on the 'Holds' page/", $waitingListConfirm)){
 						$holdResult['result'] = false;
 						$holdResult['message'] = 'Please enter a valid email address on your profile.';
-	
 					}else{
 						$holdResult['result'] = false;
 						$holdResult['message'] = 'There was an error placing your hold.';
 						global $logger;
 						$logger->log("Placing hold on OverDrive item. OverDriveId ". $overDriveId, PEAR_LOG_INFO);
-						$logger->log('URL: '.$secureBaseUrl . "BANGAuthenticate.dll?Action=LibraryWaitingList $post_string\r\n" . $waitingListConfirm ,PEAR_LOG_INFO);
-						//$logger->log("overdrive hold result ".$waitingListConfirm." end overdrive hold result", PEAR_LOG_INFO);
+						//$logger->log('URL: '.$secureBaseUrl . "BANGAuthenticate.dll?Action=LibraryWaitingList $post_string\r\n" . $waitingListConfirm ,PEAR_LOG_INFO);
+						//$logger->log("Error placing overdrive hold waitingListConfirm result ".$waitingListConfirm." end overdrive hold result", PEAR_LOG_INFO);
 					}
 				}
 			}
