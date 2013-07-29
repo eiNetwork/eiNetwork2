@@ -19,7 +19,7 @@ $(document).ready(function() {literal} { {/literal}
 		{foreach from=$recordSet item=record name="recordLoop"}
 		  {*<div class="result {if ($smarty.foreach.recordLoop.iteration % 2) == 0}alt{/if} record{$smarty.foreach.recordLoop.iteration}">*}
 		    {* This is raw HTML -- do not escape it: *}
-		  <div <div class="result record{$smarty.foreach.recordLoop.iteration}">
+		  <div class="result record{$smarty.foreach.recordLoop.iteration}">
 		    {$record}
 		  </div>
 		{/foreach}

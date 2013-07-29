@@ -2726,3 +2726,20 @@ ol.decimal li {
 ol.alpha li {
 	list-style-type: lower-alpha;
 }
+
+.preferred-message-container {
+	width: 100%;
+}
+
+.preferred-message {
+	width:60%;
+	margin:0 auto;
+}
+
+.preferred-message p {
+	display: inline-block;
+	margin:10px 4px 10px 10px;
+	color:#f00;
+	font-size:11pt;
+	text-align: center;
+}

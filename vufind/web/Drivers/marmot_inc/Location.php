@@ -226,7 +226,6 @@ class Location extends DB_DataObject
 		}
 		$homeLibrary = $librarySingleton->getLibraryForLocation($patronProfile['homeLocationId']);
 
-
 		if (isset($homeLibrary) && $homeLibrary->inSystemPickupsOnly == 1){
 			if (strlen($homeLibrary->validPickupSystems) > 0){
 				$pickupIds = array();
@@ -263,6 +262,8 @@ class Location extends DB_DataObject
 		//Load the locations and sort them based on the user profile information as well as their physical location.
 		$physicalLocation = $this->getPhysicalLocation();
 		$locationList = array();
+		$preferred_count = 0;
+		$home_library = 0;
 		while ($this->fetch()) {
 			if ($this->locationId == $selectedBranchId){
 				$selected = 'selected';
@@ -279,20 +280,25 @@ class Location extends DB_DataObject
 				//$locationList['1' . $this->displayName] = clone $this;
 				if (isset($patronProfile['myLocation1Id']) && $this->locationId == $patronProfile['myLocation1Id']){
 					//Next come nearby locations for the user	
-				$locationList['1' . $this->displayName] = clone $this; 	
+				$locationList['locations']['1' . $this->displayName] = clone $this;
+				$preferred_count++;
 				} elseif (isset($patronProfile['myLocation2Id']) && $this->locationId == $patronProfile['myLocation2Id']){
 				//Next come nearby locations for the user
-				$locationList['2' . $this->displayName] = clone $this;
+				$locationList['locations']['2' . $this->displayName] = clone $this;
+				$preferred_count++;
 				} elseif (isset($homeLibrary) && $this->libraryId == $homeLibrary->libraryId){
 					//Other locations that are within the same library system
-					$locationList['3' . $this->displayName] = clone $this;
+					$locationList['locations']['3' . $this->displayName] = clone $this;
+					$home_library = 1;
 				} else {
 					//Finally, all other locations are shown sorted alphabetically.
-					$locationList['4' . $this->displayName] = clone $this;
+					$locationList['locations']['4' . $this->displayName] = clone $this;
 				}
 			}
 		}
-		ksort($locationList);
+		ksort($locationList['locations']);
+		$locationList['preferred_count'] = $preferred_count;
+		$locationList['home_library'] = $home_library; // boolean
 		return $locationList;
 	}
 	/**
