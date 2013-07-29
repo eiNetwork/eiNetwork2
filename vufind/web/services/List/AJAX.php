@@ -994,7 +994,6 @@ class AJAX extends Action {
 			}
 			$bookCart = User_list::staticGet($bookCartId);
 			$bookCartItems = $bookCart->getResources(isset($_GET['tag']) ? $_GET['tag'] : null);
-			$return;
 			$return['count'] = count($bookCartItems);
 			echo json_encode($return);
 		}else{
