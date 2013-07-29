@@ -194,18 +194,23 @@ function getAccountSetting(){
 	return false;
 }
 
-
 function requestItem(id,listId){
-        document.body.style.cursor = 'wait';
-        var tags = "";
-        var notes = '';
+
+	var tags = "";
+	var notes = '';
 	var url = path + "/List/AJAX";
-	var params ="method=processRequestItem&" +
-                        "campus=" + $("#campus").val() + "&" +
-			"selected["+id+"]=on"  + "&" +
-			"holdType=" + "hold";
-        newAJAXLightbox(id,'VuFind',listId,url,'post',params,'json');
+	var params ="method=processRequestItem&" + "campus=" + $("#campus").val() + "&" + "selected["+id+"]=on"  + "&" +"holdType=" + "hold";
+	
+	if ($("#campus").val() == ''){
+		alert('Please select a pickup location.');
+		return false;
+	} else {
+		document.body.style.cursor = 'wait';
+		newAJAXLightbox(id,'VuFind', listId,url, 'post',params, 'json');
+	}
+
 }
+
 function newAJAXLightbox(id, source,listId,urlToLoad, connect_type,dataToLoad,dataTypeToLoad, parentId, left, width, top, height){
 	
 	var loadMsg = $('#lightboxLoading').html();
@@ -274,7 +279,7 @@ function newAJAXLightbox(id, source,listId,urlToLoad, connect_type,dataToLoad,da
         }   );
 }
 
-function deleteItemInList(itemId,source){
+function deleteItemInList(itemId,source,reload){
     document.body.style.cursor = 'wait';
     var data ='method=deleteItemInList&selected['+itemId+']=on&source='+source;
     if($("#listId").val()!=null&&$("#listId").val()!=''){
@@ -293,7 +298,7 @@ function deleteItemInList(itemId,source){
 			    });
                         document.body.style.cursor = 'default';
                         getBookCartItemCount();
-			location.reload();
+                if (reload == 'reload') location.reload();
 		},
 		error: function() {
 			$('#popupbox').html(failMsg);
@@ -519,24 +524,35 @@ function renewItem(url){
 
 function requestAllItems(listId){
 
-	document.body.style.cursor = 'wait';
-        var tags = "";
-        var notes = '';
+	var tags = "";
+	var notes = '';
 	var send = "";
-        send = "method=processRequestItem&holdType=hold&campus="+$("#campus").val();
-        $.each($(".resultsList"),function (){
-    	var pid = this.getAttribute("id");
-	id = pid.replace("record",".");
-	var temp = pid.replace("record","");	
-	if(!$("#request-now"+temp).hasClass("it-is-here")){
-	    send = send+"&selected["+id+"]=on";
-	    //requestItem(id,listId);
-	  }
-         })
 	
-	var url = path + "/List/AJAX";
+   	if ($("#campus").val() == ''){
+		alert('Please select a pickup location.');
+		return false;
+	} else {
+		
+		document.body.style.cursor = 'wait';
+		send = "method=processRequestItem&holdType=hold&campus="+$("#campus").val();
+	
+		$.each($(".resultsList"),function(){
 
-        newAJAXLightbox(0,'VuFind',listId,url,'post',send,'json',false, '440px', false,'450px','500px');
+			var pid = this.getAttribute("id");
+			id = pid.replace("record",".");
+
+			var temp = pid.replace("record","");
+
+			if(!$("#request-now"+temp).hasClass("it-is-here")){
+				send = send+"&selected["+id+"]=on";
+			}
+			
+		})
+
+		var url = path + "/List/AJAX";
+
+		newAJAXLightbox(0,'VuFind',listId,url,'post',send,'json',false, '440px', false,'450px','500px');
+	}     
 
 }
 

@@ -245,9 +245,10 @@ class AJAX extends Action {
 			$locationList[$locationSingleton->locationId] = $locationSingleton->displayName;
 		}*/
 		$location = new Location();
+		$patronResult = isset($patronResult) ? $patronResult : null;
 		$pickupBranches = $location->getPickupBranchesPreferLocationFirst($patronResult, null);
 		$locationList = array();
-		foreach ($pickupBranches as $curLocation) {
+		foreach ($pickupBranches['locations'] as $curLocation) {
 			$locationList[$curLocation->locationId] = $curLocation->displayName;
 		}
 		asort($locationList);
@@ -305,7 +306,7 @@ class AJAX extends Action {
 			$location = new Location();
 			$locationList = $location->getPickupBranchesPreferLocationFirst($patronProfile, $patronProfile['homeLocationId']);
 
-			foreach ($locationList as $location){
+			foreach ($locationList['locations'] as $location){
 				$output .= "<Location id='{$location->code}' selected='{$location->selected}'>$location->displayName</Location>";
 			}
 

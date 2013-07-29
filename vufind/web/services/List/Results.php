@@ -709,7 +709,14 @@ class Results extends Action {
 				global $locationSingleton;
 				//Get the list of pickup branch locations for display in the user interface.
 				$locations = $locationSingleton->getPickupBranchesPreferLocationFirst($profile, $profile['homeLocationId']);
-				$interface->assign('pickupLocations', $locations);
+				$interface->assign('home_library', $locations['home_library']);
+				
+				if ($locations['preferred_count'] < 1 && $_REQUEST['goToListID'] == 'BookCart'){
+					$interface->assign('preferred_message', "You don't have a default pickup location selected.<br />Please select your default pickup locations using the 'Your Preferred Libraries' panel on the right.");
+				}
+
+				$interface->assign('preferred_count', $locations['preferred_count']);
+				$interface->assign('pickupLocations', $locations['locations']);
 				//set focus to the submit button if the user is logged in since the campus will be correct most of the time.
 				$interface->assign('focusElementId', 'submit');
 			}else{
