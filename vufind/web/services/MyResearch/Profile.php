@@ -83,7 +83,7 @@ class Profile extends MyResearch
 		//$pickupBranches = $location->getPickupBranchesPreferLocationFirst($patronResult, null);
 		$pickupBranches = $location->getPickupBranchesPreferLocationFirst($profile, null);
 		$locationList = array();
-		foreach ($pickupBranches as $curLocation) {
+		foreach ($pickupBranches['locations'] as $curLocation) {
 			$locationList[$curLocation->locationId] = $curLocation->displayName;
 		}
 		// sort alphabetically

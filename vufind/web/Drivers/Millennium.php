@@ -1230,7 +1230,7 @@ class MillenniumDriver implements DriverInterface
 		$location->whereAdd("code = '$homeBranchCode'");
 		$location->find(1);
 		if ($user) {
-			if ($user->homeLocationId == 0) {
+			//if ($user->homeLocationId == 0) {
 				$user->homeLocationId = $location->locationId;
 				//commented this out because it was preventing users with no home library set to set their
 				//preferred libraries
@@ -1250,7 +1250,7 @@ class MillenniumDriver implements DriverInterface
 					//Update the serialized instance stored in the session
 					$_SESSION['userinfo'] = serialize($user);
 				}
-			}
+			//}
 
 			//Get displayname for prefered location 1
 			$myLocation1 = new Location();

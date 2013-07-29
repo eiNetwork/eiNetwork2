@@ -1,3 +1,21 @@
+{literal}
+<script type="text/javascript">
+
+	$(document).ready(function() {
+
+		$('#placeHoldForm').submit(function(){
+
+			if ($('#campus').val() == ''){
+				alert('Please select a pickup location.');
+				return false;
+			}
+
+		})
+
+	});
+
+</script>
+{/literal}
 <script type="text/javascript" src="{$path}/services/EcontentRecord/ajax.js"></script>
 {* Main Listing *}
 {if (isset($title)) }
@@ -40,6 +58,14 @@
 		
 	</div>
 	{/if}
+
+	{if $preferred_message != ''}
+		<div class="resulthead preferred-message-container" style="margin-bottom: 25px;">
+			<div class="preferred-message">
+				<p>{$preferred_message}</p>
+			</div>
+		</div>
+	{/if}
 	
 	{if $pageType eq 'BookCart'}
 	<form name='placeHoldForm' id='placeHoldForm' action="{$url}/MyResearch/HoldMultiple" method="post">
@@ -70,8 +96,12 @@
 			<div style="margin-top:15px;padding-left:5px;text-align: left;margin-bottom:15px"> <span style="margin-right:15px;font-size:15px">{translate text="Pickup Location"}: </span>
 			 <span class='loginField'>
 			 <select name="campus" id="campus" style="width:260px">
+			   {if $preferred_count < 1}
+										<option value=""></option>
+										{/if}
 			   {if count($pickupLocations) > 0}
 			     {foreach from=$pickupLocations item=location}
+			       
 			       <option value="{$location->code}" {if $location->selected == "selected"}selected="selected"{/if}>{$location->displayName}</option>
 			     {/foreach}
 			   {else} 
