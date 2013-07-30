@@ -2,6 +2,34 @@
     <div id="left-bar">&nbsp;</div>
     <div id="main-content">
         <h1>Latest Website Updates</h1>
+        <br>
+        <h3>We’re listening to you.   The ongoing changes and planned enhancements are driven by the comments and feedback you submit when completing the new catalog survey.  We want to continue to hear from you and we appreciate your feedback.</h3>
+        <br>
+        <div class="releases">
+            <h2><b>Upcoming Release version 3.0</b></h2>
+            Scheduled release date 9/9/2013
+            <ol class="decimal">
+                <li>Improve search results for title searches when using a search phrase that exactly matches the title.</li>
+                <li>Automatically include alternate forms of the title as part of the search criteria when performing a title search.</li>
+                <li>Enable users to place title requests from the search results page.</li>
+                <li>Enable users to select and save their preference for a full or brief display of information when viewing checked out items, requests, wishlists, and  the bookcart  while  logged into My Account.</li>
+                <li>Make it more apparent to users when logged into My Account that they have outstanding fines.</li>
+            </ol>
+        </div>
+        <div class="releases">
+            <h2><span class="bold">Previous Releases</span></h2>
+            <h2>Release version 2.2</h2>
+            Release date 7/29/2013
+            <ol class="decimal">
+                <li>Improve messaging and functionality when placing requests by users without preferred library locations.</li>
+                <li>Misc. bug fixes:
+                    <ol class="alpha">
+                        <li>Overdrive request that became available does not appear in Requested Items.</li>
+                    </ol>
+                </li>
+            </ol>
+        </div>
+        
         <div class="releases">
             <h2>Release version 2.1</h2>
             Release date 7/15/2013
@@ -20,7 +48,6 @@
         </div>
 
         <div class="releases">
-            <h2><span class="bold">Previous Releases</span></h2>
             <h2>Release version 2.0</h2>
             Release date 7/2/2013
             <ol class="decimal">
