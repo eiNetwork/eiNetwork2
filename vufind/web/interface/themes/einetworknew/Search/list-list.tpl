@@ -17,13 +17,9 @@ $(document).ready(function() {literal} { {/literal}
 		</div>
 		*}
 		{foreach from=$recordSet item=record name="recordLoop"}
-		  {*<div class="result {if ($smarty.foreach.recordLoop.iteration % 2) == 0}alt{/if} record{$smarty.foreach.recordLoop.iteration}">*}
-		    {* This is raw HTML -- do not escape it: *}
-		  <div <div class="result record{$smarty.foreach.recordLoop.iteration}">
 		    {$record}
-		  </div>
 		{/foreach}
-		<input type="hidden" name="type" value="hold" />		
+		<input type="hidden" name="type" value="hold" />	
 		
 		{if !$enableBookCart}
 		<input type="submit" name="placeHolds" value="Request Selected Items" class="requestSelectedItems"/>

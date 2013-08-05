@@ -25,10 +25,15 @@ function redrawSaveStatus() {literal}{{/literal}
 		getSaveStatus('{$id|escape:"javascript"}', 'saveLink');
 {literal}}{/literal}
 </script>
-<div id="page-content" class="content">
-	{if $error}<p class="error">{$error}</p>{/if} 
-	{include file="ei_tpl/Record/left-bar-record.tpl"}
-	<div id="main-content" class="full-result-content">
+
+{if $error}<p class="error">{$error}</p>{/if} 
+
+<div class="row">
+	<div class="col-lg-3">
+		{include file="ei_tpl/Record/left-bar-record.tpl"}
+	</div>
+	<div class="col-lg-6">
+		<div id="main-content" class="full-result-content">
             <div id="inner-main-content">	
 			<div id="record_record">
 			<div id="record_record_up">
@@ -709,11 +714,11 @@ function redrawSaveStatus() {literal}{{/literal}
 		{/literal}
             </div>
 	</div>
-	<div id="right-bar">
-            {include file="ei_tpl/right-bar.tpl"}
-        </div>
-	</div>	
-
+	</div>
+	<div class="col-lg-3">
+		{include file="ei_tpl/right-bar.tpl"}
+	</div>
+</div>
 
 <!--{if $showStrands}
 {* Strands Tracking *}{literal}

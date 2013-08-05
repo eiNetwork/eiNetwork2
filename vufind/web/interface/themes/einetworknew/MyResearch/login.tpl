@@ -1,4 +1,3 @@
-<div id="loginHome">
 {literal}
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -95,44 +94,48 @@
 	});
 </script>
 {/literal}
-	<div class="loginHome-left"></div>
-	<div class="loginHome-center">
-		<div class="loginMessage">
-			<p style="font-size:55%">We are receiving reports about some users not receiving email notices for upcoming due dates, hold pickups, or overdue items.         You may wish to check My Account or contact your local library for this information.   Please contact your email provider if you believe you are not receiving these notices.</p>
-		</div>
-		<div class="login">
-			<form id="loginForm" action="{$path}/MyResearch/Home" method="post" autocomplete="on">
-				<div><b>I have a Library Card</b></div>
-				{if $message}
-					<div class="error">Sorry, the account information you entered does not match our records. Please check and try again.</div>
-				{/if}
-				<div id="email">
-					Library Card Number:
-					<input id="card" class="text" type="text" name="username" value="{$username|escape}" maxlength="14"/>
-					<div id="cardError">&nbsp;</div>
-				</div>
-				<div id="password">
-					4 digit PIN number:
-					<input id="pin" class="text" type="password" name="password" number" maxlength="8"/>
-					<div id="pinError">&nbsp;</div>
-					<div><a href="/MyResearch/PinReset"> I forgot or don't have my PIN <br> I need to get a PIN for the first time.</a></div>
-				</div>
-				<div>
-					<input class="button" type="submit" name="submit" value="Login" alt='{translate text="Login"}' />
-				</div>
-			</form>
-		</div>
-		<div class="register">
-			<div><a href="{$path}/MyResearch/GetCard"><b>I need a Library Card</b></a></div>
-			<div id="description">
-				With a free catalog account, you can request items directly from the catalog, view your past searches and get personalized recommendations for items you might like.
-			</div>
-			<div>
-				<a href="{$path}/MyResearch/GetCard">
-					<input class="button" type="submit" name="submit" value="Register"/>
-				</a>
-			</div>
-		</div>
+
+<div class="row">
+	<div class="col-lg-3">
+
 	</div>
-	<div class="loginHome-right"></div>
+	<div class="col-lg-6">
+		<p class="notification">We are receiving reports about some users not receiving email notices for upcoming due dates, hold pickups, or overdue items. You may wish to check My Account or contact your local library for this information. Please contact your email provider if you believe you are not receiving these notices.</p>
+
+		<div class="row">
+			<div class="col-lg-6">
+				<h4>I have a Library Card</h4>
+				<form id="loginForm" action="/MyResearch/Home" method="post" autocomplete="on">
+					<div class="form-group">
+						<label for="username">Library Card Number</label>
+						<div>
+							<input id="card" type="text" class="form-control" id="inputEmail" placeholder="Email" name="username" value="{$username|escape}" maxlength="14" />
+						</div>
+						<div id="cardError">&nbsp;</div>
+					</div>
+					<div class="form-group">
+						<label for="password">4 digit PIN number</label>
+						<div>
+							<input id="pin" type="password" class="form-control" id="inputPassword" placeholder="Password" name="password">
+						</div>
+						<div id="pinError">&nbsp;</div>
+					</div>
+					<div class="form-group">
+						<div>
+							<input type="submit" name="submit" class="btn btn-default" value="Login" />
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="col-lg-6">
+				<h4><a href="http://librarycatalog.einetwork.net/MyResearch/GetCard">I need a Library Card</a></h4>
+				<p>With a free catalog account, you can request items directly from the catalog, view your past searches and get personalized recommendations for items you might like.</p>
+				<a href="http://librarycatalog.einetwork.net/MyResearch/GetCard" class="btn btn-info">Register</a>
+			</div>
+		</div>
+
+	</div>
+	<div class="col-lg-3">
+
+	</div>
 </div>
