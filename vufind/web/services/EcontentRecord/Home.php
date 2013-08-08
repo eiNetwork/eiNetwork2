@@ -137,7 +137,13 @@ class Home extends Action{
 					$this->issn = "";
 				}
 			}
+						
+			//echo "<pre>Econtent Record";
+			//echo print_r($eContentRecord);
+			//echo "</pre>";
+			
 			//echo "<pre>".print_r($this->fixSubjects($eContentRecord->getPropertyArray('subject')), 1)."</pre>";
+			$interface->assign('altTitle', $eContentRecord->getPropertyArray('title_alt'));			
 			$interface->assign('additionalAuthorsList', $eContentRecord->getPropertyArray('author2'));
 			$interface->assign('subjectList', $this->fixSubjects($eContentRecord->getPropertyArray('subject')));
 			$interface->assign('lccnList', $eContentRecord->getPropertyArray('lccn'));
