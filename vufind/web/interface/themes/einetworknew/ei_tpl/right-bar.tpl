@@ -63,13 +63,18 @@
 	    }
         </script>
     {/literal}
-    
-    <div class="prefer-branch" id="prefer-branch">
-        <div id="description">
-            Your Preferred Branches
-        </div>
-		<input id="edit-button" class="button" type="button" value="Edit" onclick="getToUpdatePreferredBranches()"/>
-    </div>
+
+    <div class="row">
+		<div class="col-lg-12">
+			<div class="panel">
+				<div class="prefer-branch" id="prefer-branch">
+			        <div id="description">
+			            Your Preferred Branches
+			        </div>
+			    </div>
+			</div>
+		</div>
+	</div>
 
     {literal}
     <script type="text/javascript">
@@ -143,7 +148,7 @@
 
     <div class="row">
 		<div class="col-lg-12">
-			<div class="list-group">
+			<div class="list-group side-nav">
 				<a class="list-group-item" href="{$url}/MyResearch/MyList/1">{$Title1}</a>
 				<a class="list-group-item" href="{$url}/MyResearch/MyList/2">{$Title2}</a>
 				<a class="list-group-item" href="{$url}/MyResearch/MyList/5924">{$Title3}</a>

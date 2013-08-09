@@ -55,6 +55,7 @@ body {
 }
 
 .footer {
+	margin:30px 0 0 0;
 	background-color: #333333;
 	color: #fff;
 }
@@ -94,7 +95,7 @@ body {
 /* left panel */
 
 .facets {
-	
+	background-color: #eeeecc;
 }
 
 .narrowGroupHidden {
@@ -158,6 +159,19 @@ body {
 	font-size:11px;
 }
 
+.book-results .due-date {
+	font-weight: bold;
+}
+
+.book-results .overdue-message {
+	margin:10px 0 0 0;
+	color: #f00;
+}
+
+.book-results .format-type {
+	margin:10px 0 0 0;
+}
+
 .active-filter-list {
 	margin:-15px 0 0 0;
 }
@@ -185,7 +199,7 @@ body {
 
 .accordion-heading {
 	position: relative;
-	height:60px;
+	height:50px;
 }
 
 .accordion-heading .btn-group-actions {
@@ -209,8 +223,17 @@ body {
 	margin:0px auto;
 }
 
+.cover-image-econtent img {
+	width: 53px;
+	height: 80px;
+}
+
 .book-results {
 	font-size: 12px;
+}
+
+.book-results ul {
+	padding:0;
 }
 
 .book-results span {
@@ -268,8 +291,8 @@ body {
 	background-repeat: no-repeat;
 }
 
-.show-all-button {
-	margin:20px 0 0 0;
+#show-all-button {
+	width:100px;
 }
 
 .book-results-buttons a {
@@ -284,4 +307,61 @@ body {
 
 p.notification {
 	color: #f00;
+}
+
+.accordion-group {
+	border: 0;
+}
+
+.list-header {
+	margin:20px 0 20px 0;
+}
+
+.list-header-second-line {
+	list-style: none;
+}
+
+.list-header-second-line li {
+	float: left;
+}
+
+.list-header-second-line .due-date {
+	display: none;
+	font-size:11px;
+}
+
+.list-header-second-line .overdue-message {
+	display: none;
+	font-size:11px;
+	color: #f00;
+}
+
+.renew-checkboxes {
+	text-align: right;
+}
+
+.renew-checkboxes label {
+	font-size:12px;
+	margin:5px 20px 0 0;
+}
+
+.btn-renew-all {
+	text-align: right;
+}
+
+.btn-renew-all button {
+	margin:0 0 0 0;
+}
+
+.side-nav .list-group-item {
+	border: 0;
+}
+
+.return-btn {
+	width:100px;
+}
+
+.renew-message {
+	margin-top:20px;
+	margin-bottom:20px;
 }

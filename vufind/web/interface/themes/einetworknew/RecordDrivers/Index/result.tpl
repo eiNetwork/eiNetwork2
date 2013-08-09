@@ -6,9 +6,9 @@
                     <div class="col-lg-1">
                         <a class="accordion-toggle accordion-toggle-collapse" data-toggle="collapse" data-parent="#accordion2" href="#collapse{if $summShortId}{$summShortId}{else}{$summId|escape}{/if}"><!-- --></a>
                     </div>
-                    <div class="col-lg-8 book-results-title">
+                    <div class="col-lg-9 book-results-title">
                         <ul>
-                            <li><a href="{$url}/Record/{$summId|escape:"url"}/Home?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}" class="title" title="{if !$summTitle|regex_replace:"/(\/|:)$/":""}{translate text='Title not available'}{else}{$summTitle|regex_replace:"/(\/|:)$/":""}{/if}">{if !$summTitle|regex_replace:"/(\/|:)$/":""}{translate text='Title not available'}{else}{$summTitle|regex_replace:"/(\/|:)$/":""|truncate:60:"..."|highlight:$lookfor}{/if}</a></li>
+                            <li><a href="{$url}/Record/{$summId|escape:"url"}/Home?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}" class="title" title="{if !$summTitle|regex_replace:"/(\/|:)$/":""}{translate text='Title not available'}{else}{$summTitle|regex_replace:"/(\/|:)$/":""}{/if}">{if !$summTitle|regex_replace:"/(\/|:)$/":""}{translate text='Title not available'}{else}{$summTitle|regex_replace:"/(\/|:)$/":""|truncate:50:"..."|highlight:$lookfor}{/if}</a></li>
                             <li class="book-results-author"><span>
                                 {if $summAuthor}
                                     {translate text=''}
@@ -33,7 +33,7 @@
                             </span></li>
                         </ul>
                     </div>
-                    <div class="col-lg-3">
+                    <div class="col-lg-2">
                         <div class="btn-group btn-group-actions">
                             <button type="button" class="btn btn-small btn-info dropdown-toggle" data-toggle="dropdown">
                                 Action <span class="caret"></span>
@@ -65,7 +65,7 @@
             <div id="collapse{if $summShortId}{$summShortId}{else}{$summId|escape}{/if}" class="accordion-body collapse in">
                 <div class="accordion-inner">
                     <div class="row">
-                        <div class="col-lg-2 cover-image">
+                        <div class="col-lg-4 cover-image">
                             {if $user->disableCoverArt != 1}  
                                 <div id='descriptionPlaceholder{if $summShortId}{$summShortId}{else}{$summId|escape}{/if}' style='display:none'></div>
                                 <a href="{$url}/Record/{$summId|escape:"url"}?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}" id="descriptionTrigger{if $summShortId}{$summShortId}{else}{$summId|escape}{/if}">
@@ -93,7 +93,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="col-lg-4 book-results-buttons">
+                        <div class="col-lg-2 book-results-buttons">
                             {if $pageType eq 'WishList'}
                                 <a href="" class="btn btn-small btn-info disable-link" onclick="window.location.href ='{$url}/Record/{$summId|escape:'url'}/Home?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}'">View Details</a>
                                 <a href="" class="btn btn-small btn-info disable-link" {if $enableBookCart}onclick="getSaveToBookCart('{$summId|escape:"url"}','VuFind');return false;"{/if}>Move To Cart</a>

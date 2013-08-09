@@ -69,14 +69,6 @@ class CheckedOut extends MyResearch{
 				}
 
 				if ($renewResult = $this->catalog->driver->renewItem($user->password, $data)){
-
-					/*
-					echo "<pre>";
-					print_r($renewResult);
-					echo "</pre>";
-
-					die();
-					*/
 					
 					foreach($renewResult['items'] as $key => $value){
 
@@ -216,6 +208,7 @@ class CheckedOut extends MyResearch{
 					
 					}
 					$interface->assign('transList', $result['transactions']);
+					
 				}
 			}
 		}
@@ -273,6 +266,7 @@ class CheckedOut extends MyResearch{
 
 		// Define sorting options
 		$sortOptions = array(
+				'dueDate' => 'Due Date',
 				'title' => 'Title',
 				'author' => 'Author',
 				'format' => 'Format',
@@ -379,6 +373,7 @@ class CheckedOut extends MyResearch{
 		/**BEGIN for Overdrive Checkout Items**/
 		$overDriveDriver = new OverDriveDriver();
 		$overDriveCheckedOutItems = $overDriveDriver->getOverDriveCheckedOutItems($user);
+
 		//Load the full record for each item in the wishlist
 		foreach ($overDriveCheckedOutItems['items'] as $key => $item){
 
@@ -394,22 +389,21 @@ class CheckedOut extends MyResearch{
 		}
 		
 		$sortOptions = array(
+				'dueDate' => 'Due Date',
 				'title'   => 'Title',
 				'author'  => 'Author',
 				'format'  => 'Format',
 				);
 		$interface->assign('sortOptions', $sortOptions);
 		
-		
-		
 		$interface->assign('overDriveCheckedOutItems', $overDriveCheckedOutItems['items']);
 		$interface->assign('ButtonBack',true);
 		$interface->assign('ButtonHome',true);
 		$interface->assign('MobileTitle','OverDrive Checked Out Items');
 		
-		/**END for Overdrive Checkout Items**/
+		// /**END for Overdrive Checkout Items**/
 		
-		$interface->assign('patron',$patron);
+		// $interface->assign('patron',$patron);
 		$interface->setTemplate('checkedout.tpl');
 		$interface->setPageTitle('My Holds');
 		$interface->display('layout.tpl');
@@ -510,7 +504,7 @@ class CheckedOut extends MyResearch{
 		// Rename sheet
 		$objPHPExcel->getActiveSheet()->setTitle('Checked Out');
 
-		// Redirect output to a client’s web browser (Excel5)
+		// Redirect output to a clientâ€™s web browser (Excel5)
 		header('Content-Type: application/vnd.ms-excel');
 		header('Content-Disposition: attachment;filename="CheckedOutItems.xls"');
 		header('Cache-Control: max-age=0');
