@@ -887,7 +887,7 @@ class AJAX extends Action {
 				global $locationSingleton;
 				//Get the list of pickup branch locations for display in the user interface.
 				$locations = $locationSingleton->getPickupBranchesPreferLocationFirst($profile, $profile['homeLocationId']);
-				$interface->assign('pickupLocations', $locations);
+				$interface->assign('pickupLocations', $locations['locations']);
 				//set focus to the submit button if the user is logged in since the campus will be correct most of the time.
 				$interface->assign('focusElementId', 'submit');
 			}else{
@@ -994,7 +994,6 @@ class AJAX extends Action {
 			}
 			$bookCart = User_list::staticGet($bookCartId);
 			$bookCartItems = $bookCart->getResources(isset($_GET['tag']) ? $_GET['tag'] : null);
-			$return;
 			$return['count'] = count($bookCartItems);
 			echo json_encode($return);
 		}else{

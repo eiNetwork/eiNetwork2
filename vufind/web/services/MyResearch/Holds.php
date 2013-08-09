@@ -190,7 +190,7 @@ class Holds extends MyResearch
 						$location = new Location();
 						$pickupBranches = $location->getPickupBranchesPreferLocationFirst($patronResult, null);
 						$locationList = array();
-						foreach ($pickupBranches as $curLocation) {
+						foreach ($pickupBranches['locations'] as $curLocation) {
 							$locationList[$curLocation->locationId] = $curLocation->displayName;
 						}
 						$interface->assign('pickupLocations', $locationList);
