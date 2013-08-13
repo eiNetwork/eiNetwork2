@@ -13,12 +13,12 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="list-group side-nav">
-				<a class="list-group-item" href="" onclick='getWishList()'>Wish Lists</a>
-				<a class="list-group-item" href="" onclick='getCheckedOutItem()'>Checked Out Items <span id="my-item-PlaceHolder" class="badge"></span></a>
-				<a class="list-group-item" href="" onclick='getRequestedItem()' >Requested Items<span id="my-ruest-item-placeHolder" class="badge"></span></a>
-				<a class="list-group-item" href="" onclick='getReadingHistory()' >Reading History</a>
+				<a class="list-group-item disable-link" href="" onclick='getWishList()'>Wish Lists</a>
+				<a class="list-group-item disable-link" href="" onclick='getCheckedOutItem()'>Checked Out Items <span id="my-item-PlaceHolder" class="badge"></span></a>
+				<a class="list-group-item disable-link" href="" onclick='getRequestedItem()' >Requested Items<span id="my-ruest-item-placeHolder" class="badge"></span></a>
+				<a class="list-group-item disable-link" href="" onclick='getReadingHistory()' >Reading History</a>
 				<a class="list-group-item" href="/Search/History">Saved Searches</a>
-				<a class="list-group-item" href="" onclick='getAccountSetting()'>Account Settings</a>
+				<a class="list-group-item disable-link" href="" onclick='getAccountSetting()'>Account Settings</a>
 				<a class="list-group-item" href="/MyResearch/Firsttime">First Time Using the Catalog?</a>
 				<a class="list-group-item" href="/MyResearch/Latestupdates">Latest Website Updates</a>
 			</div>

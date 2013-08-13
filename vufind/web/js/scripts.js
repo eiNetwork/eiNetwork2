@@ -266,41 +266,19 @@ function Login(elems, salt, module, action, id, lookfor, message) {
 
 }
 
-function lightbox(left, width, top, height){
-	if (!left) left = '100px';
-	if (!top) top = '100px';
-	if (!width) width = 'auto';
-	if (!height) height = 'auto';
-	if(width!=null||width){
-		var reg = /\d*/;
-		var newWidth = reg.exec(width);
-		var newHeight = reg.exec(height);
-		left = ($(document).width()-parseInt(newWidth))/2;
-	}
-	var loadMsg = $('#lightboxLoading').html();
+function lightbox(left, width, top, height, load_message){
+	
+	$('#eiNetworkModal .modal-header').hide();
+	$('#eiNetworkModal .modal-footer').hide();
 
 	if (navigator.userAgent.indexOf('Firefox') != -1){
-		$('#popupbox').html('<div class="lightboxLoadingContents"><div class="lightboxLoadingMessage">' + loadMsg + '</div><iframe src="' + path + '/images/loading_bar.gif" class="loading-frame"  frameborder="0" border="0" cellspacing="0"></iframe></div>');
+		$('#eiNetworkModal .modal-body').html('<div class="loading-container"><div class="loading-message">' + load_message + '</div><div class="loading-cog"><img src="' + path + '/images/loading_cog.png" /></div><iframe src="' + path + '/images/loading_bar.gif" class="loading-frame"  frameborder="0" border="0" cellspacing="0"></iframe></div>');
 	} else {
-		$('#popupbox').html('<div class="lightboxLoadingContents"><div class="lightboxLoadingMessage">' + loadMsg + '</div><img src="' + path + '/images/loading_bar.gif" class="lightboxLoadingImage"/></div>');
+		$('#eiNetworkModal .modal-body').html('<div class="loading-container"><div class="loading-message">' + load_message + '</div><div class="loading-cog"><img src="' + path + '/images/loading_cog.png" /></div><img src="' + path + '/images/loading_bar.gif" class="lightboxLoadingImage"/></div>');
 	}
 
-	hideSelects('hidden');
+	$('#eiNetworkModal').modal('show');
 
-	// Find out how far down the screen the user has scrolled.
-	var new_top =  document.body.scrollTop;
-
-	// Get the height of the document
-	var documentHeight = $(document).height();
-
-	$('#lightbox').show();
-	$('#lightbox').css('height', documentHeight + 'px');
-
-	$('#popupbox').show();
-	$('#popupbox').css('top', top);
-	$('#popupbox').css('left', left);
-	$('#popupbox').css('width', width);
-	$('#popupbox').css('height', height);
 }
 
 function ajaxLightbox(urlToLoad, parentId, left, width, top, height){
@@ -317,55 +295,57 @@ function ajaxLightbox(urlToLoad, parentId, left, width, top, height){
 
 	// Get the height of the document
 	var documentHeight = $(document).height();
+
+	$('#myModal').modal('show');
  
-	$('#lightbox').show();
-	$('#lightbox').css('height', documentHeight + 'px');
+	//$('#lightbox').show();
+	//$('#lightbox').css('height', documentHeight + 'px');
 	
 	//$('#popupbox').html('<img src="' + path + '/images/loading.gif" /><br />' + loadMsg);
-	$('#popupbox').show();
-	$('#popupbox').css('top', '50%');
-	$('#popupbox').css('left', '50%');
+	//$('#popupbox').show();
+	//$('#popupbox').css('top', '50%');
+	//$('#popupbox').css('left', '50%');
 
 	$.get(urlToLoad, function(data) {
 		
-		//$('#popupbox').html(data);
+		$('#myModal .modal-body').html(data);
 		//$('#popupbox').show();
 		if (parentId){
 		
-			//Automatically position the lightbox over the cursor
-			$("#popupbox").position({
-				my: "top right",
-				at: "top right",
-				of: parentId,
-				collision: "flip"
-			});
+			// //Automatically position the lightbox over the cursor
+			// $("#popupbox").position({
+			// 	my: "top right",
+			// 	at: "top right",
+			// 	of: parentId,
+			// 	collision: "flip"
+			// });
 			
 		}else{
 
-			if (!left) left = '30%';
-			if (!top) top = '30%';
-			if (!height) height = '300px';
+			// if (!left) left = '30%';
+			// if (!top) top = '30%';
+			// if (!height) height = '300px';
 			
-			if(width!=null||width.indexOf("%")<=0){
+			// if(width!=null||width.indexOf("%")<=0){
 				
-				var reg = /\d*/;
-				var newWidth = reg.exec(width);
-				var newHeight = reg.exec(height);
-				var left = ($(document).width()-parseInt(newWidth))/2;
-			}
-			if (!width) width = '400px';
-			$('#popupbox').css('top', new_top);
-			$('#popupbox').css('left', left);
-			$('#popupbox').css('width', width);
-			$('#popupbox').css('height', height);
+			// 	var reg = /\d*/;
+			// 	var newWidth = reg.exec(width);
+			// 	var newHeight = reg.exec(height);
+			// 	var left = ($(document).width()-parseInt(newWidth))/2;
+			// }
+			// if (!width) width = '400px';
+			// $('#popupbox').css('top', new_top);
+			// $('#popupbox').css('left', left);
+			// $('#popupbox').css('width', width);
+			// $('#popupbox').css('height', height);
 			
 			//$(document).scrollTop(0);
-		$('#popupbox').html(data);
-		$('#popupbox').show();
+			$('#myModal .modal-body').html(data);
+		//$('#popupbox').show();
 		}
-		if ($("#popupboxHeader").length > 0){
-			$("#popupbox").draggable({ handle: "#popupboxHeader" });
-		}
+		// if ($("#popupboxHeader").length > 0){
+		// 	$("#popupbox").draggable({ handle: "#popupboxHeader" });
+		// }
 	});
 }
 
@@ -1172,12 +1152,11 @@ function preload(arrayOfImages) {
 
     $(arrayOfImages).each(function(){
         $('<img/>')[0].src = this;
-        // Alternatively you could use:
-        // (new Image()).src = this;
     });
 
 }
 
 preload([
-    '/images/loading_bar.gif'
+    '/images/loading_bar.gif',
+    '/images/loading_cog.png'
 ]);

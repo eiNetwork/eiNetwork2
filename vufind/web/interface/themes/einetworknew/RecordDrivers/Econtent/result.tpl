@@ -32,9 +32,9 @@
                                 <ul class="dropdown-menu">
                                     <li><a class="disable-link" href="" onclick="window.location.href='{$url}/EcontentRecord/{$summId|escape:"url"}/Home?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}'">View Details</a></li>
 						        	{if sourceUrl}
-						        		<li><a class="disable-link" href="" onclick="window.location.href='{$sourceUrl}'">Access Online</a></li>
+						        		<li><a class="disable-link RequestWord{$summId|escape:"url"}" href="" onclick="window.location.href='{$sourceUrl}'">Access Online</a></li>
 						        	{else}
-						        		<li><a class="disable-link" href="" onclick="window.location.href='{$url}/EcontentRecord/{$summId|escape:"url"}/Home?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}#links'">Access Online</a></li>
+						        		<li><a class="disable-link RequestWord{$summId|escape:"url"}" href="" onclick="window.location.href='{$url}/EcontentRecord/{$summId|escape:"url"}/Home?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}#links'">Access Online</a></li>
 						        	{/if}
 						        	<li><a href="" onclick="deleteItemInList('{$summId|escape:"url"}','eContent')">Remove</a></li>
                                 </ul>
@@ -49,9 +49,9 @@
                                 <ul class="dropdown-menu">
                                     <li><a class="disable-link" href="" onclick="window.location.href='{$url}/EcontentRecord/{$summId|escape:"url"}/Home?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}'">View Details</a></li>
 						            {if $sourceUrl}
-						            	<li><a class="disable-link" href="" onclick="window.location.href='{$sourceUrl}'">Access Online</a></li>
+						            	<li><a class="disable-link RequestWord{$summId|escape:"url"}" href="" onclick="window.location.href='{$sourceUrl}'">Access Online</a></li>
 						            {else}
-						            	<li><a class="disable-link" href="" onclick="window.location.href='{$url}/EcontentRecord/{$summId|escape:"url"}/Home?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}#links'">Access Online</a></li>
+						            	<li><a class="disable-link RequestWord{$summId|escape:"url"}" href="" onclick="window.location.href='{$url}/EcontentRecord/{$summId|escape:"url"}/Home?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}#links'">Access Online</a></li>
 						            {/if}
                                 </ul>
                             {/if}
@@ -110,9 +110,9 @@
 
                             	<a href="" class="btn btn-small btn-info disable-link" onclick="window.location.href='{$url}/EcontentRecord/{$summId|escape:"url"}/Home?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}'">View Details</a>
 					        	{if sourceUrl}
-					        		<a href="" class="btn btn-small btn-info disable-link" onclick="window.location.href='{$sourceUrl}'">Access Online</a>
+					        		<a href="" class="btn btn-small btn-info disable-link RequestWord{$summId|escape:"url"}" onclick="window.location.href='{$sourceUrl}'">Access Online</a>
 					        	{else}
-					        		<a href="" class="btn btn-small btn-info disable-link" onclick="window.location.href='{$url}/EcontentRecord/{$summId|escape:"url"}/Home?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}#links'">Access Online</a>
+					        		<a href="" class="btn btn-small btn-info disable-link RequestWord{$summId|escape:"url"}" onclick="window.location.href='{$url}/EcontentRecord/{$summId|escape:"url"}/Home?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}#links'">Access Online</a>
 					        	{/if}
 					        	<a href="" class="btn btn-small btn-info disable-link" onclick="deleteItemInList('{$summId|escape:"url"}','eContent')">Remove</a>
                             {elseif $pageType eq 'BookCart'}
@@ -123,9 +123,9 @@
                             {else}
                                	<a href="" class="btn btn-small btn-info disable-link" onclick="window.location.href='{$url}/EcontentRecord/{$summId|escape:"url"}/Home?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}'">View Details</a>
 					            {if $sourceUrl}
-					            	<a href="" class="btn btn-small btn-info disable-link" onclick="window.location.href='{$sourceUrl}'">Access Online</a>
+					            	<a href="" class="btn btn-small btn-info disable-link RequestWord{$summId|escape:"url"}" onclick="window.location.href='{$sourceUrl}'">Access Online</a>
 					            {else}
-					            	<a href="" class="btn btn-small btn-info disable-link" onclick="window.location.href='{$url}/EcontentRecord/{$summId|escape:"url"}/Home?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}#links'">Access Online</a>
+					            	<a href="" class="btn btn-small btn-info disable-link RequestWord{$summId|escape:"url"}" onclick="window.location.href='{$url}/EcontentRecord/{$summId|escape:"url"}/Home?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}#links'">Access Online</a>
 					            {/if}
                             {/if}
                         </div>

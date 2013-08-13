@@ -365,3 +365,38 @@ p.notification {
 	margin-top:20px;
 	margin-bottom:20px;
 }
+
+.renew-message-success {
+	color: #0c0;
+}
+
+.renew-message-fail {
+	color: #f00;
+}
+
+.loading-message {
+	margin:20px 0 20px 0;
+}
+
+.loading-cog {
+	margin:auto;
+	width:100%;
+}
+
+.loading-cog img {
+	margin:auto;
+	width:85px;
+	height:138px;
+}
+
+.loading-message iframe {
+	margin:auto;
+}
+
+.loading-message img {
+	margin:auto;
+}
+
+.loading-container {
+	text-align: center;
+}

@@ -1,4 +1,7 @@
 function checkoutOverDriveItem(elemId, page){
+	
+
+
 	if (loggedIn){
 		showProcessingIndicator("Checking out the title for you in OverDrive.  This may take a minute.");
 		var url = path + "/EcontentRecord/"+elemId+"/AJAX?method=CheckoutOverDriveItem";

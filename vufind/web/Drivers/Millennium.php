@@ -3050,6 +3050,10 @@ class MillenniumDriver implements DriverInterface
 							$renew_success = false;
 							$message = 'A renewal for this item is not allowed.';
 							$hold_request_count++;
+						} elseif (strpos($status, 'It is too soon to renew') > 0){
+							$renew_success = false;
+							$message = 'It is too soon to renew.';
+							$hold_request_count++;
 						}
 
 						//$test[$n]['raw'] = $status;

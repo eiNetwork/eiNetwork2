@@ -32,6 +32,45 @@
 </script>
 {/if}
 
+
+{literal}
+<script type="text/javascript">
+
+	$(document).ready(function(){
+
+		var renewMessage = 0
+		var modal_content = ''
+
+		{/literal}{foreach from=$transList item=record name="recordLoop"}
+
+			{if $record.renewMessage}{literal}
+
+				renewMessage = 1;
+
+				modal_content = modal_content + "<div class='renew-message'><strong>{/literal}{$record.title|regex_replace:"/(\/|:)$/":""|truncate:180:"..."|highlight:$lookfor}{literal}</strong><br />" 
+				
+				if ('{/literal}{$record.renewMessage}{literal}' == 'Your item was successfully renewed'){
+					modal_content = modal_content + "<span class='renew-message-success'>{/literal}{$record.renewMessage}{literal}</span></div>"
+				} else {
+					modal_content = modal_content + "<span class='renew-message-fail'>{/literal}{$record.renewMessage}{literal}</span></div>"
+				}
+
+			{/literal}{/if}
+
+		{/foreach}{literal}
+
+		if (renewMessage == 1){
+			$('#eiNetworkModal').modal('show');
+			$('#eiNetworkModal .modal-title').text('Your Item Renewals');
+			$('#eiNetworkModal .modal-body').html(modal_content);
+		}
+
+	});
+
+</script>
+{/literal}
+
+
 <div class="row">
 	<div class="col-lg-9">
 		<div class="sort">
@@ -151,16 +190,6 @@
 										    {/if}
 				                        </div>
 				                  	</div>
-				                  	{if $record.renewMessage}
-				                  	<div class="row renew-message">
-				                  		<div class="col-lg-12">
-				                  			<div class="alert{if $record.renewResult == true} alert-success{else} alert-danger{/if}">
-											  <button type="button" class="close" data-dismiss="alert">&times;</button>
-											  {$record.renewMessage|escape}
-											</div>
-				                  		</div>
-				                  	</div>
-				                  	 {/if}
 				                </div>
 					            <div id="collapse{$record.shortId|escape}" class="accordion-body collapse in">
 					                <div class="accordion-inner">

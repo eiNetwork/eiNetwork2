@@ -249,6 +249,7 @@ function doGetStatusSummaries()
 			}
 		});
 	}
+
 	// Get OverDrive status summaries one at a time since they take several
 	// seconds to load
 	for (var j=0; j<GetOverDriveStatusList.length; j++) {
@@ -261,21 +262,26 @@ function doGetStatusSummaries()
 				var items = $(data).find('item');
 				$(items).each(function(index, item){
 					var elemId = $(item).attr("id");
+
+					var checkout_function_js = "checkoutOverDriveItem('" + elemId + "')";
+					var checkout_function = new Function(checkout_function_js);
+
+					var placehold_function_js = "placeOverDriveHold('"+elemId+"')";
+					var placehold_function = new Function(placehold_function_js);
+
 					//alert(sta);
 					if(sta =="Available from OverDrive"){
-						$("#RequestWord"+elemId).text("Checkout Now");
+						$(".RequestWord"+elemId).text("Checkout Now");
 						url = '/EcontentRecord/'+elemId+'/AJAX?method=CheckoutOverDriveItem';
-						if(document.getElementById("selected"+elemId)){
-							document.getElementById("selected"+elemId).setAttribute("onclick","checkoutOverDriveItem('" + elemId + "')");
-						}
+					    $(".RequestWord"+elemId).removeAttr('onclick').click(function(){
+					    	checkoutOverDriveItem(elemId);
+					    });
 					}else if(sta == "Checked Out"){
-						$("#RequestWord"+elemId).text("Request Now");
+						$(".RequestWord"+elemId).text("Request Now");
 						url = '/EcontentRecord/'+elemId+'/AJAX?method=PlaceOverDriveHold&elemId=' + elemId;
-						if(document.getElementById("selected"+elemId)){
-							document.getElementById("selected"+elemId).setAttribute("onclick","placeOverDriveHold('"+elemId+"')");
-						}
+					    $(".RequestWord"+elemId).prop('onclick', '').click(placehold_function);
 					}else{
-						$("#RequestWord"+elemId).text("Access Online");
+						$(".RequestWord"+elemId).text("Access Online");
 					}
 					$('#holdingsEContentSummary' + elemId).replaceWith($(item).find('formattedHoldingsSummary').text());
 					//console.log(sta)
