@@ -224,11 +224,17 @@ class Holds extends MyResearch
 									$interface->assign('pageLinks', $pager->getLinks());
 								}
 								
+								$i = 0;
 								foreach($sectionData as $key => $value){
+
+									// tidy up pending status
+									if (strpos($value['status'], 'Pending') !== false) $result['holds']['unavailable'][$i]['status'] = 'Pending';
 									
 									if ($value['status'] == 'Frozen' || $value['status'] == 'Available' || $value['status'] == 'In Transit'){
 										$frozenRecords++;
 									}
+
+									$i++;
 									
 								}
 								

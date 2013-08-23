@@ -72,7 +72,7 @@
 
 
 <div class="row">
-	<div class="col-lg-9">
+	<div class="col-xs-9 col-md-9">
 		<div class="sort">
 		    <div id="sortLabel">
 			{translate text='Sort by'}
@@ -97,7 +97,7 @@
 			<h3>{translate text='Physical Checked Out Items'}</h3>
 
 			<div class="row list-header">
-				<div class="col-lg-2">
+				<div class="col-xs-2 col-md-2">
 
 					<div class="input-group show-all-button">
 						<input type="button" id="show-all-button" class="btn btn-small btn-default form-control" value="Hide All" />
@@ -107,7 +107,7 @@
 					</div>
 
 				</div>
-				<div class="col-lg-10 btn-renew-all">
+				<div class="col-xs-10 col-md-10 btn-renew-all">
 					<button type="button" class="btn btn-info" onclick="return renewSelectedTitles();">Renew Selected Items</button>
 				</div>
 			</div>
@@ -117,14 +117,12 @@
 				{foreach from=$transList item=record name="recordLoop"}
 
 					<div class="row">
-					    <div class="col-lg-12">
+					    <div class="col-xs-12 col-md-12">
 					        <div class="accordion-group">
 					            <div class="accordion-heading">
 					                <div class="row">
-					                    <div class="col-lg-1">
-					                        <a class="accordion-toggle accordion-toggle-collapse" data-toggle="collapse" data-parent="#accordion2" href="#collapse{$record.shortId|escape}"><!-- --></a>
-					                    </div>
-					                    <div class="col-lg-9 book-results-title">
+					                    <div class="col-xs-10 col-md-10 book-results-title">
+					                    	<a class="accordion-toggle accordion-toggle-collapse" data-toggle="collapse" data-parent="#accordion2" href="#collapse{$record.shortId|escape}"></a>
 					                    	<ul>
 					                            <li>
 					                            	{if $record.id}
@@ -171,7 +169,7 @@
 				                            	</li>
 					                        </ul>
 					                    </div>
-					                    <div class="col-lg-2 renew-checkboxes">
+					                    <div class="col-xs-2 col-md-2 renew-checkboxes">
 					                    	{if $patronCanRenew}
 					                    		{assign var=id value=$record.id scope="global"}
 											    {assign var=shortId value=$record.shortId scope="global"}
@@ -194,16 +192,16 @@
 					            <div id="collapse{$record.shortId|escape}" class="accordion-body collapse in">
 					                <div class="accordion-inner">
 					                    <div class="row">
-					                        <div class="col-lg-2 cover-image">
+					                        <div class="col-xs-3 col-md-3 cover-image">
 					                        	{if $user->disableCoverArt != 1}
 												    {if $record.id}
-													<a href="{$url}/Record/{$record.id|escape:"url"}" id="descriptionTrigger{$record.id|escape:"url"}">
+													<a class="thumbnail" href="{$url}/Record/{$record.id|escape:"url"}" id="descriptionTrigger{$record.id|escape:"url"}">
 													    <img src="{$coverUrl}/bookcover.php?id={$record.id}&amp;isn={$record.isbn|@formatISBN}&amp;size=small&amp;upc={$record.upc}&amp;category={$record.format_category.0|escape:"url"}" class="listResultImage" alt="{translate text='Cover Image'}"/>
 													</a>
 												    {/if}
 												{/if}
 											</div>
-					                        <div class="col-lg-10 book-results">
+					                        <div class="col-xs-9 col-md-9 book-results">
 					                            <ul>
 					                            	<li class="due-date">
 					                            		Due On&nbsp;{$record.duedate|date_format}
@@ -463,14 +461,14 @@
 	    		{foreach from=$overDriveCheckedOutItems item=record}
 
 	    			<div class="row">
-					    <div class="col-lg-12">
+					    <div class="col-xs-12 col-md-12">
 					        <div class="accordion-group">
 					            <div class="accordion-heading">
 					                <div class="row">
-					                    <div class="col-lg-1">
+					                    <div class="col-xs-1 col-md-1">
 					                        <a class="accordion-toggle accordion-toggle-collapse" data-toggle="collapse" data-parent="#accordion2" href="#collapse{if $record.id}{$record.id|escape}{/if}"><!-- --></a>
 					                    </div>
-					                    <div class="col-lg-9 book-results-title">
+					                    <div class="col-xs-9 col-md-9 book-results-title">
 					                    	<ul>
 					                            <li><a href="{$url}/Record/{$record.id|escape:"url"}" class="title">{if !$record.title|regex_replace:"/(\/|:)$/":""}{translate text='Title not available'}{else}{$record.title|regex_replace:"/(\/|:)$/":""|truncate:100:"..."|highlight:$lookfor}{/if}</a></li>
 					                            <li>
@@ -485,7 +483,7 @@
 					                        	</li>
 					                        </ul>
 					                    </div>
-					                    <div class="col-lg-2">
+					                    <div class="col-xs-2 col-md-2">
 					                        <div class="btn-group btn-group-actions">
 					                            <button type="button" class="btn btn-small btn-info dropdown-toggle" data-toggle="dropdown">
 					                                Action <span class="caret"></span>
@@ -506,10 +504,10 @@
 					            <div id="collapse{if $record.id}{$record.id|escape}{/if}" class="accordion-body collapse in">
 					                <div class="accordion-inner">
 					                    <div class="row">
-					                        <div class="col-lg-2 cover-image cover-image-econtent">
+					                        <div class="col-xs-2 col-md-2 cover-image cover-image-econtent">
 												<img src="{$record.imageUrl}" class="listResultImage" alt="{translate text='Cover Image'}"/>
 					                        </div>
-					                        <div class="col-lg-6 book-results">
+					                        <div class="col-xs-6 col-md-6 book-results">
 					                            <ul>
 				                                    <li><span>
 		                                    			{if $record.expiresOn}
@@ -535,7 +533,7 @@
 					                                {/if}
 					                            </ul>
 					                        </div>
-					                        <div class="col-lg-4 book-results-buttons">
+					                        <div class="col-xs-4 col-md-4 book-results-buttons">
 				                            	<a href="" class="btn btn-info disable-link" onclick='DownloadCheckedoutOverdrive({$record.recordId},{$record.lockedFormat})'>Download</a>
 												{if $record.hasRead == true}
 													<a href="" class="btn btn-info disable-link" onclick="downloadOverDriveItem('{$record.overDriveId}','610')">Read</a>
@@ -554,7 +552,7 @@
 
 
 	</div>
-	<div class="col-lg-3">
+	<div class="col-xs-3 col-md-3">
 		{include file="MyResearch/menu.tpl"}
 		{include file="Admin/menu.tpl"}
 	</div>

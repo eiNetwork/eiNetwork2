@@ -74,7 +74,7 @@ $(document).ready(function() {
 	{/if}
 	{if $filterList}
 		<div class="row">
-			<div class="col-lg-11 active-filter-list">
+			<div class="col-xs-11 col-md-11 active-filter-list">
 
 					<dl class="narrowList navmenu narrow_begin">
 						<ul>
@@ -97,7 +97,7 @@ $(document).ready(function() {
 
 
 			<div class="row">
-						<div class="col-lg-12">
+						<div class="col-xs-12 col-md-12">
 								<h4>{translate text=$cluster.label}</h4>
 
 									<dl class="narrowList navmenu narrow_begin">

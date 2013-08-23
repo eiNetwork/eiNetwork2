@@ -2093,14 +2093,14 @@ class MillenniumDriver implements DriverInterface
 							$curHold['locationSelect'] = $scols[$i];
 						}elseif (preg_match('/<select\s+name=loc(.*?)x(\d\d).*?<option\s+value="([\w]{1,5})[+ ]*"\s>.*/s', $scols[$i], $matches)){
 							//no library selected, and it wants a holding from a location
-							$curHold['location'] = "<font style='color:red'>No location selected</font>";
+							$curHold['location'] = "No location selected";
 							$curHold['locationUpdateable'] = true;
 						}else{
 							$curHold['location'] = $scols[$i];
 							//Trim the carrier code if any
-							if (preg_match('/.*\s[\w\d]{4}/', $curHold['location'])){
-								$curHold['location'] = substr($curHold['location'], 0, strlen($curHold['location']) - 5);
-							}
+							//if (preg_match('/.*\s[\w\d]{4}/', $curHold['location'])){
+							//	$curHold['location'] = substr($curHold['location'], 0, strlen($curHold['location']) - 5);
+							//}
 							$curHold['currentPickupName'] = $curHold['location'];
 							$curHold['locationUpdateable'] = false;
 						}

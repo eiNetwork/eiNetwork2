@@ -16,7 +16,7 @@
                         <td>{$profile.fullname|escape}</td>
                         <td>
                                 {if $edit == true}
-                                        <select name='notices' id="preferredBranch_notices">
+                                        <select name='notices' id="preferredBranch_notices" class="form-control">
                                         <option value='z' >E-mail</option>
                                         <option value='p'>Phone</option>
                                         </select>
@@ -60,14 +60,14 @@
                 <tr>
                         <td>
                                 {if $edit == true}
-                                <input id="preferredBranch_phone" name='phone' class="text" value='{$profile.phone|escape}' size='20' maxlength='10' />
+                                <input id="preferredBranch_phone" name='phone' class="text form-control" value='{$profile.phone|escape}' size='20' maxlength='10' />
                                 <span id="phoneError" class="error">&nbsp;</span>
                                 {else}{$profile.phone|escape}
                                 {/if}
                         </td>
                         <td>
                                 {if $edit == true}
-                                <input id="preferredBranch_email" name='email' class="text" value='{$profile.email|escape}' size='20' maxlength='30' />
+                                <input id="preferredBranch_email" name='email' class="text form-control" value='{$profile.email|escape}' size='20' maxlength='30' />
                                 <span id="emailError" class="error">&nbsp;</span>
                                 {else}{$profile.email|escape}
                                 {/if}
@@ -83,7 +83,7 @@
 		
             {if $edit == true}
 	    	<p style="font-size: 12px">Preferred Library</p>
-            {html_options name="myLocation1" id="preferredBranch_myLocation1" options=$locationList selected=$profile.myLocation1Id}
+            {html_options name="myLocation1" id="preferredBranch_myLocation1" class="form-control" options=$locationList selected=$profile.myLocation1Id}
             {else}{$profile.myLocation1|escape}
     
 	    
@@ -92,7 +92,7 @@
             {/if}
             {if $edit == true}
 	    <p style="font-size: 12px">Alternative Library</p>
-            {html_options name="myLocation2" id="preferredBranch_myLocation2" options=$locationList selected=$profile.myLocation2Id}
+            {html_options name="myLocation2" id="preferredBranch_myLocation2" class="form-control" options=$locationList selected=$profile.myLocation2Id}
             {else}{$profile.myLocation2|escape}
             {/if}
             </p>
@@ -102,9 +102,9 @@
 		</div>
         {if $canUpdate}
                 {if $edit == true}
-                <input  type='submit' value='Update Profile' name='update'  class='button'/>
+                <input  type='submit' value='Update Profile' name='update'  class='btn btn-default'/>
                 {else}
-                <input type='submit' value='Edit Profile' name='edit' class='button'/>
+                <input type='submit' value='Edit Profile' name='edit' class='btn btn-default'/>
                 {/if}
         {/if}
         

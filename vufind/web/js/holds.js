@@ -158,10 +158,9 @@ function checkSelected(){
 
     // check to see if any locations changed
     $('.location_dropdown[data-changed]').each(function(){
-
     	dropdown_selected = true;
-
     });
+
 
     var len = 0;
     for (var o in values) {
@@ -199,6 +198,7 @@ function checkSelected(){
     $('.econtent_cancel_checkboxes').each(function(){
 
     	if ($(this).prop('checked') == true){
+            alert($(this).name)
     		econtent_changed = true;
     		od_cancelations.push(this.name);
     	}
@@ -217,7 +217,7 @@ function checkSelected(){
 				if (econtent_changed == true){
 					updateOverdrive(od_cancelations);
 				} else {
-					showProcessingIndicator('You have successfully updated your holds. Please wait while we refresh the page.');
+					showProcessingIndicator('You have successfully updated your holds.<br />Please wait while we refresh the page.');
 					window.location.href = path + "/MyResearch/Holds";
 				}
 			},
@@ -225,7 +225,7 @@ function checkSelected(){
 				if (econtent_changed == true){
 					updateOverdrive(od_cancelations);
 				} else {
-					showProcessingIndicator('There was a problem updating your physical item holds. Please try again later. Please wait while we refresh the page.');
+					showProcessingIndicator('There was a problem updating your physical item holds. Please try again later.<br />Please wait while we refresh the page.');
 					window.location.href = path + "/MyResearch/Holds";
 				}
 			}

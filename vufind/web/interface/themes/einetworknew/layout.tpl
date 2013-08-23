@@ -50,7 +50,7 @@
 	{/if}
 	    
 	{* Files that should not be combined *}
-	{if $includeAutoLogoutCode == true }
+	{if $includeAutoLogoutCode == true && $user}
 		<script type="text/javascript" src="{$path}/js/autoLogout.js"></script>
 	{/if}
 	    
@@ -61,6 +61,23 @@
 </head>
  
 <body>
+
+	<div class="modal fade" id="eiNetworkModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title">title</h4>
+				</div>
+				<div class="modal-body">
+					
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
 
 	{*google analytics*}
 
@@ -86,55 +103,66 @@
 
 		<div class="container">
 
-			<div class="modal fade" id="eiNetworkModal">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-							<h4 class="modal-title">title</h4>
-						</div>
-						<div class="modal-body">
-							
-						</div>
-							<div class="modal-footer">
-							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						</div>
-					</div><!-- /.modal-content -->
-				</div><!-- /.modal-dialog -->
-			</div><!-- /.modal -->
-
 			<div class="row header">
-				<div class="col-lg-2" style="text-align:center">
-					<a class="btn btn-warning survey-btn" href="">A Quick Survey</a>
+				<div class="col-xs-2 col-md-2" style="text-align:center">
+					<a class="btn btn-warning survey-btn pull-left" href="http://www.surveymonkey.com/s/NewLibraryCatalog" target="_blank">A Quick Survey</a>
+				</div>
+				<div class="col-xs-10 col-md-10" style="text-align:center">
+					<div class="row">
+						<form method="get" action="/Union/Search" id="searchForm" class="form-inline" onsubmit='startSearch();'>
+							<div class="col-xs-3 col-md-3">
+								<div class="input-group">
+									<span class="input-group-addon invert-label">Search</span>
+									<select name="basicType" class="form-control">
+										{foreach from=$basicSearchTypes item=searchDesc key=searchVal}
+											<option value="{$searchVal}"{if $searchIndex == $searchVal} selected="selected"{/if}>
+											{translate text=$searchDesc}
+											</option>
+										{/foreach}
+									</select>
+								</div><!-- /input-group -->
+							</div>
+							<div class="{if $user}col-xs-6 col-md-6{else}col-xs-7 col-md-7{/if}">
+								<div class="input-group">
+									<span class="input-group-addon invert-label">for</span>
+									<input type="text" class="form-control" name="lookfor" style="border-right:solid #fff 1px;">
+									<span class="input-group-btn">
+										<input type="submit" class="btn btn-primary" style="border:solid #fff 1px;" type="button" value="Go!">
+									</span>
+								</div><!-- /input-group -->
+							</div>
+							<div class="{if $user}col-xs-3 col-md-3{else}col-xs-2 col-md-2{/if}" style="text-align:center">
+								<div class="row">
+
+									{if $user}
+
+										<div class="col-xs-6 col-md-6 welcome-user">
+												<p>Welcome</p>
+												<a href="{$path}/MyResearch/Profile">
+											        {if strlen($user->displayName) > 0}{$user->displayName}
+											        {else}{*{$user->lastname|capitalize}*}{$user->firstname|capitalize}
+											        {/if}
+										        </a>
+										</div>
+										<div class="col-xs-6 col-md-6">
+											<a class="btn btn-default pull-right" href="{$path}/MyResearch/Logout">{translate text="Sign Out"}</a>
+										</div>
+
+									{else}
+
+										<div class="col-xs-12 col-md-12">
+											<a class="btn btn-default pull-right" href="{$path}/MyResearch/Home">{translate text="My Account"}</a>
+										</div>
+
+									{/if}
+
+								</div>
+								
+							</div>
+						</form>
+					</div>
 				</div>
 
-				<form method="get" action="/Union/Search" id="searchForm" class="form-inline" onsubmit='startSearch();'>
-					<div class="col-lg-3">
-						<div class="input-group">
-							<span class="input-group-addon invert-label">Search</span>
-							<select name="basicType" class="form-control">
-								{foreach from=$basicSearchTypes item=searchDesc key=searchVal}
-									<option value="{$searchVal}"{if $searchIndex == $searchVal} selected="selected"{/if}>
-									{translate text=$searchDesc}
-									</option>
-								{/foreach}
-							</select>
-						</div><!-- /input-group -->
-					</div>
-					<div class="col-lg-5">
-						<div class="input-group">
-							<span class="input-group-addon invert-label">for</span>
-							<input type="text" class="form-control" name="lookfor">
-							<span class="input-group-btn">
-								<input type="submit" class="btn btn-info" type="button" value="Go!">
-							</span>
-						</div><!-- /input-group -->
-					</div>
-				</form>
-
-				<div class="col-lg-2" style="text-align:center">
-					<a class="btn btn-default" href="/MyResearch/Home">My Account</a>
-				</div>
 			</div>
 
 		</div>
@@ -143,7 +171,7 @@
 		<div class="container">
 
 			<div class="row main-page">
-				<div class="col-lg-12">
+				<div class="col-xs-12 col-md-12">
 					{include file="$module/$pageTemplate"}
 				</div>
 			</div>

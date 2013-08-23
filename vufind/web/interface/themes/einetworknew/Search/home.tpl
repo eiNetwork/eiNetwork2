@@ -101,20 +101,33 @@
     </script>
 {/literal}
 
-<div class="slider-wrapper theme-dark">
-	<div id="slider" class="nivoSlider">
-		<img src="/interface/themes/einetworknew/images/Art/Slider/slider10.png"  data-transition="slideInLeft">
-		<img src="/interface/themes/einetworknew/images/Art/Slider/slider11.png"  data-transition="slideInLeft">
-		<img src="/interface/themes/einetworknew/images/Art/Slider/slider12.png"  data-transition="slideInLeft">
-		<img src="/interface/themes/einetworknew/images/Art/Slider/slider14.png"  data-transition="slideInLeft">
-		<img src="/interface/themes/einetworknew/images/Art/Slider/slider15.png"  data-transition="slideInLeft">
-		<img src="/interface/themes/einetworknew/images/Art/Slider/slider16.png"  data-transition="slideInLeft">
-		<img src="/interface/themes/einetworknew/images/Art/Slider/slider1.png"  data-transition="slideInLeft">
-		<img src="/interface/themes/einetworknew/images/Art/Slider/slider2.png"  data-transition="slideInLeft">
-		<img src="/interface/themes/einetworknew/images/Art/Slider/slider3.png"  data-transition="slideInLeft">
-		<img src="/interface/themes/einetworknew/images/Art/Slider/slider4.png"  data-transition="slideInLeft">
-		<img src="/interface/themes/einetworknew/images/Art/Slider/slider5.png"  data-transition="slideInLeft">
-		<img src="/interface/themes/einetworknew/images/Art/Slider/slider6.png"  data-transition="slideInLeft">
-	    <img src="/interface/themes/einetworknew/images/Art/Slider/slider7.png"  data-transition="slideInLeft">
+<div class="row">
+	<div class="col-xs-12 col-md-12 splash-message"><h3>Get started by entering your search above.</h3></div>
+</div>
+
+<div class="row">
+	<div class="col-xs-12 col-md-12">
+		<div class="slider-wrapper theme-dark">
+			<div id="slider" class="nivoSlider">
+				<img src="/interface/themes/einetworknew/images/Art/Slider/slider10.png"  data-transition="slideInLeft">
+				<img src="/interface/themes/einetworknew/images/Art/Slider/slider11.png"  data-transition="slideInLeft">
+				<img src="/interface/themes/einetworknew/images/Art/Slider/slider12.png"  data-transition="slideInLeft">
+				<img src="/interface/themes/einetworknew/images/Art/Slider/slider14.png"  data-transition="slideInLeft">
+				<img src="/interface/themes/einetworknew/images/Art/Slider/slider15.png"  data-transition="slideInLeft">
+				<img src="/interface/themes/einetworknew/images/Art/Slider/slider16.png"  data-transition="slideInLeft">
+				<img src="/interface/themes/einetworknew/images/Art/Slider/slider1.png"  data-transition="slideInLeft">
+				<img src="/interface/themes/einetworknew/images/Art/Slider/slider2.png"  data-transition="slideInLeft">
+				<img src="/interface/themes/einetworknew/images/Art/Slider/slider3.png"  data-transition="slideInLeft">
+				<img src="/interface/themes/einetworknew/images/Art/Slider/slider4.png"  data-transition="slideInLeft">
+				<img src="/interface/themes/einetworknew/images/Art/Slider/slider5.png"  data-transition="slideInLeft">
+				<img src="/interface/themes/einetworknew/images/Art/Slider/slider6.png"  data-transition="slideInLeft">
+			    <img src="/interface/themes/einetworknew/images/Art/Slider/slider7.png"  data-transition="slideInLeft">
+			</div>
+		</div>
 	</div>
+</div>
+
+<div class="row">
+	<div class="col-xs-6 col-md-6"><a onclick='getAccountSetting()' class="btn btn-primary pull-right"><strong>I have a Library Card</strong></a></div>
+	<div class="col-xs-6 col-md-6"><a href="{$path}/MyResearch/GetCard" class="btn btn-primary"><strong>I need a Library Card</strong></a></div>
 </div>

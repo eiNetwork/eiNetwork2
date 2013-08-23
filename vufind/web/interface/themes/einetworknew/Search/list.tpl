@@ -9,17 +9,17 @@
 
 
 <div class="row">
-	<div class="col-lg-3 facets">
+	<div class="col-xs-3 col-md-3 facets">
 		{if $sideRecommendations}
 			{foreach from=$sideRecommendations item="recommendations"}
 				{include file=$recommendations}
 			{/foreach}
 		{/if}
 	</div>
-	<div class="col-lg-6">
+	<div class="col-xs-6 col-md-6">
 
 		<div class="row">
-			<div class="col-lg-5">
+			<div class="col-xs-5 col-md-5">
 				{if $recordCount}
 					<div class="input-group">
 						<span class="input-group-addon">{translate text='Sort by'}</span>
@@ -34,14 +34,14 @@
 				{if $spellingSuggestions}
 				{/if}
 			</div>
-			<div class="col-lg-7" style="text-align:right">
+			<div class="col-xs-7 col-md-7" style="text-align:right">
 				<a href="" class="btn btn-info" onclick="window.location.href='/Search/Advanced'">Advanced Search</a>
 			</div>
 		</div>
 
 		{if $searchType == 'advanced'}
 			<div class="row">
-				<div class="col-lg-12">
+				<div class="col-xs-12 col-md-12">
 					<span style="font-style:italic; font-weight:570;">"{$lookfor|escape:"html"}"</span>
 					<a style="margin-left: 10px" href="{$path}/Search/Advanced?edit={$searchId}" class="small">{translate text="Edit this Advanced Search"}</a>
 				</div>
@@ -50,7 +50,7 @@
 
 		{if $recordCount}
 			<div class="row">
-				<div class="col-lg-12">
+				<div class="col-xs-12 col-md-12">
 					<div class="items-found">
 						{$recordCount}{translate text=" items found for"}{if $searchType == 'basic'} <span style="font-style:italic; font-weight:570;">'{$lookfor|escape:"html"}'</span>{/if}
 					</div>
@@ -59,7 +59,7 @@
 		{/if}
 
 		<div class="row">
-			<div class="col-lg-4">
+			<div class="col-xs-4 col-md-4">
 
 				<div class="input-group show-all-button">
 					<input type="button" id="show-all-button" class="btn btn-small btn-default form-control" value="Hide All" />
@@ -69,7 +69,7 @@
 				</div>
 
 			</div>
-			<div class="col-lg-8" style="text-align: right">
+			<div class="col-xs-8 col-md-8" style="text-align: right">
 				{if $pageLinks.all}
 					<ul class="pagination pagination-small">{$pageLinks.all}</ul>
 				{/if}
@@ -90,7 +90,7 @@
 		<div id='prospectorSearchResultsPlaceholder'></div>
 
 		<div class="row">
-			<div class="col-lg-12" style="text-align: right">
+			<div class="col-xs-12 col-md-12" style="text-align: right">
 				{if $pageLinks.all}
 					<ul class="pagination pagination-small">{$pageLinks.all}</ul>
 				{/if}
@@ -107,7 +107,7 @@
 		{* End Main Listing *}
 
 	</div>
-	<div class="col-lg-3">
+	<div class="col-xs-3 col-md-3">
 		 {*right-bar template*}
   		{include file="ei_tpl/right-bar.tpl"}
 	</div>

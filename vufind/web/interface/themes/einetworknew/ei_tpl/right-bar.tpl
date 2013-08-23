@@ -1,21 +1,25 @@
 {strip}
 
 	<div class="row">
-		<div class="col-lg-12">
-			<div class="panel">
-				<img src="/interface/themes/einetworknew/images/shopping_cart.png" alt="cart"/>
-		        <span id="cart-descrpiion" style="vertical-align:middle"></span>
-		        <div class="panel-footer"><button class="btn btn-default" id="view_cart_button" onclick="getViewCart()">View Cart</button></div>
+		<div class="col-xs-12 col-md-12">
+			<div class="panel panel-default book-cart">
+				<div class="panel-body">
+					<img src="/interface/themes/einetworknew/images/shopping_cart.png" alt="cart"/>
+			        <span id="cart-descrpiion" style="vertical-align:middle"></span><br />
+			        <button class="btn btn-default pull-right" id="view_cart_button" onclick="getViewCart()">View Cart</button>
+				</div>
 			</div>
 		</div>
 	</div>
 
+
+
 	<div class="row">
-		<div class="col-lg-12">
+		<div class="col-xs-12 col-md-12">
 			<div class="list-group side-nav">
 				<a class="list-group-item disable-link" href="" onclick='getWishList()'>Wish Lists</a>
-				<a class="list-group-item disable-link" href="" onclick='getCheckedOutItem()'>Checked Out Items <span id="my-item-PlaceHolder" class="badge"></span></a>
-				<a class="list-group-item disable-link" href="" onclick='getRequestedItem()' >Requested Items<span id="my-ruest-item-placeHolder" class="badge"></span></a>
+				<a class="list-group-item disable-link" href="" onclick='getCheckedOutItem()'>Checked Out Items <span id="my-item-PlaceHolder"></span></a>
+				<a class="list-group-item disable-link" href="" onclick='getRequestedItem()' >Requested Items <span id="my-ruest-item-placeHolder"></span></a>
 				<a class="list-group-item disable-link" href="" onclick='getReadingHistory()' >Reading History</a>
 				<a class="list-group-item" href="/Search/History">Saved Searches</a>
 				<a class="list-group-item disable-link" href="" onclick='getAccountSetting()'>Account Settings</a>
@@ -32,10 +36,10 @@
 		    if (data.error){
 		    }else{
 			if(data.SumOfCheckoutItems != 0){
-			    $("#my-item-PlaceHolder").text(data.SumOfCheckoutItems);
+			    $("#my-item-PlaceHolder").text("("+data.SumOfCheckoutItems+")");
 			}
 			if(data.SumOfRequestItems != 0){
-			    $("#my-ruest-item-placeHolder").text(data.SumOfRequestItems);
+			    $("#my-ruest-item-placeHolder").text(" ("+data.SumOfRequestItems+")");
 			}
 			setInterval("getRequestAndCheckout()",2000);
 		    }
@@ -52,10 +56,10 @@
 		if (data.error){
 		}else{
 		    if(data.SumOfCheckoutItems != 0){
-			$("#my-item-PlaceHolder").text(data.SumOfCheckoutItems);
+			$("#my-item-PlaceHolder").text("("+data.SumOfCheckoutItems+")");
 		    }
 		    if(data.SumOfRequestItems != 0){
-			$("#my-ruest-item-placeHolder").text(data.SumOfRequestItems);
+			$("#my-ruest-item-placeHolder").text(" ("+data.SumOfRequestItems+")");
 		    }
 		}
 	    }
@@ -65,13 +69,16 @@
     {/literal}
 
     <div class="row">
-		<div class="col-lg-12">
-			<div class="panel">
-				<div class="prefer-branch" id="prefer-branch">
-			        <div id="description">
-			            Your Preferred Branches
-			        </div>
-			    </div>
+		<div class="col-xs-12 col-md-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">Your Preferred Libraries</div>
+				<div class="panel-body">
+					<div class="prefer-branch" id="prefer-branch">
+				        <div id="description">
+				            
+				        </div>
+				    </div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -147,7 +154,7 @@
     {/php}
 
     <div class="row">
-		<div class="col-lg-12">
+		<div class="col-xs-12 col-md-12">
 			<div class="list-group side-nav">
 				<a class="list-group-item" href="{$url}/MyResearch/MyList/1">{$Title1}</a>
 				<a class="list-group-item" href="{$url}/MyResearch/MyList/2">{$Title2}</a>

@@ -1,12 +1,12 @@
 <div class="row">
-    <div class="col-lg-12">
+    <div class="col-xs-12 col-md-12">
         <div class="accordion-group">
             <div class="accordion-heading">
                 <div class="row">
-                    <div class="col-lg-1">
+                    <div class="col-xs-1 col-md-1">
                         <a class="accordion-toggle accordion-toggle-collapse" data-toggle="collapse" data-parent="#accordion2" href="#collapse{if $summShortId}{$summShortId}{else}{$summId|escape}{/if}"><!-- --></a>
                     </div>
-                    <div class="col-lg-9 book-results-title">
+                    <div class="col-xs-9 col-md-9 book-results-title">
                         <ul>
                             <li><a href="{$path}/EcontentRecord/{$summId|escape:"url"}?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}" class="title">{if !$summTitle|regex_replace:"/(\/|:)$/":""}{translate text='Title not available'}{else}{$summTitle|regex_replace:"/(\/|:)$/":""|truncate:50:"..."|highlight:$lookfor}{/if}</a></li>
                             <li class="book-results-author"><span>
@@ -23,7 +23,7 @@
                             </span></li>
                         </ul>
                     </div>
-                    <div class="col-lg-2">
+                    <div class="col-xs-2 col-md-2">
                         <div class="btn-group btn-group-actions">
                             <button type="button" class="btn btn-small btn-info dropdown-toggle" data-toggle="dropdown">
                                 Action <span class="caret"></span>
@@ -63,7 +63,7 @@
             <div id="collapse{if $summShortId}{$summShortId}{else}{$summId|escape}{/if}" class="accordion-body collapse in">
                 <div class="accordion-inner">
                     <div class="row">
-                        <div class="col-lg-4 cover-image">
+                        <div class="col-xs-4 col-md-4 cover-image">
 							{if !isset($user->disableCoverArt) ||$user->disableCoverArt != 1}	
 								<div id='descriptionPlaceholder{$summId|escape}' style='display:none'></div>
 								<a href="{$path}/EcontentRecord/{$summId|escape:"url"}?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}" id="descriptionTrigger{$summId|escape:"url"}">
@@ -71,7 +71,7 @@
 								</a>
 							{/if}
                         </div>
-                        <div class="col-lg-6 book-results">
+                        <div class="col-xs-6 col-md-6 book-results">
                             <ul>
                                 {if $summDate}
                                     <li>Year: <span>
@@ -105,7 +105,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="col-lg-2 book-results-buttons">
+                        <div class="col-xs-2 col-md-2 book-results-buttons">
                             {if $pageType eq 'WishList'}
 
                             	<a href="" class="btn btn-small btn-info disable-link" onclick="window.location.href='{$url}/EcontentRecord/{$summId|escape:"url"}/Home?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}'">View Details</a>

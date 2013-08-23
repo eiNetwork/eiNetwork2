@@ -96,29 +96,33 @@
 {/literal}
 
 <div class="row">
-	<div class="col-lg-3">
+	<div class="col-xs-3 col-md-3">
 
 	</div>
-	<div class="col-lg-6">
-		<p class="notification">We are receiving reports about some users not receiving email notices for upcoming due dates, hold pickups, or overdue items. You may wish to check My Account or contact your local library for this information. Please contact your email provider if you believe you are not receiving these notices.</p>
-
+	<div class="col-xs-6 col-md-6">
 		<div class="row">
-			<div class="col-lg-6">
+			<div class="col-xs-6 col-md-6">
 				<h4>I have a Library Card</h4>
 				<form id="loginForm" action="/MyResearch/Home" method="post" autocomplete="on">
 					<div class="form-group">
 						<label for="username">Library Card Number</label>
 						<div>
-							<input id="card" type="text" class="form-control" id="inputEmail" placeholder="Email" name="username" value="{$username|escape}" maxlength="14" />
+							<input id="card" type="text" class="form-control" id="inputEmail" placeholder="Card Number" name="username" value="{$username|escape}" maxlength="14" />
 						</div>
 						<div id="cardError">&nbsp;</div>
 					</div>
 					<div class="form-group">
 						<label for="password">4 digit PIN number</label>
 						<div>
-							<input id="pin" type="password" class="form-control" id="inputPassword" placeholder="Password" name="password">
+							<input id="pin" type="password" class="form-control" id="inputPassword" placeholder="PIN" name="password">
 						</div>
 						<div id="pinError">&nbsp;</div>
+					</div>
+					<div class="login-links">
+						<ul>
+							<li><a href="{$path}/MyResearch/PinReset">I forgot or don't have my PIN</a></li>
+							<li><a href="{$path}/MyResearch/PinReset">I need to get a PIN for the first time</a></li>
+						</ul>
 					</div>
 					<div class="form-group">
 						<div>
@@ -127,15 +131,15 @@
 					</div>
 				</form>
 			</div>
-			<div class="col-lg-6">
+			<div class="col-xs-6 col-md-6">
 				<h4><a href="http://librarycatalog.einetwork.net/MyResearch/GetCard">I need a Library Card</a></h4>
 				<p>With a free catalog account, you can request items directly from the catalog, view your past searches and get personalized recommendations for items you might like.</p>
-				<a href="http://librarycatalog.einetwork.net/MyResearch/GetCard" class="btn btn-info">Register</a>
+				<a href="http://librarycatalog.einetwork.net/MyResearch/GetCard" class="btn btn-default">Register</a>
 			</div>
 		</div>
 
 	</div>
-	<div class="col-lg-3">
+	<div class="col-xs-3 col-md-3">
 
 	</div>
 </div>
