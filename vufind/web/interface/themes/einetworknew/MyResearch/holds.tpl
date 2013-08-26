@@ -86,7 +86,7 @@
 
 		<div class="sort pull-right" style="width:220px">
 			<div class="sortOptions">
-				<label>{translate text='Sort by'}
+				<label class="pull-right">{translate text='Sort by'}
 					<select name="accountSort" id="sort{$sectionKey}" onchange="changeAccountSort($(this).val());">
 						{foreach from=$sortOptions item=sortDesc key=sortVal}
 						<option value="{$sortVal}"{if $defaultSortOption == $sortVal} selected="selected"{/if}>{translate text=$sortDesc}</option>

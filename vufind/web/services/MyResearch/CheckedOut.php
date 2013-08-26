@@ -185,12 +185,18 @@ class CheckedOut extends MyResearch{
 						$itemBarcode = isset($data['barcode']) ? $data['barcode'] : null;
 						$itemId = isset($data['itemid']) ? $data['itemid'] : null;
 
+						//$result['transactions'][$i]['overdue'] = true;
+						$result['transactions'][$i]['overdue'] = true;
+						$result['transactions'][$i]['daysUntilDue'] = 0;
+						$result['transactions'][$i]['fine'] = '$2.33';
+
 						if ($itemId != null && isset($renew_message[$itemId])){
 							$renewMessage = $renew_message[$itemId]['message'];
 							$renewResult = $renew_message[$itemId]['result'];
 							$data['renewMessage'] = $renewMessage;
 							$data['renewResult']  = $renewResult;
 							$result['transactions'][$i] = $data;
+							
 							unset($renew_message[$itemId]);
 							$logger->log("Found renewal message in session for $itemBarcode", PEAR_LOG_INFO);
 						}else if ($itemId != null && isset($_SESSION['renew_message'][$itemId])){

@@ -40,6 +40,10 @@ body {
 	color: #fff;
 } 
 
+.label-warning {
+	color:#000;
+}
+
 .search-box label {
 	min-width: 60px;
 	color: #fff;
@@ -626,4 +630,8 @@ p.notification {
 .welcome-user a:hover {
 	text-decoration: none;
 	border-bottom:solid #fff 1px;
+}
+
+.renew-count {
+	font-size:0.85em;
 }
