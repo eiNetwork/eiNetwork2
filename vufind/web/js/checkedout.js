@@ -26,9 +26,9 @@ function renewSelectedTitles(){
 			$('.loading-frame').css('display','none'); // fix for firefox to display iframe with loading throbber
 			$('#renewForm').submit();
 			$('.loading-frame').css('display','block');
-			lightbox(null,null,null,null,'Renewing your items. This may take a minute.');
+			lightbox('Renewing your items. This may take a minute.');
 		} else {
-			lightbox(null,null,null,null,'Renewing your items. This may take a minute.');
+			lightbox('Renewing your items. This may take a minute.');
 			$('#renewForm').submit();
 		}
 

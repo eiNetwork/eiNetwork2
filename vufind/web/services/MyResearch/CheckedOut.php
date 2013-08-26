@@ -186,9 +186,9 @@ class CheckedOut extends MyResearch{
 						$itemId = isset($data['itemid']) ? $data['itemid'] : null;
 
 						//$result['transactions'][$i]['overdue'] = true;
-						$result['transactions'][$i]['overdue'] = true;
-						$result['transactions'][$i]['daysUntilDue'] = 0;
-						$result['transactions'][$i]['fine'] = '$2.33';
+						// $result['transactions'][$i]['overdue'] = true;
+						// $result['transactions'][$i]['daysUntilDue'] = 0;
+						// $result['transactions'][$i]['fine'] = '$2.33';
 
 						if ($itemId != null && isset($renew_message[$itemId])){
 							$renewMessage = $renew_message[$itemId]['message'];

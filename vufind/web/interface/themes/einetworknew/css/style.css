@@ -415,7 +415,7 @@ p.notification {
 }
 
 .renew-message-fail {
-	color: #f00;
+	color: #fff;
 }
 
 .loading-message {
@@ -468,7 +468,13 @@ p.notification {
 }
 
 .label-requested-results {
+	display: inline-block;
 	font-size:12px;
+
+}
+
+.label-checkedout-results {
+	margin:0 15px 0 0;
 }
 
 .requested-results-actions {
@@ -487,6 +493,10 @@ p.notification {
 
 .requested-results-actions-checkboxes ul {
 	margin:10px 10px 0 0;
+}
+
+.checkedout-results-actions-checkboxes label {
+	margin:0 10px 0 0;
 }
 
 .requested-results-actions-location {
@@ -634,4 +644,12 @@ p.notification {
 
 .renew-count {
 	font-size:0.85em;
+}
+
+.checkedout-econtent-buttons {
+	margin:0 -4px 0 0;
+}
+
+.checkedout-return-btn a {
+	margin:5px 0 5px 0;
 }

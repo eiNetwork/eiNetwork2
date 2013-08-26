@@ -89,7 +89,7 @@
 
 <div class="row">
 	<div class="col-xs-9 col-md-9">
-			<div class="sort pull-right" style="width:220px">
+			<div class="sort pull-right">
 				<div class="sortOptions">
 					<label>{translate text='Sort by'}
 						<select name="accountSort" id="sort{$sectionKey}" onchange="changeAccountSort($(this).val());">
@@ -102,7 +102,7 @@
 			</div>
 
 			<div> 
-				<h2 style="margin-top:0px">{translate text='Requested Items'}</h2>
+				<h2 style="margin-top:0px">{translate text='Checked Out Items'}</h2>
 			</div>
 
 			{if $profile.expireclose == 1}
@@ -140,7 +140,7 @@
 					        	</div>
 					        	<div class="results-header clearfix">
 					            	<div class="row results-title-header">
-					            		<div class="col-xs-12 col-md-12 results-title">
+					            		<div class="col-xs-8 col-md-8 results-title">
 						        			<a href="{$url}/Record/{$record.recordId|escape:"url"}?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}" class="title">
 												{if !$record.title|regex_replace:"/(\/|:)$/":""}
 												{translate text='Title not available'}
@@ -159,33 +159,35 @@
 														{/if}
 													{/if}
 												</span>
+
+											<div class="row results-status-header">
+						        				<div class="col-xs-12 col-md-12">
+						        					<p><span class="label label-info label-requested-results">Due On&nbsp;{$record.duedate|date_format}</span>		
+														{if $record.overdue}
+														    <span class="label label-danger label-requested-results">OVERDUE</span>
+														{elseif $record.daysUntilDue == 0}
+														    <span class="label label-danger label-requested-results">Due Today</span>
+														{elseif $record.daysUntilDue == 1}
+														    <span class="label label-warning label-requested-results">Due Tomorrow</span>
+														{elseif $record.daysUntilDue <= 7}
+														    <span class="label label-warning label-requested-results">Due in {$record.daysUntilDue} Days</span>
+														{/if}
+
+
+														{if $record.fine}
+														    <span class="label label-danger label-requested-results">FINE {$record.fine}</span>
+														{/if}
+
+														{if $record.renewCount == 1}
+														    <span class="label label-default label-requested-results">Renewed&nbsp;{$record.renewCount}&nbsp;time</span>
+														{elseif $record.renewCount > 1}
+														    <span class="label label-default label-requested-results">Renewed&nbsp;{$record.renewCount}&nbsp;times</span>
+														{/if}
+						                        	</p>
+						        				</div>
+						                    </div>
 						        		</div>
-						        	</div>
-						        	<div class="row results-status-header">
-				        				<div class="col-xs-4 col-md-4">
-				        					<p><span class="label label-info">Due On&nbsp;{$record.duedate|date_format}</span></p>
-			        						<p><span class="label {if $record.daysUntilDue == 0 || $record.daysUntilDue == 1}label-danger{elseif $record.daysUntilDue <= 7}label-warning{/if} label-requested-results">
-				                        		{if $record.overdue}
-												    <span class='overdueLabel'>OVERDUE</span>
-												{elseif $record.daysUntilDue == 0}
-												    <span class='dueSoonLabel'>(Due today)</span>
-												{elseif $record.daysUntilDue == 1}
-												    <span class='dueSoonLabel'>(Due tomorrow)</span>
-												{elseif $record.daysUntilDue <= 7}
-												    <span class='dueSoonLabel'>(Due in {$record.daysUntilDue} days )</span>
-												{/if}
-												
-				                        	</span></p>
-				                        	<p>{if $record.renewCount == 1}
-												    <span class='dueSoonLabel'>Renewed&nbsp;{$record.renewCount}&nbsp;time</br></span>
-												{elseif $record.renewCount > 1}
-												    <span class='dueSoonLabel'>Renewed&nbsp;{$record.renewCount}&nbsp;times</br></span>
-												{/if}
-												{if $record.fine}
-												    <span class='overdueLabel'>FINE {$record.fine}</span>
-												{/if}</p>
-				        				</div>
-					                    <div class="col-xs-8 col-md-8">
+						        		<div class="col-xs-4 col-md-4">
 				                    		{if $patronCanRenew}
 					                    		{assign var=id value=$record.id scope="global"}
 											    {assign var=shortId value=$record.shortId scope="global"}
@@ -196,14 +198,14 @@
 												-->			    
 												{else}
 
-													<label class="pull-right">
+													<label class="pull-right label-checkedout-results">
 														<span class="label label-default label-requested-results">Renew</span><br /><input type="checkbox" class="form-control titleSelect freeze_checkboxes physical_items update_all" name="selected[{$record.renewIndicator}]" id="selected{$record.itemid}" />
 													</label>
 
 				                        		{/if}
 										    {/if}
 				                        </div>
-				                    </div>
+						        	</div>
 				                </div>
 					            <div id="collapse{$record.shortId|escape}" class="accordion-body collapse in">
 					                <div class="accordion-inner requested-results-striped clearfix">
@@ -243,7 +245,6 @@
 													</ul>
 												</div>
 												<div class="col-xs-4 col-md-4">
-													<div class="row requested-results-actions-checkboxes">
 														{if $patronCanRenew}
 								                    		{assign var=id value=$record.id scope="global"}
 														    {assign var=shortId value=$record.shortId scope="global"}
@@ -255,12 +256,11 @@
 															{else}
 
 																<label class="pull-right">
-																	<span class="label label-default label-checkedout-results">Renew</span><br /><input type="checkbox" class="form-control titleSelect freeze_checkboxes physical_items update_all" name="selected[{$record.renewIndicator}]" id="selected{$record.itemid}" />
+																	<span class="label label-default label-requested-results">Renew</span><br /><input type="checkbox" class="form-control titleSelect freeze_checkboxes physical_items update_all" name="selected[{$record.renewIndicator}]" id="selected{$record.itemid}" />
 																</label>
 
 							                        		{/if}
 													    {/if}
-							                    	</div>
 												</div>
 											</div>
 
@@ -400,13 +400,15 @@
 																    <span class="label label-warning label-requested-results">Due in {$record.daysUntilDue} Days</span>
 																{/if}
 
+
+																{if $record.fine}
+																    <span class="label label-danger label-requested-results">FINE {$record.fine}</span>
+																{/if}
+
 																{if $record.renewCount == 1}
 																    <span class="label label-default label-requested-results">Renewed&nbsp;{$record.renewCount}&nbsp;time</span>
 																{elseif $record.renewCount > 1}
 																    <span class="label label-default label-requested-results">Renewed&nbsp;{$record.renewCount}&nbsp;times</span>
-																{/if}
-																{if $record.fine}
-																    <span class="label label-danger label-requested-results">FINE {$record.fine}</span>
 																{/if}
 								                        	</p>
 						                        		</li>
@@ -431,31 +433,29 @@
 
 	    		{foreach from=$overDriveCheckedOutItems item=record}
 
-	    			<div class="row">
+    				<div class="row">
 					    <div class="col-xs-12 col-md-12">
+					    	<a class="accordion-toggle accordion-toggle-collapse" data-toggle="collapse" data-parent="#accordion2" href="#collapse{$record.shortId|escape}"></a>
 					        <div class="accordion-group">
-					            <div class="accordion-heading">
-					                <div class="row">
-					                    <div class="col-xs-1 col-md-1">
-					                        <a class="accordion-toggle accordion-toggle-collapse" data-toggle="collapse" data-parent="#accordion2" href="#collapse{if $record.id}{$record.id|escape}{/if}"><!-- --></a>
-					                    </div>
-					                    <div class="col-xs-9 col-md-9 book-results-title">
-					                    	<ul>
-					                            <li><a href="{$url}/Record/{$record.id|escape:"url"}" class="title">{if !$record.title|regex_replace:"/(\/|:)$/":""}{translate text='Title not available'}{else}{$record.title|regex_replace:"/(\/|:)$/":""|truncate:100:"..."|highlight:$lookfor}{/if}</a></li>
-					                            <li>
-					                            	<ul class="list-header-second-line">
-					                    				<li class="book-results-author"><span>
-					                    					{if strlen($record.record->author) > 0}{$record.record->author}{/if}
-					                    				</span></li>
-					                    				<li class="due-date">&nbsp;&nbsp;|&nbsp;&nbsp;{if $record.expiresOn}
+					        	<div class="accordion-heading">
+
+					        	</div>
+					        	<div class="results-header clearfix">
+					            	<div class="row results-title-header">
+					            		<div class="col-xs-12 col-md-12 results-title"><a href="{$url}/Record/{$record.id|escape:"url"}" class="title">{if !$record.title|regex_replace:"/(\/|:)$/":""}{translate text='Title not available'}{else}{$record.title|regex_replace:"/(\/|:)$/":""|truncate:100:"..."|highlight:$lookfor}{/if}</a>
+											| <span class="author">
+													{if strlen($record.record->author) > 0}{$record.record->author}{/if}
+												</span>
+						        		</div>
+						        	</div>
+						        	<div class="row results-status-header">
+				        				<div class="col-xs-8 col-md-8">
+				        					<p><span class="label label-info">{if $record.expiresOn}
 														    Expires on&nbsp;{$record.expiresOn|date_format}
-														{/if}</li>
-					                            	</ul>
-					                        	</li>
-					                        </ul>
-					                    </div>
-					                    <div class="col-xs-2 col-md-2">
-					                        <div class="btn-group btn-group-actions">
+														{/if}</span></p>
+				        				</div>
+					                    <div class="col-xs-4 col-md-4">
+				                    		<div class="btn-group btn-group-actions pull-right">
 					                            <button type="button" class="btn btn-small btn-info dropdown-toggle" data-toggle="dropdown">
 					                                Action <span class="caret"></span>
 					                            </button>
@@ -469,53 +469,76 @@
 				                                    {/if}
 				                                </ul>
 					                        </div>
-					                    </div>
-				                  	</div>
+				                        </div>
+				                    </div>
 				                </div>
-					            <div id="collapse{if $record.id}{$record.id|escape}{/if}" class="accordion-body collapse in">
-					                <div class="accordion-inner">
-					                    <div class="row">
-					                        <div class="col-xs-2 col-md-2 cover-image cover-image-econtent">
-												<img src="{$record.imageUrl}" class="listResultImage" alt="{translate text='Cover Image'}"/>
-					                        </div>
-					                        <div class="col-xs-6 col-md-6 book-results">
-					                            <ul>
-				                                    <li><span>
-		                                    			{if $record.expiresOn}
-														    Expires on&nbsp;{$record.expiresOn|date_format}
+					            <div id="collapse{$record.shortId|escape}" class="accordion-body collapse in">
+					                <div class="accordion-inner requested-results-striped clearfix">
+
+					                	<div class="col-xs-2 col-md-2 col-lg-2 cover-image">
+											{if $user->disableCoverArt != 1}
+												<a class="thumbnail" href="{$url}/Record/{$record.id|escape:"url"}" id="descriptionTrigger{$record.recordId|escape:"url"}">
+													<img src="{$record.imageUrl}" class="listResultImage" alt="{translate text='Cover Image'}"/>
+												</a>
+											{/if}
+										</div>
+										<div class="col-xs-10 col-md-10">
+
+											<div class="row">
+												<div class="col-xs-8 col-md-8">
+													<ul class="requested-results">
+														<li class"results-title">
+															<a href="{$url}/Record/{$record.id|escape:"url"}" class="title">{if !$record.title|regex_replace:"/(\/|:)$/":""}{translate text='Title not available'}{else}{$record.title|regex_replace:"/(\/|:)$/":""|truncate:100:"..."|highlight:$lookfor}{/if}</a>
+														</li>
+														<li>
+															<span class="author">{if strlen($record.record->author) > 0}{$record.record->author}{/if}</span>
+														</li>
+													</ul>
+												</div>
+												<div class="col-xs-4 col-md-4">
+													<div class="row checkedout-econtent-buttons pull-right">
+														<a href="" class="btn btn-info disable-link" onclick='DownloadCheckedoutOverdrive({$record.recordId},{$record.lockedFormat})'>Download</a>
+														{if $record.hasRead == true}
+															<a href="" class="btn btn-info disable-link" onclick="downloadOverDriveItem('{$record.overDriveId}','610')">Read</a>
 														{/if}
-				                                    </span></li>
-					                                <li><span>
-					                                	{if is_array($record.format)}
-														    <span></span>
-													    {elseif $record.format|rtrim eq "Kindle Book"}
-															<span>
-															<img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/EbookDownload.png"/ alt="Ebook Download">
-															</span>
-													    {elseif $record.format|rtrim eq "Adobe PDF eBook"}
-															<span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/EbookDownload.png"/ alt="Ebook Download"></span>
-													    {elseif $record.format|rtrim eq "OverDrive MP3 Audiobook"}
-															<span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/AudioBookDownload.png"/ alt="Ebook Download"></span>
-														{/if}
-													    {$record.format}
-					                                </span></li>
-					                                {if $record.earlyReturn == 1}
-					                                	<li><a href="" class="btn btn-info disable-link return-btn" onclick="returnOverDriveItem('{$record.overDriveId}', '{$record.transactionId}')"/>Return</a></li>
-					                                {/if}
-					                            </ul>
-					                        </div>
-					                        <div class="col-xs-4 col-md-4 book-results-buttons">
-				                            	<a href="" class="btn btn-info disable-link" onclick='DownloadCheckedoutOverdrive({$record.recordId},{$record.lockedFormat})'>Download</a>
-												{if $record.hasRead == true}
-													<a href="" class="btn btn-info disable-link" onclick="downloadOverDriveItem('{$record.overDriveId}','610')">Read</a>
-												{/if}
-					                        </div>
-					                    </div>
-					                </div>
-					            </div>
-					        </div>
+							                    	</div>
+												</div>
+											</div>
+
+											<div class="row">
+												<div class="col-xs-12 col-md-12">
+													<ul class="requested-results">
+														<li class="requested-results-format">
+															{if is_array($record.format)}
+															    <span></span>
+														    {elseif $record.format|rtrim eq "Kindle Book"}
+																<span>
+																<img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/EbookDownload.png"/ alt="Ebook Download">
+																</span>
+														    {elseif $record.format|rtrim eq "Adobe PDF eBook"}
+																<span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/EbookDownload.png"/ alt="Ebook Download"></span>
+														    {elseif $record.format|rtrim eq "OverDrive MP3 Audiobook"}
+																<span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/AudioBookDownload.png"/ alt="Ebook Download"></span>
+															{/if}
+														    {$record.format}
+														</li>
+														 {if $record.earlyReturn == 1}
+						                                	<li class="checkedout-return-btn"><a href="" class="btn btn-info disable-link return-btn" onclick="returnOverDriveItem('{$record.overDriveId}', '{$record.transactionId}')"/>Return</a></li>
+						                                {/if}
+														<li class="label-requested-results">
+															<span class="label label-info">{if $record.expiresOn}
+															    Expires on&nbsp;{$record.expiresOn|date_format}
+															{/if}</span>
+						                        		</li>
+						                        	</ul>
+												</div>
+											</div>
+										</div>
+					                </div><!-- /accordion-inner -->
+					            </div><!-- /collapsed -->
+					        </div><!-- /accordion-group -->
 					    </div>
-					</div>
+					</div><!-- /resuts row -->
 
 				{/foreach}
 			{/if}
