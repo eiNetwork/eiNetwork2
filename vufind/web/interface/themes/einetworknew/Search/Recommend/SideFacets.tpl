@@ -206,7 +206,7 @@ $(document).ready(function() {
 												{else}
 													<dd>
 														{if $thisFacet.url !=null}
-														<a href="{$thisFacet.url|escape}">{/if}{$thisFacet.display|escape}{if $thisFacet.url !=null}</a> <span class="badge">{$thisFacet.count}</span>{/if}
+														<a href="{$thisFacet.url|escape}">{/if}{$thisFacet.display|escape}{if $thisFacet.url !=null}</a> ({$thisFacet.count}){/if}
 														{if $thisFacet.count != ''}{/if}
 													</dd>
 												{/if}

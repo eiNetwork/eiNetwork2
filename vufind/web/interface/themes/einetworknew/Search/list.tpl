@@ -35,7 +35,7 @@
 				{/if}
 			</div>
 			<div class="col-xs-7 col-md-7" style="text-align:right">
-				<a href="" class="btn btn-info" onclick="window.location.href='/Search/Advanced'">Advanced Search</a>
+				<a href="" class="btn btn-default" onclick="window.location.href='/Search/Advanced'">Advanced Search</a>
 			</div>
 		</div>
 
@@ -60,14 +60,7 @@
 
 		<div class="row">
 			<div class="col-xs-4 col-md-4">
-
-				<div class="input-group show-all-button">
-					<input type="button" id="show-all-button" class="btn btn-small btn-default form-control" value="Hide All" />
-					<span class="input-group-addon">
-						Save <input type="checkbox">
-					</span>
-				</div>
-
+				
 			</div>
 			<div class="col-xs-8 col-md-8" style="text-align: right">
 				{if $pageLinks.all}

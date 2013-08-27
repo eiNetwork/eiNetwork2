@@ -132,7 +132,7 @@ body {
 /* left panel */
 
 .facets {
-	background-color: #eeeecc;
+	/*background-color: #eeeecc;*/
 }
 
 .narrowGroupHidden {
@@ -455,7 +455,7 @@ p.notification {
 }
 
 .requested-results {
-	margin:8px 0 0 0;
+	list-style: none;
 	padding:0;
 }
 
@@ -652,4 +652,26 @@ p.notification {
 
 .checkedout-return-btn a {
 	margin:5px 0 5px 0;
+}
+
+.otherEditions {
+	margin:5px 0 0 0;
+	font-size:0.85em;
+}
+
+.otherEditions a {
+	color: #336699;
+}
+
+.search-results {
+	margin-bottom:20px;
+}
+
+.search-results-list {
+	list-style: none;
+	padding:0;
+}
+
+.search-results-list li {
+	margin:0 0 5px 0;
 }
