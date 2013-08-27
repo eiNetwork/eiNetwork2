@@ -7,7 +7,7 @@
         <br>
         <div class="releases">
             <h2><b>Upcoming Release version 3.0</b></h2>
-            Scheduled release date 9/9/2013
+            Scheduled release date September, 2013
             <ol class="decimal">
                 <li>Improve search results for title searches when using a search phrase that exactly matches the title.</li>
                 <li>Automatically include alternate forms of the title as part of the search criteria when performing a title search.</li>
