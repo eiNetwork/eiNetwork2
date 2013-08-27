@@ -93,14 +93,18 @@
                         </div>
                         <div class="col-xs-2 col-md-2 book-results-buttons">
                             {if $pageType eq 'WishList'}
-                                <a href="" class="btn btn-small btn-default disable-link" onclick="window.location.href ='{$url}/Record/{$summId|escape:'url'}/Home?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}'">View Details</a>
-                                <a href="" class="btn btn-small btn-default disable-link" {if $enableBookCart}onclick="getSaveToBookCart('{$summId|escape:"url"}','VuFind');return false;"{/if}>Move To Cart</a>
-                                <a href="" class="btn btn-small btn-default disable-link" onclick="deleteItemInList('{$summId|escape:"url"}','VuFind')">Remove</a>
+                                <div class="btn-group-vertical">
+                                    <button type="button" class="btn btn-default" onclick="window.location.href ='{$url}/Record/{$summId|escape:'url'}/Home?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}'">View Details</button>
+                                    <button type="button" class="btn btn-default" {if $enableBookCart}onclick="getSaveToBookCart('{$summId|escape:"url"}','VuFind');return false;"{/if}>Move To Cart</button>
+                                    <button type="button" class="btn btn-default" onclick="deleteItemInList('{$summId|escape:"url"}','VuFind')">Remove</button>
+                                </div>
                             {elseif $pageType eq 'BookCart'}
-                                <a href="" class="btn btn-small btn-default disable-link" onclick="requestItem('{$summId|escape:"url"}','{$wishListID}')">Request Item</a>
-                                <a href="" class="btn btn-small btn-default disable-link" onclick="getSaveToListForm('{$summId|escape:"url"}', 'VuFind'); return false;">Move to Wish List</a>
-                                <a href="" class="btn btn-small btn-default disable-link" onclick="findInLibrary('{$summId|escape:"url"}',false,'150px','570px','auto')">Find in Library</a>
-                                <a href="" class="btn btn-small btn-default disable-link" onclick="deleteItemInList('{$summId|escape:"url"}','VuFind')">Remove</a>
+                                <div class="btn-group-vertical">
+                                    <button type="button" class="btn btn-default" onclick="requestItem('{$summId|escape:"url"}','{$wishListID}')">Request Item</button>
+                                    <button type="button" class="btn btn-default" onclick="getSaveToListForm('{$summId|escape:"url"}', 'VuFind'); return false;">Move to Wish List</button>
+                                    <button type="button" class="btn btn-default" onclick="findInLibrary('{$summId|escape:"url"}',false,'150px','570px','auto')">Find in Library</button>
+                                    <button type="button" class="btn btn-default" onclick="deleteItemInList('{$summId|escape:"url"}','VuFind')">Remove</button>
+                                </div>
                             {/if}
                         </div>
                     </div>
