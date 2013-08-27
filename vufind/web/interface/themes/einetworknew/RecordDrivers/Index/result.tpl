@@ -1,7 +1,7 @@
 {if $pageType eq 'WishList' || $pageType eq 'BookCart'}
 
 <div class="row">
-    <div class="col-xs-12 col-md-12">
+    <div class="col-xs-12 col-md-12 search-results">
         <a class="accordion-toggle accordion-toggle-collapse" data-toggle="collapse" data-parent="#accordion2" href="#collapse{$record.shortId|escape}"></a>       
         <div class="accordion-group">
             <div class="accordion-heading">
