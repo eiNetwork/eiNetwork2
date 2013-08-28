@@ -198,7 +198,7 @@
 				{$pageContent}
 			{/if}
 		    
-			{if $pageLinks.all}<div class="pagination">{$pageLinks.all}</div>{/if}
+			{if $pageLinks.all}<div class="pagination pagination-sm">{$pageLinks.all}</div>{/if}
 		</div>
 		{* End Main Listing *}
 	</div>

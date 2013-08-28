@@ -575,7 +575,7 @@
 											| <span class="author">{if strlen($record.author) > 0}{$record.author}{/if}</span>
 						        		</div>
 						        		<div class="col-xs-2 col-md-2">
-				                        	<input class="btn btn-info" type="button" onclick="checkoutOverDriveItem('{$record.recordId}', 'Holds')"  value="Checkout" />
+				                        	<input class="btn btn-default" type="button" onclick="checkoutOverDriveItem('{$record.recordId}', 'Holds')"  value="Checkout" />
 				                        </div>
 						        	</div>
 				                </div>
@@ -605,7 +605,7 @@
 												</div>
 												<div class="col-xs-6">
 													<label class="pull-right" style="text-align: center; margin:0 10px 0 0">
-														<input class="btn btn-info" type="button" onclick="checkoutOverDriveItem('{$record.recordId}', 'Holds')"  value="Checkout" />
+														<input class="btn btn-default" type="button" onclick="checkoutOverDriveItem('{$record.recordId}', 'Holds')"  value="Checkout" />
 													</label>
 												</div>
 											</div>

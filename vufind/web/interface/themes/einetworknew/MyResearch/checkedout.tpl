@@ -456,7 +456,7 @@
 				        				</div>
 					                    <div class="col-xs-4 col-md-4">
 				                    		<div class="btn-group btn-group-actions pull-right">
-					                            <button type="button" class="btn btn-small btn-info dropdown-toggle" data-toggle="dropdown">
+					                            <button type="button" class="btn btn-small btn-default dropdown-toggle" data-toggle="dropdown">
 					                                Action <span class="caret"></span>
 					                            </button>
 				                                <ul class="dropdown-menu">
@@ -497,10 +497,17 @@
 												</div>
 												<div class="col-xs-4 col-md-4">
 													<div class="row checkedout-econtent-buttons pull-right">
-														<a href="" class="btn btn-info disable-link" onclick='DownloadCheckedoutOverdrive({$record.recordId},{$record.lockedFormat})'>Download</a>
-														{if $record.hasRead == true}
-															<a href="" class="btn btn-info disable-link" onclick="downloadOverDriveItem('{$record.overDriveId}','610')">Read</a>
-														{/if}
+
+														<div class="btn-group-vertical">
+															<button type="button" class="btn btn-default" onclick='DownloadCheckedoutOverdrive({$record.recordId},{$record.lockedFormat})'>Download</button>
+															{if $record.hasRead == true}
+																<button type="button" class="btn btn-default" onclick="downloadOverDriveItem('{$record.overDriveId}','610')">Read</button>
+															{/if}
+															{if $record.earlyReturn == 1}
+																<button type="button" class="btn btn-default" onclick="returnOverDriveItem('{$record.overDriveId}', '{$record.transactionId}')">Return</button>
+															{/if}
+														</div>
+
 							                    	</div>
 												</div>
 											</div>
@@ -522,9 +529,6 @@
 															{/if}
 														    {$record.format}
 														</li>
-														 {if $record.earlyReturn == 1}
-						                                	<li class="checkedout-return-btn"><a href="" class="btn btn-info disable-link return-btn" onclick="returnOverDriveItem('{$record.overDriveId}', '{$record.transactionId}')"/>Return</a></li>
-						                                {/if}
 														<li class="label-requested-results">
 															<span class="label label-info">{if $record.expiresOn}
 															    Expires on&nbsp;{$record.expiresOn|date_format}
