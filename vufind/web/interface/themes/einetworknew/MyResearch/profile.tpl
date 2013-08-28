@@ -42,26 +42,9 @@
 	}
 
 </script>
-{/literal}
-	 
-	<div id="left-bar">
-		<div class="account_balance">
-			<div>Account Balance</div>
-			{*<div class="fine_details">
-				<span>You have 2 overdue items accumulating fines</span>
-				<br/>
-				<input class="button" value="View Details"/>
-			</div>*}
-			<div class="pay_balance">
-				<span>{$profile.fines}  due in library fines</span>
-				<br/>
-				<a href='{$ecommerceLink}'><input type="button" class="button" value="Pay Balance"/></a>
-			</div>
-		</div>
-	</div>
+{/literal}	 
 
-
-	<div id="main-content">
+	<div class="col-xs-9 col-md-9">
 		{if $profileUpdateErrors}
 		<div class="error">{$profileUpdateErrors}</div>
 		{/if}
@@ -73,9 +56,9 @@
 		{elseif $profile.expireclose == -1}
 		<font color="red"><b>Your library card is expired.  Please visit your local library to renew your card to ensure access to all online service.  </a></b></font>
 		{/if}
-		<form id="profileForm" action="" method="post" {if $edit == true}onsubmit="return checkWhenSubmit();"{/if}>
+		<form role="form" id="profileForm" action="" method="post" {if $edit == true}onsubmit="return checkWhenSubmit();"{/if}>
 		<h3 id="info">Information</h3>
-		<input class="button" type="button" onclick="ajaxLightbox('/MyResearch/AJAX?method=getPinUpdateForm',false,false,'400px',false,'250px');return false;" value="Modify PIN Number"/>
+		<input class="btn btn-default" type="button" onclick="ajaxLightbox('/MyResearch/AJAX?method=getPinUpdateForm',false,false,'400px',false,'250px');return false;" value="Modify PIN Number"/>
 			<div class="profile">
 			<div id="name_notification" class="profile_row">
 				<table>
@@ -222,17 +205,17 @@
 
 		{if $canUpdate}
 			{if $edit == true}
-			<input  type='submit' value='Update Profile' name='update'  class='button'/>
-			<input  type='button' value='Cancel' name='update' onclick='window.location.href="/MyResearch/Profile"' class='button'/>
+			<input  type='submit' value='Update Profile' name='update'  class='btn btn-default'/>
+			<input  type='button' value='Cancel' name='update' onclick='window.location.href="/MyResearch/Profile"' class='btn btn-default'/>
 			{else}
-			<input type='submit' value='Edit Profile' name='edit' class='button'/>
+			<input type='submit' value='Edit Profile' name='edit' class='btn btn-default'>
 			{/if}
 		{/if}
 		</form>
 		{/if}
 	</div>
 	
-	<div id="right-bar">
+	<div class="col-xs-3 col-md-3 clearfix">
 		{include file="MyResearch/menu.tpl"}
 		{include file="Admin/menu.tpl"}
 	</div>
