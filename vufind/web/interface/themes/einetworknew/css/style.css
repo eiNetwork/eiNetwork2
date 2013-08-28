@@ -664,7 +664,7 @@ p.notification {
 }
 
 .search-results {
-	margin-bottom:20px;
+	margin-top:20px;
 }
 
 .search-results-list {
@@ -674,4 +674,20 @@ p.notification {
 
 .search-results-list li {
 	margin:0 0 5px 0;
+}
+
+.wishlist-batch-actions {
+	margin:0 5px 0 0;
+}
+
+.wishlist-batch-actions li {
+	text-align: left;
+}
+
+.wishlist-view-dropdown {
+	margin:0 20px 0 0;
+}
+
+.wishlist-dropdown-actions {
+	margin:0 15px 0 0;
 }

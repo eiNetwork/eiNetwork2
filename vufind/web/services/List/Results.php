@@ -499,7 +499,8 @@ class Results extends Action {
 			$recordSet = $searchObject->getResultRecordHTML();
 			$interface->assign('recordSet', $recordSet);
 			$page = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;
-                                                $list_id = $_REQUEST['goToListID'];
+                                                
+                                                $list_id = isset($_REQUEST['goToListID']) ? $_REQUEST['goToListID'] : null;
  
                                                 if (count($recordSet) < 1) {
                                                                 header( 'Location: /List/Results?goToListID=' . $list_id . '&view=list&searchSource=local&page=' . ($page - 1)) ;
@@ -711,7 +712,9 @@ class Results extends Action {
 				$locations = $locationSingleton->getPickupBranchesPreferLocationFirst($profile, $profile['homeLocationId']);
 				$interface->assign('home_library', $locations['home_library']);
 				
-				if ($locations['preferred_count'] < 1 && $_REQUEST['goToListID'] == 'BookCart'){
+				$goToListID = isset($_REQUEST['goToListID']) ? $_REQUEST['goToListID'] : null;
+
+				if ($locations['preferred_count'] < 1 && $goToListID == 'BookCart'){
 					$interface->assign('preferred_message', "You don't have a default pickup location selected.<br />Please select your default pickup locations using the 'Your Preferred Libraries' panel on the right.");
 				}
 

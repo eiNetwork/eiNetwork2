@@ -64,7 +64,7 @@
 			</div>
 			<div class="col-xs-8 col-md-8" style="text-align: right">
 				{if $pageLinks.all}
-					<ul class="pagination pagination-small">{$pageLinks.all}</ul>
+					<ul class="pagination pagination-sm">{$pageLinks.all}</ul>
 				{/if}
 			</div>
 		</div>
@@ -85,7 +85,7 @@
 		<div class="row">
 			<div class="col-xs-12 col-md-12" style="text-align: right">
 				{if $pageLinks.all}
-					<ul class="pagination pagination-small">{$pageLinks.all}</ul>
+					<ul class="pagination pagination-sm">{$pageLinks.all}</ul>
 				{/if}
 			</div>
 		</div>

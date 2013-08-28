@@ -24,7 +24,7 @@
 	Search for items to add them to a new wish list.
 	{else}
 		<form method="post">
-			<table class="datagrid" style="width:656px;">
+			<table class="table">
 					<tr>
 						<th style="width:20px;"><input type = "checkbox" /></th>
 						<th>Name</th>
