@@ -73,7 +73,7 @@ function redrawSaveStatus() {literal}{{/literal}
 				{/if}
 				{*}
 			</div>
-			<div class="col-xs-3 col-md-3">
+			<div class="col-xs-2 col-md-2">
 				<div class="btn-group-vertical">
 					{if !isset($noRequest)}
 						<button type="button" class="btn btn-default" {if $enableBookCart}onclick="getSaveToBookCart('{$id|escape:"url"}','VuFind');return false;"{/if}>Add to Cart</button>
@@ -86,7 +86,7 @@ function redrawSaveStatus() {literal}{{/literal}
 		</div>
 
 	</div>
-	<div class="col-lg-3">
+	<div class="col-xs-3 col-md-3">
 		{include file="ei_tpl/right-bar.tpl"}
 	</div>
 </div>

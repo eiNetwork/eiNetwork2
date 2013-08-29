@@ -18,12 +18,13 @@
 	{css filename="jqueryui.css"}
 	<link rel="stylesheet" href="/interface/themes/einetworknew/css/style.css" type="text/css" media="screen" />
 		
-	<link rel="stylesheet" href="/interface/themes/einetwork/css/SliderThemes/default/default.css" type="text/css" media="screen" />
-	<link rel="stylesheet" href="/interface/themes/einetwork/css/SliderThemes/light/light.css" type="text/css" media="screen" />
-	<link rel="stylesheet" href="/interface/themes/einetwork/css/SliderThemes/dark/dark.css" type="text/css" media="screen" />
-	<link rel="stylesheet" href="/interface/themes/einetwork/css/SliderThemes/bar/bar.css" type="text/css" media="screen" />
-	<link rel="stylesheet" href="/interface/themes/einetwork/css/SliderThemes/nivo-slider.css" type="text/css" media="screen" />
-	<link rel="stylesheet" href="/interface/themes/einetwork/css/SliderThemes/slider-style.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/interface/themes/einetworknew/css/SliderThemes/default/default.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/interface/themes/einetworknew/css/SliderThemes/light/light.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/interface/themes/einetworknew/css/SliderThemes/dark/dark.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/interface/themes/einetworknew/css/SliderThemes/bar/bar.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/interface/themes/einetworknew/css/SliderThemes/nivo-slider.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/interface/themes/einetworknew/css/SliderThemes/slider-style.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/interface/themes/einetworknew/css/ei_css/get-card.css" type="text/css" media="screen" />
 	    
 	<script type="text/javascript">
 		path = '{$path}';
@@ -97,7 +98,7 @@
 	</script>
 	{/literal}
 
-	{php} if (strpos($_SERVER["REQUEST_URI"],'Union/Search') !== false){ {/php}
+	{php} if (strpos($_SERVER["REQUEST_URI"],'Union/Search') !== false || strpos($_SERVER["REQUEST_URI"],'Search/Results') !== false){ {/php}
 
 	<div class="header-back header-back-search"></div>
 
@@ -194,7 +195,7 @@
 				<div class="col-xs-3 col-md-3 retain-filters">
 					{php}
 
-				      if (strpos($_SERVER['REQUEST_URI'], 'Union/Search', 0) > 0){
+				      if (strpos($_SERVER['REQUEST_URI'], 'Union/Search', 0) > 0 || strpos($_SERVER['REQUEST_URI'], 'Search/Results', 0) > 0){
 				        echo '<div class="availFilter"><input name="limit_avail" id="limitToAvail" type="checkbox"> Limit to available</div>';
 				      }
 

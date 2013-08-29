@@ -5,6 +5,11 @@ body {
 	font-size: 12pt;
 }
 
+.container { /* Disabling Responsive Layout for Now */
+	max-width: none;
+	width: 970px;
+}
+
 .slider-wrapper {
 	width:700px !important;
 	margin:20px auto 20px !important;
@@ -140,11 +145,11 @@ body {
 /* left panel */
 
 .facets {
-	background-color: #F5F5DC;
+	background-color: #f8fffc;
 }
 
 .right-bar {
-	background-color: #F5F5DC;
+	background-color: #f8fffc;
 }
 
 .narrowGroupHidden {
@@ -621,11 +626,11 @@ p.notification {
 }
 
 .panel-default {
-	background-color: #F5F5DC;
+	background-color: #f8fffc;
 }
 
 .list-group-item {
-	background-color: #F5F5DC;
+	background-color: #f8fffc;
 }
 
 .book-cart {
@@ -722,4 +727,31 @@ p.notification {
 
 .book-cart-copy {
 	margin:20px 0 20px 0;
+}
+
+.preferred-message-container {
+	width: 100%;
+}
+
+.errorMessage{
+	/*height:12px;*/
+	color: red;
+}
+
+.preferred-message {
+	width:60%;
+	margin:0 auto;
+}
+
+.preferred-message p {
+	display: inline-block;
+	margin:10px 4px 10px 10px;
+	color:#f00;
+	font-size:11pt;
+	text-align: center;
+}
+
+#adminMenuAccordion {
+	height:200px;
+	overflow-x: auto;
 }
