@@ -35,7 +35,7 @@
 				{/if}
 			</div>
 			<div class="col-xs-7 col-md-7" style="text-align:right">
-				<a href="" class="btn btn-default" onclick="window.location.href='/Search/Advanced'">Advanced Search</a>
+				<button class="btn btn-default" onclick="window.location.href='/Search/Advanced'">Advanced Search</button>
 			</div>
 		</div>
 

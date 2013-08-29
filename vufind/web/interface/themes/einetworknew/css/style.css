@@ -2,7 +2,7 @@
 
 body {
 	font-family: Calibri, Segoe, "Segoe UI", Optima, Arial, sans-serif;
-	font-size: 13pt;
+	font-size: 12pt;
 }
 
 .slider-wrapper {
@@ -28,6 +28,10 @@ body {
 	height: 70px;
 	background-color: #333;
 	margin:0;
+}
+
+.header-back-search {
+	height: 90px;
 }
 
 .header {
@@ -65,7 +69,11 @@ body {
 }
 
 .main-page {
-	margin:50px 0 0 0;
+	margin:30px 0 0 0;
+}
+
+.main-page-search {
+	margin:30px 0 0 0;
 }
 
 .footer {
@@ -132,7 +140,11 @@ body {
 /* left panel */
 
 .facets {
-	/*background-color: #eeeecc;*/
+	background-color: #F5F5DC;
+}
+
+.right-bar {
+	background-color: #F5F5DC;
 }
 
 .narrowGroupHidden {
@@ -608,8 +620,16 @@ p.notification {
 	background-color:#fff;
 }
 
+.panel-default {
+	background-color: #F5F5DC;
+}
+
+.list-group-item {
+	background-color: #F5F5DC;
+}
+
 .book-cart {
-	margin:-20px 0 0 0;
+	margin:-10px 0 0 0;
 	border: none;
 }
 
@@ -690,4 +710,16 @@ p.notification {
 
 .wishlist-dropdown-actions {
 	margin:0 15px 0 0;
+}
+
+.retain-filters {
+	color:#fff;
+}
+
+.recordcoverWrapper {
+	width:50%;
+}
+
+.book-cart-copy {
+	margin:20px 0 20px 0;
 }

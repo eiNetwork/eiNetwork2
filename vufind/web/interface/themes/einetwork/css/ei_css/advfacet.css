@@ -1,11 +1,4 @@
 
-html,body{
-font-family: "Helvetica Neue Light", Helvetica, Sans-serif;
-height: 100%;
-margin: 0px;
-padding: 0px;
-}
-
 div.dropdown{
 position: relative;
 margin: 5px 0px 5px;

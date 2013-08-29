@@ -1,5 +1,6 @@
 {strip}
 
+<div class="right-bar">
 	<div class="row">
 		<div class="col-xs-12 col-md-12">
 			<div class="panel panel-default book-cart">
@@ -164,6 +165,8 @@
 				<a class="list-group-item" href="http://articles.einetwork.net">Databases and Articles</a>
 				<a class="list-group-item" href="http://illiad.carnegielibrary.org/illiad/logon.html">Interlibrary Loan</a>
 			</div>
+
+</div>
 
 </div>
 {/strip}
