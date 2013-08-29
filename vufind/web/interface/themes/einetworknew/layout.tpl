@@ -18,12 +18,13 @@
 	{css filename="jqueryui.css"}
 	<link rel="stylesheet" href="/interface/themes/einetworknew/css/style.css" type="text/css" media="screen" />
 		
-	<link rel="stylesheet" href="/interface/themes/einetwork/css/SliderThemes/default/default.css" type="text/css" media="screen" />
-	<link rel="stylesheet" href="/interface/themes/einetwork/css/SliderThemes/light/light.css" type="text/css" media="screen" />
-	<link rel="stylesheet" href="/interface/themes/einetwork/css/SliderThemes/dark/dark.css" type="text/css" media="screen" />
-	<link rel="stylesheet" href="/interface/themes/einetwork/css/SliderThemes/bar/bar.css" type="text/css" media="screen" />
-	<link rel="stylesheet" href="/interface/themes/einetwork/css/SliderThemes/nivo-slider.css" type="text/css" media="screen" />
-	<link rel="stylesheet" href="/interface/themes/einetwork/css/SliderThemes/slider-style.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/interface/themes/einetworknew/css/SliderThemes/default/default.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/interface/themes/einetworknew/css/SliderThemes/light/light.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/interface/themes/einetworknew/css/SliderThemes/dark/dark.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/interface/themes/einetworknew/css/SliderThemes/bar/bar.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/interface/themes/einetworknew/css/SliderThemes/nivo-slider.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/interface/themes/einetworknew/css/SliderThemes/slider-style.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/interface/themes/einetworknew/css/ei_css/get-card.css" type="text/css" media="screen" />
 	    
 	<script type="text/javascript">
 		path = '{$path}';

@@ -691,3 +691,24 @@ p.notification {
 .wishlist-dropdown-actions {
 	margin:0 15px 0 0;
 }
+.preferred-message-container {
+	width: 100%;
+}
+
+.errorMessage{
+	/*height:12px;*/
+	color: red;
+}
+
+.preferred-message {
+	width:60%;
+	margin:0 auto;
+}
+
+.preferred-message p {
+	display: inline-block;
+	margin:10px 4px 10px 10px;
+	color:#f00;
+	font-size:11pt;
+	text-align: center;
+}
