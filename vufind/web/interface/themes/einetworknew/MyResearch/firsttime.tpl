@@ -1,9 +1,5 @@
-<div id="page-content" class="content">
-  <div id="left-bar">
-   &nbsp;
-  </div>
-  
-  <div id="main-content">
+<div id="page-content" class="content">  
+  <div class="col-xs-9 col-md-9">
     <h2>First Time Using the Catalog?</h2>
  {literal}
  <script type="text/javascript">
@@ -39,7 +35,7 @@
       </div>
     </div>
     </div> 
-  <div id="right-bar">
+  <div class="col-xs-3 col-md-3 clearfix">
     {include file="MyResearch/menu.tpl"}
     {include file="Admin/menu.tpl"}
   </div>

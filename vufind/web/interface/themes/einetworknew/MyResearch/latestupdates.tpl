@@ -1,9 +1,35 @@
 <div id="page-content" class="content">
-    <div id="left-bar">&nbsp;</div>
-    <div id="main-content">
-        <h1>Latest Website Updates</h1>
+    <div class="col-xs-9 col-md-9">
+        <h2>Latest Website Updates</h2>
+        <br>
+        <h4>We’re listening to you.   The ongoing changes and planned enhancements are driven by the comments and feedback you submit when completing the new catalog survey.  We want to continue to hear from you and we appreciate your feedback.</h4>
         <div class="releases">
-            <h2>Release version 2.1</h2>
+            <h3>Upcoming Release version 3.0</h3>
+            Scheduled release September, 2013
+            <ol class="decimal">
+                <li>Improve search results for title searches when using a search phrase that exactly matches the title.</li>
+                <li>Automatically include alternate forms of the title as part of the search criteria when performing a title search.</li>
+                <li>Enable users to place title requests from the search results page.</li>
+                <li>Enable users to select and save their preference for a full or brief display of information when viewing checked out items, requests, wishlists, and  the bookcart  while  logged into My Account.</li>
+                <li>Make it more apparent to users when logged into My Account that they have outstanding fines.</li>
+            </ol>
+        </div>
+        <div class="releases">
+            <h3>Previous Releases</h3>
+            <h3>Release version 2.2</h3>
+            Release date 7/29/2013
+            <ol class="decimal">
+                <li>Improve messaging and functionality when placing requests by users without preferred library locations.</li>
+                <li>Misc. bug fixes:
+                    <ol class="alpha">
+                        <li>Overdrive request that became available does not appear in Requested Items.</li>
+                    </ol>
+                </li>
+            </ol>
+        </div>
+        
+        <div class="releases">
+            <h3>Release version 2.1</h3>
             Release date 7/15/2013
             <ol class="decimal">
                 <li>Enabled the ability to retain your library card number and PIN when logging into My Account.</li>
@@ -20,8 +46,7 @@
         </div>
 
         <div class="releases">
-            <h2><span class="bold">Previous Releases</span></h2>
-            <h2>Release version 2.0</h2>
+            <h3>Release version 2.0</h3>
             Release date 7/2/2013
             <ol class="decimal">
                 <li>Enable ability for users to retain filters between searches.<br />Provided ability to retain filters across multiple searches.  A checkbox under the search box supports this feature.</li>
@@ -40,7 +65,7 @@
             </ol>
         </div>
         <div class="releases">
-            <h2>Release version 1.1</h2>
+            <h3>Release version 1.1</h3>
             Release date 6/10/2013
             <ol class="decimal">
                 <li>Provided instructions on My Account login for users who haven't set up a PIN.</li>
@@ -52,7 +77,7 @@
             </ol>
         </div>
     </div>
-    <div id="right-bar">
+    <div class="col-xs-3 col-md-3 clearfix">
     {include file="MyResearch/menu.tpl"}
     {include file="Admin/menu.tpl"}
     </div>
