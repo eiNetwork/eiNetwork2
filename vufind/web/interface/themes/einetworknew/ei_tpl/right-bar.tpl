@@ -1,8 +1,9 @@
-{strip}
 {literal}
 <script type="text/javascript">
 
 	$(document).ready(function(){
+
+		var t=setTimeout(function(){$('.notification-center').show('fast');},2000)
 
 		$('#notification-center-link').click(function(){
 			$('.notification-center').show('fast');
@@ -16,6 +17,7 @@
 
 </script>
 {/literal}
+{strip}
 <div class="right-bar">
 	<div class="row">
 		<div class="col-xs-12 col-md-12 notification-center-container">
@@ -99,6 +101,7 @@
         </script>
     {/literal}
 
+    {if $user}
     <div class="row">
 		<div class="col-xs-12 col-md-12">
 			<div class="panel panel-default">
@@ -136,6 +139,7 @@
 	    })
     </script>
     {/literal}
+    {/if}
     
    
 

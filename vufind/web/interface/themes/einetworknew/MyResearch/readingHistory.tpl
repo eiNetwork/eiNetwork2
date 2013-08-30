@@ -58,7 +58,7 @@
 							
 							{if $transList}
 								<div class="clearfix"></div>
-								<div>{if $pageLinks.all}<div class="pagination pull-right">{$pageLinks.all}</div>{/if}</div>			
+								<div>{if $pageLinks.all}<div class="pagination pagination-sm pull-right">{$pageLinks.all}</div>{/if}</div>			
 								<div class=clearfix></div>
 							{/if}
 							{if $transList}
@@ -171,7 +171,7 @@
 				{/if}
 				{if $transList}
 					<div class=clearfix></div>
-					<div>{if $pageLinks.all}<div class="pagination pull-right">{$pageLinks.all}</div>{/if}</div>			
+					<div>{if $pageLinks.all}<div class="pagination pagination-sm pull-right">{$pageLinks.all}</div>{/if}</div>			
 					<div class=clearfix></div>
 				{/if}
 		</div>

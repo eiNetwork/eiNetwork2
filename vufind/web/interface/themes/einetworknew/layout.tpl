@@ -4,7 +4,6 @@
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=9" />
 	<title>{$pageTitle|truncate:64:"..."}</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
@@ -174,7 +173,8 @@
 
 			</div>
 			<div class="row">
-				<div class="col-xs-2 col-md-2 col-md-offset-5 retain-filters">
+				<div class="col-xs-2 col-md-2 col-md-offset-5">
+					<div class="retain-filters">
 					{* Do we have any checkbox filters? *}
 
 					  {assign var="hasCheckboxFilters" value="0"}
@@ -190,16 +190,18 @@
 					  {if $filterList || $hasCheckboxFilters}
 					      <input type="checkbox" checked="checked" onclick="filterAll(this);" /> {translate text="basic_search_keep_filters"}
 					  {/if}
-					    
+				  	</div>
 				</div>
-				<div class="col-xs-3 col-md-3 retain-filters">
-					{php}
+				<div class="col-xs-3 col-md-3">
+					<div class="retain-filters">
+						{php}
 
-				      if (strpos($_SERVER['REQUEST_URI'], 'Union/Search', 0) > 0 || strpos($_SERVER['REQUEST_URI'], 'Search/Results', 0) > 0){
-				        echo '<div class="availFilter"><input name="limit_avail" id="limitToAvail" type="checkbox"> Limit to available</div>';
-				      }
+					      if (strpos($_SERVER['REQUEST_URI'], 'Union/Search', 0) > 0 || strpos($_SERVER['REQUEST_URI'], 'Search/Results', 0) > 0){
+					        echo '<div class="availFilter"><input name="limit_avail" id="limitToAvail" type="checkbox"> Limit to available</div>';
+					      }
 
-				    {/php}
+					    {/php}
+					</div>
 				</div>
 			</div>
 
