@@ -15,16 +15,14 @@
 	</script>
 {/literal}
 <div id="page-content" class="content">
-	<div id="left-bar">
-	
-	</div>
-	<div id="main-content">
+	<div id="main-content" class="col-xs-9 col-md-9">
 	{if $wishLists|@count lt 1}
-	<div class="subPageTitle" style="height:40px;">{translate text="You don't have any Classic Catalog wish lists."}</div>
+	<div><h3>{translate text="You don't have any wish lists in the old catalog."}</h3></div>
 	Search for items to add them to a new wish list.
 	{else}
+		<div><h2>{translate text="Import a Wish List from the Old Catalog"}</h2></div>
 		<form method="post">
-			<table class="datagrid" style="width:656px;">
+			<table class="table">
 					<tr>
 						<th style="width:20px;"><input type = "checkbox" /></th>
 						<th>Name</th>
@@ -41,10 +39,13 @@
 					</tr>
 			{/foreach}
 			</table>
-			<input type="submit" name="submit" value="Import" class="button yellow" /><input type='button' onclick="window.location.href='/List/Results'" value='Cancel' class="button"/>
+			<input type="submit" name="submit" value="Import" class="btn btn-warning" />&nbsp;<input type='button' onclick="window.location.href='/List/Results'" value='Cancel' class="btn btn-warning"/>
 		</form>
 	{/if}
 	</div>
-	{*right-bar template*}
-	{include file="ei_tpl/right-bar.tpl"}
+
+	<div class="col-xs-3 col-md-3">
+		{*right-bar template*}
+		{include file="ei_tpl/right-bar.tpl"}
+	</div>
 </div>

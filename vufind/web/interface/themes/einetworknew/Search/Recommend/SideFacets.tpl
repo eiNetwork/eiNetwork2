@@ -85,7 +85,7 @@ $(document).ready(function() {
 							{/foreach}
 						</ul>
 
-						<a href="#" onclick="removeFilters();" class="btn btn-small btn-danger">Remove All Filters</a>
+						<a href="#" onclick="removeFilters();" class="btn btn-small btn-default">Remove All Filters</a>
 
 					</dl>
 			</div>

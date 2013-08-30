@@ -101,19 +101,22 @@
                         </div>
                         <div class="col-xs-2 col-md-2 book-results-buttons">
                             {if $pageType eq 'WishList'}
-
-                            	<a href="" class="btn btn-small btn-info disable-link" onclick="window.location.href='{$url}/EcontentRecord/{$summId|escape:"url"}/Home?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}'">View Details</a>
-					        	{if sourceUrl}
-					        		<a href="" class="btn btn-small btn-info disable-link RequestWord{$summId|escape:"url"}" onclick="window.location.href='{$sourceUrl}'">Access Online</a>
-					        	{else}
-					        		<a href="" class="btn btn-small btn-info disable-link RequestWord{$summId|escape:"url"}" onclick="window.location.href='{$url}/EcontentRecord/{$summId|escape:"url"}/Home?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}#links'">Access Online</a>
-					        	{/if}
-					        	<a href="" class="btn btn-small btn-info disable-link" onclick="deleteItemInList('{$summId|escape:"url"}','eContent')">Remove</a>
+                            	<div class="btn-group-vertical">
+                                    <button type="button" class="btn btn-default" onclick="window.location.href='{$url}/EcontentRecord/{$summId|escape:"url"}/Home?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}'">View Details</button>
+									{if sourceUrl}
+										<button type="button" class="btn btn-default" onclick="window.location.href='{$sourceUrl}'">Access Online</button>
+									{else}
+										<button type="button" class="btn btn-default" onclick="window.location.href='{$url}/EcontentRecord/{$summId|escape:"url"}/Home?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}#links'">Access Online</button>
+									{/if}
+									<button type="button" class="btn btn-default" onclick="deleteItemInList('{$summId|escape:"url"}','eContent')">Remove</button>
+                                </div>
                             {elseif $pageType eq 'BookCart'}
-                            	<a href="" class="btn btn-small btn-info disable-link" onclick="requestItem('{$summId|escape:"url"}','{$wishListID}')">Request Now</a>
-					            <a href="" class="btn btn-small btn-info disable-link" onclick="getSaveToListForm('{$summId|escape:"url"}', 'VuFind'); return false;">Move to Wish List</a>
-					        	<a href="" class="btn btn-small btn-info disable-link" onclick="requestItem('{$summId|escape:"url"}','{$wishListID}')">Find in Library</a>
-					        	<a href="" class="btn btn-small btn-info disable-link" onclick="deleteItemInList('{$summId|escape:"url"}','eContent')">Remove</a>
+                            	<div class="btn-group-vertical">
+                                    <button type="button" class="btn btn-default" onclick="requestItem('{$summId|escape:"url"}','{$wishListID}')">Request Now</button>
+                                    <button type="button" class="btn btn-default" onclick="getSaveToListForm('{$summId|escape:"url"}', 'VuFind'); return false;">Move to Wish List</button>
+                                    <button type="button" class="btn btn-default" onclick="requestItem('{$summId|escape:"url"}','{$wishListID}')">Find in Library</button>
+                                    <button type="button" class="btn btn-default" onclick="deleteItemInList('{$summId|escape:"url"}','eContent')">Remove</button>
+                                </div>
                             {/if}
                         </div>
                     </div>
@@ -191,12 +194,14 @@
                         </ul>
                     </div>
                     <div class="col-xs-4 col-md-4">
-                    	<a href="" class="btn btn-small btn-default disable-link" onclick="window.location.href='{$url}/EcontentRecord/{$summId|escape:"url"}/Home?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}'">View Details</a>
-			            {if $sourceUrl}
-			            	<a href="" class="btn btn-small btn-default disable-link RequestWord{$summId|escape:"url"}" onclick="window.location.href='{$sourceUrl}'">Access Online</a>
-			            {else}
-			            	<a href="" class="btn btn-small btn-default disable-link RequestWord{$summId|escape:"url"}" onclick="window.location.href='{$url}/EcontentRecord/{$summId|escape:"url"}/Home?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}#links'">Access Online</a>
-			            {/if}
+                    	<div class="btn-group-vertical">
+	                        <button type="button" class="btn btn-default" onclick="window.location.href='{$url}/EcontentRecord/{$summId|escape:"url"}/Home?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}'">View Details</button>
+	                        {if $sourceUrl}
+	                        	<button type="button" class="btn btn-default" onclick="window.location.href='{$sourceUrl}'">Access Online</button>
+	                        {else}
+	                        	<button type="button" class="btn btn-default" onclick="window.location.href='{$url}/EcontentRecord/{$summId|escape:"url"}/Home?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}#links'">Access Online</button>
+	                    	{/if}
+	                    </div>
                     </div>
                 </div>
             </div>

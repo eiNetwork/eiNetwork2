@@ -1,9 +1,6 @@
 {*<script type="text/javascript" src="{$path}/js/validate/jquery.validate.js"></script>*}
 <div id="page-content" class="content">
-	<div id="left-bar">
-		&nbsp;
-	</div>
-	<div id="main-content">
+	<div id="main-content" class="col-xs-12 col-md-12">
 		<p>Please enter the following information to set up your account.</p>
 		<p>Fields marks in yellow are required.</p>
 		<div class="page">
@@ -177,6 +174,10 @@
 						<option value="1923">2007</option>
 						<option value="1922">2008</option>
 						<option value="1923">2009</option>
+						<option value="1923">2010</option>
+						<option value="1923">2011</option>
+						<option value="1923">2012</option>
+						<option value="1923">2013</option>
 					</select>
 				</div>
 				

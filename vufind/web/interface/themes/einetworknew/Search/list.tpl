@@ -19,7 +19,7 @@
 	<div class="col-xs-6 col-md-6">
 
 		<div class="row">
-			<div class="col-xs-5 col-md-5">
+			<div class="col-xs-6 col-md-6">
 				{if $recordCount}
 					<div class="input-group">
 						<span class="input-group-addon">{translate text='Sort by'}</span>
@@ -34,8 +34,8 @@
 				{if $spellingSuggestions}
 				{/if}
 			</div>
-			<div class="col-xs-7 col-md-7" style="text-align:right">
-				<a href="" class="btn btn-default" onclick="window.location.href='/Search/Advanced'">Advanced Search</a>
+			<div class="col-xs-6 col-md-6" style="text-align:right">
+				<button class="btn btn-default" onclick="window.location.href='/Search/Advanced'">Advanced Search</button>
 			</div>
 		</div>
 
@@ -59,12 +59,9 @@
 		{/if}
 
 		<div class="row">
-			<div class="col-xs-4 col-md-4">
-				
-			</div>
-			<div class="col-xs-8 col-md-8" style="text-align: right">
+			<div class="col-xs-12 col-md-12" style="text-align: right">
 				{if $pageLinks.all}
-					<ul class="pagination pagination-small">{$pageLinks.all}</ul>
+					<ul class="pagination pagination-sm">{$pageLinks.all}</ul>
 				{/if}
 			</div>
 		</div>
@@ -85,7 +82,7 @@
 		<div class="row">
 			<div class="col-xs-12 col-md-12" style="text-align: right">
 				{if $pageLinks.all}
-					<ul class="pagination pagination-small">{$pageLinks.all}</ul>
+					<ul class="pagination pagination-sm">{$pageLinks.all}</ul>
 				{/if}
 			</div>
 		</div>
