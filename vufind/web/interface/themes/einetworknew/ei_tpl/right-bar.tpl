@@ -1,6 +1,36 @@
 {strip}
+{literal}
+<script type="text/javascript">
 
+	$(document).ready(function(){
+
+		$('#notification-center-link').click(function(){
+			$('.notification-center').show('fast');
+		})
+
+		$('.notification-center .close').click(function(){
+			$('.notification-center').hide('slow');
+		})
+
+	});
+
+</script>
+{/literal}
 <div class="right-bar">
+	<div class="row">
+		<div class="col-xs-12 col-md-12 notification-center-container">
+			<span class="glyphicon glyphicon-inbox"></span> <a id="notification-center-link" class="disable-link" href="">Notification Center</a> <span style="color:#f00;font-size:0.95em">(2)</span>
+			<div class="row">
+				<div class="col-xs-12 col-md-12 notification-center">
+					<p class="notification-arrow-up"></p>
+					<button type="button" class="close pull-right">&times;</button>
+					<p>Your library card is due to expire within the next <span class="label label-danger" style="font-size:0.85em">30 days</span>.<br />Please visit your local library to renew your card to ensure access to all online services.</p>
+					<p class="notification-center-footer">You have <span class="label label-danger" style="font-size:0.85em">$1.35</span> in overdue fines.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<div class="row">
 		<div class="col-xs-12 col-md-12">
 			<div class="panel panel-default book-cart">

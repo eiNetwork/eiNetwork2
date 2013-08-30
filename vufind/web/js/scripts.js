@@ -251,7 +251,7 @@ function lightbox(load_message){
 }
 
 function ajaxLightbox(urlToLoad, parentId, left, width, top, height){
-	
+
 	var loadMsg = $('#lightboxLoading').html();
 
 	hideSelects('hidden');
@@ -265,7 +265,9 @@ function ajaxLightbox(urlToLoad, parentId, left, width, top, height){
 	// Get the height of the document
 	var documentHeight = $(document).height();
 
-	$('#myModal').modal('show');
+	$('#eiNetworkModal .modal-header').hide();
+	$('#eiNetworkModal .modal-footer').hide();
+	$('#eiNetworkModal').modal('show');
  
 	//$('#lightbox').show();
 	//$('#lightbox').css('height', documentHeight + 'px');
@@ -277,7 +279,7 @@ function ajaxLightbox(urlToLoad, parentId, left, width, top, height){
 
 	$.get(urlToLoad, function(data) {
 		
-		$('#myModal .modal-body').html(data);
+		$('#eiNetworkModal .modal-body').html(data);
 		//$('#popupbox').show();
 		if (parentId){
 		

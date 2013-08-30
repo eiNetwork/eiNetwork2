@@ -634,7 +634,6 @@ p.notification {
 }
 
 .book-cart {
-	margin:-10px 0 0 0;
 	border: none;
 }
 
@@ -754,4 +753,59 @@ p.notification {
 #adminMenuAccordion {
 	height:200px;
 	overflow-x: auto;
+}
+
+.notification-center-container {
+	position: relative;
+	font-size: 1em;
+	margin:0 0 0 15px;
+}
+
+.notification-center-container span {
+	font-size:1.2em;
+	margin:0 10px 0 0;
+}
+
+.notification-center {
+	display: none;
+	position: absolute;
+	z-index: 10;
+	top:30px;
+	width:100%;
+	border:solid 3px #333333;
+	background-color:#fff;
+	-moz-box-shadow: 0 0 5px #888;
+	-webkit-box-shadow: 0 0 5px#888;
+	box-shadow: 0 0 5px #888;
+	padding:12px;
+}
+
+.notification-center p {
+	padding:6px;
+	margin:0 0 6px 0;
+	border-bottom:#cacaca solid 1px;
+}
+
+.notification-center p.notification-center-footer {
+	border-bottom: none;
+}
+
+.notification-arrow-up {
+	position: absolute;
+	display:block;
+	z-index: 12;
+	top:-7px;
+	left:17px;
+	width:9px;
+	height:4px;
+	background-image: url('../images/arrow_up.png');
+	background-repeat: no-repeat;
+}
+
+.godeeper-arrow {
+	
+	position: absolute;
+	z-index:10;
+	top:20px;
+	left:40px;
 }

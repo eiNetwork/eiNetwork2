@@ -41,7 +41,7 @@ function redrawSaveStatus() {literal}{{/literal}
 				</a>
 				<div id="goDeeperLink" class="godeeper" style="display:none">
 					<a href="{$path}/Record/{$id|escape:"url"}/GoDeeper" onclick="ajaxLightbox('{$path}/Record/{$id|escape}/GoDeeper?lightbox', false,false, '700px', '110px', '70%'); return false;">
-					<img alt="{translate text='Go Deeper'}" src="{$path}/images/deeper.png" /></a>
+					<img class="godeeper-arrow" alt="{translate text='Go Deeper'}" src="{$path}/images/deeper.png" /></a>
 				</div>
 			</div>
 			<div class="col-xs-6 col-md-6">
@@ -82,6 +82,97 @@ function redrawSaveStatus() {literal}{{/literal}
 					<button type="button" class="btn btn-default" onclick="getSaveToListForm('{$id|escape}', 'VuFind'); return false;">Add To Wish List</button>
 					<button type="button" class="btn btn-default" onclick="findInLibrary('{$id|escape:"url"}',false,'150px','570px','auto')">Find in Library</button>
 				</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-12 col-md-12">
+				<ul class="search-results-list">
+					<li>{include file="Record/formatType.tpl"}</li>
+					<li><div id="holdingsSummaryPlaceholder" class="holdingsSummaryRecord"></div></li>
+				</ul>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="col-xs-12 col-md-12">
+				<ul class="search-results-list">
+					{if $summary}
+						<li>
+							{translate text='Summary'}
+							<ul>
+								<li>
+									{if strlen($summary) > 300}
+										<span id="shortSummary">
+											{$summary|stripTags:'<b><p><i><em><strong><ul><li><ol>'|truncate:300}{*Leave unescaped because some syndetics reviews have html in them *}
+											<a href='#' onclick='$("#shortSummary").slideUp();$("#fullSummary").slideDown()'>More</a>
+										</span>
+										<span id="fullSummary" style="display:none">
+											{$summary|stripTags:'<b><p><i><em><strong><ul><li><ol>'}{*Leave unescaped because some syndetics reviews have html in them *}
+											<a href='#' onclick='$("#shortSummary").slideDown();$("#fullSummary").slideUp()'>Less</a>
+										</span>
+									{else}
+										{$summary|stripTags:'<b><p><i><em><strong><ul><li><ol>'}{*Leave unescaped because some syndetics reviews have html in them *}
+									{/if}
+								</li>
+							</ul>
+						</li>
+					{/if}
+					{if $toc}
+						{assign var="con" value=""}
+						<li>
+							{translate text='Contents'}
+							<ul>
+								<li>
+									{foreach from=$toc item=line name=loop}
+										{if $line.code =="g"}
+											{assign var="con" value="`$con``$line.content`<br>"}
+										{else}
+											{assign var="con" value="`$con``$line.content`"}
+										{/if}
+									{/foreach}
+									{if strlen($con) > 300}
+										<span id="shortTOC">
+											{$con|truncate:300}
+											<a href='#' onclick='$("#shortTOC").slideUp();$("#fullTOC").slideDown()'>More</a>
+										</span>
+										<span id="fullTOC" style="display:none">
+											{$con}
+											<a href='#' onclick='$("#shortTOC").slideDown();$("#fullTOC").slideUp()'>Less</a>
+										</span>
+									{else}
+										{$con}
+									{/if}
+								</li>
+							</ul>
+						</li>
+					{/if}
+					<li>
+						{translate text='Published Reviews'}
+						<ul>
+							<li>
+								{if $showAmazonReviews || $showStandardReviews}
+									<div id='reviewPlaceholder'>No published reviews available</div>
+								{/if}
+							</li>
+						</ul>
+					</li>
+					<li>
+						{translate text='Community Reviews test'}
+						<ul>
+							<li>
+								{*include file="$module/view-comments.tpl"*}
+								<div class="ltfl_reviews"></div>
+							</li>
+						</ul>
+					</li>
+					<li>
+						{translate text='Staff Reviews'}
+						<ul>
+							<li>{include file="$module/view-staff-reviews.tpl"}</li>
+						</ul>
+					</li>
+				</ul>
 			</div>
 		</div>
 
