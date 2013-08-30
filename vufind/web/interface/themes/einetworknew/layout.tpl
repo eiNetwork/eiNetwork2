@@ -96,9 +96,17 @@
 	 })();
 
 	</script>
-	{/literal}   
+	{/literal}
 
-	<div class="header-back"></div>  
+	{php} if (strpos($_SERVER["REQUEST_URI"],'Union/Search') !== false || strpos($_SERVER["REQUEST_URI"],'Search/Results') !== false){ {/php}
+
+	<div class="header-back header-back-search"></div>
+
+	{php} } else { {/php}
+
+	<div class="header-back"></div>
+
+	{php} } {/php}
 
 	<div id="wrap">
 
@@ -165,13 +173,42 @@
 				</div>
 
 			</div>
+			<div class="row">
+				<div class="col-xs-2 col-md-2 col-md-offset-5 retain-filters">
+					{* Do we have any checkbox filters? *}
+
+					  {assign var="hasCheckboxFilters" value="0"}
+
+					  {if isset($checkboxFilters) && count($checkboxFilters) > 0}
+					    {foreach from=$checkboxFilters item=current}
+					      {if $current.selected}
+								{assign var="hasCheckboxFilters" value="1"}
+					      {/if}
+					    {/foreach}
+					  {/if}
+
+					  {if $filterList || $hasCheckboxFilters}
+					      <input type="checkbox" checked="checked" onclick="filterAll(this);" /> {translate text="basic_search_keep_filters"}
+					  {/if}
+					    
+				</div>
+				<div class="col-xs-3 col-md-3 retain-filters">
+					{php}
+
+				      if (strpos($_SERVER['REQUEST_URI'], 'Union/Search', 0) > 0 || strpos($_SERVER['REQUEST_URI'], 'Search/Results', 0) > 0){
+				        echo '<div class="availFilter"><input name="limit_avail" id="limitToAvail" type="checkbox"> Limit to available</div>';
+				      }
+
+				    {/php}
+				</div>
+			</div>
 
 		</div>
 
 
 		<div class="container">
 
-			<div class="row main-page">
+			<div class="row main-page {php} if (strpos($_SERVER['REQUEST_URI'],'Union/Search') !== false){ {/php}main-page-search{php} } {/php}">
 				<div class="col-xs-12 col-md-12">
 					{include file="$module/$pageTemplate"}
 				</div>

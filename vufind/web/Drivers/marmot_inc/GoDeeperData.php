@@ -505,6 +505,9 @@ class GoDeeperData{
 
 	function getHtmlData($dataType, $isbn, $upc){
 		global $interface;
+
+		$recordType = isset($recordType) ? $recordType : null;
+
 		$interface->assign('recordType', $recordType);
 		$interface->assign('id', $_REQUEST['id']);
 		$interface->assign('isbn', $isbn);

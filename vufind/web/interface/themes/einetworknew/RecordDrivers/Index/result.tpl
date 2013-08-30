@@ -103,14 +103,9 @@
                                             {/if}
                                         </span>
                                     </li>
-                                    {if $summDate}
-                                        <li>Year: <span>
-                                            {if $summDate}
-                                                    {$summDate.0|escape}
-                                            {/if}
-                                        </span></li>
-                                    {/if}
-                                    <li>Material Type: <span>{include file="/usr/local/VuFind-Plus/vufind/web/interface/themes/einetwork/ei_tpl/formatType.tpl"}</span></li>
+                                    <li class="requested-results-format">
+                                        {include file="/usr/local/VuFind-Plus/vufind/web/interface/themes/einetwork/ei_tpl/formatType.tpl"}
+                                    </li>
                                     <li class="book-results-location">
                                         <div id = "holdingsSummary{if $summShortId}{$summShortId}{else}{$summId|escape}{/if}" class="holdingsSummary">
                                             <div class="statusSummary" id="statusSummary{if $summShortId}{$summShortId}{else}{$summId|escape}{/if}">
