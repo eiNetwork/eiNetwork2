@@ -37,7 +37,7 @@ class AJAX extends Action {
 	function launch()
 	{
 		$method = $_GET['method'];
-		if (in_array($method, array('GetSuggestions', 'GetListTitles', 'getOverDriveSummary',"getAllItems", 'AddList','updatePreferredBranches', 'editEmailPrompt', 'getUnavailableHoldingInfo'))){
+		if (in_array($method, array('GetSuggestions', 'GetListTitles', 'getOverDriveSummary',"getAllItems", 'AddList','updatePreferredBranches', 'editEmailPrompt', 'getUnavailableHoldingInfo', 'saveNotificationPopupState'))){
 			header('Content-type: text/plain');
 			header('Cache-Control: no-cache, must-revalidate'); // HTTP/1.1
 			header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
@@ -564,6 +564,13 @@ class AJAX extends Action {
 		else{
 			return "";
 		}
+
+	}
+
+	function saveNotificationPopupState(){
+
+		// if true keep notification window closed on page load
+		$_SESSION['notification_popupstate'] = 1;
 
 	}
 }

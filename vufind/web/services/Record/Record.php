@@ -251,8 +251,10 @@ class Record extends Action
                 //clean up alt titles, remove dups and blanks, and sort by alpha
 		$altTitleUnique = array_unique($altTitle);
 		ksort($altTitleUnique);
-		if (strlen($altTitleUnique[0]) < 1){
-			array_shift($altTitleUnique);
+		if (count($altTitleUnique) > 0){
+			if (strlen($altTitleUnique[0]) < 1){
+				array_shift($altTitleUnique);
+			}
 		}
 		
 		//echo "<pre>";

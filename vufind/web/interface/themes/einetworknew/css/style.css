@@ -5,10 +5,21 @@ body {
 	font-size: 12pt;
 }
 
-.container { /* Disabling Responsive Layout for Now */
-	max-width: none;
-	width: 970px;
+a.inactive-link {
+	text-decoration: none;
+	color: #a0a0a0;
 }
+
+a.inactive-link:hover {
+	text-decoration: none;
+	border: none;
+	cursor: default;
+}
+
+/*.container {  Disabling Responsive Layout for Now 
+	max-width: none;
+	width: 1024px;
+}*/
 
 .slider-wrapper {
 	width:700px !important;
@@ -73,12 +84,16 @@ body {
 	margin:0 0 0 -44px;
 }
 
+.sidegroup {
+	margin:-20px 0 0 0;
+}
+
 .main-page {
-	margin:30px 0 0 0;
+	margin:60px 0 0 0;
 }
 
 .main-page-search {
-	margin:30px 0 0 0;
+	margin:60px 0 0 0;
 }
 
 .footer {
@@ -224,10 +239,6 @@ body {
 
 .book-results .format-type {
 	margin:10px 0 0 0;
-}
-
-.active-filter-list {
-	margin:-15px 0 0 0;
 }
 
 .active-filter-list ul {
@@ -558,7 +569,7 @@ p.notification {
 
 .results-title a {
 	color: #000;
-	font-size:1em;
+	font-size:1.2em;
 }
 
 .results-title a:hover {
@@ -717,6 +728,7 @@ p.notification {
 }
 
 .retain-filters {
+	margin:6px 0 0 0;
 	color:#fff;
 }
 
@@ -773,7 +785,8 @@ p.notification {
 	top:30px;
 	width:100%;
 	border:solid 3px #333333;
-	background-color:#fff;
+	background-color:#3c4d97;
+	color: #fff;
 	-moz-box-shadow: 0 0 5px #888;
 	-webkit-box-shadow: 0 0 5px#888;
 	box-shadow: 0 0 5px #888;
@@ -810,52 +823,28 @@ p.notification {
 	left:40px;
 }
 
-.goDeeperLink {
-	text-align: left;
+.details-page-header {
+	margin:20px 0 0 0 !important;
+	color: #336699;
+	font-weight: bold;
 }
 
-#goDeeperContent {
-	padding: 5px;
+.details-page-header ul {
+	list-style: none;
+	padding:0;
+	color: #333333;
+	font-weight: normal;
 }
 
-#goDeeperLinks {
-	width:25%;
-	float:left;
+.table-noborder td {
+	border-top: none !important;
+	padding: 0 !important;
 }
 
-#goDeeperOutput {
-	width:75%;
-	padding: 5px;
-	border-left: solid 1px rgb(244,213,56);
-	text-align: left;
-	float:right;
+.details-info {
+	margin:20px 0 0 0;
 }
 
-.fictionProfileTitle{
-	font-size: 14px;
-	font-weight:bold;
+#spellingSuggestions {
+	margin:20px 0 0 0;
 }
-.fictionCharacter, .fictionTopics, .fictionSettings, .fictionGenres {
-	padding: 5px 0px 5px 8px;
-}
-.fictionProfile a:hover{
-	font-weight:bold;
-	color:#F0F0F0;
-}
-.fictionProfile a{
-	color:#F0F0F0;
-}
-.fictionCharacter div{
-	padding-left:12px;
-}
-.fictionAward{
-	padding-top:5px;
-}
-.fiction_sub_head{
-	padding-left:10px;
-}
-.fiction_sub_head a{
-	color: rgb(153,153,255);
-}
-
-

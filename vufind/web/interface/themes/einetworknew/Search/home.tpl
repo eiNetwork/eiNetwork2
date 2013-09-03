@@ -128,6 +128,6 @@
 </div>
 
 <div class="row">
-	<div class="col-xs-6 col-md-6"><a onclick='getAccountSetting()' class="btn btn-primary pull-right"><strong>I have a Library Card</strong></a></div>
-	<div class="col-xs-6 col-md-6"><a href="{$path}/MyResearch/GetCard" class="btn btn-primary"><strong>I need a Library Card</strong></a></div>
+	<div class="col-xs-6 col-md-6"><a onclick='getAccountSetting()' class="btn btn-default pull-right"><strong>I have a Library Card</strong></a></div>
+	<div class="col-xs-6 col-md-6"><a href="{$path}/MyResearch/GetCard" class="btn btn-default"><strong>I need a Library Card</strong></a></div>
 </div>

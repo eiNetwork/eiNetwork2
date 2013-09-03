@@ -16,7 +16,9 @@
     <link rel="search" type="application/opensearchdescription+xml" title="Library Catalog Search" href="{$url}/Search/OpenSearch?method=describe" />
       
 	{css filename="jqueryui.css"}
-	<link rel="stylesheet" href="/interface/themes/einetworknew/css/style.css" type="text/css" media="screen" />		
+	<link rel="stylesheet" href="/interface/themes/einetworknew/css/style.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/interface/themes/einetworknew/css/oldstyle.css" type="text/css" media="screen" />
+			
 	<link rel="stylesheet" href="/interface/themes/einetworknew/css/SliderThemes/default/default.css" type="text/css" media="screen" />
 	<link rel="stylesheet" href="/interface/themes/einetworknew/css/SliderThemes/light/light.css" type="text/css" media="screen" />
 	<link rel="stylesheet" href="/interface/themes/einetworknew/css/SliderThemes/dark/dark.css" type="text/css" media="screen" />
@@ -113,7 +115,13 @@
 
 			<div class="row header">
 				<div class="col-xs-2 col-md-2" style="text-align:center">
-					<a class="btn btn-warning survey-btn pull-left" href="http://www.surveymonkey.com/s/NewLibraryCatalog" target="_blank">A Quick Survey</a>
+					{if isset($lastsearch) and isset($pageType) and ($pageType eq "record" or $pageType eq "EcontentRecord")}
+						<a class="btn btn-default survey-btn pull-left disable-link" href="#" onclick='window.location.href="{$lastsearch|escape}#record{$id|escape:"url"}"'>{translate text="Back to Search Results"}</a>
+					{elseif $searchType == 'advanced'&&$pageType!='advanced'}
+						<a class="btn btn-default survey-btn pull-left disable-link" href="#" onclick='window.location.href="{$path}/Search/Advanced?edit={$searchId}"'>{translate text="Back to Advanced Search"}</a>
+					{else}
+						<a class="btn btn-warning survey-btn pull-left" href="http://www.surveymonkey.com/s/NewLibraryCatalog" target="_blank">{translate text="A Quick Survey"}</a>
+					{/if}
 				</div>
 				<div class="col-xs-10 col-md-10" style="text-align:center">
 					<div class="row">
@@ -173,7 +181,8 @@
 
 			</div>
 			<div class="row">
-				<div class="col-xs-2 col-md-2 col-md-offset-5 retain-filters">
+				<div class="col-xs-2 col-md-2 col-md-offset-5">
+					<div class="retain-filters">
 					{* Do we have any checkbox filters? *}
 
 					  {assign var="hasCheckboxFilters" value="0"}
@@ -189,16 +198,18 @@
 					  {if $filterList || $hasCheckboxFilters}
 					      <input type="checkbox" checked="checked" onclick="filterAll(this);" /> {translate text="basic_search_keep_filters"}
 					  {/if}
-					    
+				  	</div>
 				</div>
-				<div class="col-xs-3 col-md-3 retain-filters">
-					{php}
+				<div class="col-xs-3 col-md-3">
+					<div class="retain-filters">
+						{php}
 
-				      if (strpos($_SERVER['REQUEST_URI'], 'Union/Search', 0) > 0 || strpos($_SERVER['REQUEST_URI'], 'Search/Results', 0) > 0){
-				        echo '<div class="availFilter"><input name="limit_avail" id="limitToAvail" type="checkbox"> Limit to available</div>';
-				      }
+					      if (strpos($_SERVER['REQUEST_URI'], 'Union/Search', 0) > 0 || strpos($_SERVER['REQUEST_URI'], 'Search/Results', 0) > 0){
+					        echo '<div class="availFilter"><input name="limit_avail" id="limitToAvail" type="checkbox"> Limit to available</div>';
+					      }
 
-				    {/php}
+					    {/php}
+					</div>
 				</div>
 			</div>
 
