@@ -107,6 +107,32 @@ class MyResearch extends Action
 					}
 				}
 			}
+
+			if ($user){
+
+				$notifications = array();
+				$notifications['messages'] = null;
+				$notifications['count'] = 0;
+				$notifications['state'] = 0;
+
+				$patron = $this->catalog->patronLogin($user->cat_username, $user->cat_password);
+
+				$profile = $this->catalog->getMyProfile($patron);
+
+				if ($profile['fines'] != '$0.00'){
+					$notifications['messages'][] = 'You have <span class="label label-primary" style="font-size:0.85em">' . $profile['fines'] . '</span>in overdue fines.';
+				}
+
+				if (strtotime($profile['expires']) > strtotime('-30 day')){
+					$notifications['messages'][] = 'Your library card is due to expire within the next <span class="label label-primary" style="font-size:0.85em">30 days</span>. Please visit your local library to renew your card to ensure access to all online services.';
+				}
+
+				$notifications['count'] = count($notifications['messages']);
+				$notifications['state'] = isset($_SESSION['notification_popupstate']) ? $_SESSION['notification_popupstate'] : 0;
+
+				$interface->assign('notifications', $notifications);
+			}
+
 			//always show the ecommcerce link
 			$ecommerceLink = $configArray['Site']['ecommerceLink'];
 			$interface->assign('showEcommerceLink', true);

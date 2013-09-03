@@ -7,6 +7,8 @@
 </script>
 {/if}
 
+{$marktestok}
+
 
 <div class="row">
 	<div class="col-xs-3 col-md-3 facets">

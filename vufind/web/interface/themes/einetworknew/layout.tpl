@@ -4,6 +4,7 @@
 	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=9" />
 	<title>{$pageTitle|truncate:64:"..."}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
@@ -15,7 +16,9 @@
     <link rel="search" type="application/opensearchdescription+xml" title="Library Catalog Search" href="{$url}/Search/OpenSearch?method=describe" />
       
 	{css filename="jqueryui.css"}
-	<link rel="stylesheet" href="/interface/themes/einetworknew/css/style.css" type="text/css" media="screen" />		
+	<link rel="stylesheet" href="/interface/themes/einetworknew/css/style.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/interface/themes/einetworknew/css/oldstyle.css" type="text/css" media="screen" />
+			
 	<link rel="stylesheet" href="/interface/themes/einetworknew/css/SliderThemes/default/default.css" type="text/css" media="screen" />
 	<link rel="stylesheet" href="/interface/themes/einetworknew/css/SliderThemes/light/light.css" type="text/css" media="screen" />
 	<link rel="stylesheet" href="/interface/themes/einetworknew/css/SliderThemes/dark/dark.css" type="text/css" media="screen" />
@@ -112,7 +115,13 @@
 
 			<div class="row header">
 				<div class="col-xs-2 col-md-2" style="text-align:center">
-					<a class="btn btn-warning survey-btn pull-left" href="http://www.surveymonkey.com/s/NewLibraryCatalog" target="_blank">A Quick Survey</a>
+					{if isset($lastsearch) and isset($pageType) and ($pageType eq "record" or $pageType eq "EcontentRecord")}
+						<a class="btn btn-default survey-btn pull-left disable-link" href="#" onclick='window.location.href="{$lastsearch|escape}#record{$id|escape:"url"}"'>{translate text="Back to Search Results"}</a>
+					{elseif $searchType == 'advanced'&&$pageType!='advanced'}
+						<a class="btn btn-default survey-btn pull-left disable-link" href="#" onclick='window.location.href="{$path}/Search/Advanced?edit={$searchId}"'>{translate text="Back to Advanced Search"}</a>
+					{else}
+						<a class="btn btn-warning survey-btn pull-left" href="http://www.surveymonkey.com/s/NewLibraryCatalog" target="_blank">{translate text="A Quick Survey"}</a>
+					{/if}
 				</div>
 				<div class="col-xs-10 col-md-10" style="text-align:center">
 					<div class="row">

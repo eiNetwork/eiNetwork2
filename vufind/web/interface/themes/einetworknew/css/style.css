@@ -5,10 +5,21 @@ body {
 	font-size: 12pt;
 }
 
-.container { /* Disabling Responsive Layout for Now */
+a.inactive-link {
+	text-decoration: none;
+	color: #a0a0a0;
+}
+
+a.inactive-link:hover {
+	text-decoration: none;
+	border: none;
+	cursor: default;
+}
+
+/*.container {  Disabling Responsive Layout for Now 
 	max-width: none;
 	width: 1024px;
-}
+}*/
 
 .slider-wrapper {
 	width:700px !important;
@@ -774,7 +785,8 @@ p.notification {
 	top:30px;
 	width:100%;
 	border:solid 3px #333333;
-	background-color:#fff;
+	background-color:#3c4d97;
+	color: #fff;
 	-moz-box-shadow: 0 0 5px #888;
 	-webkit-box-shadow: 0 0 5px#888;
 	box-shadow: 0 0 5px #888;
@@ -830,5 +842,9 @@ p.notification {
 }
 
 .details-info {
+	margin:20px 0 0 0;
+}
+
+#spellingSuggestions {
 	margin:20px 0 0 0;
 }
