@@ -809,3 +809,53 @@ p.notification {
 	top:20px;
 	left:40px;
 }
+
+.goDeeperLink {
+	text-align: left;
+}
+
+#goDeeperContent {
+	padding: 5px;
+}
+
+#goDeeperLinks {
+	width:25%;
+	float:left;
+}
+
+#goDeeperOutput {
+	width:75%;
+	padding: 5px;
+	border-left: solid 1px rgb(244,213,56);
+	text-align: left;
+	float:right;
+}
+
+.fictionProfileTitle{
+	font-size: 14px;
+	font-weight:bold;
+}
+.fictionCharacter, .fictionTopics, .fictionSettings, .fictionGenres {
+	padding: 5px 0px 5px 8px;
+}
+.fictionProfile a:hover{
+	font-weight:bold;
+	color:#F0F0F0;
+}
+.fictionProfile a{
+	color:#F0F0F0;
+}
+.fictionCharacter div{
+	padding-left:12px;
+}
+.fictionAward{
+	padding-top:5px;
+}
+.fiction_sub_head{
+	padding-left:10px;
+}
+.fiction_sub_head a{
+	color: rgb(153,153,255);
+}
+
+
