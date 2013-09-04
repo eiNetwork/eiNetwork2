@@ -26,20 +26,6 @@
 			})
 		})
 
-		$('#show-all-button').click(function(){
-
-			if (expanded == true){
-				$('.accordion-body').collapse('hide');
-				$('#show-all-button').val('Full View');
-				expanded = false;
-			} else {
-				$('.accordion-body').collapse('show');
-				$('#show-all-button').val('Brief View');
-				expanded = true;
-			}
-
-		})
-
 		var location_id = 0;
 
 		$('.dropdown-pickup-locations-expanded a').click(function(){
@@ -75,6 +61,30 @@
 			}
 
 		})
+
+		$('.save-expand-collapse').click(function(){
+
+			// save popup state in session.
+			if ($(this).prop('checked') == true){
+				hold_page_accordion_save = true;
+			} else {
+				hold_page_accordion_save = false;
+			}
+
+			var url = path + "/MyResearch/AJAX?method=saveExpandCollapseState";
+			
+			$.ajax({
+				url : url,
+				data : {
+					'hold_page_accordion_save': hold_page_accordion_save,
+					'hold_page_accordion_state': expanded
+				},
+				dataType : 'text',
+				type : 'get'
+			});
+
+		})
+
 
 
 	});
@@ -131,11 +141,11 @@
 					<div class="input-group show-all-button">
 						<input type="button" id="show-all-button" class="btn btn-small btn-default form-control" value="Brief View" />
 						<span class="input-group-addon">
-							Save <input type="checkbox">
+							Save <input type="checkbox" class="save-expand-collapse">
 						</span>
 					</div>
 				</div>
-				<div class="col-xs-10 col-md-10 btn-renew-all">
+				<div class="col-xs-9 col-md-9 col-md-offset-1 btn-renew-all">
 					{if $freezeButton eq 'freeze'}
 						<button type="button" class="btn btn-warning" id="freeze-all-btn">Freeze All</button>
 					{else}

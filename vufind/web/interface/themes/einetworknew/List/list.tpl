@@ -82,7 +82,7 @@
 						</span>
 					</div>
 				</div>
-				<div class="col-xs-10 col-md-10 btn-renew-all">
+				<div class="col-xs-9 col-md-9 col-md-offset-1 btn-renew-all">
 					<div class="wishlist-batch-actions">		
 						<div class="btn-group">
 							<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">

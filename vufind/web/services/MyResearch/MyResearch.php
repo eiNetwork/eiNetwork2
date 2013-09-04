@@ -127,6 +127,12 @@ class MyResearch extends Action
 					$notifications['messages'][] = 'Your library card is due to expire within the next <span class="label label-primary" style="font-size:0.85em">30 days</span>. Please visit your local library to renew your card to ensure access to all online services.';
 				}
 
+				$notifications['messages'][] = "You are a winner!!!!";
+
+				$notifications['messages'][] = "Lets go Buccos!";
+
+				$notifications['messages'][] = "Erin Go Bragh";
+
 				$notifications['count'] = count($notifications['messages']);
 				$notifications['state'] = isset($_SESSION['notification_popupstate']) ? $_SESSION['notification_popupstate'] : 0;
 

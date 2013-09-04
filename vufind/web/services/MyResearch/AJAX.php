@@ -37,7 +37,7 @@ class AJAX extends Action {
 	function launch()
 	{
 		$method = $_GET['method'];
-		if (in_array($method, array('GetSuggestions', 'GetListTitles', 'getOverDriveSummary',"getAllItems", 'AddList','updatePreferredBranches', 'editEmailPrompt', 'getUnavailableHoldingInfo', 'saveNotificationPopupState'))){
+		if (in_array($method, array('GetSuggestions', 'GetListTitles', 'getOverDriveSummary',"getAllItems", 'AddList','updatePreferredBranches', 'editEmailPrompt', 'getUnavailableHoldingInfo', 'saveNotificationPopupState','saveExpandCollapseState'))){
 			header('Content-type: text/plain');
 			header('Cache-Control: no-cache, must-revalidate'); // HTTP/1.1
 			header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
@@ -571,6 +571,45 @@ class AJAX extends Action {
 
 		// if true keep notification window closed on page load
 		$_SESSION['notification_popupstate'] = 1;
+
+	}
+
+	function saveExpandCollapseState(){
+
+		global $configArray;
+		global $user;
+
+		$this->catalog = new CatalogConnection($configArray['Catalog']['driver']);
+
+		$pref = unserialize($user->preferences);
+
+		echo "<pre>";
+		print_r($pref);
+		echo "</pre>";
+
+		if (isset($_REQUEST['hold_page_accordion_save']) && isset($_REQUEST['hold_page_accordion_state'])){
+			
+			echo "<pre>";
+			print_r($_REQUEST['hold_page_accordion_save']);
+			echo "</pre>";
+
+			$pref['hold_page_accordion_save'] = $_REQUEST['hold_page_accordion_save'];
+
+			if ($_REQUEST['hold_page_accordion_save'] == true){
+				$pref['hold_page_accordion_state'] = $_REQUEST['hold_page_accordion_state'];
+			} elseif ($_REQUEST['hold_page_accordion_save'] == false){
+				echo "its in here";
+				unset($pref['hold_page_accordion_state']);
+				unset($pref['hold_page_accordion_save']);
+			}
+
+		}
+
+		echo "<pre>";
+		print_r($pref);
+		echo "</pre>";
+
+		//$this->catalog->update_user_preferences(serialize($pref));
 
 	}
 }

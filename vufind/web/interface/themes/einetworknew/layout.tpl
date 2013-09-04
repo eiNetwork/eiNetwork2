@@ -7,6 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript" src="{$path}/js/jquery.cookie.js"></script>
 
 	<!-- Start Bootstrap CSS and JS -->
 	<link rel="stylesheet" href="/js/bootstrap/css/bootstrap.min.css" type="text/css" />

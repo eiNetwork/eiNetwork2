@@ -699,4 +699,20 @@ class EINetwork extends MillenniumDriver{
 			}
 			return $str;
 		}
+
+	function update_user_preferences($pref){
+
+		// DB_DataObject::debugLevel(5);
+
+		global $user;
+		global $configArray;
+
+		$user->preferences = $pref;
+		$user->update();
+
+		// DB_DataObject::debugLevel();
+
+		UserAccount::updateSession($user);
+
+	}
 }

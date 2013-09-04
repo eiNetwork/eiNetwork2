@@ -6,8 +6,7 @@ require_once 'DB/DataObject.php';
 require_once 'DB/DataObject/Cast.php';
 
 class User extends DB_DataObject
-{
-	###START_AUTOCODE
+{###START_AUTOCODE
 	/* the code below is auto generated do not remove the above tag */
 
 	public $__table = 'user';                            // table name
@@ -43,7 +42,7 @@ class User extends DB_DataObject
 
 	function __sleep()
 	{
-		return array('id', 'username', 'password', 'cat_username', 'cat_password', 'firstname', 'lastname', 'email', 'phone', 'college', 'major', 'homeLocationId', 'myLocation1Id', 'myLocation2Id', 'trackReadingHistory', 'roles', 'bypassAutoLogout', 'displayName', 'disableRecommendations', 'disableCoverArt', 'patronType');
+		return array('id', 'username', 'password', 'cat_username', 'cat_password', 'firstname', 'lastname', 'email', 'phone', 'college', 'major', 'homeLocationId', 'myLocation1Id', 'myLocation2Id', 'trackReadingHistory', 'roles', 'bypassAutoLogout', 'displayName', 'disableRecommendations', 'disableCoverArt', 'patronType', 'preferences');
 	}
 
 	function __wakeup()

@@ -273,6 +273,7 @@ class Holds extends MyResearch
 				}
 			}
 		}
+
 		//print_r($patron);
 		$interface->assign('patron',$patron);
 		//$interface->setTemplate('checkedout.tpl');

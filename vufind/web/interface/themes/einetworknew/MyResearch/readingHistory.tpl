@@ -44,6 +44,13 @@
 					<form id='readingListForm' action ="{$fullPath}">
 						<div>
 							<input name='readingHistoryAction' id='readingHistoryAction' value='' type='hidden' />
+							
+							{if $transList}
+								<div class="clearfix"></div>
+								<div>{if $pageLinks.all}<div class="pagination pagination-sm pull-right">{$pageLinks.all}</div>{/if}</div>			
+								<div class=clearfix></div>
+							{/if}
+
 							<div id="readingListActionsTop" class="pull-right">
 								{if $historyActive == true}
 									{if $transList}
@@ -56,11 +63,6 @@
 								{/if}
 							</div>
 							
-							{if $transList}
-								<div class="clearfix"></div>
-								<div>{if $pageLinks.all}<div class="pagination pagination-sm pull-right">{$pageLinks.all}</div>{/if}</div>			
-								<div class=clearfix></div>
-							{/if}
 							{if $transList}
 							<table class="table" id="readingHistoryTable">
 							  <thead>
@@ -80,8 +82,8 @@
 								</td>*}
 								<td class="myAccountCell">
 								{if $user->disableCoverArt != 1}
-									<div class="imageColumn">	  
-									<a href="{$url}/Record/{$record.recordId|escape:"url"}?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}" id="descriptionTrigger{$record.recordId|escape:"url"}">
+									<div class="imageColumn cover-image">	  
+									<a class="thumbnail" href="{$url}/Record/{$record.recordId|escape:"url"}?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}" id="descriptionTrigger{$record.recordId|escape:"url"}">
 									<img src="{$path}/bookcover.php?id={$record.recordId}&amp;isn={$record.isbn|@formatISBN}&amp;size=small&amp;upc={$record.upc}&amp;category={$record.format_category|escape:"url"}" class="listResultImage" alt="{translate text='Cover Image'}"/>
 									</a>
 									<div id='descriptionPlaceholder{$record.recordId|escape}' style='display:none'></div>
