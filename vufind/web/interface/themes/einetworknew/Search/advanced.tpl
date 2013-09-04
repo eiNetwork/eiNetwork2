@@ -1,7 +1,7 @@
 <div class="row">
 
 	<div class="col-xs-9 col-md-9">
-
+	<div class="resulthead"><h3>{translate text='Advanced Search'}</h3></div>
 		<form method="get" action="{$url}/Search/Results" id="advSearchForm" class="search">
 			<div id="left-bar">
 				{if $searchFilters}
@@ -25,19 +25,14 @@
 					</div>
 				</div>
 				{/if}
-				<div class="sidegroup">
-					<h4>{translate text="Search Tips"}</h4>
-					<div class="sidegroupContents">
+			</div>
+			<div id="main-content" class="advSearchContent">
+				<div class="sidegroupContents">
 						<div class="sideLinksAdv">
 						<a href="{$url}/Help/Home?topic=search" onclick="window.open('{$url}/Help/Home?topic=advsearch', 'Help', 'width=625, height=510'); return false;">{translate text="Help with Advanced Search"}</a><br />
 						<a href="{$url}/Help/Home?topic=search" onclick="window.open('{$url}/Help/Home?topic=search', 'Help', 'width=625, height=510'); return false;">{translate text="Help with Search Operators"}</a>
 						</div>
 					</div>
-				</div>
-			</div>
-			<div id="main-content" class="advSearchContent">
-				<div class="resulthead"><h3>{translate text='Advanced Search'}</h3></div>
-
 				{if $editErr}
 				{assign var=error value="advSearchError_$editErr"}
 				<div class="error">{translate text=$error}</div>
@@ -60,16 +55,16 @@
 
 				<a href="#" class="add" onclick="addGroup(); return false;">{translate text="add_search_group"}</a>
 				<br /><br />
-				<input type="submit" name="submit" class="button" value="{translate text="Find"}" /><br /><br />
+				<input type="submit" name="submit" class="btn btn-default" value="{translate text="Find"}" /><br /><br />
 				{if $facetList}
-				<h3>{translate text='Limit To'}</h3><br />
+				<h4>{translate text='Limit To'}</h4><br />
 				<table class="citation" summary="{translate text='Limit To'}">
 					<tr>
 					{foreach from=$facetList item="list" key="label"}
 						<td>{translate text=$label}: </td>
 					{/foreach}
 					{if $illustratedLimit}
-						<td>{translate text="Illustrated"}</td>
+						<td>{translate text="Illustrated"}: </td>
 					{/if}
 					{if $showPublicationDate}
 						<td>{translate text="Publication Year"}: </td>
@@ -78,7 +73,7 @@
 					<tr>
 						{foreach from=$facetList item="list" key="label"}
 						<td>
-							<select name="filter[]" multiple size="10 ">
+							<select name="filter[]" multiple size="10">
 							{foreach from=$list item="value" key="display"}
 								<option value="{$value.filter|escape}"{if $value.selected} selected="selected"{/if}>{$display|escape}</option>
 							{/foreach}
@@ -96,7 +91,7 @@
 						<td>
 							<label for="publishDateyearfrom" class='yearboxlabel'>From:</label>
 							<input type="text" size="4" maxlength="4" class="text" name="publishDateyearfrom" id="publishDateyearfrom" value="" style="width:128px"/><br/>
-							<label for="publishDateyearto" class='yearboxlabel'>To:</label>
+							<label for="publishDateyearto" class='yearboxlabel'>To:</label><br/>
 							<input type="text" size="4" maxlength="4" class="text" name="publishDateyearto" id="publishDateyearto" value="" style="width:128px"/>
 							<br/>
 							{*<div id='yearDefaultLinks'>
@@ -108,8 +103,9 @@
 						{/if}
 					</tr>
 				</table>
+				</br>
 				{/if}
-				<input type="submit" name="submit"  class="button" value="{translate text="Find"}" /><br />
+				<input type="submit" name="submit"  class="btn btn-default" value="{translate text="Find"}" /><br />
 		        </div>
 		  
 		</form>
