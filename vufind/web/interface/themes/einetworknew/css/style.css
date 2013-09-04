@@ -896,3 +896,13 @@ p.notification {
 .fiction_sub_head a{
 	color: rgb(153,153,255);
 }
+
+.facet-heading {
+	font-weight: bold;
+}
+
+.pref-saved {
+	display: none;
+	margin:4px 0 0 -15px;
+	color: #f00;
+}

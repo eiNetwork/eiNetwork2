@@ -581,35 +581,9 @@ class AJAX extends Action {
 
 		$this->catalog = new CatalogConnection($configArray['Catalog']['driver']);
 
-		$pref = unserialize($user->preferences);
+		$holdpage_collapse = $_REQUEST['holdpage_collapse']; //boolean
 
-		echo "<pre>";
-		print_r($pref);
-		echo "</pre>";
-
-		if (isset($_REQUEST['hold_page_accordion_save']) && isset($_REQUEST['hold_page_accordion_state'])){
-			
-			echo "<pre>";
-			print_r($_REQUEST['hold_page_accordion_save']);
-			echo "</pre>";
-
-			$pref['hold_page_accordion_save'] = $_REQUEST['hold_page_accordion_save'];
-
-			if ($_REQUEST['hold_page_accordion_save'] == true){
-				$pref['hold_page_accordion_state'] = $_REQUEST['hold_page_accordion_state'];
-			} elseif ($_REQUEST['hold_page_accordion_save'] == false){
-				echo "its in here";
-				unset($pref['hold_page_accordion_state']);
-				unset($pref['hold_page_accordion_save']);
-			}
-
-		}
-
-		echo "<pre>";
-		print_r($pref);
-		echo "</pre>";
-
-		//$this->catalog->update_user_preferences(serialize($pref));
+		$this->catalog->update_user_preferences($holdpage_collapse);
 
 	}
 }

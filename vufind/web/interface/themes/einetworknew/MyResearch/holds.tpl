@@ -11,7 +11,7 @@
 
 	$(document).ready(function(){
 
-		var expanded = true;
+		var collapsed = {/literal}{$holdpage_collapse}{literal};
 
 		// expand and collapse functions
 		$('.collapse').each(function(){
@@ -62,13 +62,35 @@
 
 		})
 
+		$('#show-all-button').click(function(){
+
+			if ($('#show-all-button').val() == 'Full View'){
+				$('.save-expand-collapse').prop('checked', false)
+				$('.pref-saved').hide();
+				$('.accordion-body').collapse('show');
+				$('#show-all-button').val('Brief View');
+				collapsed  = 0;
+			} else if ($('#show-all-button').val() == 'Brief View'){
+				$('.save-expand-collapse').prop('checked', false)
+				$('.pref-saved').hide();
+				$('.accordion-body').collapse('hide');
+				$('#show-all-button').val('Full View');
+				collapsed  = 1;
+			}
+
+		})
+
 		$('.save-expand-collapse').click(function(){
 
 			// save popup state in session.
 			if ($(this).prop('checked') == true){
-				hold_page_accordion_save = true;
+				
+				holdpage_collapse = collapsed;
+
 			} else {
-				hold_page_accordion_save = false;
+
+				holdpage_collapse = 0;
+
 			}
 
 			var url = path + "/MyResearch/AJAX?method=saveExpandCollapseState";
@@ -76,14 +98,21 @@
 			$.ajax({
 				url : url,
 				data : {
-					'hold_page_accordion_save': hold_page_accordion_save,
-					'hold_page_accordion_state': expanded
+					'holdpage_collapse': holdpage_collapse,
+				},
+				success: function(){
+					$('.pref-saved').show();
 				},
 				dataType : 'text',
 				type : 'get'
 			});
 
 		})
+
+		// save expand collapse
+		if (collapsed == 1){
+			$('#show-all-button').trigger('click')
+		}
 
 
 
@@ -145,7 +174,10 @@
 						</span>
 					</div>
 				</div>
-				<div class="col-xs-9 col-md-9 col-md-offset-1 btn-renew-all">
+				<div class="col-xs-4 col-md-4 col-md-offset-1">
+					<p class="pref-saved">Your view have been saved.</p>
+				</div>
+				<div class="col-xs-5 col-md-5 btn-renew-all">
 					{if $freezeButton eq 'freeze'}
 						<button type="button" class="btn btn-warning" id="freeze-all-btn">Freeze All</button>
 					{else}

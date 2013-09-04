@@ -98,7 +98,7 @@ $(document).ready(function() {
 
 			<div class="row">
 						<div class="col-xs-12 col-md-12">
-								<h4>{translate text=$cluster.label}</h4>
+								<p class="facet-heading">{translate text=$cluster.label}</p>
 
 									<dl class="narrowList navmenu narrow_begin">
 										{if $title == 'publishDate' || $title == 'birthYear' || $title == 'deathYear'}

@@ -274,6 +274,14 @@ class Holds extends MyResearch
 			}
 		}
 
+		if (isset($user->holdpage_collapse)){
+			$holdpage_collapse = $user->holdpage_collapse;
+		} else {
+			$holdpage_collapse = 0;
+		}
+		
+		$interface->assign('holdpage_collapse', $holdpage_collapse);
+
 		//print_r($patron);
 		$interface->assign('patron',$patron);
 		//$interface->setTemplate('checkedout.tpl');
