@@ -702,23 +702,11 @@ class EINetwork extends MillenniumDriver{
 
 	function update_user_preferences($holdpage_collapse){
 
-		// DB_DataObject::debugLevel(5);
-
 		global $user;
 		global $configArray;
 
-		echo "<pre>";
-		print_r($holdpage_collapse);
-		echo "</pre>";
-
 		$user->holdpage_collapse = $holdpage_collapse;
 		$user->update();
-
-		echo "<pre>";
-		print_r($user);
-		echo "</pre>";
-
-		// DB_DataObject::debugLevel();
 
 		UserAccount::updateSession($user);
 
