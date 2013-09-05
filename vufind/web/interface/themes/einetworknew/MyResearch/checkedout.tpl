@@ -35,6 +35,34 @@
 
 		})
 
+		// save expand collapse
+		if ($.cookie('save-expand-state') == 'expand'){
+			expanded = false;
+			$('.save-expand-collapse').prop('checked', true);
+			$('#show-all-button').trigger('click');
+		} else if ($.cookie('save-expand-state') == 'collapse'){
+			expanded = true;
+			$('.save-expand-collapse').prop('checked', true);
+			$('#show-all-button').trigger('click');
+
+		} else {
+			expanded = true;
+		}
+
+		$('.save-expand-collapse').click(function(){
+
+			if ($(this).prop('checked') == true){
+				if (expanded == true){
+					$.cookie('save-expand-state', 'expand', { expires: 7, path: '/MyResearch/CheckedOut' });
+				} else {
+					$.cookie('save-expand-state', 'collapse', { expires: 7, path: '/MyResearch/CheckedOut' });
+				}
+			} else {
+				$.removeCookie('save-expand-state', { path: '/MyResearch/CheckedOut' });
+			}
+
+		});
+
 	});
 
 </script>
@@ -118,11 +146,11 @@
 					<div class="input-group show-all-button">
 						<input type="button" id="show-all-button" class="btn btn-small btn-default form-control" value="Brief View" />
 						<span class="input-group-addon">
-							Save <input type="checkbox">
+							Save <input type="checkbox" class="save-expand-collapse">
 						</span>
 					</div>
 				</div>
-				<div class="col-xs-10 col-md-10 btn-renew-all">
+				<div class="col-xs-9col-md-9 col-md-offset-1 btn-renew-all">
 					<button type="button" class="btn btn-warning" onclick="return renewSelectedTitles();">Renew Selected Items</button>
 				</div>
 			</div>

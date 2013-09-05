@@ -129,7 +129,7 @@
 {literal}
 <script type="text/javascript">
 	$(function() {
-		$("#adminMenuAccordion").accordion();
+		//$("#adminMenuAccordion").accordion();
 		{/literal}
 		{if $defaultSection}
 		$("#adminMenuAccordion").accordion("activate", {$defaultSection});

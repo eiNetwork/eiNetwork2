@@ -41,7 +41,7 @@
 		<div class="col-xs-12 col-md-12 notification-center-container">
 			<span class="glyphicon glyphicon-inbox"></span> <a id="notification-center-link" class="disable-link {if $notifications.count == 0}inactive-link{/if}" href="">Notification Center</a> <span style="color:#f00;font-size:0.95em">({$notifications.count})</span>
 			<div class="row">
-				<div class="col-xs-12 col-md-12 notification-center">
+				<div class="col-xs-12 col-md-12 notification-center clearfix">
 					<p class="notification-arrow-up notification-center-footer"></p>
 
 					{assign var="x" value=0}

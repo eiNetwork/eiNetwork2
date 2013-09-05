@@ -7,6 +7,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script type="text/javascript" src="{$path}/js/jquery.cookie.js"></script>
 
 	<!-- Start Bootstrap CSS and JS -->
 	<link rel="stylesheet" href="/js/bootstrap/css/bootstrap.min.css" type="text/css" />
@@ -18,6 +19,9 @@
 	{css filename="jqueryui.css"}
 	<link rel="stylesheet" href="/interface/themes/einetworknew/css/style.css" type="text/css" media="screen" />
 	<link rel="stylesheet" href="/interface/themes/einetworknew/css/oldstyle.css" type="text/css" media="screen" />
+
+	<link rel="stylesheet" href="/interface/themes/einetworknew/css/toggles.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/interface/themes/einetworknew/css/toggles-light.css" type="text/css" media="screen" />
 			
 	<link rel="stylesheet" href="/interface/themes/einetworknew/css/SliderThemes/default/default.css" type="text/css" media="screen" />
 	<link rel="stylesheet" href="/interface/themes/einetworknew/css/SliderThemes/light/light.css" type="text/css" media="screen" />

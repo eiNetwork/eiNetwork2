@@ -126,7 +126,7 @@
 	{/if}
 </div>
 {/strip}
-{literal}
+<!-- {literal}
 <script type="text/javascript">
 	$(function() {
 		$("#adminMenuAccordion").accordion();
@@ -137,4 +137,4 @@
 		{literal}
 	});
 </script>
-{/literal}
+{/literal} -->

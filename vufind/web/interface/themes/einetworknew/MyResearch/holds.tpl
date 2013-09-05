@@ -6,12 +6,24 @@
 <script type="text/javascript" src="{$path}/js/holds.js"></script>
 <script type="text/javascript" src="{$path}/services/MyResearch/ajax.js"></script>
 <script type="text/javascript" src="{$path}/js/tablesorter/jquery.tablesorter.min.js"></script>
+<script type="text/javascript" src="{$path}/js/toggles.min.js"></script>
 {literal}
 <script type="text/javascript">
 
 	$(document).ready(function(){
 
-		var expanded = true;
+		var collapsed = {/literal}{$holdpage_collapse}{literal};
+
+		if (collapsed == 1){
+			$('.toggle').toggles({
+				clicker: $('.clickme'),
+				on: true
+			});
+		} else {
+			$('.toggle').toggles({
+				clicker: $('.clickme')
+			});
+		}
 
 		// expand and collapse functions
 		$('.collapse').each(function(){
@@ -24,20 +36,6 @@
 				$(this).parent().parent().find('.accordion-toggle').removeClass('accordion-toggle-collapse').addClass('accordion-toggle-expand');
 				$(this).parent().find('.results-header').show();
 			})
-		})
-
-		$('#show-all-button').click(function(){
-
-			if (expanded == true){
-				$('.accordion-body').collapse('hide');
-				$('#show-all-button').val('Full View');
-				expanded = false;
-			} else {
-				$('.accordion-body').collapse('show');
-				$('#show-all-button').val('Brief View');
-				expanded = true;
-			}
-
 		})
 
 		var location_id = 0;
@@ -76,6 +74,51 @@
 
 		})
 
+		$('#show-all-button').click(function(){
+
+			if ($('#show-all-button').val() == 'Full View'){
+				$('.save-expand-collapse').prop('checked', false)
+				$('.pref-saved').hide();
+				$('.accordion-body').collapse('show');
+				$('#show-all-button').val('Brief View');
+				collapsed  = 0;
+			} else if ($('#show-all-button').val() == 'Brief View'){
+				$('.save-expand-collapse').prop('checked', false)
+				$('.pref-saved').hide();
+				$('.accordion-body').collapse('hide');
+				$('#show-all-button').val('Full View');
+				collapsed  = 1;
+			}
+
+		})
+
+		$('.toggle').on('toggle', function (e, active) {
+		    if (active) {
+		        holdpage_collapse = 1;
+		    } else {
+		        holdpage_collapse = 0;
+		    }
+
+		    var url = path + "/MyResearch/AJAX?method=saveExpandCollapseState";
+			
+			$.ajax({
+				url : url,
+				data : {
+					'holdpage_collapse': holdpage_collapse,
+				},
+				success: function(){
+					
+				},
+				dataType : 'text',
+				type : 'get'
+			});
+
+		});
+
+		// save expand collapse
+		if (collapsed == 1){
+			$('#show-all-button').trigger('click')
+		}
 
 	});
 
@@ -127,15 +170,13 @@
 			</div>
 
 			<div class="row list-header">
-				<div class="col-xs-2 col-md-2">
-					<div class="input-group show-all-button">
-						<input type="button" id="show-all-button" class="btn btn-small btn-default form-control" value="Brief View" />
-						<span class="input-group-addon">
-							Save <input type="checkbox">
-						</span>
-					</div>
+				<div class="col-xs-1 col-md-1">
+					<input type="button" id="show-all-button" class="btn btn-small btn-default form-control" value="Brief View" />
 				</div>
-				<div class="col-xs-10 col-md-10 btn-renew-all">
+				<div class="col-xs-4 col-md-4 col-md-offset-1">
+					<div class="clickme" style="margin:8px 0 0 0;"><span style="font-size:13px; float: left">Save Brief View</span><div style="float:left; margin-left:10px" rel="clickme" class="toggle toggle-light"></div></div>
+				</div>
+				<div class="col-xs-6 col-md-6 btn-renew-all">
 					{if $freezeButton eq 'freeze'}
 						<button type="button" class="btn btn-warning" id="freeze-all-btn">Freeze All</button>
 					{else}

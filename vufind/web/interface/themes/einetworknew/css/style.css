@@ -632,7 +632,7 @@ p.notification {
 .location-well {
 	margin:0 0 0 0;
 	font-size:0.95em;
-	width:330px;
+	width:280px;
 	background-color:#fff;
 }
 
@@ -780,10 +780,9 @@ p.notification {
 
 .notification-center {
 	display: none;
-	position: absolute;
-	z-index: 10;
-	top:30px;
 	width:100%;
+	min-height:100px;
+	margin:5px 0 0 0;
 	border:solid 3px #333333;
 	background-color:#3c4d97;
 	color: #fff;
@@ -796,7 +795,8 @@ p.notification {
 .notification-center p {
 	padding:6px;
 	margin:0 0 6px 0;
-	border-bottom:#cacaca solid 1px;
+	padding:4px;
+	border-bottom:#142162 solid 1px;
 }
 
 .notification-center p.notification-center-footer {
@@ -895,4 +895,14 @@ p.notification {
 }
 .fiction_sub_head a{
 	color: rgb(153,153,255);
+}
+
+.facet-heading {
+	font-weight: bold;
+}
+
+.pref-saved {
+	display: none;
+	margin:4px 0 0 -15px;
+	color: #f00;
 }

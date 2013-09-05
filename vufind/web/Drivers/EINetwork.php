@@ -699,4 +699,16 @@ class EINetwork extends MillenniumDriver{
 			}
 			return $str;
 		}
+
+	function update_user_preferences($holdpage_collapse){
+
+		global $user;
+		global $configArray;
+
+		$user->holdpage_collapse = $holdpage_collapse;
+		$user->update();
+
+		UserAccount::updateSession($user);
+
+	}
 }

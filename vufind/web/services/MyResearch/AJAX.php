@@ -37,7 +37,7 @@ class AJAX extends Action {
 	function launch()
 	{
 		$method = $_GET['method'];
-		if (in_array($method, array('GetSuggestions', 'GetListTitles', 'getOverDriveSummary',"getAllItems", 'AddList','updatePreferredBranches', 'editEmailPrompt', 'getUnavailableHoldingInfo', 'saveNotificationPopupState'))){
+		if (in_array($method, array('GetSuggestions', 'GetListTitles', 'getOverDriveSummary',"getAllItems", 'AddList','updatePreferredBranches', 'editEmailPrompt', 'getUnavailableHoldingInfo', 'saveNotificationPopupState','saveExpandCollapseState'))){
 			header('Content-type: text/plain');
 			header('Cache-Control: no-cache, must-revalidate'); // HTTP/1.1
 			header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
@@ -571,6 +571,19 @@ class AJAX extends Action {
 
 		// if true keep notification window closed on page load
 		$_SESSION['notification_popupstate'] = 1;
+
+	}
+
+	function saveExpandCollapseState(){
+
+		global $configArray;
+		global $user;
+
+		$this->catalog = new CatalogConnection($configArray['Catalog']['driver']);
+
+		$holdpage_collapse = $_REQUEST['holdpage_collapse']; //boolean
+
+		$this->catalog->update_user_preferences($holdpage_collapse);
 
 	}
 }

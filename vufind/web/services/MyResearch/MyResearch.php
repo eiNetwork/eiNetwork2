@@ -123,7 +123,7 @@ class MyResearch extends Action
 					$notifications['messages'][] = 'You have <span class="label label-primary" style="font-size:0.85em">' . $profile['fines'] . '</span>in overdue fines.';
 				}
 
-				if (strtotime($profile['expires']) > strtotime('-30 day')){
+				if ($profile['expireclose'] == 1){
 					$notifications['messages'][] = 'Your library card is due to expire within the next <span class="label label-primary" style="font-size:0.85em">30 days</span>. Please visit your local library to renew your card to ensure access to all online services.';
 				}
 
