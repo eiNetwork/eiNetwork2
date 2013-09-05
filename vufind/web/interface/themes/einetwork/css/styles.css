@@ -2743,3 +2743,66 @@ ol.alpha li {
 	font-size:11pt;
 	text-align: center;
 }
+
+/* notification center */
+
+.notification-center-container {
+	position: relative;
+	font-size: 1em;
+	margin:10px 0 0 15px;
+}
+
+.notification-center-container span {
+	font-size:1.2em;
+	margin:0 10px 0 0;
+}
+
+.notification-center-container a#notification-center-link {
+	margin:0 0 0 15px;
+}
+
+.notification-center {
+	display: none;
+	width:185px;
+	min-height:60px;
+	margin:5px 0 0 0;
+	border:solid 3px #333333;
+	background-color:#3c4d97;
+	color: #fff;
+	-moz-box-shadow: 0 0 5px #888;
+	-webkit-box-shadow: 0 0 5px#888;
+	box-shadow: 0 0 5px #888;
+	padding:12px;
+}
+
+.notification-center p {
+	padding:6px;
+	margin:0 0 6px 0;
+	padding:4px;
+	border-bottom:#fff solid 1px;
+}
+
+.notification-center a {
+	color: #fff;
+}
+
+.notification-center a:hover {
+	color: #fff;
+	text-decoration: underline;
+}
+
+.notification-center p.notification-center-footer {
+	border-bottom: none;
+}
+
+.notification-arrow-up {
+	position: absolute;
+	display:block;
+	z-index: 12;
+	top:24px;
+	left:6px;
+	width:9px;
+	height:4px;
+	background-image: url('../images/arrow_up.png');
+	background-repeat: no-repeat;
+}

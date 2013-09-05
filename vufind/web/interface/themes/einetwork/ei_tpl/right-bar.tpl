@@ -1,5 +1,72 @@
+{if $notifications.count > 0}
+{literal}
+<script type="text/javascript">
+
+	var user_id = {/literal}{$user->id}{literal}
+
+	$(document).ready(function(){
+
+		{/literal}{if $notifications.state == 0}{literal}
+			var t=setTimeout(function(){$('.notification-center').show('fast');},2000)
+		{/literal}{/if}{literal}
+
+		$('#notification-center-link').click(function(){
+			$('.notification-center').show('fast');
+		})
+
+		$('.notification-center button').click(function(){
+
+			// save popup state in session.
+
+			var url = path + "/MyResearch/AJAX?method=saveNotificationPopupState"
+			$.ajax( {
+				url : url,
+				data : {user_id: user_id},
+				dataType : 'text',
+				type : 'post'
+			});
+
+			$('.notification-center').hide('slow');
+		})
+
+		$('.disable-link').click(function(e){
+			e.preventDefault();
+		})
+
+	});
+
+</script>
+{/literal}
+{/if}
 {strip}
 <div id="right-bar">
+
+	{if $user}
+	<div>
+		<div class="notification-center-container">
+			<img src="/interface/themes/einetwork/images/inbox.png" /> <a id="notification-center-link" class="disable-link" href="">Notification Center</a> <span style="color:#f00;font-size:0.95em">({$notifications.count})</span>
+			<div class="row">
+				<div class="col-xs-12 col-md-12 notification-center clearfix">
+					<p class="notification-arrow-up notification-center-footer"></p>
+
+					{assign var="x" value=0}
+
+					{foreach from=$notifications.messages item="message"}
+
+					{assign var="x" value=$x+1}
+
+					<p {if $x eq $notifications.count}class="notification-center-footer"{/if}>{$message}</p>
+
+					{/foreach}
+
+					<button type="button" style="float: right">Close</button>
+					<div style="clear: both"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	{/if}
+
     <div class="bookcart">
         <div id="cart-image">
             <img src="/interface/themes/einetwork/images/Art/Materialicons/ShoppingCart.png"  alt="cart" style="vertical-align:middle"/>
