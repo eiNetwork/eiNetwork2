@@ -6,12 +6,24 @@
 <script type="text/javascript" src="{$path}/js/holds.js"></script>
 <script type="text/javascript" src="{$path}/services/MyResearch/ajax.js"></script>
 <script type="text/javascript" src="{$path}/js/tablesorter/jquery.tablesorter.min.js"></script>
+<script type="text/javascript" src="{$path}/js/toggles.min.js"></script>
 {literal}
 <script type="text/javascript">
 
 	$(document).ready(function(){
 
 		var collapsed = {/literal}{$holdpage_collapse}{literal};
+
+		if (collapsed == 1){
+			$('.toggle').toggles({
+				clicker: $('.clickme'),
+				on: true
+			});
+		} else {
+			$('.toggle').toggles({
+				clicker: $('.clickme')
+			});
+		}
 
 		// expand and collapse functions
 		$('.collapse').each(function(){
@@ -80,20 +92,14 @@
 
 		})
 
-		$('.save-expand-collapse').click(function(){
+		$('.toggle').on('toggle', function (e, active) {
+		    if (active) {
+		        holdpage_collapse = 1;
+		    } else {
+		        holdpage_collapse = 0;
+		    }
 
-			// save popup state in session.
-			if ($(this).prop('checked') == true){
-				
-				holdpage_collapse = collapsed;
-
-			} else {
-
-				holdpage_collapse = 0;
-
-			}
-
-			var url = path + "/MyResearch/AJAX?method=saveExpandCollapseState";
+		    var url = path + "/MyResearch/AJAX?method=saveExpandCollapseState";
 			
 			$.ajax({
 				url : url,
@@ -101,20 +107,18 @@
 					'holdpage_collapse': holdpage_collapse,
 				},
 				success: function(){
-					$('.pref-saved').show();
+					
 				},
 				dataType : 'text',
 				type : 'get'
 			});
 
-		})
+		});
 
 		// save expand collapse
 		if (collapsed == 1){
 			$('#show-all-button').trigger('click')
 		}
-
-
 
 	});
 
@@ -166,18 +170,13 @@
 			</div>
 
 			<div class="row list-header">
-				<div class="col-xs-2 col-md-2">
-					<div class="input-group show-all-button">
-						<input type="button" id="show-all-button" class="btn btn-small btn-default form-control" value="Brief View" />
-						<span class="input-group-addon">
-							Save <input type="checkbox" class="save-expand-collapse">
-						</span>
-					</div>
+				<div class="col-xs-1 col-md-1">
+					<input type="button" id="show-all-button" class="btn btn-small btn-default form-control" value="Brief View" />
 				</div>
 				<div class="col-xs-4 col-md-4 col-md-offset-1">
-					<p class="pref-saved">Your view have been saved.</p>
+					<div class="clickme" style="margin:8px 0 0 0;"><span style="font-size:13px; float: left">Save Brief View</span><div style="float:left; margin-left:10px" rel="clickme" class="toggle toggle-light"></div></div>
 				</div>
-				<div class="col-xs-5 col-md-5 btn-renew-all">
+				<div class="col-xs-6 col-md-6 btn-renew-all">
 					{if $freezeButton eq 'freeze'}
 						<button type="button" class="btn btn-warning" id="freeze-all-btn">Freeze All</button>
 					{else}

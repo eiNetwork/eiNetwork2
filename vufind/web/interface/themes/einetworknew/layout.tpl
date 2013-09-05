@@ -19,6 +19,9 @@
 	{css filename="jqueryui.css"}
 	<link rel="stylesheet" href="/interface/themes/einetworknew/css/style.css" type="text/css" media="screen" />
 	<link rel="stylesheet" href="/interface/themes/einetworknew/css/oldstyle.css" type="text/css" media="screen" />
+
+	<link rel="stylesheet" href="/interface/themes/einetworknew/css/toggles.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="/interface/themes/einetworknew/css/toggles-light.css" type="text/css" media="screen" />
 			
 	<link rel="stylesheet" href="/interface/themes/einetworknew/css/SliderThemes/default/default.css" type="text/css" media="screen" />
 	<link rel="stylesheet" href="/interface/themes/einetworknew/css/SliderThemes/light/light.css" type="text/css" media="screen" />
