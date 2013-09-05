@@ -62,7 +62,6 @@ class Hold extends Action {
 		global $configArray;
 		global $user;
 		$logger = new Logger();
-
 		//TODO: Clean this up so there is only ever one id.
 		if (isset($_REQUEST['recordId'])) {
 			$recordId = $_REQUEST['recordId'];
@@ -119,7 +118,14 @@ class Hold extends Action {
 				global $locationSingleton;
 				//Get the list of pickup branch locations for display in the user interface.
 				$locations = $locationSingleton->getPickupBranchesPreferLocationFirst($profile, $profile['homeLocationId']);
-				$interface->assign('pickupLocations', $locations);
+				$interface->assign('home_library', $locations['home_library']);
+				
+				if ($locations['preferred_count'] < 1){
+					$interface->assign('preferred_message', "Your preferred pickup locations can be saved and <br />pre-selected for your requests. Click Edit in the Right Panel to set your Preferred Libraries.");
+				}
+
+				$interface->assign('preferred_count', $locations['preferred_count']);
+				$interface->assign('pickupLocations', $locations['locations']);
 				//set focus to the submit button if the user is logged in since the campus will be correct most of the time.
 				$interface->assign('focusElementId', 'submit');
 			}else{

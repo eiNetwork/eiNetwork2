@@ -938,6 +938,9 @@ public class MarcRecordDetails {
 	 */
 	public String getDate() {
 		String date = getFieldVals("260c", ", ");
+		if (date == null || date.length() == 0) {
+			date = getFieldVals("264c", ", ");
+		}		
 		if (date == null || date.length() == 0) return (null);
 		return Utils.cleanDate(date);
 	}
@@ -3221,7 +3224,7 @@ public class MarcRecordDetails {
 						try {
 							ArrayList<LibrarySpecificLink> urls = this.getSourceUrls();
 							if (urls.size() == 0){
-								//logger.debug("Marking record as not eContent because we did not find any source urls for the external content");
+								logger.debug("Marking record as not eContent because we did not find any source urls for the external content");
 								isEContent = false;
 								isMatch = false;
 							}

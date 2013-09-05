@@ -1,3 +1,21 @@
+{literal}
+<script type="text/javascript">
+
+	$(document).ready(function() {
+
+		$('#placeHoldForm').submit(function(){
+
+			if ($('#campus').val() == ''){
+				alert('Please select a pickup location.');
+				return false;
+			}
+
+		})
+
+	});
+
+</script>
+{/literal}
 {strip}
 <script type="text/javascript" src="{$path}/services/Record/ajax.js"></script>
 <div id="page-content" class="content">
@@ -12,6 +30,11 @@
 		<div class="resulthead" style="margin-bottom: 25px;">
 			<h3>{translate text='Place a Hold'}</h3>
 		</div>
+		{if $preferred_message != ''}
+			<div class="resulthead preferred-message" style="margin-bottom: 25px;">
+				<p>{$preferred_message}</p>
+			</div>
+		{/if}
 		<form id='placeHoldForm' name='placeHoldForm' action="{$path}/Record/{$id|escape:"url"}/Hold" method="post">
 			<div style="margin-left: 20px">
 				<div id="loginFormWrapper">
@@ -35,6 +58,9 @@
 								<span class='loginLabel' style="margin-bottom: 12px; font-size: 15px;">{translate text="I want to pick this up at"}:</span>
 								<span class='loginField'>
 									<select name="campus" id="campus" style="margin-left: 20px;width: 260px">
+										{if $preferred_count < 1}
+										<option value=""></option>
+										{/if}
 										{if count($pickupLocations) > 0}
 											{foreach from=$pickupLocations item=location}
 												<option value="{$location->code}" {if $location->selected == "selected"}selected="selected"{/if}>{$location->displayName}</option>
