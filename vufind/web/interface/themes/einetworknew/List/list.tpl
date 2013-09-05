@@ -100,7 +100,7 @@
 							</button>
 							<ul class="dropdown-menu" role="menu">
 								<li><a class="disable-link" href="#" onclick="saveAllToBookCart()">Move All Physical Items to Book Cart</a></li>
-								<li><a class="disable-link" href="#" onclick="ajaxLightbox('/List/ListEdit?id=786&source=VuFind&lightbox&method=editList',false,false,'450px',false,'200px'); return false;">Delete This Wish List</a></li>
+								<li><a class="disable-link" href="#" onclick="getDeleteList('{$wishListID}')">Delete This Wish List</a></li>
 							</ul>			
 						</div>
 					</div>
