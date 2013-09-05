@@ -18,7 +18,7 @@
 			{/foreach}
 		{/if}
 	</div>
-	<div class="col-xs-6 col-md-6">
+	<div class="col-xs-6 col-md-6" style="border-left:solid #c0c0c0 1px; border-right:solid #c0c0c0 1px;">
 
 		<div class="row">
 			<div class="col-xs-6 col-md-6">

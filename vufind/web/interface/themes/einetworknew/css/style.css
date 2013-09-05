@@ -5,6 +5,22 @@ body {
 	font-size: 12pt;
 }
 
+h1 {
+	font-size:1em;
+}
+
+h2 {
+	font-size: 26px;
+}
+
+h3 {
+	font-size: 20px;
+}
+
+h4 {
+
+}
+
 a.inactive-link {
 	text-decoration: none;
 	color: #a0a0a0;
@@ -357,7 +373,7 @@ a.inactive-link:hover {
 }
 
 #show-all-button {
-	width:100px;
+	
 }
 
 .book-results-buttons a {

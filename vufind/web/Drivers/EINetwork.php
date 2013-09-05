@@ -706,9 +706,18 @@ class EINetwork extends MillenniumDriver{
 		global $configArray;
 
 		$user->holdpage_collapse = $holdpage_collapse;
-		$user->update();
+		
+		if ($user->update()){
 
-		UserAccount::updateSession($user);
+			echo "<pre>";
+			print_r('test');
+			echo "</pre>";
+
+			UserAccount::updateSession($user);
+			return true;
+		} else {
+			return false;
+		}
 
 	}
 }

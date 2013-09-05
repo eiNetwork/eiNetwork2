@@ -583,7 +583,15 @@ class AJAX extends Action {
 
 		$holdpage_collapse = $_REQUEST['holdpage_collapse']; //boolean
 
-		$this->catalog->update_user_preferences($holdpage_collapse);
+		$message = array('message' => 'this is a test');
+
+		echo "<pre>";
+		print_r($message);
+		echo "</pre>";
+
+		if ($this->catalog->update_user_preferences($holdpage_collapse)){
+			echo json_encode($message);
+		}
 
 	}
 }

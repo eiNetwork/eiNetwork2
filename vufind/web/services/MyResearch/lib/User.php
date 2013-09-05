@@ -31,7 +31,6 @@ class User extends DB_DataObject
 	public $bypassAutoLogout;        //tinyint
 	public $disableRecommendations;     //tinyint
 	public $disableCoverArt;     //tinyint
-	public $holdpage_collapse;
 	private $roles;
 	private $data = array();
 

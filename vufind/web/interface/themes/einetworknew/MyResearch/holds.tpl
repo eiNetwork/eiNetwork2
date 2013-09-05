@@ -17,11 +17,19 @@
 		if (collapsed == 1){
 			$('.toggle').toggles({
 				clicker: $('.clickme'),
+				text: {
+			      on: 'Brief', // text for the ON position
+			      off: 'Full' // and off
+			    },
 				on: true
 			});
 		} else {
 			$('.toggle').toggles({
-				clicker: $('.clickme')
+				clicker: $('.clickme'),
+				text: {
+			      on: 'Brief', // text for the ON position
+			      off: 'Full' // and off
+			    }
 			});
 		}
 
@@ -170,13 +178,13 @@
 			</div>
 
 			<div class="row list-header">
-				<div class="col-xs-1 col-md-1">
-					<input type="button" id="show-all-button" class="btn btn-small btn-default form-control" value="Brief View" />
+				<div class="col-xs-3 col-md-3">
+					<p style="font-size:13px;float:left; margin:6px 10px 0 0">Switch to</p><input type="button" id="show-all-button" class="btn btn-sm btn-default" value="Brief View" />
 				</div>
-				<div class="col-xs-4 col-md-4 col-md-offset-1">
-					<div class="clickme" style="margin:8px 0 0 0;"><span style="font-size:13px; float: left">Save Brief View</span><div style="float:left; margin-left:10px" rel="clickme" class="toggle toggle-light"></div></div>
+				<div class="col-xs-4 col-md-4">
+					<div class="clickme" style="margin:6px 0 0 0;"><span style="font-size:13px; float: left">My Preferred View </span><div style="float:left; margin-left:10px" rel="clickme" class="toggle toggle-light"></div></div>
 				</div>
-				<div class="col-xs-6 col-md-6 btn-renew-all">
+				<div class="col-xs-5 col-md-5 btn-renew-all">
 					{if $freezeButton eq 'freeze'}
 						<button type="button" class="btn btn-warning" id="freeze-all-btn">Freeze All</button>
 					{else}
