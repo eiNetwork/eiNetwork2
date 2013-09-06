@@ -57,6 +57,7 @@ class Record extends Action
 		global $configArray;
 		global $library;
 		global $timer;
+		global $user;
 
 		$interface->assign('page_body_style', 'sidebar_left');
 		$interface->assign('libraryThingUrl', $configArray['LibraryThing']['url']);
@@ -113,14 +114,15 @@ class Record extends Action
 		$recordTitleWithAuth = trim($this->concatenateSubfieldData($marcField, array('a', 'b', 'h', 'n', 'p', 'c')));
 		$interface->assign('recordTitleWithAuth', $recordTitleWithAuth);
 
+		$notifications = array();
+		$notifications['messages'] = null;
+		$notifications['count'] = 0;
+		$notifications['state'] = 0;
+
+		$this->catalog = new CatalogConnection($configArray['Catalog']['driver']);
+
 		if ($user){
-			$notifications = array();
-			$notifications['messages'] = null;
-			$notifications['count'] = 0;
-			$notifications['state'] = 0;
-
 			$patron = $this->catalog->patronLogin($user->cat_username, $user->cat_password);
-
 			$profile = $this->catalog->getMyProfile($patron);
 
 			if ($profile['fines'] != '$0.00'){
