@@ -125,6 +125,8 @@ class MyResearch extends Action
 
 				if ($profile['expireclose'] == 1){
 					$notifications['messages'][] = 'Your library card is due to expire within the next 30 days. Please visit your local library to renew your card to ensure access to all online services.';
+				} elseif ($profile['expireclose'] == -1){
+					$notifications['messages'][] = 'Your library card is expired. Please visit your local library to renew your card to ensure access to all online service.';
 				}
 
 				$notifications['count'] = count($notifications['messages']);

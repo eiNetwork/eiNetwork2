@@ -24,9 +24,9 @@ class Action extends PEAR{
 
 	protected $catalog;
 
-    function launch(){
+	function __construct(){
 
-    	// until we add a class/schema for this, we will use the action.php to populate the notification center.
+		// until we add a class/schema for this, we will use the action.php to populate the notification center.
 		global $interface;
 		global $configArray;
 		global $user;
@@ -48,6 +48,8 @@ class Action extends PEAR{
 
 			if ($profile['expireclose'] == 1){
 				$notifications['messages'][] = 'Your library card is due to expire within the next 30 days. Please visit your local library to renew your card to ensure access to all online services.';
+			} elseif ($profile['expireclose'] == -1){
+				$notifications['messages'][] = 'Your library card is expired. Please visit your local library to renew your card to ensure access to all online service.';
 			}
 
 			$notifications['count'] = count($notifications['messages']);
@@ -56,6 +58,10 @@ class Action extends PEAR{
 			$interface->assign('notifications', $notifications);
 		}
 
+	}
+
+    function launch()
+    {
     }
         
 }

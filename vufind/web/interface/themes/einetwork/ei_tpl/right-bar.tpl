@@ -29,10 +29,6 @@
 			$('.notification-center').hide('slow');
 		})
 
-		$('.disable-link').click(function(e){
-			e.preventDefault();
-		})
-
 	});
 
 </script>
