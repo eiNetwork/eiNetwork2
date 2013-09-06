@@ -43,7 +43,7 @@ class Action extends PEAR{
 			$profile = $this->catalog->getMyProfile($patron);
 
 			if ($profile['fines'] != '$0.00'){
-				$notifications['messages'][] = 'You have <a href="https://catalog.einetwork.net:444/screens/pverify_web_ngc.html" target="_blank">' . $profile['fines'] . '</a> in overdue fines.';
+				$notifications['messages'][] = 'You have <a href="http://catalog.einetwork.net/patroninfo" target="_blank">' . $profile['fines'] . '</a> in overdue fines.';
 			}
 
 			if ($profile['expireclose'] == 1){
