@@ -65,7 +65,7 @@
 
     <div class="bookcart">
         <div id="cart-image">
-            <img src="/interface/themes/einetwork/images/Art/Materialicons/ShoppingCart.png"  alt="cart" style="vertical-align:middle"/>
+            <img src="/interface/themes/einetwork/images/shopping_cart.png"  alt="cart" style="vertical-align:middle;margin-left:2px"/>
             <span id="cart-descrpiion" style="vertical-align:middle"></span>
         </div>
         <div id="blank">&nbsp;</div>
