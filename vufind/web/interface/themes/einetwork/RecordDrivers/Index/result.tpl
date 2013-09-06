@@ -115,10 +115,14 @@
             <span class="action-lable-span">Request Now</span>
           </div>
 <!--	<div class="round-rectangle-button" style="border-radius:0px;border-bottom-width:0px" name="selected[{if $summShortId}{$summShortId}{else}{$summId|escape}{/if}]" id="selected{if $summShortId}{$summShortId}{else}{$summId|escape}{/if}" {if $enableBookCart}onclick="getSaveToBookCart('{$summId|escape:"url"}','VuFind',this);return false;"{/if}>
--->	<div class="round-rectangle-button" style="border-top-right-radius:0px;border-top-left-radius:0px"  name="selected[{if $summShortId}{$summShortId}{else}{$summId|escape}{/if}]" id="selected{if $summShortId}{$summShortId}{else}{$summId|escape}{/if}" {if $enableBookCart}onclick="getSaveToBookCart('{$summId|escape:"url"}','VuFind',this);return false;"{/if}>
+-->	<div class="round-rectangle-button" style="border-top-right-radius:0px;border-top-left-radius:0px;border-bottom-right-radius:0px;border-bottom-left-radius:0px"  name="selected[{if $summShortId}{$summShortId}{else}{$summId|escape}{/if}]" id="selected{if $summShortId}{$summShortId}{else}{$summId|escape}{/if}" {if $enableBookCart}onclick="getSaveToBookCart('{$summId|escape:"url"}','VuFind',this);return false;"{/if}>
 	    <span class="resultAction_img_span"><img alt="add_to_cart" src="/interface/themes/einetwork/images/Art/ActionIcons/AddToCart.png" class="resultAction_img"></span>
 	    <span class="resultAction_span" >Add to Cart</span>
 	</div>
+    <div class="round-rectangle-button" id="find-in-library" onclick="findInLibrary('{$summId|escape:"url"}',false,'150px','570px','auto')">
+                        <span class="action-img-span"><img id="find-in-library-img" alt="find in library" class="action-img" src="/interface/themes/einetwork/images/Art/ActionIcons/MoreLikeThis.png" /></span>
+                        <span class="action-lable-span">Find in Library</span>
+                    </div>
 <!--	<div class="round-rectangle-button"  style="border-radius:0px;border-bottom-width:0px;">
 	    <span class="resultAction_img_span"><img alt="more like this" src="/interface/themes/einetwork/images/Art/ActionIcons/MoreLikeThis.png" class="resultAction_img"></span>
 	    <span class="resultAction_span" name="more_like_this" >More like this</span>
