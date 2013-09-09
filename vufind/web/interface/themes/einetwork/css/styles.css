@@ -2823,6 +2823,7 @@ ol.alpha li {
 }
 
 .pay-fine-button {
+	height:25px !important;
 	display: block;
 	clear: both;
 	float: right;

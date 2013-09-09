@@ -43,7 +43,7 @@ class Action extends PEAR{
 			$profile = $this->catalog->getMyProfile($patron);
 
 			if ($profile['fines'] != '$0.00'){
-				$notifications['messages'][] = 'You have ' . $profile['fines'] . ' in overdue fines. <input type="button" class="pay-fine-button" onclick="window.open(\'http://catalog.einetwork.net/patroninfo\')" value="Pay Fine" title="Pay overdue fine on-line" />';
+				$notifications['messages'][] = 'You have ' . $profile['fines'] . ' in overdue fines. <input type="button" class="button pay-fine-button" onclick="window.open(\'http://catalog.einetwork.net/patroninfo\')" value="Pay Fine" title="Pay overdue fine on-line" />';
 			}
 
 			if ($profile['expireclose'] == 1){
