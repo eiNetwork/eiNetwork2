@@ -53,7 +53,7 @@
 
 					{assign var="x" value=$x+1}
 
-					<p {if $x eq $notifications.count}class="notification-center-footer"{/if}>{$message}</p>
+					<p class="notification-center-message{if $x eq $notifications.count} notification-center-footer{/if}">{$message}</p>
 
 					{/foreach}
 

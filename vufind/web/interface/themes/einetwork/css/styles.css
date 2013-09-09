@@ -2776,9 +2776,9 @@ ol.alpha li {
 }
 
 .notification-center p {
-	padding:6px;
+	padding:6px 0px 12px 0;
 	margin:0 0 6px 0;
-	border-bottom:#fff solid 1px;
+	border-bottom:#333 solid 1px;
 }
 
 .notification-center a {
@@ -2812,6 +2812,10 @@ ol.alpha li {
 	width:100%;
 }
 
+.notification-center-message {
+	clear:both;
+}
+
 .notification-center-close {
 	float: right;
 	background: url("/interface/themes/einetwork/images/close_button_small.png") no-repeat scroll 0 0 transparent;
@@ -2823,7 +2827,11 @@ ol.alpha li {
 }
 
 .pay-fine-button {
-	height:25px !important;
+	height:20px !important;
+	width:60px !important;
+	font-size:11px;
+	padding:0 !important;
+	margin:0 0 0 0;
 	display: block;
 	clear: both;
 	float: right;
