@@ -105,15 +105,24 @@
 	      <span class="resultAction_span">Remove</span>
 	  </div>
     {else}
+
 	<div class="round-rectangle-button" style="border-bottom-width:0px;border-bottom-left-radius:0px;border-bottom-right-radius:0px" onclick="window.location.href ='{$url}/Record/{$summId|escape:'url'}/Home?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}'">
 	    <span class="resultAction_img_span"><img alt="view_details" src="/interface/themes/einetwork/images/Art/ActionIcons/ViewDetails.png" class="resultAction_img"></span>
 	    <span class="resultAction_span">View Details</span>
 	</div>
+  <div class="round-rectangle-button request-now-button" id="request-now{if $summShortId}{$summShortId}{else}{$summId|escape}{/if}" style="border-bottom-width:0px;border-top-left-radius:0px;border-top-right-radius:0px;border-bottom-left-radius:0px;border-bottom-right-radius:0px;{if isset($noRequest)}background-color: rgb(192, 192, 192); color: rgb(248, 248, 248); cursor: default;{/if}">
+            <span class="action-img-span"><img id="request-now-img" alt="request now" class="action-img" src="/interface/themes/einetwork/images/Art/ActionIcons/RequestNow.png" alt="Request Now"/></span>
+            <span class="action-lable-span">Request Now</span>
+          </div>
 <!--	<div class="round-rectangle-button" style="border-radius:0px;border-bottom-width:0px" name="selected[{if $summShortId}{$summShortId}{else}{$summId|escape}{/if}]" id="selected{if $summShortId}{$summShortId}{else}{$summId|escape}{/if}" {if $enableBookCart}onclick="getSaveToBookCart('{$summId|escape:"url"}','VuFind',this);return false;"{/if}>
--->	<div class="round-rectangle-button" style="border-top-right-radius:0px;border-top-left-radius:0px"  name="selected[{if $summShortId}{$summShortId}{else}{$summId|escape}{/if}]" id="selected{if $summShortId}{$summShortId}{else}{$summId|escape}{/if}" {if $enableBookCart}onclick="getSaveToBookCart('{$summId|escape:"url"}','VuFind',this);return false;"{/if}>
+-->	<div class="round-rectangle-button" style="border-top-right-radius:0px;border-top-left-radius:0px;border-bottom-right-radius:0px;border-bottom-left-radius:0px"  name="selected[{if $summShortId}{$summShortId}{else}{$summId|escape}{/if}]" id="selected{if $summShortId}{$summShortId}{else}{$summId|escape}{/if}" {if $enableBookCart}onclick="getSaveToBookCart('{$summId|escape:"url"}','VuFind',this);return false;"{/if}>
 	    <span class="resultAction_img_span"><img alt="add_to_cart" src="/interface/themes/einetwork/images/Art/ActionIcons/AddToCart.png" class="resultAction_img"></span>
 	    <span class="resultAction_span" >Add to Cart</span>
 	</div>
+    <div class="round-rectangle-button" id="find-in-library" onclick="findInLibrary('{$summId|escape:"url"}',false,'150px','570px','auto')">
+                        <span class="action-img-span"><img id="find-in-library-img" alt="find in library" class="action-img" src="/interface/themes/einetwork/images/Art/ActionIcons/MoreLikeThis.png" /></span>
+                        <span class="action-lable-span">Find in Library</span>
+                    </div>
 <!--	<div class="round-rectangle-button"  style="border-radius:0px;border-bottom-width:0px;">
 	    <span class="resultAction_img_span"><img alt="more like this" src="/interface/themes/einetwork/images/Art/ActionIcons/MoreLikeThis.png" class="resultAction_img"></span>
 	    <span class="resultAction_span" name="more_like_this" >More like this</span>
@@ -131,6 +140,19 @@
   	resultDescription('{if $summShortId}{$summShortId}{else}{$summId|escape}{/if}','{$summId}');
         {literal} }); {/literal}
 getItemStatusCart('{$summId|escape}');
+
+    {if !isset($noRequest)}{literal}
+
+    $(document).ready(function(){
+
+        $('.request-now-button').click(function(e){
+            e.preventDefault();
+        });
+
+    });
+
+    {/literal}{/if}
+
     </script>
 </div>
 </div>

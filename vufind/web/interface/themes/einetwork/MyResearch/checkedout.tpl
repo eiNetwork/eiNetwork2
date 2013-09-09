@@ -29,9 +29,6 @@
 	    <h2>Checked Out Items</h2>
 <p style="font-size:80%;color:red">We are receiving reports about some users not receiving email notices for upcoming due dates, hold pickups, or overdue items.  You may wish to check My Account or contact your local library for this information.   Please contact your email provider if you believe you are not receiving these notices.</p>
 	</div>
-	{if $profile.expireclose == 1}
-	    <font color="red"><b>Your library card is due to expire within the next 30 days.  Please visit your local library to renew your card to ensure access to all online service.  </a></b></font>
-	{/if}
 	    
 	<form id="renewForm" action="{$path}/MyResearch/CheckedOut">
 	    {*******BEGIN checked out item list*****}
