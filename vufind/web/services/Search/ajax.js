@@ -230,7 +230,7 @@ function doGetStatusSummaries()
 						//alert('test')
 						
 						$("#request-now"+elemId).bind('click', function(){
-							location.href='/Record/.' + elemId + '/Hold';
+							getToRequest('/Record/.' + elemId + '/Hold');
 						})
 
 					}

@@ -45,6 +45,8 @@
 				<div class="col-xs-12 col-md-12 notification-center clearfix">
 					<p class="notification-arrow-up notification-center-footer"></p>
 
+					<button type="button" class="notification-center-close" title="Close notification center"></button>
+
 					{assign var="x" value=0}
 
 					{foreach from=$notifications.messages item="message"}
@@ -55,7 +57,6 @@
 
 					{/foreach}
 
-					<button type="button" style="float: right">Close</button>
 					<div style="clear: both"></div>
 				</div>
 			</div>

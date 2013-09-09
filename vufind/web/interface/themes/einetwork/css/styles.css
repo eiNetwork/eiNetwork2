@@ -2778,7 +2778,6 @@ ol.alpha li {
 .notification-center p {
 	padding:6px;
 	margin:0 0 6px 0;
-	padding:4px;
 	border-bottom:#fff solid 1px;
 }
 
@@ -2805,4 +2804,27 @@ ol.alpha li {
 	height:4px;
 	background-image: url('../images/arrow_up.png');
 	background-repeat: no-repeat;
+}
+
+.notification-center p {
+	display: block;
+	clear: both;
+	width:100%;
+}
+
+.notification-center-close {
+	float: right;
+	background: url("/interface/themes/einetwork/images/close_button_small.png") no-repeat scroll 0 0 transparent;
+	cursor: pointer;
+	border:none;
+	width:20px;
+	height:20px;
+	margin:-5px -5px 0 0;
+}
+
+.pay-fine-button {
+	display: block;
+	clear: both;
+	float: right;
+	cursor: pointer;
 }
