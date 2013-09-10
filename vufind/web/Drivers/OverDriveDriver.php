@@ -639,7 +639,7 @@ class OverDriveDriver {
 				$waitingListPageInfo = curl_getinfo($overDriveInfo['ch']);
 				if (preg_match('/already on/', $waitingListPage)){
 					$holdResult['result'] = false;
-					$holdResult['message'] = "You are already on the waiting list for this selected title.";
+					$holdResult['message'] = "You are already on the waiting list for the selected title or have it checked out.";
 				}else{
 
 					//Fill out the email address to use for notification
