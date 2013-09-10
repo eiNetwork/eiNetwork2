@@ -17,23 +17,25 @@
 </script>
 {/literal}
 <div class='fictionProfile'>
-	<div class='fictionProfileTitle'><a name="characters">Characters</a></div>
-	{foreach from=$fictionData.characters item=character}
-		<div class='fictionCharacter'>
-			<span class='fictionCharacterName'><a href="/Union/Search?basicType=keyword&lookfor={$character.name}">{$character.name}</a></span>
-			<div class='fictionCharacterGender'>{$character.gender}&nbsp;{$character.age}</div>
-			<div class='fictionCharacterOccupation'>{$character.occupation}</div>
-			<div class='fictionCharacterDescription'>{$character.description}</div>
-		</div>
-	{/foreach}
+	{if isset($fictionData.characters)}
+		<div class='fictionProfileTitle'><a name="characters">Characters</a></div>
+		{foreach from=$fictionData.characters item=character}
+			<div class='fictionCharacter'>
+				<span class='fictionCharacterName'><a href="/Union/Search?basicType=keyword&lookfor={$character.name}">{$character.name}</a></span>
+				<div class='fictionCharacterGender'>{$character.gender}&nbsp;{$character.age}</div>
+				<div class='fictionCharacterOccupation'>{$character.occupation}</div>
+				<div class='fictionCharacterDescription'>{$character.description}</div>
+			</div>
+		{/foreach}
+	{/if}
 	
 	{if isset($fictionData.topics)}
-	<div class='fictionProfileTitle'><a name="topics">Topics</a></div>
-	<div class='fictionTopics'>
-	{foreach from=$fictionData.topics item=topic}
-	<div class='fictionTopic'><a href="/Union/Search?basicType=keyword&lookfor={$topic}"> {$topic}</a></div>
-	{/foreach}
-	</div>
+		<div class='fictionProfileTitle'><a name="topics">Topics</a></div>
+		<div class='fictionTopics'>
+		{foreach from=$fictionData.topics item=topic}
+		<div class='fictionTopic'><a href="/Union/Search?basicType=keyword&lookfor={$topic}"> {$topic}</a></div>
+		{/foreach}
+		</div>
 	{/if}
 	
 	{if isset($fictionData.settings)}

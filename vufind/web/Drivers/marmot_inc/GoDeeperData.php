@@ -194,6 +194,31 @@ class GoDeeperData{
 		}
 		return $tocData;
 	}
+
+	function isXML($xml){
+	    libxml_use_internal_errors(true);
+
+	    $doc = new DOMDocument('1.0', 'utf-8');
+	    $doc->loadXML($xml);
+
+	    $errors = libxml_get_errors();
+
+	    if(empty($errors)){
+	        return true;
+	    }
+
+	    $error = $errors[0];
+	    if($error->level < 3){
+	        return true;
+	    }
+
+	    $explodedxml = explode("r", $xml);
+	    $badxml = $explodedxml[($error->line)-1];
+
+	    $message = $error->message . ' at line ' . $error->line . '. Bad XML: ' . htmlentities($badxml);
+	    return $message;
+	}
+
 	function getFictionProfile($isbn, $upc){
 		//Load the index page from syndetics
 		global $configArray;
@@ -203,20 +228,22 @@ class GoDeeperData{
 		if (!$fictionData){
 			$clientKey = $configArray['Syndetics']['key'];
 			$requestUrl = "http://syndetics.com/index.aspx?isbn=$isbn/FICTION.XML&client=$clientKey&type=xw10&upc=$upc";
+				
+			//Get the XML from the service
+			$ctx = stream_context_create(array(
+				  'http' => array(
+				  'timeout' => 3
+			)
+			));
+			
+			$response = file_get_contents($requestUrl, 0, $ctx);
 
-			try{
-				//Get the XML from the service
-				$ctx = stream_context_create(array(
-					  'http' => array(
-					  'timeout' => 2
-				)
-				));
-				$response =file_get_contents($requestUrl, 0, $ctx);
+			$fictionData = array();
 
-				//Parse the XML
+			try {
+				
 				$data = new SimpleXMLElement($response);
 
-				$fictionData = array();
 				if (isset($data)){
 					//Load characters
 					if (isset($data->VarFlds->VarDFlds->SSIFlds->Fld920)){
@@ -301,15 +328,39 @@ class GoDeeperData{
 						}
 
 					}
-
 				}
-			}catch (Exception $e) {
+
+			} catch (Exception $e) {
 				global $logger;
-				$logger->log("Error fetching data from Syndetics $e", PEAR_LOG_ERR);
+				$logger->log("Error fetching data from Syndetics fiction.xml $e", PEAR_LOG_ERR);
 				$fictionData = array();
 			}
+
+			//Parse the XML
+			if (count($fictionData) == 0){
+
+				// try loading awards.xml
+				$awards_url = "http://syndetics.com/index.aspx?isbn=$isbn/ffawards.xml&client=$clientKey&type=xw10&upc=$upc";
+				$awards_response =file_get_contents($awards_url, 0, $ctx);
+				
+				//Parse the XML
+				$awards_data = new SimpleXMLElement($awards_response);
+
+				if (isset($awards_data->VarFlds->VarDFlds->SSIFlds->Fld985)){
+					foreach ($awards_data->VarFlds->VarDFlds->SSIFlds->Fld985 as $field){
+						$fictionData['awards'][] = array(
+                            'name' => (string)$field->a,
+                            'year' => (string)$field->y,
+						);
+					}
+				}
+
+			}
+			
 			$memcache->set("syndetics_fiction_profile_{$isbn}_{$upc}", $fictionData, 0, $configArray['Caching']['syndetics_fiction_profile']);
+
 		}
+
 		return $fictionData;
 	}
 	function getAuthorNotes($isbn, $upc){
