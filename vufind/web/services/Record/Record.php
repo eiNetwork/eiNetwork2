@@ -142,28 +142,153 @@ class Record extends Action
 		}
 
 		//Alternate title array
-		$marcField130 = $marcRecord->getFields('130');
-		$marcField240 = $marcRecord->getFields('240');
-		$marcField246 = $marcRecord->getFields('246');
-		$marcField730 = $marcRecord->getFields('730');
-		$marcField740 = $marcRecord->getFields('740');
+		$altTitle = array();
 		
-		if ($marcField130 || $marcField240 || $marcField246 || $marcField730 || $marcField740){
-			$altTitle = array();
-			foreach ($marcField130 as $field){
-				$altTitle[] = $this->getSubfieldData($field, 'a');
-			}
-			foreach ($marcField240 as $field){
-				$altTitle[] = $this->getSubfieldData($field, 'a');
-			}
-			foreach ($marcField246 as $field){
-				$altTitle[] = $this->getSubfieldData($field, 'a');
-			}
-			foreach ($marcField730 as $field){
-				$altTitle[] = $this->getSubfieldData($field, 'a');
-			}
-			$interface->assign('altTitle', $altTitle);
+		$marcField130 = $marcRecord->getFields('130');			
+		foreach ($marcField130 as $field){
+			$altTitle[] = $this->getSubfieldData($field, 'a');
 		}
+		
+		$marcField210 = $marcRecord->getFields('210');
+		foreach ($marcField210 as $field){
+			$altTitle[] = $this->getSubfieldData($field, 'a');
+		}
+
+		$marcField222 = $marcRecord->getFields('222');
+		foreach ($marcField222 as $field){
+			$altTitle[] = $this->getSubfieldData($field, 'a');
+		}
+
+		$marcField240 = $marcRecord->getFields('240');
+		foreach ($marcField240 as $field){
+			$altTitle[] = $this->getSubfieldData($field, 'a');
+		}
+
+		$marcField246 = $marcRecord->getFields('246');
+		foreach ($marcField246 as $field){
+			$altTitle[] = $this->getSubfieldData($field, 'a');
+		}
+
+		$marcField247 = $marcRecord->getFields('247');		
+		foreach ($marcField247 as $field){
+			$altTitle[] = $this->getSubfieldData($field, 'a');
+		}
+
+		//skipping these since they are already listed in contents
+		//$marcField505 = $marcRecord->getFields('505');
+		//foreach ($marcField505 as $field){
+		//	$altTitle[] = $this->getSubfieldData($field, 't');
+		//}
+
+		$marcField534 = $marcRecord->getFields('534');		
+		foreach ($marcField534 as $field){
+			$altTitle[] = $this->getSubfieldData($field, 't');
+		}
+
+		$marcField700 = $marcRecord->getFields('700');		
+		foreach ($marcField700 as $field){
+			$altTitle[] = $this->getSubfieldData($field, 't');
+		}
+
+		$marcField710 = $marcRecord->getFields('710');
+		foreach ($marcField710 as $field){
+			$altTitle[] = $this->getSubfieldData($field, 't');
+		}
+
+		$marcField711 = $marcRecord->getFields('711');
+		foreach ($marcField711 as $field){
+			$altTitle[] = $this->getSubfieldData($field, 't');
+		}
+
+		$marcField730 = $marcRecord->getFields('730');
+		foreach ($marcField730 as $field){
+			$altTitle[] = $this->getSubfieldData($field, 'a');
+		}
+
+		$marcField740 = $marcRecord->getFields('740');
+		foreach ($marcField740 as $field){
+			$altTitle[] = $this->getSubfieldData($field, 'a');
+		}		
+
+		$marcField762 = $marcRecord->getFields('762');
+		foreach ($marcField762 as $field){
+			$altTitle[] = $this->getSubfieldData($field, 's');
+			$altTitle[] = $this->getSubfieldData($field, 't');
+		}
+
+		$marcField767 = $marcRecord->getFields('767');
+		foreach ($marcField767 as $field){
+			$altTitle[] = $this->getSubfieldData($field, 's');
+			$altTitle[] = $this->getSubfieldData($field, 't');
+		}
+
+		$marcField770 = $marcRecord->getFields('770');
+		foreach ($marcField770 as $field){
+			$altTitle[] = $this->getSubfieldData($field, 's');
+			$altTitle[] = $this->getSubfieldData($field, 't');			
+		}
+		
+		$marcField772 = $marcRecord->getFields('772');
+		foreach ($marcField772 as $field){
+			$altTitle[] = $this->getSubfieldData($field, 's');
+			$altTitle[] = $this->getSubfieldData($field, 't');			
+		}
+
+		$marcField773 = $marcRecord->getFields('773');
+		foreach ($marcField773 as $field){
+			$altTitle[] = $this->getSubfieldData($field, 's');
+			$altTitle[] = $this->getSubfieldData($field, 't');
+		}
+
+		$marcField774 = $marcRecord->getFields('774');
+		foreach ($marcField774 as $field){
+			$altTitle[] = $this->getSubfieldData($field, 's');
+			$altTitle[] = $this->getSubfieldData($field, 't');			
+		}
+
+		$marcField775 = $marcRecord->getFields('775');
+		foreach ($marcField775 as $field){
+			$altTitle[] = $this->getSubfieldData($field, 's');
+			$altTitle[] = $this->getSubfieldData($field, 't');			
+		}
+
+		$marcField776 = $marcRecord->getFields('776');
+		foreach ($marcField776 as $field){
+			$altTitle[] = $this->getSubfieldData($field, 's');
+			$altTitle[] = $this->getSubfieldData($field, 't');			
+		}
+
+		$marcField777 = $marcRecord->getFields('777');
+		foreach ($marcField777 as $field){
+			$altTitle[] = $this->getSubfieldData($field, 's');
+			$altTitle[] = $this->getSubfieldData($field, 't');			
+		}
+
+		$marcField786 = $marcRecord->getFields('786');
+		foreach ($marcField786 as $field){
+			$altTitle[] = $this->getSubfieldData($field, 's');
+			$altTitle[] = $this->getSubfieldData($field, 't');			
+		}
+
+		$marcField787 = $marcRecord->getFields('787');
+		foreach ($marcField787 as $field){
+			$altTitle[] = $this->getSubfieldData($field, 's');
+			$altTitle[] = $this->getSubfieldData($field, 't');			
+		}
+		
+                //clean up alt titles, remove dups and blanks, and sort by alpha
+		$altTitleUnique = array_unique($altTitle);
+		ksort($altTitleUnique);
+		if (strlen($altTitleUnique[0]) < 1){
+			array_shift($altTitleUnique);
+		}
+		
+		//echo "<pre>";
+		//echo print_r($altTitleUnique);
+		//echo "</pre>";		
+		$interface->assign('altTitle', $altTitleUnique);
+
+		//End alternate title fields	
 		
 		$marcField = $marcRecord->getField('100');
 		if ($marcField){
@@ -180,8 +305,12 @@ class Record extends Action
 		$marcFields = $marcRecord->getFields('700');
 		if ($marcFields){
 			$contributors = array();
+			$arrayIndex = 0;
 			foreach ($marcFields as $marcField){
-				$contributors[] = $this->concatenateSubfieldData($marcField, array('a', 'b', 'd', 'q', 'c', 'e', '4'));
+				$contributors[$arrayIndex]["author"] = $this->getSubfieldData($marcField, 'a');
+				$contributors[$arrayIndex]["authorSub"] = $this->concatenateSubfieldData($marcField, array('b', 'd', 'q', 'c', 'e', '4'));
+				$contributors[$arrayIndex]["title"] = $this->getSubfieldData($marcField, 't');
+				$arrayIndex++;
 			}
 			$interface->assign('contributors', $contributors);
 		}
@@ -189,8 +318,12 @@ class Record extends Action
 		$marcFields = $marcRecord->getFields('710');
 		if ($marcFields){
 			$corporates = array();
+			$arrayIndex = 0;
 			foreach ($marcFields as $marcField){
-				$corporates[] = $this->concatenateSubfieldData($marcField, array('a', 'b', 'd', 'c'));
+				$corporates[$arrayIndex]["author"] = $this->getSubfieldData($marcField, 'a');
+				$corporates[$arrayIndex]["authorSub"] = $this->concatenateSubfieldData($marcField, array('b', 'd', 'c', 'e'));
+				$corporates[$arrayIndex]["title"] = $this->getSubfieldData($marcField, 't');
+				$arrayIndex++;
 			}
 			$interface->assign('corporates', $corporates);
 		}
@@ -198,8 +331,12 @@ class Record extends Action
 		$marcFields = $marcRecord->getFields('711');
 		if ($marcFields){
 			$meetings = array();
+			$arrayIndex = 0;
 			foreach ($marcFields as $marcField){
-				$meetings[] = $this->concatenateSubfieldData($marcField, array('a', 'd', 'c'));
+				$meetings[$arrayIndex]["author"] = $this->getSubfieldData($marcField, 'a');
+				$meetings[$arrayIndex]["authorSub"]  = $this->concatenateSubfieldData($marcField, array('d', 'c', 'e'));
+				$meetings[$arrayIndex]["title"] = $this->getSubfieldData($marcField, 't');
+				$arrayIndex++;
 			}
 			$interface->assign('meetings', $meetings);
 		}
@@ -222,7 +359,19 @@ class Record extends Action
 			$interface->assign('published', $published);
 			//$interface->assign('pubdate', str_replace('.', '', $this->getSubfieldData($marcField, 'c')));
 			$interface->assign('pubdate', ereg_replace("[^0-9]", "", $this->getSubfieldData($marcField, 'c')));
+		} else {
+			// find RDA 264 field for date
+			$marcFields = $marcRecord->getFields('264');
+			if ($marcFields){
+				$published = array();
+				foreach ($marcFields as $marcField){
+					$published[] = $this->concatenateSubfieldData($marcField, array('a', 'b', 'c'));
+				}
+				$interface->assign('published', $published);
+				$interface->assign('pubdate', ereg_replace("[^0-9]", "", $this->getSubfieldData($marcField, 'c')));
+			}
 		}
+
 
 		$marcFields = $marcRecord->getFields('250');
 		if ($marcFields){
@@ -241,9 +390,16 @@ class Record extends Action
 				if ($description != 'p. cm.'){
 					$description = preg_replace("/[\/|;:]$/", '', $description);
 					$description = preg_replace("/p\./", 'pages', $description);
+					$description = $description . ' ' . $this->getSubfieldData($marcField,'b');
+					$description = $description . ' ' . $this->getSubfieldData($marcField,'c');
+					$description = $description . ' ' . $this->getSubfieldData($marcField,'e');
+					$description = rtrim($description);
 					$physicalDescriptions[] = $description;
 				}
 			}
+			//echo "<pre>physical descriptions";
+			//print_r($physicalDescriptions);
+			//echo "</pre>";
 			$interface->assign('physicalDescriptions', $physicalDescriptions);
 		}
 		
@@ -401,8 +557,14 @@ class Record extends Action
 		$useMarcSeries = true;
 			$marcField440 = $marcRecord->getFields('440');
 			$marcField490 = $marcRecord->getFields('490');
+			$marcField760 = $marcRecord->getFields('760');
+			$marcField810 = $marcRecord->getFields('810');
+			$marcField811 = $marcRecord->getFields('811');			
 			$marcField830 = $marcRecord->getFields('830');
-			if ($marcField440 || $marcField490 || $marcField830){
+			if ($marcField440 || $marcField490 || $marcField760 || $marcField810 || $marcField811 || $marcField830){
+				//echo "<pre>";
+				//echo "get series array";
+				//echo "</pre>";
 				$series = array();
 				foreach ($marcField440 as $field){
 					$series[] = $this->getSubfieldData($field, 'a');
@@ -411,6 +573,15 @@ class Record extends Action
 					if ($field->getIndicator(1) == 0){
 						$series[] = $this->getSubfieldData($field, 'a');
 					}
+				}
+				foreach ($marcField760 as $field){
+					$series[] = rtrim($this->getSubfieldData($field, 't'),"; ");
+				}
+				foreach ($marcField810 as $field){
+					$series[] = rtrim($this->getSubfieldData($field, 't'),"; ");
+				}
+				foreach ($marcField811 as $field){
+					$series[] = rtrim($this->getSubfieldData($field, 't'),"; ");
 				}
 				foreach ($marcField830 as $field){
 					$series[] = $this->getSubfieldData($field, 'a');
