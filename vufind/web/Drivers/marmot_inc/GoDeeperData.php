@@ -282,7 +282,26 @@ class GoDeeperData{
 							);
 						}
 
+					} else {
+
+						// try loading awards.xml
+						$awards_url = "http://syndetics.com/index.aspx?isbn=$isbn/ffawards.xml&client=$clientKey&type=xw10&upc=$upc";
+						$awards_response =file_get_contents($awards_url, 0, $ctx);
+						
+						//Parse the XML
+						$awards_data = new SimpleXMLElement($awards_response);
+
+						if (isset($awards_data->VarFlds->VarDFlds->SSIFlds->Fld985)){
+							foreach ($awards_data->VarFlds->VarDFlds->SSIFlds->Fld985 as $field){
+								$fictionData['awards'][] = array(
+		                            'name' => (string)$field->a,
+		                            'year' => (string)$field->y,
+								);
+							}
+						}
+
 					}
+
 				}
 			}catch (Exception $e) {
 				global $logger;
