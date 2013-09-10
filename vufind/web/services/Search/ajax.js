@@ -72,6 +72,7 @@ function addIdToStatusList(id, type) {
 
 function doGetStatusSummaries()
 {
+
 	var now = new Date();
 	var ts = Date.UTC(now.getFullYear(),now.getMonth(),now.getDay(),now.getHours(),now.getMinutes(),now.getSeconds(),now.getMilliseconds());
 
@@ -191,7 +192,7 @@ function doGetStatusSummaries()
 							statusSpan.html("Unknown");
 						}
 					}
-					
+
 					// Load Download Link
 					var downloadLinkSpan= $('#downloadLinkValue' + elemId);
 					if (downloadLinkSpan.length > 0){
@@ -211,6 +212,26 @@ function doGetStatusSummaries()
 						$.each( checked_out, function( key, value ){
 							$(this).find('span').eq(1).text('Recently Checked Out');
 						});
+
+					}
+
+					//var SummaryDetails = $(data).find("class").text();
+
+					if (items[i].status == "It's here"){
+						console.log(items[i].Id)
+
+						$("#request-now" + elemId).css('background-color','rgb(192,192,192)');
+						$("#request-now" + elemId).css('background-color','rgb(192,192,192)');
+						$("#request-now" + elemId).css("color","rgb(248,248,248)");
+						$("#request-now" + elemId +" .action-lable-span").text("It's Here");
+						$("#request-now" + elemId).css("cursor","default");
+					} else {
+
+						//alert('test')
+						
+						$("#request-now"+elemId).bind('click', function(){
+							getToRequest('/Record/.' + elemId + '/Hold');
+						})
 
 					}
 

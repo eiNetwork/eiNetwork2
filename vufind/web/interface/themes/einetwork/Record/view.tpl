@@ -241,18 +241,16 @@ function redrawSaveStatus() {literal}{{/literal}
 					<td class="details_lable">Other Titles</td>
 					<td>
 						<table>
-					{if $altTitle}
-					{foreach from=$altTitle item=title key=k name=loop}			
-							
-								<tr><td>							
-								{$title|escape|trim}
+						{foreach from=$altTitle item=title key=k name=loop}			
+							<tr><td>
+								<a href="{$path}/Union/Search?basicType=Title&lookfor={$title|trim|escape:"url"}">{$title|escape|trim}</a>
 								</td></tr>
-								{/foreach}
-								{/if}
+						{/foreach}
 						</table>
 					</td>
 					</tr>
 					{/if}
+
 					{if $withNotes}
 					<tr>
 						<td class="details_lable">Also Includes</td>
@@ -272,17 +270,32 @@ function redrawSaveStatus() {literal}{{/literal}
 							<table>
 							{if $contributors}
 							{foreach from=$contributors item=contributor name=loop}
-							<tr><td><a href="{$path}/Author/Home?author={$contributor|trim|escape:"url"}">{$contributor|escape|trim}</a></td></tr>
+							<tr><td><a href="{$path}/Author/Home?author={$contributor.author|trim|escape:"url"}">{$contributor.author|escape|trim}</a>
+							{$contributor.authorSub}
+							{if $contributor.title}
+								<a href="{$path}/Union/Search?basicType=Title&lookfor={$contributor.title|trim|escape:"url"}">{$contributor.title|escape|trim}</a>
+							{/if}
+							</td></tr>
 							{/foreach}
 							{/if}
 							{if $corporates}
 							{foreach from=$corporates item=corporate name=loop}
-							<tr><td><a href="{$path}/Author/Home?author={$corporate|trim|escape:"url"}">{$corporate|escape|trim}</a></td></tr>
+							<tr><td><a href="{$path}/Author/Home?author={$corporate.author|trim|escape:"url"}">{$corporate.author|escape|trim}</a>
+							{$corporate.authorSub}							
+							{if $corporate.title}
+								<a href="{$path}/Union/Search?basicType=Title&lookfor={$corporate.title|trim|escape:"url"}">{$corporate.title|escape|trim}</a>
+							{/if}
+							</td></tr>
 							{/foreach}
 							{/if}
 							{if $meetings}
 							{foreach from=$meetings item=meeting name=loop}
-							<tr><td><a href="{$path}/Author/Home?author={$meeting|trim|escape:"url"}">{$meeting|escape|trim}</a></td></tr>
+							<tr><td><a href="{$path}/Author/Home?author={$meeting.author|trim|escape:"url"}">{$meeting.author|escape|trim}</a>
+							{$meeting.authorSub}								
+							{if $meeting.title}
+								<a href="{$path}/Union/Search?basicType=Title&lookfor={$meeting.title|trim|escape:"url"}">{$meeting.title|escape|trim}</a>
+							{/if}
+							</td></tr>
 							{/foreach}
 							{/if}
 							</table>

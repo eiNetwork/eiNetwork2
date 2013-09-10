@@ -938,6 +938,9 @@ public class MarcRecordDetails {
 	 */
 	public String getDate() {
 		String date = getFieldVals("260c", ", ");
+		if (date == null || date.length() == 0) {
+			date = getFieldVals("264c", ", ");
+		}		
 		if (date == null || date.length() == 0) return (null);
 		return Utils.cleanDate(date);
 	}
