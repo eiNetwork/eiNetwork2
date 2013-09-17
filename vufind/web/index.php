@@ -18,6 +18,8 @@
  *
  */
 
+ini_set("include_path", ".:/usr/local/mark/eiNetwork/vufind/PEAR:/usr/share/php:/usr/share/pear"); // override server PEAR/Pager.php
+
 /** CORE APPLICATION CONTROLLER **/
 $startTime = microtime(true);
 // Retrieve values from configuration file
