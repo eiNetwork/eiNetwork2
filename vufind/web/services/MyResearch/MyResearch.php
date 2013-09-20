@@ -120,11 +120,13 @@ class MyResearch extends Action
 				$profile = $this->catalog->getMyProfile($patron);
 
 				if ($profile['fines'] != '$0.00'){
-					$notifications['messages'][] = 'You have <span class="label label-primary" style="font-size:0.85em">' . $profile['fines'] . '</span>in overdue fines.';
+					$notifications['messages'][] = 'You have ' . $profile['fines'] . ' in overdue fines. <input type="button" class="button pay-fine-button" onclick="window.open(\'http://catalog.einetwork.net/patroninfo\')" value="Pay Fine" title="Pay overdue fine on-line" />';
 				}
 
 				if ($profile['expireclose'] == 1){
-					$notifications['messages'][] = 'Your library card is due to expire within the next <span class="label label-primary" style="font-size:0.85em">30 days</span>. Please visit your local library to renew your card to ensure access to all online services.';
+					$notifications['messages'][] = 'Your library card is due to expire within the next 30 days. Please visit your local library to renew your card to ensure access to all online services.';
+				} elseif ($profile['expireclose'] == -1){
+					$notifications['messages'][] = 'Your library card is expired. Please visit your local library to renew your card to ensure access to all online service.';
 				}
 
 				$notifications['count'] = count($notifications['messages']);
