@@ -37,7 +37,7 @@ class AJAX extends Action {
 	function launch()
 	{
 		$method = $_GET['method'];
-		if (in_array($method, array('GetSuggestions', 'GetListTitles', 'getOverDriveSummary',"getAllItems", 'AddList','updatePreferredBranches', 'editEmailPrompt', 'getUnavailableHoldingInfo','saveNotificationPopupState'))){
+		if (in_array($method, array('GetSuggestions', 'GetListTitles', 'getOverDriveSummary',"getAllItems", 'AddList','updatePreferredBranches', 'editEmailPrompt', 'getUnavailableHoldingInfo','saveNotificationPopupState','saveExpandCollapseState'))){
 			header('Content-type: text/plain');
 			header('Cache-Control: no-cache, must-revalidate'); // HTTP/1.1
 			header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
@@ -571,6 +571,58 @@ class AJAX extends Action {
 
 		// if true keep notification window closed on page load
 		$_SESSION['notification_popupstate'] = 1;
+
+	}
+
+	function saveExpandCollapseState(){
+
+		global $configArray;
+		global $user;
+
+		// echo "<pre>";
+		// print_r($user->holdpage_collapse);
+		// echo "</pre>";
+
+		$this->catalog = new CatalogConnection($configArray['Catalog']['driver']);
+
+		$holdpage_collapse = isset($_REQUEST['holdpage_collapse']) ? $_REQUEST['holdpage_collapse'] : null;
+		$checkedout_collapse = isset($_REQUEST['checkedout_collapse']) ? $_REQUEST['checkedout_collapse'] : null;
+		$readinghistory_collapse = isset($_REQUEST['readinghistory_collapse']) ? $_REQUEST['readinghistory_collapse'] : null;
+		$bookcart_collapse = isset($_REQUEST['bookcart_collapse']) ? $_REQUEST['bookcart_collapse'] : null;
+		$wishlist_collapse = isset($_REQUEST['wishlist_collapse']) ? $_REQUEST['wishlist_collapse'] : null;
+
+		//Make sure to clear any cached data
+		global $memcache;
+		$memcache->delete("patron_dump_{$this->catalog->_getBarcode()}");
+		usleep(250);
+
+
+		if (isset($holdpage_collapse)){
+			$user->holdpage_collapse = $holdpage_collapse;
+			$user->query("UPDATE user SET holdpage_collapse = $holdpage_collapse WHERE id = $user->id");
+		}
+
+		if (isset($checkedout_collapse)){
+			$user->checkedout_collapse = $checkedout_collapse;
+			$user->query("UPDATE user SET checkedout_collapse = $checkedout_collapse WHERE id = $user->id");
+		}
+
+		if (isset($readinghistory_collapse)){
+			$user->readinghistory_collapse = $readinghistory_collapse;
+			$user->query("UPDATE user SET readinghistory_collapse = $readinghistory_collapse WHERE id = $user->id");
+		}
+
+		if (isset($bookcart_collapse)){
+			$user->bookcart_collapse = $bookcart_collapse;
+			$user->query("UPDATE user SET bookcart_collapse = $bookcart_collapse WHERE id = $user->id");
+		}
+
+		if (isset($wishlist_collapse)){
+			$user->wishlist_collapse = $wishlist_collapse;
+			$user->query("UPDATE user SET wishlist_collapse = $wishlist_collapse WHERE id = $user->id");
+		}
+
+		$_SESSION['userinfo'] = serialize($user);
 
 	}
 }

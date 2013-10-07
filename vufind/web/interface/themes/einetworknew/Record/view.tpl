@@ -32,20 +32,20 @@ function redrawSaveStatus() {literal}{{/literal}
 	<div class="col-xs-3 col-md-3">
 		{include file="ei_tpl/Record/left-bar-record.tpl"}
 	</div>
-	<div class="col-xs-6 col-md-6">
+	<div class="col-xs-6 col-md-6 details-panel">
 
 		<div class="row">
-			<div class="col-xs-3 col-md-3">
-				<a class="thumbnail" href="{$bookCoverUrl}">							
-					<img alt="{translate text='Book Cover'}" class="recordcover" src="{$bookCoverUrl}" />
+			<div class="col-xs-3 col-md-3 col-lg-3">
+				<a href="{$bookCoverUrl}">							
+					<img style="width:100px" alt="{translate text='Book Cover'}" class="recordcover" src="{$bookCoverUrl}" />
 				</a>
 				<div id="goDeeperLink" class="godeeper" style="display:none">
 					<a href="{$path}/Record/{$id|escape:"url"}/GoDeeper" onclick="ajaxLightbox('{$path}/Record/{$id|escape}/GoDeeper?lightbox', false,false, '700px', '110px', '70%'); return false;">
 					<img class="godeeper-arrow" alt="{translate text='Go Deeper'}" src="{$path}/images/deeper.png" /></a>
 				</div>
 			</div>
-			<div class="col-xs-6 col-md-6">
-				<div id='recordTitle'>{$recordTitleSubtitle|regex_replace:"/(\/|:)$/":""|escape} </div>
+			<div class="col-xs-5 col-md-5">
+				<div id='recordTitle' class="details-page-header">{$recordTitleSubtitle|regex_replace:"/(\/|:)$/":""|escape} </div>
 				{* Display more information about the title*}
 				{if $mainAuthor}
 					<div class="recordAuthor">
@@ -73,14 +73,14 @@ function redrawSaveStatus() {literal}{{/literal}
 				{/if}
 				{*}
 			</div>
-			<div class="col-xs-2 col-md-2">
+			<div class="col-xs-4 col-md-4">
 				<div class="btn-group-vertical">
 					{if !isset($noRequest)}
-						<button type="button" class="btn btn-default" {if $enableBookCart}onclick="getSaveToBookCart('{$id|escape:"url"}','VuFind');return false;"{/if}>Add to Cart</button>
+						<button class="btn btn-xs btn-default btn-search-results" id="add-to-cart{$short_id|escape:'url'}" {if $enableBookCart}onclick="getSaveToBookCart('{$id|escape:"url"}','VuFind');return false;"{/if}><span class="glyphicon glyphicon-plus glyphicon-ein-color"></span>&nbsp;&nbsp;Add to Cart</button>
 					{/if}
-					<button type="button" class="btn btn-default" {if isset($noRequest)}disabled="disabled"{/if} {if !isset($noRequest)}onclick="getToRequest('{$path}/Record/{$id|escape:'url'}/Hold')"{/if}>Request Now</button>
-					<button type="button" class="btn btn-default" onclick="getSaveToListForm('{$id|escape}', 'VuFind'); return false;">Add To Wish List</button>
-					<button type="button" class="btn btn-default" onclick="findInLibrary('{$id|escape:"url"}',false,'150px','570px','auto')">Find in Library</button>
+					<button class="btn btn-xs btn-default btn-search-results" {if isset($noRequest)}disabled="disabled"{/if} {if !isset($noRequest)}onclick="getToRequest('{$path}/Record/{$id|escape:'url'}/Hold')"{/if}><span class="glyphicon glyphicon-import glyphicon-ein-color"></span>&nbsp;&nbsp;Request Now</button>
+					<button class="btn btn-xs btn-default btn-search-results" onclick="getSaveToListForm('{$id|escape}', 'VuFind'); return false;"><span class="glyphicon glyphicon-th-list glyphicon-ein-color"></span>&nbsp;&nbsp;Add To Wish List</button>
+					<button class="btn btn-xs btn-default btn-search-results" onclick="findInLibrary('{$id|escape:"url"}',false,'150px','570px','auto')"><span class="glyphicon glyphicon-search glyphicon-ein-color"></span>&nbsp;&nbsp;Find in Library</button>
 				</div>
 			</div>
 		</div>
@@ -98,8 +98,8 @@ function redrawSaveStatus() {literal}{{/literal}
 			<div class="col-xs-12 col-md-12">
 				<ul class="search-results-list">
 					{if $summary}
-						<li class="details-page-header">
-							{translate text='Summary'}
+						<li class="details-summary">
+							<span class="details-page-header">{translate text='Summary'}</span>
 							<ul>
 								<li>
 									{if strlen($summary) > 300}
@@ -120,8 +120,8 @@ function redrawSaveStatus() {literal}{{/literal}
 					{/if}
 					{if $toc}
 						{assign var="con" value=""}
-						<li class="details-page-header">
-							{translate text='Contents'}
+						<li class="details-summary">
+							<span class="details-page-header">{translate text='Contents'}</span>
 							<ul>
 								<li>
 									{foreach from=$toc item=line name=loop}
@@ -147,8 +147,8 @@ function redrawSaveStatus() {literal}{{/literal}
 							</ul>
 						</li>
 					{/if}
-					<li class="details-page-header">
-						{translate text='Published Reviews'}
+					<li class="details-summary">
+						<span class="details-page-header">{translate text='Published Reviews'}</span>
 						<ul>
 							<li>
 								{if $showAmazonReviews || $showStandardReviews}
@@ -157,8 +157,8 @@ function redrawSaveStatus() {literal}{{/literal}
 							</li>
 						</ul>
 					</li>
-					<li class="details-page-header">
-						{translate text='Community Reviews test'}
+					<li class="details-summary">
+						<span class="details-page-header">{translate text='Community Reviews test'}</span>
 						<ul>
 							<li>
 								{*include file="$module/view-comments.tpl"*}
@@ -166,8 +166,8 @@ function redrawSaveStatus() {literal}{{/literal}
 							</li>
 						</ul>
 					</li>
-					<li class="details-page-header">
-						{translate text='Staff Reviews'}
+					<li class="details-summary">
+						<span class="details-page-header">{translate text='Staff Reviews'}</span>
 						<ul>
 							<li>{include file="$module/view-staff-reviews.tpl"}</li>
 						</ul>

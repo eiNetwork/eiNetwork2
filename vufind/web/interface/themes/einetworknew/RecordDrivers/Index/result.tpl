@@ -1,7 +1,7 @@
 {if $pageType eq 'WishList' || $pageType eq 'BookCart'}
 
 <div class="row">
-    <div class="col-xs-12 col-md-12 search-results">
+    <div class="col-xs-12 col-md-12 search-results resultsList" id="record{$summShortId|escape}">
         <a class="accordion-toggle accordion-toggle-collapse" data-toggle="collapse" data-parent="#accordion2" href="#collapse{$summShortId|escape}"></a>
         <div class="accordion-group">
             <div class="accordion-heading">
@@ -10,30 +10,29 @@
             <div class="results-header clearfix">
                 <div class="row results-title-header">
                     <div class="col-xs-9 col-md-9 results-title">
-                        <a href="{$url}/Record/{$summId|escape:"url"}/Home?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}" class="title" title="{if !$summTitle|regex_replace:"/(\/|:)$/":""}{translate text='Title not available'}{else}{$summTitle|regex_replace:"/(\/|:)$/":""}{/if}">{if !$summTitle|regex_replace:"/(\/|:)$/":""}{translate text='Title not available'}{else}{$summTitle|regex_replace:"/(\/|:)$/":""|truncate:50:"..."|highlight:$lookfor}{/if}</a>
+                        <a style="margin:5px 0 0 30px; display: inline-block" href="{$url}/Record/{$summId|escape:"url"}/Home?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}" class="title" title="{if !$summTitle|regex_replace:"/(\/|:)$/":""}{translate text='Title not available'}{else}{$summTitle|regex_replace:"/(\/|:)$/":""}{/if}">{if !$summTitle|regex_replace:"/(\/|:)$/":""}{translate text='Title not available'}{else}{$summTitle|regex_replace:"/(\/|:)$/":""|truncate:50:"..."|highlight:$lookfor}{/if}</a>
                         | <span class="author">
-                                {if $summAuthor}
-                                    {translate text=''}
-                                    {if is_array($summAuthor)}
-                                        {foreach from=$summAuthor item=author}
-                                        <a href="{$url}/Author/Home?author={$author|escape:"url"}">{$author|highlight:$lookfor}</a>
-                                        {/foreach}
-                                    {else}
-                                        <a href="{$url}/Author/Home?author={$summAuthor|escape:"url"}">{$summAuthor|highlight:$lookfor}</a>
-                                    {/if}
+                            {if $summAuthor}
+                                {translate text=''}
+                                {if is_array($summAuthor)}
+                                    {foreach from=$summAuthor item=author}
+                                    <a href="{$url}/Author/Home?author={$author|escape:"url"}">{$author|highlight:$lookfor}</a>
+                                    {/foreach}
+                                {else}
+                                    <a href="{$url}/Author/Home?author={$summAuthor|escape:"url"}">{$summAuthor|highlight:$lookfor}</a>
                                 {/if}
-                                {if $summCorpAuthor}
-                                    {translate text=''}
-                                    {if is_array($summCorpAuthor)}
-                                        {foreach from=$summCorpAuthor item=corpAuthor}
-                                        <a href="{$url}/Author/Home?author={$corpAuthor|escape:"url"}">{$corpAuthor|highlight:$lookfor}</a>
-                                        {/foreach}
-                                    {else}
-                                        <a href="{$url}/Author/Home?author={$summCorpAuthor|escape:"url"}">{$summCorpAuthor|highlight:$lookfor}</a>
-                                    {/if}
+                            {/if}
+                            {if $summCorpAuthor}
+                                {translate text=''}
+                                {if is_array($summCorpAuthor)}
+                                    {foreach from=$summCorpAuthor item=corpAuthor}
+                                    <a href="{$url}/Author/Home?author={$corpAuthor|escape:"url"}">{$corpAuthor|highlight:$lookfor}</a>
+                                    {/foreach}
+                                {else}
+                                    <a href="{$url}/Author/Home?author={$summCorpAuthor|escape:"url"}">{$summCorpAuthor|highlight:$lookfor}</a>
                                 {/if}
-                            </span>
-
+                            {/if}
+                        </span>
                     </div>
                     <div class="col-xs-3 col-md-3">
                         <div class="btn-group wishlist-dropdown-actions pull-right">
@@ -155,7 +154,7 @@
             </div>
             <div class="col-xs-9 col-md-9">
                 <div class="row">
-                    <div class="col-xs-8 col-md-8">
+                    <div class="col-xs-7 col-md-7">
                         <ul class="requested-results">
                             <li class"results-title">
                                 <a href="{$url}/Record/{$summId|escape:"url"}/Home?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}" class="title" title="{if !$summTitle|regex_replace:"/(\/|:)$/":""}{translate text='Title not available'}{else}{$summTitle|regex_replace:"/(\/|:)$/":""}{/if}">{if !$summTitle|regex_replace:"/(\/|:)$/":""}{translate text='Title not available'}{else}{$summTitle|regex_replace:"/(\/|:)$/":""|truncate:50:"..."|highlight:$lookfor}{/if}</a>    
@@ -186,10 +185,12 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="col-xs-4 col-md-4">
+                    <div class="col-xs-5 col-md-5">
                         <div class="btn-group-vertical">
-                            <button type="button" class="btn btn-default" onclick="window.location.href ='{$url}/Record/{$summId|escape:'url'}/Home?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}'">View Details</button>
-                            <button type="button" class="btn btn-default" {if $enableBookCart}onclick="getSaveToBookCart('{$summId|escape:"url"}','VuFind');return false;"{/if}>Add To Cart</button>
+                            <button type="button" class="btn btn-xs btn-default btn-search-results" onclick="window.location.href ='{$url}/Record/{$summId|escape:'url'}/Home?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}'"><span class="glyphicon glyphicon-chevron-right glyphicon-ein-color"></span>&nbsp;&nbsp;View Details</button>
+                            <button type="button" class="btn btn-xs btn-default btn-search-results" id="request-now{if $summShortId}{$summShortId}{else}{$summId|escape}{/if}"><span class="glyphicon glyphicon-import glyphicon-ein-color"></span>&nbsp;&nbsp;Request Now</button>
+                            <button type="button" class="btn btn-xs btn-default btn-search-results" id="add-to-cart{if $summShortId}{$summShortId}{else}{$summId|escape}{/if}" {if $enableBookCart}onclick="getSaveToBookCart('{$summId|escape:"url"}','VuFind');return false;"{/if}><span class="glyphicon glyphicon-plus glyphicon-ein-color"></span>&nbsp;&nbsp;Add To Cart</button>
+                            <button type="button" class="btn btn-xs btn-default btn-search-results" onclick="findInLibrary('{$summId|escape:"url"}',false,'150px','570px','auto')"><span class="glyphicon glyphicon-search glyphicon-ein-color"></span>&nbsp;&nbsp;Find in Library</button>
                         </div>
                     </div>
                 </div>

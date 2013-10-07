@@ -133,18 +133,15 @@
 </script>
 {/literal}
 <div class="row">
-	<div class="col-xs-9 col-md-9">
+	<div class="col-xs-9 col-md-9 myaccount-main-panel">
 
-		<div class="sort pull-right" style="width:220px">
-			<div class="sortOptions">
-				<label class="pull-right">{translate text='Sort by'}
-					<select name="accountSort" id="sort{$sectionKey}" onchange="changeAccountSort($(this).val());">
-						{foreach from=$sortOptions item=sortDesc key=sortVal}
-						<option value="{$sortVal}"{if $defaultSortOption == $sortVal} selected="selected"{/if}>{translate text=$sortDesc}</option>
-						{/foreach}
-					</select>
-				</label>
-			</div>
+		<div class="pull-right myaccount-sort-container">
+			<label class="myaccount-sort-label">{translate text='Sort by'}&nbsp;</label>
+			<select name="accountSort" id="sort{$sectionKey}" class="form-control myaccount-sort-select" onchange="changeAccountSort($(this).val());">
+				{foreach from=$sortOptions item=sortDesc key=sortVal}
+				<option value="{$sortVal}"{if $defaultSortOption == $sortVal} selected="selected"{/if}>{translate text=$sortDesc}</option>
+				{/foreach}
+			</select>
 		</div>
 	
 		{if $user->cat_username}
@@ -221,28 +218,32 @@
 						        	</div>
 						        	<div class="results-header clearfix">
 						            	<div class="row results-title-header">
-						            		<div class="col-xs-12 col-md-12 results-title">
-							        			<a href="{$url}/Record/{$record.recordId|escape:"url"}?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}" class="title">
-													{if !$record.title|regex_replace:"/(\/|:)$/":""}
-													{translate text='Title not available'}
-													{else}
-													{$record.title|regex_replace:"/(\/|:)$/":""|truncate:60:"..."|highlight:$lookfor}
-													{/if}
-												</a>
-												| <span class="author">
-														{if $record.author}
-															{if is_array($record.author)}
-																{foreach from=$summAuthor item=author}
-																	<a href="{$url}/Author/Home?author={$author|escape:"url"}">{$author|highlight:$lookfor}</a>
-																{/foreach}
+						            		<div class="col-xs-12 col-md-12">
+						            			<ul class="requested-results requested-results-collapse">
+													<li class"results-title">
+									        			<a href="{$url}/Record/{$record.recordId|escape:"url"}?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}" class="title">
+															{if !$record.title|regex_replace:"/(\/|:)$/":""}
+															{translate text='Title not available'}
 															{else}
-																<a href="{$url}/Author/Home?author={$record.author|escape:"url"}">{$record.author|highlight:$lookfor}</a>
+															{$record.title|regex_replace:"/(\/|:)$/":""|truncate:60:"..."|highlight:$lookfor}
 															{/if}
-														{/if}
-													</span>
+														</a>
+														| <span class="author">
+																{if $record.author}
+																	{if is_array($record.author)}
+																		{foreach from=$summAuthor item=author}
+																			<a href="{$url}/Author/Home?author={$author|escape:"url"}">{$author|highlight:$lookfor}</a>
+																		{/foreach}
+																	{else}
+																		<a href="{$url}/Author/Home?author={$record.author|escape:"url"}">{$record.author|highlight:$lookfor}</a>
+																	{/if}
+																{/if}
+															</span>
+													</li>
+												</ul>
 							        		</div>
 							        	</div>
-							        	<div class="row results-status-header">
+							        	<div class="row results-status-header results-status-collapse">
 					        				<div class="col-xs-4 col-md-4">
 				        						<p><span class="label {if $record.status == 'Pending' }label-warning{else}label-success{/if} label-requested-results">
 					                        		{$record.status}
@@ -276,7 +277,7 @@
 
 							                    		 <div class="col-xs-4 col-md-4" style="text-align: center">
 								                        	<label>
-																<span class="label label-default label-requested-results">Cancel</span><br /><input type="checkbox" class="form-control titleSelect cancel_checkboxes physical_items" name="selected[{$record.renewIndicator}]" id="selected{$record.itemid}" />
+																<span class="label label-default label-requested-results">Cancel</span><br /><input type="checkbox" class="titleSelect cancel_checkboxes physical_items" name="selected[{$record.renewIndicator}]" id="selected{$record.itemid}" />
 															</label>
 								                        </div>
 							                        
@@ -284,12 +285,12 @@
 
 							                    		<div class="col-xs-4 col-md-4" style="text-align: center">
 								                        	<label>
-																<span class="label label-default label-requested-results">Unfreeze</span><br /><input id="frozen_state_on" type="checkbox" class="form-control titleSelect freeze_checkboxes physical_items update_all" name="data[{$record.cancelId}][freeze]" />
+																<span class="label label-default label-requested-results">Unfreeze</span><br /><input id="frozen_state_on" type="checkbox" class="titleSelect freeze_checkboxes physical_items update_all" name="data[{$record.cancelId}][freeze]" />
 															</label>
 								                        </div>
 								                        <div class="col-xs-4 col-md-4" style="text-align: center">
 								                        	<label>
-																<span class="label label-default label-requested-results">Cancel</span><br /><input type="checkbox" class="form-control titleSelect cancel_checkboxes physical_items" name="selected[{$record.renewIndicator}]" id="selected{$record.itemid}" />
+																<span class="label label-default label-requested-results">Cancel</span><br /><input type="checkbox" class="titleSelect cancel_checkboxes physical_items" name="selected[{$record.renewIndicator}]" id="selected{$record.itemid}" />
 															</label>
 								                        </div>
 
@@ -309,12 +310,12 @@
 
 								                        <div class="col-xs-4 col-md-4 pull-right" style="text-align: center; margin:-21px 45px 0 0">
 								                        	<label>
-																<span class="label label-default label-requested-results">Cancel</span><br /><input type="checkbox" class="form-control titleSelect cancel_checkboxes physical_items" name="selected[{$record.renewIndicator}]" id="selected{$record.itemid}" />
+																<span class="label label-default label-requested-results">Cancel</span><br /><input type="checkbox" class="titleSelect cancel_checkboxes physical_items" name="selected[{$record.renewIndicator}]" id="selected{$record.itemid}" />
 															</label>
 								                        </div>
 								                        <div class="col-xs-4 col-md-4 pull-right" style="text-align: center; margin:-21px 5px 0 0">
 								                        	<label>
-																<span class="label label-default label-requested-results">Freeze</span><br /><input id="frozen_state_off" type="checkbox" class="form-control titleSelect freeze_checkboxes physical_items update_all" name="data[{$record.cancelId}][freeze]" />
+																<span class="label label-default label-requested-results">Freeze</span><br /><input id="frozen_state_off" type="checkbox" class="titleSelect freeze_checkboxes physical_items update_all" name="data[{$record.cancelId}][freeze]" />
 															</label>
 								                        </div>
 
@@ -368,7 +369,7 @@
 
 									                    		 <div class="col-xs-4 col-md-4 col-md-offset-8" style="text-align: center">
 										                        	<label>
-																		<span class="label label-default label-requested-results">Cancel</span><br /><input type="checkbox" class="form-control titleSelect cancel_checkboxes physical_items" name="selected[{$record.renewIndicator}]" id="selected{$record.itemid}" />
+																		<span class="label label-default label-requested-results">Cancel</span><br /><input type="checkbox" class="titleSelect cancel_checkboxes physical_items" name="selected[{$record.renewIndicator}]" id="selected{$record.itemid}" />
 																	</label>
 										                        </div>
 									                        
@@ -376,12 +377,12 @@
 
 									                    		<div class="col-xs-4 col-md-4 col-md-offset-4" style="text-align: center">
 										                        	<label>
-																		<span class="label label-default label-requested-results">Unfreeze</span><br /><input id="frozen_state_on" type="checkbox" class="form-control titleSelect freeze_checkboxes physical_items update_all" name="data[{$record.cancelId}][freeze]" />
+																		<span class="label label-default label-requested-results">Unfreeze</span><br /><input id="frozen_state_on" type="checkbox" class="titleSelect freeze_checkboxes physical_items update_all" name="data[{$record.cancelId}][freeze]" />
 																	</label>
 										                        </div>
 										                        <div class="col-xs-4 col-md-4" style="text-align: center">
 										                        	<label>
-																		<span class="label label-default label-requested-results">Cancel</span><br /><input type="checkbox" class="form-control titleSelect cancel_checkboxes physical_items" name="selected[{$record.renewIndicator}]" id="selected{$record.itemid}" />
+																		<span class="label label-default label-requested-results">Cancel</span><br /><input type="checkbox" class="titleSelect cancel_checkboxes physical_items" name="selected[{$record.renewIndicator}]" id="selected{$record.itemid}" />
 																	</label>
 										                        </div>
 
@@ -402,12 +403,12 @@
 																
 										                        <div class="col-xs-4 col-md-4 pull-right" style="text-align: center;  margin:0 25px 0 0">
 										                        	<label>
-																		<span class="label label-default label-requested-results">Cancel</span><br /><input type="checkbox" class="form-control titleSelect cancel_checkboxes physical_items" name="selected[{$record.renewIndicator}]" id="selected{$record.itemid}" />
+																		<span class="label label-default label-requested-results">Cancel</span><br /><input type="checkbox" class="titleSelect cancel_checkboxes physical_items" name="selected[{$record.renewIndicator}]" id="selected{$record.itemid}" />
 																	</label>
 										                        </div>
 										                        <div class="col-xs-4 col-md-4 pull-right" style="text-align: center;">
 										                        	<label>
-																		<span class="label label-default label-requested-results">Freeze</span><br /><input id="frozen_state_off" type="checkbox" class="form-control titleSelect freeze_checkboxes physical_items update_all" name="data[{$record.cancelId}][freeze]" />
+																		<span class="label label-default label-requested-results">Freeze</span><br /><input id="frozen_state_off" type="checkbox" class="titleSelect freeze_checkboxes physical_items update_all" name="data[{$record.cancelId}][freeze]" />
 																	</label>
 										                        </div>
 

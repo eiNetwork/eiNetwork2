@@ -68,6 +68,13 @@
  
 <body>
 
+	{* LightBox *}
+    <div id="lightboxLoading" class="lightboxLoading" style="display: none;">{translate text="Loading"}...</div>
+    <div id="lightboxError" style="display: none;">{translate text="lightbox_error"}</div>
+    <div id="lightbox" onclick="hideLightbox(); return false;"></div>
+    <div id="popupbox" class="popupBox"></div>
+    {* End LightBox *}
+
 	<div class="modal fade" id="eiNetworkModal">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -113,24 +120,24 @@
 
 	{php} } {/php}
 
-	<div id="wrap">
+	<div id="wrapper">
 
 		<div class="container">
 
 			<div class="row header">
-				<div class="col-xs-2 col-md-2" style="text-align:center">
+				<div class="col-xs-2 col-md-2 col-lg-2">
 					{if isset($lastsearch) and isset($pageType) and ($pageType eq "record" or $pageType eq "EcontentRecord")}
-						<a class="btn btn-default survey-btn pull-left disable-link" href="#" onclick='window.location.href="{$lastsearch|escape}#record{$id|escape:"url"}"'>{translate text="Back to Search Results"}</a>
+						<a class="btn btn-default survey-btn pull-left disable-link" href="#" onclick='window.location.href="{$lastsearch|escape}#record{$id|escape:"url"}"'><span class="glyphicon glyphicon-chevron-left glyphicon-ein-color"></span>&nbsp;&nbsp;{translate text="Search Results"}</a>
 					{elseif $searchType == 'advanced'&&$pageType!='advanced'}
 						<a class="btn btn-default survey-btn pull-left disable-link" href="#" onclick='window.location.href="{$path}/Search/Advanced?edit={$searchId}"'>{translate text="Back to Advanced Search"}</a>
 					{else}
 						<a class="btn btn-warning survey-btn pull-left" href="http://www.surveymonkey.com/s/NewLibraryCatalog" target="_blank">{translate text="A Quick Survey"}</a>
 					{/if}
 				</div>
-				<div class="col-xs-10 col-md-10" style="text-align:center">
+				<div class="col-xs-10 col-md-10 col-lg-10" style="text-align:center">
 					<div class="row">
 						<form method="get" action="/Union/Search" id="searchForm" class="form-inline" onsubmit='startSearch();'>
-							<div class="col-xs-3 col-md-3">
+							<div class="col-xs-3 col-sm-3 col-md-4 col-lg-3">
 								<div class="input-group">
 									<span class="input-group-addon invert-label">Search</span>
 									<select name="basicType" class="form-control">
@@ -142,7 +149,7 @@
 									</select>
 								</div><!-- /input-group -->
 							</div>
-							<div class="{if $user}col-xs-6 col-md-6{else}col-xs-7 col-md-7{/if}">
+							<div class="{if $user}col-xs-6 col-sm-6 col-md-5 col-lg-6{else}col-xs-7 col-sm-7 col-md-6 col-lg-7{/if}">
 								<div class="input-group">
 									<span class="input-group-addon invert-label">for</span>
 									<input type="text" class="form-control" name="lookfor" style="border-right:solid #fff 1px;">
@@ -157,7 +164,7 @@
 									{if $user}
 
 										<div class="col-xs-6 col-md-6 welcome-user">
-												<p>Welcome</p>
+												<span>Welcome</span>
 												<a href="{$path}/MyResearch/Profile">
 											        {if strlen($user->displayName) > 0}{$user->displayName}
 											        {else}{*{$user->lastname|capitalize}*}{$user->firstname|capitalize}
@@ -185,7 +192,7 @@
 
 			</div>
 			<div class="row">
-				<div class="col-xs-2 col-md-2 col-md-offset-5">
+				<div class="col-xs-2 col-md-2 col-md-offset-6">
 					<div class="retain-filters">
 					{* Do we have any checkbox filters? *}
 
@@ -230,10 +237,11 @@
 
 		</div>
 
-		{include file="ei_tpl/footer.tpl"}
+		<div id="push"></div>
 
 	</div>
 
+	{include file="ei_tpl/footer.tpl"}
 
 	{if $strandsAPID}
 		{literal}

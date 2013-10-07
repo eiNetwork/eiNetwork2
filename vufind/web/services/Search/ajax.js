@@ -218,12 +218,10 @@ function doGetStatusSummaries()
 					//var SummaryDetails = $(data).find("class").text();
 
 					if (items[i].status == "It's here"){
-						console.log(items[i].Id)
-
 						$("#request-now" + elemId).css('background-color','rgb(192,192,192)');
 						$("#request-now" + elemId).css('background-color','rgb(192,192,192)');
 						$("#request-now" + elemId).css("color","rgb(248,248,248)");
-						$("#request-now" + elemId +" .action-lable-span").text("It's Here");
+						$("#request-now" + elemId).html('<span class="glyphicon glyphicon-check glyphicon-ein-color"></span>&nbsp;&nbsp;It\'s Here');
 						$("#request-now" + elemId).css("cursor","default");
 					} else {
 
@@ -292,17 +290,17 @@ function doGetStatusSummaries()
 
 					//alert(sta);
 					if(sta =="Available from OverDrive"){
-						$(".RequestWord"+elemId).text("Checkout Now");
+						$("#RequestWord"+elemId).html('<span class="glyphicon glyphicon-plus glyphicon-ein-color"></span> Checkout Now');
 						url = '/EcontentRecord/'+elemId+'/AJAX?method=CheckoutOverDriveItem';
-					    $(".RequestWord"+elemId).removeAttr('onclick').click(function(){
+					    $("#RequestWord"+elemId).removeAttr('onclick').click(function(){
 					    	checkoutOverDriveItem(elemId);
 					    });
 					}else if(sta == "Checked Out"){
-						$(".RequestWord"+elemId).text("Request Now");
+						$("#RequestWord"+elemId).html('<span class="glyphicon glyphicon-plus glyphicon-ein-color"></span> Request Now');
 						url = '/EcontentRecord/'+elemId+'/AJAX?method=PlaceOverDriveHold&elemId=' + elemId;
-					    $(".RequestWord"+elemId).prop('onclick', '').click(placehold_function);
+					    $("#RequestWord"+elemId).prop('onclick', '').click(placehold_function);
 					}else{
-						$(".RequestWord"+elemId).text("Access Online");
+						$("#RequestWord"+elemId).html('<span class="glyphicon glyphicon-download-alt glyphicon-ein-color"></span> Access Online');
 					}
 					$('#holdingsEContentSummary' + elemId).replaceWith($(item).find('formattedHoldingsSummary').text());
 					//console.log(sta)

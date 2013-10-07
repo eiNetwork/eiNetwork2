@@ -1,12 +1,32 @@
 <script type="text/javascript" src="{$url}/services/MyResearch/ajax.js"></script>
 <script type="text/javascript" src="{$url}/services/EcontentRecord/ajax.js"></script>
 <script type="text/javascript" src="{$path}/js/checkedout.js"></script>
+<script type="text/javascript" src="{$path}/js/toggles.min.js"></script>
 {literal}
 <script type="text/javascript">
 
 	$(document).ready(function(){
 
-		var expanded = true;
+		var collapsed = {/literal}{$checkedout_collapse}{literal};
+
+		if (collapsed == 1){
+			$('.toggle').toggles({
+				clicker: $('.clickme'),
+				text: {
+			      on: 'Brief', // text for the ON position
+			      off: 'Full' // and off
+			    },
+				on: true
+			});
+		} else {
+			$('.toggle').toggles({
+				clicker: $('.clickme'),
+				text: {
+			      on: 'Brief', // text for the ON position
+			      off: 'Full' // and off
+			    }
+			});
+		}
 
 		// expand and collapse functions
 		$('.collapse').each(function(){
@@ -23,45 +43,49 @@
 
 		$('#show-all-button').click(function(){
 
-			if (expanded == true){
-				$('.accordion-body').collapse('hide');
-				$('#show-all-button').val('Full View');
-				expanded = false;
-			} else {
+			if ($('#show-all-button').val() == 'Full View'){
+				$('.save-expand-collapse').prop('checked', false)
+				$('.pref-saved').hide();
 				$('.accordion-body').collapse('show');
 				$('#show-all-button').val('Brief View');
-				expanded = true;
+				collapsed  = 0;
+			} else if ($('#show-all-button').val() == 'Brief View'){
+				$('.save-expand-collapse').prop('checked', false)
+				$('.pref-saved').hide();
+				$('.accordion-body').collapse('hide');
+				$('#show-all-button').val('Full View');
+				collapsed  = 1;
 			}
 
 		})
 
-		// save expand collapse
-		if ($.cookie('save-expand-state') == 'expand'){
-			expanded = false;
-			$('.save-expand-collapse').prop('checked', true);
-			$('#show-all-button').trigger('click');
-		} else if ($.cookie('save-expand-state') == 'collapse'){
-			expanded = true;
-			$('.save-expand-collapse').prop('checked', true);
-			$('#show-all-button').trigger('click');
+		$('.toggle').on('toggle', function (e, active) {
+		    if (active) {
+		        checkedout_collapse = 1;
+		    } else {
+		        checkedout_collapse = 0;
+		    }
 
-		} else {
-			expanded = true;
-		}
-
-		$('.save-expand-collapse').click(function(){
-
-			if ($(this).prop('checked') == true){
-				if (expanded == true){
-					$.cookie('save-expand-state', 'expand', { expires: 7, path: '/MyResearch/CheckedOut' });
-				} else {
-					$.cookie('save-expand-state', 'collapse', { expires: 7, path: '/MyResearch/CheckedOut' });
-				}
-			} else {
-				$.removeCookie('save-expand-state', { path: '/MyResearch/CheckedOut' });
-			}
+		    var url = path + "/MyResearch/AJAX?method=saveExpandCollapseState";
+			
+			$.ajax({
+				url : url,
+				data : {
+					'checkedout_collapse': checkedout_collapse,
+				},
+				success: function(){
+					
+				},
+				dataType : 'text',
+				type : 'get'
+			});
 
 		});
+
+		// save expand collapse
+		if (collapsed == 1){
+			$('#show-all-button').trigger('click')
+		}
 
 	});
 
@@ -116,17 +140,14 @@
 
 
 <div class="row">
-	<div class="col-xs-9 col-md-9">
-			<div class="sort pull-right">
-				<div class="sortOptions">
-					<label>{translate text='Sort by'}
-						<select name="accountSort" id="sort{$sectionKey}" onchange="changeAccountSort($(this).val());">
-							{foreach from=$sortOptions item=sortDesc key=sortVal}
-							<option value="{$sortVal}"{if $defaultSortOption == $sortVal} selected="selected"{/if}>{translate text=$sortDesc}</option>
-							{/foreach}
-						</select>
-					</label>
-				</div>
+	<div class="col-xs-9 col-md-9 myaccount-main-panel">
+			<div class="pull-right myaccount-sort-container">
+				<label class="myaccount-sort-label">{translate text='Sort by'}&nbsp;</label>
+				<select name="accountSort" id="sort{$sectionKey}" class="form-control myaccount-sort-select" onchange="changeAccountSort($(this).val());">
+					{foreach from=$sortOptions item=sortDesc key=sortVal}
+					<option value="{$sortVal}"{if $defaultSortOption == $sortVal} selected="selected"{/if}>{translate text=$sortDesc}</option>
+					{/foreach}
+				</select>
 			</div>
 
 			<div> 
@@ -142,15 +163,13 @@
 			</div>
 
 			<div class="row list-header">
-				<div class="col-xs-2 col-md-2">
-					<div class="input-group show-all-button">
-						<input type="button" id="show-all-button" class="btn btn-small btn-default form-control" value="Brief View" />
-						<span class="input-group-addon">
-							Save <input type="checkbox" class="save-expand-collapse">
-						</span>
-					</div>
+				<div class="col-xs-3 col-md-3">
+					<p style="font-size:13px;float:left; margin:6px 10px 0 0">Switch to</p><input type="button" id="show-all-button" class="btn btn-sm btn-default" value="Brief View" />
 				</div>
-				<div class="col-xs-9col-md-9 col-md-offset-1 btn-renew-all">
+				<div class="col-xs-4 col-md-4">
+					<div class="clickme" style="margin:6px 0 0 0;"><span style="font-size:13px; float: left">My Preferred View </span><div style="float:left; margin-left:10px" rel="clickme" class="toggle toggle-light"></div></div>
+				</div>
+				<div class="col-xs-5 col-md-5 btn-renew-all">
 					<button type="button" class="btn btn-warning" onclick="return renewSelectedTitles();">Renew Selected Items</button>
 				</div>
 			</div>
@@ -168,27 +187,31 @@
 					        	</div>
 					        	<div class="results-header clearfix">
 					            	<div class="row results-title-header">
-					            		<div class="col-xs-8 col-md-8 results-title">
-						        			<a href="{$url}/Record/{$record.recordId|escape:"url"}?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}" class="title">
-												{if !$record.title|regex_replace:"/(\/|:)$/":""}
-												{translate text='Title not available'}
-												{else}
-												{$record.title|regex_replace:"/(\/|:)$/":""|truncate:60:"..."|highlight:$lookfor}
-												{/if}
-											</a>
-											| <span class="author">
-													{if $record.author}
-														{if is_array($record.author)}
-															{foreach from=$summAuthor item=author}
-																<a href="{$url}/Author/Home?author={$author|escape:"url"}">{$author|highlight:$lookfor}</a>
-															{/foreach}
+					            		<div class="col-xs-8 col-md-8">
+					            			<ul class="requested-results requested-results-collapse">
+												<li class"results-title">
+								        			<a href="{$url}/Record/{$record.recordId|escape:"url"}?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}" class="title">
+														{if !$record.title|regex_replace:"/(\/|:)$/":""}
+														{translate text='Title not available'}
 														{else}
-															<a href="{$url}/Author/Home?author={$record.author|escape:"url"}">{$record.author|highlight:$lookfor}</a>
+														{$record.title|regex_replace:"/(\/|:)$/":""|truncate:60:"..."|highlight:$lookfor}
 														{/if}
-													{/if}
-												</span>
+													</a>
+													| <span class="author">
+															{if $record.author}
+																{if is_array($record.author)}
+																	{foreach from=$summAuthor item=author}
+																		<a href="{$url}/Author/Home?author={$author|escape:"url"}">{$author|highlight:$lookfor}</a>
+																	{/foreach}
+																{else}
+																	<a href="{$url}/Author/Home?author={$record.author|escape:"url"}">{$record.author|highlight:$lookfor}</a>
+																{/if}
+															{/if}
+														</span>
+													</li>
+												</ul>
 
-											<div class="row results-status-header">
+											<div class="row results-status-header results-status-collapse">
 						        				<div class="col-xs-12 col-md-12">
 						        					<p><span class="label label-info label-requested-results">Due On&nbsp;{$record.duedate|date_format}</span>		
 														{if $record.overdue}
@@ -470,12 +493,31 @@
 					        	</div>
 					        	<div class="results-header clearfix">
 					            	<div class="row results-title-header">
-					            		<div class="col-xs-12 col-md-12 results-title"><a href="{$url}/Record/{$record.id|escape:"url"}" class="title">{if !$record.title|regex_replace:"/(\/|:)$/":""}{translate text='Title not available'}{else}{$record.title|regex_replace:"/(\/|:)$/":""|truncate:100:"..."|highlight:$lookfor}{/if}</a>
-											| <span class="author">
-													{if strlen($record.record->author) > 0}{$record.record->author}{/if}
-												</span>
-						        		</div>
-						        	</div>
+						            		<div class="col-xs-12 col-md-12">
+						            			<ul class="requested-results">
+													<li class"results-title">
+									        			<a href="{$url}/Record/{$record.recordId|escape:"url"}?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}" class="title">
+															{if !$record.title|regex_replace:"/(\/|:)$/":""}
+															{translate text='Title not available'}
+															{else}
+															{$record.title|regex_replace:"/(\/|:)$/":""|truncate:60:"..."|highlight:$lookfor}
+															{/if}
+														</a>
+														| <span class="author">
+																{if $record.author}
+																	{if is_array($record.author)}
+																		{foreach from=$summAuthor item=author}
+																			<a href="{$url}/Author/Home?author={$author|escape:"url"}">{$author|highlight:$lookfor}</a>
+																		{/foreach}
+																	{else}
+																		<a href="{$url}/Author/Home?author={$record.author|escape:"url"}">{$record.author|highlight:$lookfor}</a>
+																	{/if}
+																{/if}
+															</span>
+													</li>
+												</ul>
+							        		</div>
+							        	</div>
 						        	<div class="row results-status-header">
 				        				<div class="col-xs-8 col-md-8">
 				        					<p><span class="label label-info">{if $record.expiresOn}
@@ -578,8 +620,9 @@
 
 
 	</div>
-	<div class="col-xs-3 col-md-3">
+	<div class="col-xs-3 col-md-3 right-panel">
 		{include file="MyResearch/menu.tpl"}
 		{include file="Admin/menu.tpl"}
+		<div class="clearfix"></div>
 	</div>
 </div>

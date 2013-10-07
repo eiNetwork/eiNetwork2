@@ -31,6 +31,11 @@ class User extends DB_DataObject
 	public $bypassAutoLogout;        //tinyint
 	public $disableRecommendations;     //tinyint
 	public $disableCoverArt;     //tinyint
+	public $holdpage_collapse;     //tinyint
+	public $checkedout_collapse;     //tinyint
+	public $readinghistory_collapse;     //tinyint
+	public $bookcart_collapse;     //tinyint
+	public $wishlist_collapse;     //tinyint
 	private $roles;
 	private $data = array();
 
@@ -42,7 +47,7 @@ class User extends DB_DataObject
 
 	function __sleep()
 	{
-		return array('id', 'username', 'password', 'cat_username', 'cat_password', 'firstname', 'lastname', 'email', 'phone', 'college', 'major', 'homeLocationId', 'myLocation1Id', 'myLocation2Id', 'trackReadingHistory', 'roles', 'bypassAutoLogout', 'displayName', 'disableRecommendations', 'disableCoverArt', 'patronType', 'holdpage_collapse');
+		return array('id', 'username', 'password', 'cat_username', 'cat_password', 'firstname', 'lastname', 'email', 'phone', 'college', 'major', 'homeLocationId', 'myLocation1Id', 'myLocation2Id', 'trackReadingHistory', 'roles', 'bypassAutoLogout', 'displayName', 'disableRecommendations', 'disableCoverArt', 'patronType', 'holdpage_collapse', 'checkedout_collapse', 'readinghistory_collapse', 'bookcart_collapse', 'wishlist_collapse');
 	}
 
 	function __wakeup()

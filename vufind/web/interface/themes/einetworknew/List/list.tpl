@@ -1,16 +1,30 @@
 <script type="text/javascript" src="{$path}/services/EcontentRecord/ajax.js"></script>
-{* Main Listing *}
-{if (isset($title)) }
-<script type="text/javascript">
-	alert("{$title}");
-</script>
-{/if}
+<script type="text/javascript" src="{$path}/js/toggles.min.js"></script>
 {literal}
 <script type="text/javascript">
 
 	$(document).ready(function(){
 
-		var expanded = true;
+		var collapsed = {/literal}{$list_collapse}{literal};
+
+		if (collapsed == 1){
+			$('.toggle').toggles({
+				clicker: $('.clickme'),
+				text: {
+			      on: 'Brief', // text for the ON position
+			      off: 'Full' // and off
+			    },
+				on: true
+			});
+		} else {
+			$('.toggle').toggles({
+				clicker: $('.clickme'),
+				text: {
+			      on: 'Brief', // text for the ON position
+			      off: 'Full' // and off
+			    }
+			});
+		}
 
 		// expand and collapse functions
 		$('.collapse').each(function(){
@@ -27,26 +41,64 @@
 
 		$('#show-all-button').click(function(){
 
-			if (expanded == true){
-				$('.accordion-body').collapse('hide');
-				$('#show-all-button').val('Full View');
-				expanded = false;
-			} else {
+			if ($('#show-all-button').val() == 'Full View'){
+				$('.save-expand-collapse').prop('checked', false)
+				$('.pref-saved').hide();
 				$('.accordion-body').collapse('show');
 				$('#show-all-button').val('Brief View');
-				expanded = true;
+				collapsed  = 0;
+			} else if ($('#show-all-button').val() == 'Brief View'){
+				$('.save-expand-collapse').prop('checked', false)
+				$('.pref-saved').hide();
+				$('.accordion-body').collapse('hide');
+				$('#show-all-button').val('Full View');
+				collapsed  = 1;
 			}
 
 		})
+
+		$('.toggle').on('toggle', function (e, active) {
+		    if (active) {
+		        list_collapse = 1;
+		    } else {
+		        list_collapse = 0;
+		    }
+
+		    var url = path + "/MyResearch/AJAX?method=saveExpandCollapseState";
+			
+			$.ajax({
+				url : url,
+				data : {
+					'{/literal}{$list_collapse_key}{literal}': list_collapse,
+				},
+				success: function(){
+					
+				},
+				dataType : 'text',
+				type : 'get'
+			});
+
+		});
+
+		// save expand collapse
+		if (collapsed == 1){
+			$('#show-all-button').trigger('click')
+		}
 
 	});
 
 </script>
 {/literal}
+{* Main Listing *}
+{if (isset($title)) }
+<script type="text/javascript">
+	alert("{$title}");
+</script>
+{/if}
 
 <div class="row">
 
-	<div class="col-xs-9 col-md-9">
+	<div class="col-xs-9 col-md-9 myaccount-main-panel">
 
 		<input type="hidden" value="{$wishListID}" id="listId"/>
 		<script type="text/javascript" src="/services/List/ajax.js"></script>
@@ -55,16 +107,13 @@
 
 			<form id='goToList' action='/List/Results' method='GET' name='goToList'> 
 			
-				<div class="sort pull-right wishlist-view-dropdown">
-					<div class="sortOptions">
-						<label>{translate text='View Wish List'}
-							<select name="goToListID" id="goToListID" onchange="this.form.submit()">
-								{foreach from=$wishList item = list key=key name = loop}
-									<option value="{$list.id}" {if $currentListID && $currentListID == $list.id} selected="selected"{/if}>{$list.title}
-								{/foreach}
-							</select>
-						</label>
-					</div>
+				<div class="pull-right myaccount-sort-container">
+					<label class="myaccount-sort-label">{translate text='View Wish List'}&nbsp;</label>
+					<select name="goToListID" id="goToListID" class="form-control myaccount-sort-select" onchange="this.form.submit()">
+						{foreach from=$wishList item = list key=key name = loop}
+							<option value="{$list.id}" {if $currentListID && $currentListID == $list.id} selected="selected"{/if}>{$list.title}
+						{/foreach}
+					</select>
 				</div>
 
 			</form>
@@ -73,16 +122,28 @@
 			
 			<h3>{$listTitle}&nbsp;<span style="font-size: 14px;">(<span style="color:#256292;cursor: pointer;" onclick="ajaxLightbox('/List/ListEdit?id={$wishListID}&source=VuFind&lightbox&method=editList',false,false,'450px',false,'200px'); return false;">edit</span>)</span></h3>
 
-			<div class="row list-header">
-				<div class="col-xs-2 col-md-2">
-					<div class="input-group show-all-button">
-						<input type="button" id="show-all-button" class="btn btn-small btn-default form-control" value="Brief View" />
-						<span class="input-group-addon">
-							Save <input type="checkbox">
-						</span>
-					</div>
+			<div class="row">
+				<div class="col-xs-12 book-cart-copy">
+					<p>{if count($recordSet)>1}
+						You have items in this wishlist
+					{elseif count($recordSet) == 1}
+						You have an item in this wishlist
+					{else}
+						This wishlist is empty
+					{/if}</p>
 				</div>
-				<div class="col-xs-9 col-md-9 col-md-offset-1 btn-renew-all">
+			</div>
+
+			{if count($recordSet)>0}
+
+			<div class="row list-header">
+				<div class="col-xs-3 col-md-3">
+					<p style="font-size:13px;float:left; margin:6px 10px 0 0">Switch to</p><input type="button" id="show-all-button" class="btn btn-sm btn-default" value="Brief View" />
+				</div>
+				<div class="col-xs-4 col-md-4">
+					<div class="clickme" style="margin:6px 0 0 0;"><span style="font-size:13px; float: left">My Preferred View </span><div style="float:left; margin-left:10px" rel="clickme" class="toggle toggle-light"></div></div>
+				</div>
+				<div class="col-xs-5 col-md-5 btn-renew-all">
 					<div class="wishlist-batch-actions">		
 						<div class="btn-group">
 							<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -106,6 +167,26 @@
 					</div>
 				</div>
 			</div>
+
+			<div class="row">
+				<div class="col-xs-6 col-md-6 col-md-offset-6">
+					{if $pageLinks.all}<div class="pagination pagination-sm pull-right" style="margin-right:20px">{$pageLinks.all}</div>{/if}
+				</div>
+			</div>
+
+			{if $subpage}
+				{include file=$subpage}
+			{else}
+				{$pageContent}
+			{/if}
+		    
+			<div class="row">
+				<div class="col-xs-6 col-md-6 col-md-offset-6">
+					{if $pageLinks.all}<div class="pagination pagination-sm pull-right" style="margin-right:20px">{$pageLinks.all}</div>{/if}
+				</div>
+			</div>
+
+			{/if}
 
 		{/if}
 
@@ -159,26 +240,29 @@
 							</div>
 						{/if}
 
-							{if count($recordSet)>0}
-								<div class='loginFormRow'>
-									<input type="hidden" name="holdType" value="hold"/>
-								</div>
-							{/if}
+						{if count($recordSet)>0}
+							<div class='loginFormRow'>
+								<input type="hidden" name="holdType" value="hold"/>
+							</div>
+						{/if}
 					</div>
 				</div>
 
 			</form>
 
-			<div class="row">
-				<div class="col-xs-2 col-md-2">
-					<div class="input-group show-all-button">
-						<input type="button" id="show-all-button" class="btn btn-small btn-default form-control" value="Brief View" />
-						<span class="input-group-addon">
-							Save <input type="checkbox">
-						</span>
-					</div>
+			{if count($recordSet)>0}
+
+			<div class="row list-header">
+				<div class="col-xs-3 col-md-3">
+					<p style="font-size:13px;float:left; margin:6px 10px 0 0">Switch to</p><input type="button" id="show-all-button" class="btn btn-sm btn-default" value="Brief View" />
 				</div>
-				<div class="col-xs-7 col-md-7 col-md-offset-1">
+				<div class="col-xs-4 col-md-4">
+					<div class="clickme" style="margin:6px 0 0 0;"><span style="font-size:13px; float: left">My Preferred View </span><div style="float:left; margin-left:10px" rel="clickme" class="toggle toggle-light"></div></div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-xs-7 col-md-7 col-md-offset-3">
 					{if (isset($profile)) }
 						<form class="form-horizontal" role="form">
 							<div class="col-xs-5 col-md-5"><label class="pull-right">Pickup Location:</label></div>
@@ -227,6 +311,8 @@
 				{if $pageLinks.all}<div class="pagination pagination-sm pull-right" style="margin-right:20px">{$pageLinks.all}</div>{/if}
 			</div>
 		</div>
+
+		{/if}
 
 		{* End Main Listing *}
 	</div>

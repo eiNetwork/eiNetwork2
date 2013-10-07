@@ -8,14 +8,14 @@
 	<div class="availability">
 		{if $holdingsSummary.status == 'Available from OverDrive'}
 			<span><img class="format_img" src="/interface/themes/einetwork/images/Art/AvailabilityIcons/Available.png"/ alt="Available"></span>
-			<span class="label label-success"><a style="cursor:pointer; color: #fff" class="overdriveAvailable" onclick="checkoutOverDriveItem('{$holdingsSummary.recordId}')">{$holdingsSummary.status}</a></span>
+			<span class="label label-success"><a style="cursor:pointer;" class="overdriveAvailable" onclick="checkoutOverDriveItem('{$holdingsSummary.recordId}')">{$holdingsSummary.status}</a></span>
 		{elseif $holdingsSummary.status == 'Checked Out'}
 			{if $holdingsSummary.totalCopies > 0}
 				<span><img class="format_img" src="/interface/themes/einetwork/images/Art/AvailabilityIcons/CheckedOut.png"/ alt="CheckedOut"></span>
-				<span class="label label-danger"><a style="cursor:pointer; color: #fff" class="overdriveCheckedOut" onclick="placeOverDriveHold('{$holdingsSummary.recordId}')">{$holdingsSummary.status}</a></span>
+				<span class="label label-danger"><a style="cursor:pointer;" class="overdriveCheckedOut" onclick="placeOverDriveHold('{$holdingsSummary.recordId}')">{$holdingsSummary.status}</a></span>
 			{else}
 				<span><img class="format_img" src="/interface/themes/einetwork/images/Art/AvailabilityIcons/CheckedOut.png"/ alt="CheckedOut"></span>
-				<span class="label label-danger"><a style="cursor:pointer; color: #fff" class="overdriveCheckedOut">No Copies Available</a></span>		
+				<span class="label label-danger"><a style="cursor:pointer;" class="overdriveCheckedOut">No Copies Available</a></span>		
 			{/if}
 		{/if}
 		

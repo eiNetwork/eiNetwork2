@@ -408,8 +408,15 @@ class CheckedOut extends MyResearch{
 		$interface->assign('MobileTitle','OverDrive Checked Out Items');
 		
 		// /**END for Overdrive Checkout Items**/
+
+		if (isset($user->checkedout_collapse)){
+			$checkedout_collapse = $user->checkedout_collapse;
+		} else {
+			$checkedout_collapse = 0;
+		}
 		
-		// $interface->assign('patron',$patron);
+		$interface->assign('checkedout_collapse', $checkedout_collapse);
+
 		$interface->setTemplate('checkedout.tpl');
 		$interface->setPageTitle('My Holds');
 		$interface->display('layout.tpl');

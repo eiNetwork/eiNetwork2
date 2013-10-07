@@ -77,6 +77,8 @@ class Home extends Record{
 		$interface->assign('editorialReviews', $editorialReviewResults);
 		$interface->assign('recordId', $recordId);
 
+		$interface->assign('short_id', substr($recordId,1));
+
 		//Enable and disable functionality based on library settings
 		global $library;
 		global $locationSingleton;

@@ -52,49 +52,57 @@ function saveAllToBookCart(){
 	};
     var strings = {add: 'Save To List', error: 'Error: Record not saved'};
     $(".resultsList").each(function(){
-            //alert(this.getAttribute('id'));
-            var id = '.'+this.getAttribute('id').substring(6,this.getAttribute('id').length);
-            var source = 'vufind';
-            performSaveToBookCart(id, source, strings, 'VuFind', successCallback);
-        })
+       	//alert(this.getAttribute('id'));
+        var id = '.'+this.getAttribute('id').substring(6,this.getAttribute('id').length);
+        var source = 'vufind';
+        performSaveToBookCart(id, source, strings, 'VuFind', successCallback);
+    })
     return false;
 }
 
 function performSaveToBookCart(id, source, strings, service, successCallback)
 {
+
 	document.body.style.cursor = 'wait';
-        var tags = "";
-        var notes = '';
+    var tags = "";
+    var notes = '';
 	var url = path + "/SaveToBookCart/AJAX";
 	var params = "method=AddBookCartList&" +
 							 "mytags=" + encodeURIComponent(tags) + "&" +
 							 "notes=" + encodeURIComponent(notes) + "&" +
 							 "id=" + id + "&" +
 							 "source=" + source;
+
 	$.ajax({
 		url: url+'?'+params,
-		dataType: "json",
+		dataType: "html",
 		success: function() {
+
 			disable(id);
-                    if($("#listId").val()!=null&&$("#listId").val()!=''){
-                        deleteItemInList(id,source);
-                    }
-                    getBookCartItemCount();
+            if($("#listId").val()!=null&&$("#listId").val()!=''){
+                deleteItemInList(id,source);
+            }
+            getBookCartItemCount();
 		    document.body.style.cursor = 'default';
 		    var text = '<img alt="bad result" src="/interface/themes/einetwork/images/Art/ActionIcons/BadResult.png" class="resultAction_img"><span class="resultAction_span" >&nbsp;In Cart</span>';
 		    successCallback();
-			/*if(document.getElementById("add-to-cart")){
-				document.getElementById("add-to-cart").innerHTML = text;
-			}else{
-				document.getElementById("selected"+id.replace(/\./g,"")).innerHTML = text;
-				//document.getElementById("selected"+id.replace(/\./g,"")).onclick = alert();//"deleteItemInList("+id+",'VuFind')";
-			}*/
-	},
-	error: function() {
+
+		    var elemId = id.substring(1,id.length);
+
+			if($("#add-to-cart" + elemId)){
+
+				$("#add-to-cart" + elemId).css('background-color','rgb(192,192,192)');
+				$("#add-to-cart" + elemId).css('background-color','rgb(192,192,192)');
+				$("#add-to-cart" + elemId).css("color","rgb(248,248,248)");
+				$("#add-to-cart" + elemId).html('<span class="glyphicon glyphicon-check glyphicon-ein-color"></span>&nbsp;&nbsp;In Cart');
+				$("#add-to-cart" + elemId).css("cursor","default");
+			}
+		},
+		error: function(){
 			document.getElementById('popupbox').innerHTML = strings.error;
 			setTimeout("hideLightbox();", 3000);
 			document.body.style.cursor = 'default';
-	}
+		}
 	});
 }
 
@@ -584,6 +592,7 @@ function requestAllItems1(listId){
         })
 }
 function getItemStatusCart(id){
+
 	if(window.location.pathname == "/List/Results"){
 		return;
 	}
@@ -605,18 +614,18 @@ function getItemStatusCart(id){
 	});
 }
 function disable(id){
-	if($("#add-to-cart").length){
-		$("#add-to-cart").css('background-color','rgb(192,192,192)');
-		$("#add-to-cart").css("color","rgb(248,248,248)");
-		$("#add-to-cart .action-lable-span").text("In Cart");
-		$("#add-to-cart").css("cursor","default");
-	}else if($("#selected"+id.replace(/\./g, ""))){
-		var d = "#selected"+id.replace(/\./g, "");
-		$(d).css('background-color','rgb(192,192,192)');
-		$(d).css("color","rgb(248,248,248)");
-		$(d+" .resultAction_span").text("In Cart");
-		$(d).css("cursor","default");
+
+	var elemId = id.substring(1,id.length);
+
+	if($("#add-to-cart" + elemId)){
+
+		$("#add-to-cart" + elemId).css('background-color','rgb(192,192,192)');
+		$("#add-to-cart" + elemId).css('background-color','rgb(192,192,192)');
+		$("#add-to-cart" + elemId).css("color","rgb(248,248,248)");
+		$("#add-to-cart" + elemId).html('<span class="glyphicon glyphicon-check glyphicon-ein-color"></span>&nbsp;&nbsp;In Cart');
+		$("#add-to-cart" + elemId).css("cursor","default");
 	}
+
 }
 
 function getSaveToListForm(id, source){

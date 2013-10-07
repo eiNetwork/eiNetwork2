@@ -3,7 +3,7 @@
 		{if $holdingsSummary.callnumber}
 			<div class='callNumber'>
 				<span><img class="format_img" src="/interface/themes/einetwork/images/Art/AvailabilityIcons/Available.png"/ alt="Available"></span>
-				<span class="label label-success"><a style="cursor:pointer; color: #fff" onclick="findInLibrary('{$holdingsSummary.recordId|escape:"url"}',false,'150px','570px','auto')">It's Here {$holdingsSummary.callnumber}</a></span>
+				<span class="label label-success"><a style="cursor:pointer;" onclick="findInLibrary('{$holdingsSummary.recordId|escape:"url"}',false,'150px','570px','auto')">It's Here {$holdingsSummary.callnumber}</a></span>
 			</div>
 		{elseif $holdingsSummary.isDownloadable}
 			<div>
@@ -65,10 +65,50 @@
 		</div>
 	{/if}
 	<div class="holdableCopiesSummary">
-		<span class="label label-default" style="margin-left:22px">{if $holdingsSummary.holdQueueLength > 0}
-			{$holdingsSummary.holdQueueLength} {if $holdingsSummary.holdQueueLength == 1}person {else}people {/if} on waitlist for 
+		{if $holdingsSummary.availableCopies}
+			<label class="label label-success label-small">
+				{if $holdingsSummary.holdQueueLength > 0}
+					{$holdingsSummary.holdQueueLength} 
+					{if $holdingsSummary.holdQueueLength == 1}
+						person 
+					{else}
+						people 
+					{/if} 
+					on waitlist for 
+				{/if}
+
+				{$holdingsSummary.numCopies} total 
+				
+				{if $holdingsSummary.numCopies == 1}
+					copy
+				{else}
+					copies
+				{/if}
+				{if $holdingsSummary.availableCopies}
+					, {$holdingsSummary.availableCopies} available. 
+				{/if}
+			</label>
+		{else}
+			<label class="label label-danger label-small">
+				{if $holdingsSummary.holdQueueLength > 0}
+					{$holdingsSummary.holdQueueLength} 
+					{if $holdingsSummary.holdQueueLength == 1}
+						person 
+					{else}
+						people 
+					{/if} 
+					on waitlist for 
+				{/if}
+
+				{$holdingsSummary.numCopies} total 
+				
+				{if $holdingsSummary.numCopies == 1}
+					copy
+				{else}
+					copies
+				{/if}
+			</label>
 		{/if}
-		{$holdingsSummary.numCopies} total {if $holdingsSummary.numCopies == 1}copy{else}copies{/if}{if $holdingsSummary.availableCopies}, {$holdingsSummary.availableCopies} available. {/if}</label>
 	</div>
 			
 	{if $showOtherEditionsPopup}

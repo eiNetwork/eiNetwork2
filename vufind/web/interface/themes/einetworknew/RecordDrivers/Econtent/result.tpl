@@ -9,10 +9,10 @@
                     <div class="col-xs-1 col-md-1">
                         
                     </div>
-                    <div class="col-xs-9 col-md-9 book-results-title">
-                        <ul>
-                            <li><a href="{$path}/EcontentRecord/{$summId|escape:"url"}?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}" class="title">{if !$summTitle|regex_replace:"/(\/|:)$/":""}{translate text='Title not available'}{else}{$summTitle|regex_replace:"/(\/|:)$/":""|truncate:50:"..."|highlight:$lookfor}{/if}</a></li>
-                            <li class="book-results-author"><span>
+                    <div class="col-xs-9 col-md-9">
+                        <ul class="requested-results">
+                            <li class"results-title"><a href="{$path}/EcontentRecord/{$summId|escape:"url"}?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}" class="title">{if !$summTitle|regex_replace:"/(\/|:)$/":""}{translate text='Title not available'}{else}{$summTitle|regex_replace:"/(\/|:)$/":""|truncate:50:"..."|highlight:$lookfor}{/if}</a></li>
+                            <li><span class="author">
                                 {if $summAuthor}
 									{translate text='by'}
 									{if is_array($summAuthor)}
@@ -91,7 +91,7 @@
 											{/if}			
 										</div>
 									{/if}
-									<div id= "holdingsEContentSummary{$summId|escape:"url"}" class="holdingsSummary">
+									<div id="holdingsEContentSummary{$summId|escape:"url"}" class="holdingsSummary">
 										<div class="statusSummary" id="statusSummary{$summId|escape:"url"}">
 											<span class="unknown" style="font-size: 8pt;">{translate text='Loading'}...</span>
 										</div>
@@ -102,13 +102,13 @@
                         <div class="col-xs-2 col-md-2 book-results-buttons">
                             {if $pageType eq 'WishList'}
                             	<div class="btn-group-vertical">
-                                    <button type="button" class="btn btn-default" onclick="window.location.href='{$url}/EcontentRecord/{$summId|escape:"url"}/Home?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}'">View Details</button>
+                                    <button type="button" class="btn btn-xs btn-default" onclick="window.location.href='{$url}/EcontentRecord/{$summId|escape:"url"}/Home?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}'"><span class="glyphicon glyphicon-chevron-right"></span> View Details</button>
 									{if sourceUrl}
-										<button type="button" class="btn btn-default" onclick="window.location.href='{$sourceUrl}'">Access Online</button>
+										<button type="button" class="btn btn-xs btn-default" onclick="window.location.href='{$sourceUrl}'">Access Online</button>
 									{else}
-										<button type="button" class="btn btn-default" onclick="window.location.href='{$url}/EcontentRecord/{$summId|escape:"url"}/Home?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}#links'">Access Online</button>
+										<button type="button" class="btn btn-xs btn-default" onclick="window.location.href='{$url}/EcontentRecord/{$summId|escape:"url"}/Home?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}#links'">Access Online</button>
 									{/if}
-									<button type="button" class="btn btn-default" onclick="deleteItemInList('{$summId|escape:"url"}','eContent')">Remove</button>
+									<button type="button" class="btn btn-xs btn-default" onclick="deleteItemInList('{$summId|escape:"url"}','eContent')">Remove</button>
                                 </div>
                             {elseif $pageType eq 'BookCart'}
                             	<div class="btn-group-vertical">
@@ -142,7 +142,7 @@
             </div>
             <div class="col-xs-9 col-md-9">
                 <div class="row">
-                    <div class="col-xs-8 col-md-8">
+                    <div class="col-xs-7 col-md-7">
                         <ul class="search-results-list">
                             <li class"results-title">
                                 <a href="{$path}/EcontentRecord/{$summId|escape:"url"}?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}" class="title">{if !$summTitle|regex_replace:"/(\/|:)$/":""}{translate text='Title not available'}{else}{$summTitle|regex_replace:"/(\/|:)$/":""|truncate:50:"..."|highlight:$lookfor}{/if}</a>  
@@ -193,13 +193,13 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="col-xs-4 col-md-4">
+                    <div class="col-xs-5 col-md-5">
                     	<div class="btn-group-vertical">
-	                        <button type="button" class="btn btn-default" onclick="window.location.href='{$url}/EcontentRecord/{$summId|escape:"url"}/Home?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}'">View Details</button>
+	                        <button type="button" class="btn btn-xs btn-default btn-search-results" onclick="window.location.href='{$url}/EcontentRecord/{$summId|escape:"url"}/Home?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}'"><span class="glyphicon glyphicon-chevron-right glyphicon-ein-color"></span>&nbsp;&nbsp;View Details</button>
 	                        {if $sourceUrl}
-	                        	<button type="button" class="btn btn-default" onclick="window.location.href='{$sourceUrl}'">Access Online</button>
+	                        	<button class="btn btn-xs btn-default btn-search-results" id="RequestWord{$summId|escape:"url"}" onclick="window.location.href='{$sourceUrl}'"><span class="glyphicon glyphicon-download-alt glyphicon-ein-color"></span>&nbsp;&nbsp;Access Online</button>
 	                        {else}
-	                        	<button type="button" class="btn btn-default" onclick="window.location.href='{$url}/EcontentRecord/{$summId|escape:"url"}/Home?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}#links'">Access Online</button>
+	                        	<button class="btn btn-xs btn-default btn-search-results" onclick="window.location.href='{$url}/EcontentRecord/{$summId|escape:"url"}/Home?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}#links'"><span class="glyphicon glyphicon-download-alt glyphicon-ein-color"></span>&nbsp;&nbsp;Access Online</button>
 	                    	{/if}
 	                    </div>
                     </div>

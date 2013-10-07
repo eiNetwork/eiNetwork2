@@ -60,42 +60,6 @@ class Action extends PEAR{
 
 	}
 
-	protected $catalog;
-
-	function __construct(){
-
-		// until we add a class/schema for this, we will use the action.php to populate the notification center.
-		global $interface;
-		global $configArray;
-		global $user;
-
-		$notifications = array();
-		$notifications['messages'] = null;
-		$notifications['count'] = 0;
-		$notifications['state'] = 0;
-
-		$this->catalog = new CatalogConnection($configArray['Catalog']['driver']);
-
-		if ($user){
-			$patron = $this->catalog->patronLogin($user->cat_username, $user->cat_password);
-			$profile = $this->catalog->getMyProfile($patron);
-
-			if ($profile['fines'] != '$0.00'){
-				$notifications['messages'][] = 'You have <span class="label label-primary" style="font-size:0.85em">' . $profile['fines'] . '</span>in overdue fines.';
-			}
-
-			if ($profile['expireclose'] == 1){
-				$notifications['messages'][] = 'Your library card is due to expire within the next <span class="label label-primary" style="font-size:0.85em">30 days</span>. Please visit your local library to renew your card to ensure access to all online services.';
-			}
-
-			$notifications['count'] = count($notifications['messages']);
-			$notifications['state'] = isset($_SESSION['notification_popupstate']) ? $_SESSION['notification_popupstate'] : 0;
-
-			$interface->assign('notifications', $notifications);
-		}
-
-	}
-
     function launch()
     {
     }

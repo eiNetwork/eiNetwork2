@@ -80,7 +80,7 @@ $(document).ready(function() {
 						<ul>
 							{foreach from=$filterList item=filters key=field}
 								{foreach from=$filters item=filter}
-									<li><a class="filter-delete" href="{$filter.removalUrl|escape}"><img src="{$path}/images/silk/delete.png" alt="Delete"/></a><span class="label label-success label-large">{translate text=$field}</span> {$filter.display|escape}</li>
+									<li><a class="filter-delete" href="{$filter.removalUrl|escape}"><img src="{$path}/images/silk/delete.png" alt="Delete"/></a>{translate text=$field}: {$filter.display|escape}</li>
 								{/foreach}
 							{/foreach}
 						</ul>

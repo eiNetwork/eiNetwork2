@@ -113,6 +113,13 @@ class ReadingHistory extends MyResearch
 			}
 		}
 
+		if (isset($user->readinghistory_collapse)){
+			$readinghistory_collapse = $user->readinghistory_collapse;
+		} else {
+			$readinghistory_collapse = 0;
+		}
+		
+		$interface->assign('readinghistory_collapse', $readinghistory_collapse);
 
 		$interface->setTemplate('readingHistory.tpl');
 		$interface->setPageTitle('Reading History');

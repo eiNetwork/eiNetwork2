@@ -33,7 +33,7 @@ function redrawSaveStatus() {literal}{{/literal}
     <div class="col-xs-3 col-md-3">
         {include file = "EcontentRecord/left-bar-record.tpl"}
     </div>
-    <div class="col-xs-6 col-md-6">
+    <div class="col-xs-6 col-md-6 details-panel">
         <div class="row">
             <div class="col-xs-3 col-md-3">
                 <a class="thumbnail" href="{$bookCoverUrl}">                            
@@ -48,7 +48,8 @@ function redrawSaveStatus() {literal}{{/literal}
             <div class="col-xs-6 col-md-6">
                 <div id='recordTitle'>{$eContentRecord->title|regex_replace:"/(\/|:)$/":""|escape}
                     {if $user && $user->hasRole('epubAdmin')}
-                        {if $eContentRecord->status != 'active'}<span id="eContentStatus">({$eContentRecord->status})</span>{/if}
+                        {if $eContentRecord->status != 'active'}
+                            <span id="eContentStatus">({$eContentRecord->status})</span>{/if}
                             <span id="editEContentLink"><a href='{$path}/EcontentRecord/{$id}/Edit'>(edit)</a></span>
                         {if $eContentRecord->status != 'archived' && $eContentRecord->status != 'deleted'}
                             <span id="archiveEContentLink"><a href='{$path}/EcontentRecord/{$id}/Archive' onclick="return confirm('Are you sure you want to archive this record?  The record should not have any holds or checkouts when it is archived.')">(archive)</a></span>
@@ -84,24 +85,24 @@ function redrawSaveStatus() {literal}{{/literal}
                 <div class="btn-group-vertical">
                     {if $eContentRecord->source == 'OverDrive'}
                         {if $holdingsSummary.status == 'Checked out in OverDrive'}
-                            <button type="button" class="btn btn-default" onclick="placeOverDriveHold('{$record.overDriveId}', '{$format.formatId}')">Request Now</button>
+                            <button type="button" class="btn btn-default btn-sm" onclick="placeOverDriveHold('{$record.overDriveId}', '{$format.formatId}')">Request Now</button>
                         {elseif $holdingsSummary.status == 'Available from OverDrive'}
-                            <button type="button" class="btn btn-default" onclick="checkoutOverDriveItem('{$format.overDriveId}','{$format.formatId}')">Checkout Now</button>
+                            <button type="button" class="btn btn-default btn-sm" onclick="checkoutOverDriveItem('{$format.overDriveId}','{$format.formatId}')">Checkout Now</button>
                         {else}
                             {if $eContentRecord->sourceUrl  }
-                                <button type="button" class="btn btn-default" onclick="window.location.href='{$eContentRecord->sourceUrl}'">Access Online</button>
+                                <button type="button" class="btn btn-default btn-sm" onclick="window.location.href='{$eContentRecord->sourceUrl}'">Access Online</button>
                             {else}
-                                <button type="button" class="btn btn-default" onclick="findInLibrary('{$id|escape:"url"}',false,'150px','570px','auto')" id="access-online">Loading...</button>
+                                <button type="button" class="btn btn-default btn-sm" onclick="findInLibrary('{$id|escape:"url"}',false,'150px','570px','auto')" id="access-online">Loading...</button>
                             {/if}
                         {/if}
                     {else}
                         {if $eContentRecord->sourceUrl && $eContentRecord->sourceUrl != "" }
-                            <button type="button" class="btn btn-default" onclick="window.location.href='{$eContentRecord->sourceUrl}'">Access Online</button>
+                            <button type="button" class="btn btn-default btn-sm" onclick="window.location.href='{$eContentRecord->sourceUrl}'">Access Online</button>
                         {else}
-                            <button type="button" class="btn btn-default" onclick="window.location.href='#links'">Access Online</button>
+                            <button type="button" class="btn btn-default btn-sm" onclick="window.location.href='#links'">Access Online</button>
                         {/if}
                     {/if}
-                    <button type="button" class="btn btn-default" onclick="getSaveToListForm('{$id|escape}', 'eContent'); return false;">Add To Wish List</button>
+                    <button type="button" class="btn btn-default btn-sm" onclick="getSaveToListForm('{$id|escape}', 'eContent'); return false;">Add To Wish List</button>
 
                 </div>
             </div>

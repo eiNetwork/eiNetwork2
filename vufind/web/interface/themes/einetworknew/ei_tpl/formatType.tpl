@@ -4,6 +4,6 @@
 		{include file="ei_tpl/formatTypeCore.tpl"}
 		{/foreach}
         {else}
-		<span class="iconlabel">{translate text=$summFormats}</span>
+		<span class="iconlabel">&nbsp;&nbsp;{translate text=$summFormats}</span>
         {/if}
 </div>

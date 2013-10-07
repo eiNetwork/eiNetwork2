@@ -58,7 +58,7 @@
 		{/if}
 		<form role="form" id="profileForm" action="" method="post" {if $edit == true}onsubmit="return checkWhenSubmit();"{/if}>
 		<h3 id="info">Information</h3>
-		<input class="btn btn-default" type="button" onclick="ajaxLightbox('/MyResearch/AJAX?method=getPinUpdateForm',false,false,'400px',false,'250px');return false;" value="Modify PIN Number"/>
+		<input class="btn btn-default modify-pin" type="button" onclick="ajaxLightbox('/MyResearch/AJAX?method=getPinUpdateForm',false,false,'400px',false,'250px');return false;" value="Modify PIN Number"/>
 			<div class="profile">
 			<div id="name_notification" class="profile_row">
 				<table>
@@ -77,7 +77,7 @@
 					</td>
 					<td>
 						{if $edit == true}
-							<select name='notices'>
+							<select name='notices' class="form-control">
 							<option value='z' >E-mail</option>
 							<option value='p' {if $profile.notices == 'p'}selected="selected"{/if}>Phone</option>
 							</select>
@@ -121,7 +121,7 @@
 				<tr>
 					<td>
 						{if $edit == true}
-						<input id="phone" name='phone' class="text" value='{$profile.phone|regex_replace:"/\D/":""}' size='20' maxlength='10' />
+						<input id="phone" name='phone' class="form-control" value='{$profile.phone|regex_replace:"/\D/":""}' size='20' maxlength='10' />
 						<span id="phoneError" class="error">&nbsp;</span>
 						{else}
 							{if $profile.phone}
@@ -133,7 +133,7 @@
 					</td>
 					<td>
 						{if $edit == true}
-						<input id="email" name='email' class="text" value='{$profile.email|escape}' size='20' maxlength='30' />
+						<input id="email" name='email' class="form-control" value='{$profile.email|escape}' size='20' maxlength='30' />
 						<span id="emailError" class="error">&nbsp;</span>
 						{else}
 							{if $profile.email}
@@ -156,13 +156,13 @@
 				<tr>
 					<td>
 						{if $edit == true}
-						{html_options name="myLocation1" options=$locationList selected=$profile.myLocation1Id}
+						{html_options name="myLocation1" options=$locationList class="form-control" selected=$profile.myLocation1Id}
 						{else}{$profile.myLocation1|escape}
 						{/if}
 					</td>
 					<td>
 						{if $edit == true}
-						{html_options name="myLocation2" options=$locationList selected=$profile.myLocation2Id}
+						{html_options name="myLocation2" options=$locationList class="form-control" selected=$profile.myLocation2Id}
 						{else}{$profile.myLocation2|escape}
 						{/if}
 					</td>
@@ -182,7 +182,7 @@
 								<div style="font-weight: bolder">{$lendingOption.name}</div><br/>
 								<div id="{$lendingOption.id}Select">
 									{if $edit}
-									<select name="{$lendingOption.id}">
+									<select name="{$lendingOption.id}" class="form-control">
 										{foreach from=$lendingOption.options item=option}
 												<option value="{$option.value}" {if $option.selected}selected{/if}>{$option.name}</option>
 

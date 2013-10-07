@@ -77,15 +77,34 @@
 
 	<div class="row">
 		<div class="col-xs-12 col-md-12">
-			<div class="list-group side-nav">
-				<a class="list-group-item disable-link" href="" onclick='getWishList()'>Wish Lists</a>
-				<a class="list-group-item disable-link" href="" onclick='getCheckedOutItem()'>Checked Out Items <span id="my-item-PlaceHolder"></span></a>
-				<a class="list-group-item disable-link" href="" onclick='getRequestedItem()' >Requested Items <span id="my-ruest-item-placeHolder"></span></a>
-				<a class="list-group-item disable-link" href="" onclick='getReadingHistory()' >Reading History</a>
-				<a class="list-group-item" href="/Search/History">Saved Searches</a>
-				<a class="list-group-item disable-link" href="" onclick='getAccountSetting()'>Account Settings</a>
-				<a class="list-group-item" href="/MyResearch/Firsttime">First Time Using the Catalog?</a>
-				<a class="list-group-item" href="/MyResearch/Latestupdates">Latest Website Updates</a>
+			<div class="side-nav">
+				{if ($smarty.server.REQUEST_URI == '/List/Results')}
+					{assign var="wishlist_link" value="right-current-link"}
+				{elseif ($smarty.server.REQUEST_URI == '/MyResearch/CheckedOut')}
+					{assign var="checkedout_link" value="right-current-link"}
+				{elseif ($smarty.server.REQUEST_URI == '/MyResearch/Holds')}
+					{assign var="requested_link" value="right-current-link"}
+				{elseif ($smarty.server.REQUEST_URI == '/MyResearch/ReadingHistory')}
+					{assign var="readinghistory_link" value="right-current-link"}
+				{elseif ($smarty.server.REQUEST_URI == '/Search/History')}
+					{assign var="searchhistory_link" value="right-current-link"}
+				{elseif ($smarty.server.REQUEST_URI == '/MyResearch/Profile')}
+					{assign var="profile_link" value="right-current-link"}
+				{elseif ($smarty.server.REQUEST_URI == '/MyResearch/Firsttime')}
+					{assign var="firsttime_link" value="right-current-link"}
+				{elseif ($smarty.server.REQUEST_URI == '/MyResearch/Latestupdates')}
+					{assign var="latestupdates_link" value="right-current-link"}
+				{/if}
+				<ul>
+					<li><a class="disable-link {$wishlist_link}" href="" onclick='getWishList()'>Wish Lists</a></li>
+					<li><a class="disable-link {$checkedout_link}" href="" onclick='getCheckedOutItem()'>Checked Out Items <span id="my-item-PlaceHolder"></span></a></li>
+					<li><a class="disable-link {$requested_link}" href="" onclick='getRequestedItem()' >Requested Items <span id="my-ruest-item-placeHolder"></span></a></li>
+					<li><a class="disable-link {$readinghistory_link}" href="" onclick='getReadingHistory()' >Reading History</a></li>
+					<li><a class="{$searchhistory_link}" href="/Search/History">Saved Searches</a></li>
+					<li><a class="disable-link {$profile_link}" href="" onclick='getAccountSetting()'>Account Settings</a></li>
+					<li><a class="{$firsttime_link}" href="/MyResearch/Firsttime">First Time Using the Catalog?</a></li>
+					<li><a class="{$latestupdates_link}" href="/MyResearch/Latestupdates">Latest Website Updates</a></li>
+				</ul>
 			</div>
 		</div>
 	</div>
@@ -167,6 +186,11 @@
 	    })
     </script>
     {/literal}
+
+    {else}
+
+    	<hr />
+
     {/if}
     
    
@@ -218,17 +242,18 @@
 
     <div class="row">
 		<div class="col-xs-12 col-md-12">
-			<div class="list-group side-nav">
-				<a class="list-group-item" href="{$url}/MyResearch/MyList/1">{$Title1}</a>
-				<a class="list-group-item" href="{$url}/MyResearch/MyList/2">{$Title2}</a>
-				<a class="list-group-item" href="{$url}/MyResearch/MyList/5924">{$Title3}</a>
-				<a class="list-group-item" href="{$url}/MyResearch/MyList/5925">{$Title4}</a>
-				<a class="list-group-item" href="{$url}/MyResearch/MyList/3">{$Title5}</a>
-				<a class="list-group-item" href="http://articles.einetwork.net">Databases and Articles</a>
-				<a class="list-group-item" href="http://illiad.carnegielibrary.org/illiad/logon.html">Interlibrary Loan</a>
+			<div class="side-nav side-lists">
+				<ul>
+					<li><a href="{$url}/MyResearch/MyList/1">{$Title1}</a></li>
+					<li><a href="{$url}/MyResearch/MyList/2">{$Title2}</a></li>
+					<li><a href="{$url}/MyResearch/MyList/5924">{$Title3}</a></li>
+					<li><a href="{$url}/MyResearch/MyList/5925">{$Title4}</a></li>
+					<li><a href="{$url}/MyResearch/MyList/3">{$Title5}</a></li>
+					<li><a href="http://articles.einetwork.net">Databases and Articles</a></li>
+					<li><a href="http://illiad.carnegielibrary.org/illiad/logon.html">Interlibrary Loan</a></li>
+				</ul>
 			</div>
-
-</div>
-
-</div>
+		</div>
+	</div>
+	
 {/strip}

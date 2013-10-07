@@ -20,14 +20,14 @@
 		$('#popupbox').css('top', '100px');
 		$('#popupbox').css('left', $('#left-bar').offset().left+'px');
 		$('#popupbox').css('width', '674px');
-		$('#popupbox').css('height', '385px');
+		$('#popupbox').css('height', '500px');
 		var template = '{/literal}{$temp|addslashes}{literal}';
 		var lightboxContents = template.substr(0,template.length-4)+$(elementSelector).html() + "</div>";
 		$('#popupbox').html(lightboxContents);
 	}
  {/literal}
  </script>
-<link rel="stylesheet" type="text/css" href="/interface/themes/einetwork/css/ei_css/advfacet.css">
+<link rel="stylesheet" type="text/css" href="/interface/themes/einetworknew/css/ei_css/advfacet.css">
 <div class="sortCategory">
 	<div class="sortCategoryHeading">
 		{*<div class="title">TITLE</div>*}
@@ -39,10 +39,11 @@
 				{foreach from=$tree item=clist name="colloop"}
 					 {include file ='Search/facet_popup_item.tpl' page=$smarty.foreach.colloop.iteration}
 				{/foreach}
-			</div>{*<!-- Column Wrapper -->*}
-				<div class="buttonContainer">
-							<span class="button dark" onclick="resetList()">Reset</span>
-							<span class="button dark highlighted" onclick="submitURL()">OK</span>
+				<div class="buttonContainer clearfix">
+							<span class="btn btn-default" onclick="resetList()">Reset</span>
+							<span class="btn btn-warning" onclick="submitURL()">OK</span>
 					</div>
+			</div>{*<!-- Column Wrapper -->*}
+				
 	</div>{*<!-- Material TypeHUD -->*}	
 </div>

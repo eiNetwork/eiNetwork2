@@ -427,7 +427,7 @@ class Results extends Action {
 			$interface->assign('ButtonBack',true);
 			$interface->assign('ButtonHome',true);
 			$interface->assign('MobileTitle','No Results Found');
-			
+
 			// No record found
 			$interface->setTemplate('list.tpl');
 			//$interface->setTemplate('list-none.tpl');
@@ -513,6 +513,37 @@ class Results extends Action {
 				$interface->setTemplate('noList.tpl');
 				
 			}else{
+
+				$goToListID = isset($_REQUEST['goToListID']) ? $_REQUEST['goToListID'] : null;
+
+				if (isset($_REQUEST['goToListID']) && $_REQUEST['goToListID'] == 'BookCart'){
+
+					// echo "<pre>";
+					// print_r($user);
+					// echo "</pre>";
+
+					if (isset($user->bookcart_collapse)){
+						$list_collapse = $user->bookcart_collapse;
+					} else {
+						$list_collapse = 0;
+					}
+
+					$interface->assign('list_collapse_key', 'bookcart_collapse');
+
+				} else {
+
+					if (isset($user->wishlist_collapse)){
+						$list_collapse = $user->wishlist_collapse;
+					} else {
+						$list_collapse = 0;
+					}
+
+					$interface->assign('list_collapse_key', 'wishlist_collapse');
+
+				}
+				
+				$interface->assign('list_collapse', $list_collapse);
+
 				$interface->assign('subpage', 'Search/list-list.tpl');
 				$interface->setTemplate('list.tpl');
 			}

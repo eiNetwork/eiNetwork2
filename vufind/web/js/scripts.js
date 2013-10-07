@@ -254,7 +254,7 @@ function ajaxLightbox(urlToLoad, parentId, left, width, top, height){
 
 	var loadMsg = $('#lightboxLoading').html();
 
-	hideSelects('hidden');
+	//hideSelects('hidden');
 
 	// Find out how far down the screen the user has scrolled.
 	//var new_top = document.body.scrollTop;
@@ -393,11 +393,13 @@ function waitingLightbox(left,top,width,height){
 
 function hideLightbox(){
 	
-	$('#eiNetworkModal').modal('hide');l
+	$('#eiNetworkModal').modal('hide');
+	$('#lightbox').hide();
+	$('#popupbox').hide();
 
 }
 
-function hideSelects(visibility)
+function hideSelects(visibility) // @MD - I have no idea why this is needed.
 {
 	selects = document.getElementsByTagName('select');
 	for(i = 0; i < selects.length; i++) {
