@@ -45,12 +45,12 @@ h1 {
 	font-size:1.6em; /* For usability study, we have decreased font size to copy old NGC */
 }
 
-h2 {
+h2.header-option {
 	font-size: 1.45em; /* For usability study, we have decreased font size to copy old NGC */
 	font-weight: normal;
 }
 
-h3 {
+h3.header-option {
 	font-size: 1.3em; /* For usability study, we have decreased font size to copy old NGC */
 }
 
@@ -120,11 +120,13 @@ a.inactive-link:hover {
 	color: #fff;
 }
 
-.label {
-	margin:0 0 0 0;
-	padding:0 10px 0 0;
-}
+pittsburgh
 
+.label {
+	display: inline-block;
+	margin:8px 0 0 0 !important;
+}
+/*
 .label-warning {
 	color:#000;
 	background-color:#fff;
@@ -143,13 +145,13 @@ a.inactive-link:hover {
 .label-default {
 	color:#000;
 	background-color:#fff;
-}
+}*/
 
-.search-box label {
+/*.search-box label {
 	min-width: 60px;
 	color: #fff;
 	margin:0 0 0 20px;
-}
+}*/
 
 .search-box input.search-txt {
 	width: 300px;
@@ -592,7 +594,7 @@ p.notification {
 	font-size:1em;
 }
 
-.label-requested-results {
+/*.label-requested-results {
 	display: inline-block;
 	font-size:12px;
 
@@ -600,7 +602,7 @@ p.notification {
 
 .label-checkedout-results {
 	margin:0 15px 0 0;
-}
+}*/
 
 .requested-results-actions {
 	margin:7px 0 0 0;
@@ -1038,21 +1040,31 @@ p.notification {
 /* Override twitter bootstrap labels for now */
 
 #holdingsSummary .label-danger {
-	background-color:#fff;
-	color: #f00;
-	font-size:1.1em;
+	color: #fff;
+	font-size:1em;
 }
 
 #holdingsSummary .label-success,
 #holdingsSummary .label-success a {
-	background-color:#fff;
-	color: #00b253;
+	color: #fff;
 	font-size:1em;
 }
 
 #holdingsSummary .label-default {
 	background-color:#fff;
 	color: #333;
+	font-size:1em;
+}
+
+.book-results-location .label-success,
+.book-results-location .label-success a {
+	color: #fff;
+	font-size:1em;
+}
+
+.book-results-location .label-danger,
+.book-results-location .label-danger a {
+	color: #fff;
 	font-size:1em;
 }
 

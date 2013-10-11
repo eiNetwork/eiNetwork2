@@ -4,7 +4,6 @@
 	{elseif $holdingsSummary.status == 'Checked Out'}
 		class="holdingsSummary overdriveCheckedOut"
 	{/if}>
-	<br/>
 	<div class="availability">
 		{if $holdingsSummary.status == 'Available from OverDrive'}
 			<span><img class="format_img" src="/interface/themes/einetwork/images/Art/AvailabilityIcons/Available.png"/ alt="Available"></span>
@@ -22,9 +21,9 @@
 	</div>
 
 	<div class="holdableCopiesSummary">
-		{if $holdingsSummary.numHoldings == 0}
-			No copies available yet.
-			<!--<br/>{$holdingsSummary.wishListSize} {if $holdingsSummary.wishListSize == 1}person has{else}people have{/if} added the record to their wish list.-->
+		<span class="label label-danger label-small">{if $holdingsSummary.numHoldings == 0}
+			No copies available yet.</span>
+			<!--{$holdingsSummary.wishListSize} {if $holdingsSummary.wishListSize == 1}person has{else}people have{/if} added the record to their wish list.-->
 		{else}
 			{if strcasecmp($holdingsSummary.source, 'OverDrive') == 0}
 				{*Available for use from OverDrive.*}
@@ -50,6 +49,7 @@
 			</div>
 -->
 		{/if} 
+	</span>
 		{if $showOtherEditionsPopup}
 		<div class="otherEditions">
 			<a style="cursor:pointer" onclick="loadOtherEditionSummaries('{$holdingsSummary.recordId}', true)">Other Formats and Languages</a>

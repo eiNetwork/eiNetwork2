@@ -160,7 +160,7 @@
 			{/if}
 			
 			<div> 
-				<h2 style="margin-top:0px">{translate text='Requested Items'}</h2>
+				<h2 class="header-option" style="margin-top:0px">{translate text='Requested Items'}</h2>
 			</div>
 			
 			{if $profile.expireclose == 1}
@@ -171,7 +171,7 @@
 
 
 			<div style="margin-top: 30px">
-				<h3>Physical Requests</h3>
+				<h3 class="header-option">Physical Requests</h3>
 			</div>
 
 			<div class="row list-header">
@@ -597,7 +597,7 @@
 			
 			{*****BEGIN Overdrive Holds******}
 
-			<div style="margin-top: 20px;margin-bottom: 20px"><h3>{translate text='eContent Requests'}</h3></div>
+			<div style="margin-top: 20px;margin-bottom: 20px"><h3 class="header-option">{translate text='eContent Requests'}</h3></div>
 
 			{if count($overDriveHolds.available) > 0}
 
