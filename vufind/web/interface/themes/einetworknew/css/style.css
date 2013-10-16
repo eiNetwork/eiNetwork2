@@ -1295,3 +1295,21 @@ div.popupBox ul li a {
 .searchtools {
 	margin-bottom:30px;
 }
+
+.view-select-container {
+	position: relative;
+}
+
+.view-select-saved {
+	display: none;
+	position: absolute;
+	z-index: 10;
+	top:3px;
+	left:20px;
+	padding:5px;
+	background-color:#ffcc33;
+	color: #333;
+	font-weight: bold;
+	width:120px;
+	text-align: center;
+}
