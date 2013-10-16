@@ -235,7 +235,7 @@
 						        				</div>
 						                    </div>
 						        		</div>
-						        		<div class="col-xs-4 col-md-4">
+						        		<div class="col-xs-4 col-md-4" style="text-align: center">
 				                    		{if $patronCanRenew}
 					                    		{assign var=id value=$record.id scope="global"}
 											    {assign var=shortId value=$record.shortId scope="global"}
@@ -292,7 +292,7 @@
 														</li>
 													</ul>
 												</div>
-												<div class="col-xs-4 col-md-4">
+												<div class="col-xs-4 col-md-4" style="text-align: center">
 														{if $patronCanRenew}
 								                    		{assign var=id value=$record.id scope="global"}
 														    {assign var=shortId value=$record.shortId scope="global"}
