@@ -1152,11 +1152,11 @@ class Solr implements IndexEngine {
 				 *				
 				 */				
 
-				$baseQuery = eiNetworkFacetBoosting(
-						$query,
-						$baseQuery,
-						array("cats", "lion","tiger","panther","lions"),
-						"target_audience_full:(\"Juvenile\")^50 OR literary_form_full:(\"Fiction\")^100");								
+				//$baseQuery = eiNetworkFacetBoosting(
+				//		$query,
+				//		$baseQuery,
+				//		array("cats", "lion","tiger","panther","lions"),
+				//		"target_audience_full:(\"Juvenile\")^50 OR literary_form_full:(\"Fiction\")^100");								
 
 				// The logic above extends the existing $baseQuery to include the additional boosters;
 				// Author Boosting is not included here because the Keyword search default config already handles that.
