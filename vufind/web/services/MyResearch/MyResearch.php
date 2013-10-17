@@ -107,6 +107,34 @@ class MyResearch extends Action
 					}
 				}
 			}
+
+			if ($user){
+
+				$notifications = array();
+				$notifications['messages'] = null;
+				$notifications['count'] = 0;
+				$notifications['state'] = 0;
+
+				$patron = $this->catalog->patronLogin($user->cat_username, $user->cat_password);
+
+				$profile = $this->catalog->getMyProfile($patron);
+
+				if ($profile['fines'] != '$0.00'){
+					$notifications['messages'][] = 'You have ' . $profile['fines'] . ' in overdue fines. <input type="button" class="button pay-fine-button" onclick="window.open(\'http://catalog.einetwork.net/patroninfo\')" value="Pay Fine" title="Pay overdue fine on-line" />';
+				}
+
+				if ($profile['expireclose'] == 1){
+					$notifications['messages'][] = 'Your library card is due to expire within the next 30 days. Please visit your local library to renew your card to ensure access to all online services.';
+				} elseif ($profile['expireclose'] == -1){
+					$notifications['messages'][] = 'Your library card is expired. Please visit your local library to renew your card to ensure access to all online service.';
+				}
+
+				$notifications['count'] = count($notifications['messages']);
+				$notifications['state'] = isset($_SESSION['notification_popupstate']) ? $_SESSION['notification_popupstate'] : 0;
+
+				$interface->assign('notifications', $notifications);
+			}
+
 			//always show the ecommcerce link
 			$ecommerceLink = $configArray['Site']['ecommerceLink'];
 			$interface->assign('showEcommerceLink', true);

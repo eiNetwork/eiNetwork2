@@ -6,14 +6,14 @@
         <h3>We’re listening to you.   The ongoing changes and planned enhancements are driven by the comments and feedback you submit when completing the new catalog survey.  We want to continue to hear from you and we appreciate your feedback.</h3>
         <br>
         <div class="releases">
-            <h2><b>Upcoming Release version 3.0</b></h2>
-            Scheduled release date 9/9/2013
+            <h2><b>Current release version 3.0</b></h2>
+            Release date 9/10/2013
             <ol class="decimal">
                 <li>Improve search results for title searches when using a search phrase that exactly matches the title.</li>
                 <li>Automatically include alternate forms of the title as part of the search criteria when performing a title search.</li>
                 <li>Enable users to place title requests from the search results page.</li>
-                <li>Enable users to select and save their preference for a full or brief display of information when viewing checked out items, requests, wishlists, and  the bookcart  while  logged into My Account.</li>
                 <li>Make it more apparent to users when logged into My Account that they have outstanding fines.</li>
+                <li>Enable users to select and save their preference for a full or brief display of information when viewing checked out items, requests, wishlists, and  the bookcart  while  logged into My Account. <span class="red">** This feature is currently still in development and will be included in an upcoming release. **</span></li>
             </ol>
         </div>
         <div class="releases">
