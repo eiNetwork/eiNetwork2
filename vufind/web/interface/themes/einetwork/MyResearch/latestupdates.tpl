@@ -13,8 +13,7 @@
                 <li>Automatically include alternate forms of the title as part of the search criteria when performing a title search.</li>
                 <li>Enable users to place title requests from the search results page.</li>
                 <li>Make it more apparent to users when logged into My Account that they have outstanding fines.</li>
-                <li>Enable users to select and save their preference for a full or brief display of information when viewing checked out items, requests, wishlists, and  the bookcart  while  logged into My Account. <span class="red">This feature is currently still under development and will be included in a future release.</span></li>
-
+                <li>Enable users to select and save their preference for a full or brief display of information when viewing checked out items, requests, wishlists, and  the bookcart  while  logged into My Account. <span class="red">** This feature is currently still in development and will be included in an upcoming release. **</span></li>
             </ol>
         </div>
         <div class="releases">
