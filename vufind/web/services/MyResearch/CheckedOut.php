@@ -29,7 +29,8 @@ require_once("PHPExcel.php");
 
 
 //BEGIN for Overdrive Checkout Items
-require_once 'Drivers/OverDriveDriver.php';
+//require_once 'Drivers/OverDriveDriver.php';
+require_once 'Drivers/OverDriveDriverFactory.php';
 require_once 'sys/eContent/EContentRecord.php';
 //END for Overdrive Checkout Items
 
@@ -377,7 +378,8 @@ class CheckedOut extends MyResearch{
 		
 		
 		/**BEGIN for Overdrive Checkout Items**/
-		$overDriveDriver = new OverDriveDriver();
+		//$overDriveDriver = new OverDriveDriver();
+		$overDriveDriver = OverDriveDriverFactory::getDriver();
 		$overDriveCheckedOutItems = $overDriveDriver->getOverDriveCheckedOutItems($user);
 		//Load the full record for each item in the wishlist
 		foreach ($overDriveCheckedOutItems['items'] as $key => $item){
