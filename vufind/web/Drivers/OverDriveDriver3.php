@@ -1,6 +1,6 @@
 <?php
 
-require_once ROOT_DIR . '/sys/eContent/EContentRecord.php';
+require_once 'sys/eContent/EContentRecord.php';
 
 /**
  * Complete integration via APIs including availability and account informatino.
@@ -134,13 +134,32 @@ class OverDriveDriver3 {
 				$curlInfo = curl_getinfo($ch);
 				curl_close($ch);
 				$patronTokenData = json_decode($return);
+
 				if ($patronTokenData){
 					if (isset($patronTokenData->error)){
-						echo("Error connecting to overdrive apis ". $patronTokenData->error);
+						$error_message = array(
+							'subject' => 'Error connecting to overdrive apis',
+							'message' => 
+								"Patron API error: " . $patronTokenData->error .
+								" url: " . $curlInfo['url'] . 
+								" http code: " . $curlInfo['http_code'] .
+								" line number: " . __LINE__
+						);
+						$this->eiNetworkNotify($error_message);
 					}else{
 						$memcache->set('overdrive_patron_token_' . $patronBarcode, $patronTokenData, 0, $patronTokenData->expires_in - 10);
 					}
+				} else {
+					$error_message = array(
+						'subject' => 'Error connecting to OverDrive APIs', 
+						'message' => 
+							"Unable to get token - url: " . $curlInfo['url'] . 
+							" http code: " . $curlInfo['http_code'] .
+							" line number: " . __LINE__
+					);
+					$this->eiNetworkNotify($error_message);
 				}
+
 			}
 		}
 		return $patronTokenData;
@@ -149,7 +168,7 @@ class OverDriveDriver3 {
 	public function _callUrl($url){
 		$tokenData = $this->_connectToAPI();
 		//TODO: Remove || true needed for mock environment
-		if ($tokenData || true){
+		//if ($tokenData || true){
 			$ch = curl_init($url);
 			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
 			curl_setopt($ch, CURLOPT_USERAGENT,"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
@@ -159,20 +178,37 @@ class OverDriveDriver3 {
 			curl_setopt($ch, CURLOPT_TIMEOUT, 30);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 			$return = curl_exec($ch);
+			$curlInfo = curl_getinfo($ch);
 			curl_close($ch);
 			$returnVal = json_decode($return);
 			//print_r($returnVal);
 			if ($returnVal != null){
+
+				if (isset($returnVal->message) && $returnVal->message == 'An unexpected error has occurred.'){
+					 $error_message = array(
+						'subject' => 'Error connecting to OverDrive APIs', 
+						'message' => 
+							"An unexpected error has occurred - url: " . $curlInfo['url'] . 
+							" http code: " . $curlInfo['http_code'] .
+							" line number: " . __LINE__
+					);
+					$this->eiNetworkNotify($error_message);
+				}
+
 				if (!isset($returnVal->message) || $returnVal->message != 'An unexpected error has occurred.'){
 					return $returnVal;
 				}
 			}
-		}
+		//}
 		return null;
 	}
 
 	public function _callPatronUrl($patronBarcode, $patronPin, $url, $postParams = null){
+
+		global $configArray;
+
 		$tokenData = $this->_connectToPatronAPI($patronBarcode, $patronPin, false);
+
 		if ($tokenData){
 			$ch = curl_init($url);
 			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
@@ -182,7 +218,7 @@ class OverDriveDriver3 {
 				$headers = array(
 					"Authorization: $authorizationData",
 					"User-Agent: VuFind-Plus",
-					"Host: patron.api.overdrive.com"
+					"Host: " . str_replace('http://', '', $configArray['OverDrive']['patronApiUrl'])
 				);
 			}else{
 				print_r($tokenData);
@@ -211,12 +247,24 @@ class OverDriveDriver3 {
 			}
 			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
-				$return = curl_exec($ch);
+			$return = curl_exec($ch);
 			$curlInfo = curl_getinfo($ch);
 			curl_close($ch);
 			$returnVal = json_decode($return);
-			//print_r($returnVal);
+
 			if ($returnVal != null){
+
+				if (isset($returnVal->message) && $returnVal->message == 'An unexpected error has occurred.'){
+					 $error_message = array(
+						'subject' => 'Error connecting to OverDrive APIs', 
+						'message' => 
+							"An unexpected error has occurred - url: " . $curlInfo['url'] . 
+							" http code: " . $curlInfo['http_code'] .
+							" line number: " . __LINE__
+					);
+					$this->eiNetworkNotify($error_message);
+				}
+
 				if (!isset($returnVal->message) || $returnVal->message != 'An unexpected error has occurred.'){
 					return $returnVal;
 				}
@@ -226,6 +274,9 @@ class OverDriveDriver3 {
 	}
 
 	private function _callPatronDeleteUrl($patronBarcode, $patronPin, $url){
+
+		global $configArray;
+
 		$tokenData = $this->_connectToPatronAPI($patronBarcode, $patronPin, false);
 		//TODO: Remove || true when oauth works
 		if ($tokenData || true){
@@ -237,10 +288,10 @@ class OverDriveDriver3 {
 				$headers = array(
 					"Authorization: $authorizationData",
 					"User-Agent: VuFind-Plus",
-					"Host: integration-patron.api.overdrive.com"
+					"Host: " . str_replace('http://', '', $configArray['OverDrive']['patronApiUrl'])
 				);
 			}else{
-				$headers = array("User-Agent: VuFind-Plus", "Host: api.overdrive.com");
+				$headers = array("User-Agent: VuFind-Plus", "Host: " . str_replace('http://', '', $configArray['OverDrive']['patronApiUrl']));
 			}
 
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -255,13 +306,24 @@ class OverDriveDriver3 {
 			if ($returnInfo['http_code'] == 204){
 				$result = true;
 			}else{
-				//echo("Response code was " . $returnInfo['http_code']);
 				$result = false;
 			}
 			curl_close($ch);
 			$returnVal = json_decode($return);
 			//print_r($returnVal);
 			if ($returnVal != null){
+
+				if (isset($returnVal->message) && $returnVal->message == 'An unexpected error has occurred.'){
+					 $error_message = array(
+						'subject' => 'Error connecting to OverDrive APIs', 
+						'message' => 
+							"An unexpected error has occurred - url: " . $curlInfo['url'] . 
+							" http code: " . $curlInfo['http_code'] .
+							" line number: " . __LINE__
+					);
+					$this->eiNetworkNotify($error_message);
+				}
+
 				if (!isset($returnVal->message) || $returnVal->message != 'An unexpected error has occurred.'){
 					return $returnVal;
 				}
@@ -301,7 +363,6 @@ class OverDriveDriver3 {
 		}
 		$overDriveId= strtoupper($overDriveId);
 		$metadataUrl = "http://api.overdrive.com/v1/collections/$productsKey/products/$overDriveId/metadata";
-		//echo($metadataUrl);
 		return $this->_callUrl($metadataUrl);
 	}
 
@@ -357,7 +418,7 @@ class OverDriveDriver3 {
 		}
 		global $configArray;
 		$url = $configArray['OverDrive']['patronApiUrl'] . '/v1/patrons/me/checkouts';
-		$response = $this->_callPatronUrl($user->cat_password, null, $url);
+		$response = $this->_callPatronUrl($user->cat_username, $user->cat_password, $url);
 		//print_r($response);
 		$checkedOutTitles = array();
 		if (isset($response->checkouts)){
@@ -456,7 +517,7 @@ class OverDriveDriver3 {
 		}
 		global $configArray;
 		$url = $configArray['OverDrive']['patronApiUrl'] . '/v1/patrons/me/holds';
-		$response = $this->_callPatronUrl($user->cat_password, null, $url);
+		$response = $this->_callPatronUrl($user->cat_username, $user->cat_password, $url);
 		$holds = array();
 		$holds['holds'] = array(
 			'available' => array(),
@@ -558,31 +619,42 @@ class OverDriveDriver3 {
 	 *
 	 * @return array (result, message)
 	 */
-	public function placeOverDriveHold($overDriveId, $format, $user){
+	public function placeOverDriveHold($overDriveId, $user){
 		global $configArray;
-		global $analytics;
 		global $memcache;
 
 		$url = $configArray['OverDrive']['patronApiUrl'] . '/v1/patrons/me/holds/' . $overDriveId;
 		$params = array(
 			'reserveId' => $overDriveId,
-			'emailAddress' => $user->overdriveEmail
+			'emailAddress' => $user->email
 		);
-		$response = $this->_callPatronUrl($user->cat_password, null, $url, $params);
+		$response = $this->_callPatronUrl($user->cat_username, $user->cat_password, $url, $params);
 
 		$holdResult = array();
 		$holdResult['result'] = false;
 		$holdResult['message'] = '';
 
-		//print_r($response);
-		if (isset($response->holdListPosition)){
-			$holdResult['result'] = true;
-			$holdResult['message'] = 'Your hold was placed successfully.  You are number ' . $response->holdListPosition . ' on the wait list.';
-			if ($analytics) $analytics->addEvent('OverDrive', 'Place Hold', 'succeeded');
-		}else{
-			$holdResult['message'] = 'Sorry, but we could not place a hold for you on this title.  ' . $response->message;
-			if ($analytics) $analytics->addEvent('OverDrive', 'Place Hold', 'failed');
+		if (!empty($response)){
+
+			if (isset($response->holdListPosition)){
+				$holdResult['result'] = true;
+				$holdResult['message'] = 'Your hold was placed successfully.  You are number ' . $response->holdListPosition . ' on the wait list.';
+			}else{
+				$holdResult['message'] = 'Sorry, but we could not place a hold for you on this title.  ' . $response->message;
+			}
+
+		} else {
+
+			$error_message = array(
+				'subject' => 'Error connecting to OverDrive APIs',
+				'message' => 
+					"No response from OverDrive - " .
+					" line number: " . __LINE__
+			);
+			$this->eiNetworkNotify($error_message);
+
 		}
+
 		$memcache->delete('overdrive_summary_' . $user->id);
 
 		return $holdResult;
@@ -594,13 +666,12 @@ class OverDriveDriver3 {
 	 * @param string $format
 	 * @return array
 	 */
-	public function cancelOverDriveHold($overDriveId, $format, $user){
+	public function cancelOverDriveHold($overDriveId, $user){
 		global $configArray;
-		global $analytics;
 		global $memcache;
 
 		$url = $configArray['OverDrive']['patronApiUrl'] . '/v1/patrons/me/holds/' . $overDriveId;
-		$response = $this->_callPatronDeleteUrl($user->cat_password, null, $url);
+		$response = $this->_callPatronDeleteUrl($user->cat_username, $user->cat_password, $url);
 
 		$cancelHoldResult = array();
 		$cancelHoldResult['result'] = false;
@@ -608,10 +679,15 @@ class OverDriveDriver3 {
 		if ($response === true){
 			$cancelHoldResult['result'] = true;
 			$cancelHoldResult['message'] = 'Your hold was cancelled successfully.';
-			if ($analytics) $analytics->addEvent('OverDrive', 'Cancel Hold', 'succeeded');
 		}else{
+			$error_message = array(
+				'subject' => 'Error connecting to OverDrive APIs',
+				'message' => 
+					"No response from OverDrive - " .
+					" line number: " . __LINE__
+			);
+			$this->eiNetworkNotify($error_message);
 			$cancelHoldResult['message'] = 'There was an error cancelling your hold.  ' . $response->message;
-			if ($analytics) $analytics->addEvent('OverDrive', 'Cancel Hold', 'failed');
 		}
 		$memcache->delete('overdrive_summary_' . $user->id);
 		return $cancelHoldResult;
@@ -628,33 +704,40 @@ class OverDriveDriver3 {
 	 *
 	 * @return array results (result, message)
 	 */
-	public function checkoutOverDriveItem($overDriveId, $format, $lendingPeriod, $user){
+	public function checkoutOverDriveItem($overDriveId, $user){
 
 		global $configArray;
-		global $analytics;
 		global $memcache;
 
 		$url = $configArray['OverDrive']['patronApiUrl'] . '/v1/patrons/me/checkouts';
 		$params = array(
 			'reserveId' => $overDriveId,
 		);
-		if ($format){
+		if (isset($format)){
 			$params['formatType'] = $format;
 		}
-		$response = $this->_callPatronUrl($user->cat_password, null, $url, $params);
+		$response = $this->_callPatronUrl($user->cat_username, $user->cat_password, $url, $params);
 
 		$result = array();
 		$result['result'] = false;
 		$result['message'] = '';
 
-		//print_r($response);
-		if (isset($response->expires)){
-			$result['result'] = true;
-			$result['message'] = 'Your title was checked out successfully. You may now download the title from your Account.';
-			if ($analytics) $analytics->addEvent('OverDrive', 'Checkout Item', 'succeeded');
-		}else{
-			$result['message'] = 'Sorry, we could not checkout this title to you.  ' . $response->message;
-			if ($analytics) $analytics->addEvent('OverDrive', 'Checkout Item', 'failed');
+		if (!empty($response)){
+			//print_r($response);
+			if (isset($response->expires)){
+				$result['result'] = true;
+				$result['message'] = 'Your title was checked out successfully. You may now download the title from your Account.';
+			}else{
+				$result['message'] = 'Sorry, we could not checkout this title to you.  ' . $response->message;
+			}
+		} else {
+			$error_message = array(
+				'subject' => 'Error connecting to OverDrive APIs',
+				'message' => 
+					"No response from OverDrive - " .
+					" line number: " . __LINE__
+			);
+			$this->eiNetworkNotify($error_message);
 		}
 
 		$memcache->delete('overdrive_summary_' . $user->id);
@@ -672,11 +755,10 @@ class OverDriveDriver3 {
 
 	public function returnOverDriveItem($overDriveId, $transactionId, $user){
 		global $configArray;
-		global $analytics;
 		global $memcache;
 
 		$url = $configArray['OverDrive']['patronApiUrl'] . '/v1/patrons/me/checkouts/' . $overDriveId;
-		$response = $this->_callPatronDeleteUrl($user->cat_password, null, $url);
+		$response = $this->_callPatronDeleteUrl($user->cat_username, $user->cat_password, $url);
 
 		$cancelHoldResult = array();
 		$cancelHoldResult['result'] = false;
@@ -684,10 +766,15 @@ class OverDriveDriver3 {
 		if ($response === true){
 			$cancelHoldResult['result'] = true;
 			$cancelHoldResult['message'] = 'Your item was returned successfully.';
-			if ($analytics) $analytics->addEvent('OverDrive', 'Return Item', 'succeeded');
 		}else{
 			$cancelHoldResult['message'] = 'There was an error returning this item. ' . $response->message;
-			if ($analytics) $analytics->addEvent('OverDrive', 'Return Item', 'failed');
+			$error_message = array(
+				'subject' => 'Error connecting to OverDrive APIs',
+				'message' => 
+					"No response from OverDrive - " .
+					" line number: " . __LINE__
+			);
+			$this->eiNetworkNotify($error_message);
 		}
 
 		$memcache->delete('overdrive_summary_' . $user->id);
@@ -696,8 +783,6 @@ class OverDriveDriver3 {
 
 	public function selectOverDriveDownloadFormat($overDriveId, $formatId, $user){
 		global $configArray;
-		global $analytics;
-		/** @var memcache $memcache */
 		global $memcache;
 
 		$url = $configArray['OverDrive']['patronApiUrl'] . '/v1/patrons/me/checkouts/' . $overDriveId . '/formats';
@@ -705,23 +790,32 @@ class OverDriveDriver3 {
 			'reserveId' => $overDriveId,
 			'formatType' => $formatId
 		);
-		$response = $this->_callPatronUrl($user->cat_password, null, $url, $params);
-		//print_r($response);
+		$response = $this->_callPatronUrl($user->cat_password, $user->cat_password, $url, $params);
 
 		$result = array();
 		$result['result'] = false;
 		$result['message'] = '';
 
-		if (isset($response->linkTemplates->downloadLink)){
-			$result['result'] = true;
-			$result['message'] = 'This format was locked in';
-			if ($analytics) $analytics->addEvent('OverDrive', 'Select Download Format', 'succeeded');
-			$downloadLink = $this->getDownloadLink($overDriveId, $formatId, $user);
-			$result = $downloadLink;
-		}else{
-			$result['message'] = 'Sorry, but we could not select a format for you. ' . $response;
-			if ($analytics) $analytics->addEvent('OverDrive', 'Select Download Format', 'failed');
+		if (!empty($response)){
+			if (isset($response->linkTemplates->downloadLink)){
+				$result['result'] = true;
+				$result['message'] = 'This format was locked in';
+				$downloadLink = $this->getDownloadLink($overDriveId, $formatId, $user);
+				$result = $downloadLink;
+			}else{
+				$result['message'] = 'Sorry, but we could not select a format for you. ' . $response;
+				
+			}
+		} else {
+			$error_message = array(
+				'subject' => 'Error connecting to OverDrive APIs',
+				'message' => 
+					"No response from OverDrive - " .
+					" line number: " . __LINE__
+			);
+			$this->eiNetworkNotify($error_message);
 		}
+
 		$memcache->delete('overdrive_summary_' . $user->id);
 
 		return $result;
@@ -736,7 +830,6 @@ class OverDriveDriver3 {
 
 	public function getDownloadLink($overDriveId, $format, $user){
 		global $configArray;
-		global $analytics;
 
 		$url = $configArray['OverDrive']['patronApiUrl'] . "/v1/patrons/me/checkouts/{$overDriveId}/formats/{$format}/downloadlink";
 		$url .= '?errorpageurl=' . urlencode($configArray['Site']['url'] . '/Help/OverDriveError');
@@ -744,23 +837,54 @@ class OverDriveDriver3 {
 			$url .= '&odreadauthurl=' . urlencode($configArray['Site']['url'] . '/Help/OverDriveReadError');
 		}
 
-		$response = $this->_callPatronUrl($user->cat_password, null, $url);
-		//print_r($response);
+		$response = $this->_callPatronUrl($user->cat_username, $user->cat_password, $url);
 
 		$result = array();
 		$result['result'] = false;
 		$result['message'] = '';
 
-		if (isset($response->links->contentlink)){
-			$result['result'] = true;
-			$result['message'] = 'Created Download Link';
-			$result['downloadUrl'] = $response->links->contentlink->href;
-			if ($analytics) $analytics->addEvent('OverDrive', 'Get Download Link', 'succeeded');
-		}else{
-			$result['message'] = 'Sorry, but we could not get a download link for you.  ' . $response;
-			if ($analytics) $analytics->addEvent('OverDrive', 'Get Download Link', 'failed');
+		if (!empty($response)){
+			if (isset($response->links->contentlink)){
+				$result['result'] = true;
+				$result['message'] = 'Created Download Link';
+				$result['downloadUrl'] = $response->links->contentlink->href;
+			}else{
+				$result['message'] = 'Sorry, but we could not get a download link for you.  ' . $response;
+			}
+		} else {
+			$error_message = array(
+				'subject' => 'Error connecting to OverDrive APIs',
+				'message' => 
+					"No response from OverDrive - " .
+					" line number: " . __LINE__
+			);
+			$this->eiNetworkNotify($error_message);
 		}
 
 		return $result;
+	}
+
+
+	/**
+	 * Notify eiNetwork NGC team that there is an issue with OverDrive Patron API
+	 * ..
+	 * @param $error_message
+	 * @return nothing
+	 */
+	private function eiNetworkNotify($error_message){
+		global $logger;
+		global $memcache;
+
+		$emails = "duffymark@einetwork.net,markaduffy@gmail.com,raynerj@einetwork.net,Shwaishr@einetwork.net";
+		//$emails = "duffymark@einetwork.net";
+
+		if (!$memcache->get('overdrive_issue_reported')){
+			$config = array('subject' => $error_message['subject']);
+			$logger->addLogger($emails . ':alert-5,error-5', 'mail', $config);
+			//$configArray['Logging']['email'] = 'duffymark@einetwork.net:alert-5,error-5';
+			$logger->log($error_message['message'], 1);
+			$memcache->set('overdrive_issue_reported', true, false, 1800); // remove reported flag after 30 mins (1800 seconds)
+		}
+
 	}
 }

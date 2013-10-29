@@ -4,8 +4,9 @@
  */
 require_once 'DB/DataObject.php';
 require_once 'DB/DataObject/Cast.php';
+require_once 'sys/SolrDataObject.php';
 
-class EContentRecord extends DB_DataObject{
+class EContentRecord extends SolrDataObject {
 	public $__table = 'econtent_record';		// table name
 	public $id;											//int(25)
 	public $cover;										//varchar(255)
@@ -52,6 +53,7 @@ class EContentRecord extends DB_DataObject{
 	public $marcControlField;
 	public $collection;
 	public $literary_form_full;
+	public $marcRecord;
 	public $status; //'active', 'archived', or 'deleted'
 
 	/* Static get */
@@ -65,11 +67,11 @@ class EContentRecord extends DB_DataObject{
 		return array('econtent');
 	}
 
+	function solrId(){
+		return $this->recordtype() . $this->id;
+	}
 	function recordtype(){
 		return 'econtentRecord';
-	}
-	function getSolrId(){
-		return $this->recordtype() . $this->id;
 	}
 	function title(){
 		return $this->title;
@@ -89,7 +91,8 @@ class EContentRecord extends DB_DataObject{
 		}
 		if ($formatCategory == null){
 			if (array_key_exists("*", $formatCategoryMap)){
-				$formatCategory = $formatCategoryMap['*'];
+				$formatCategory = $formatCategoryMap[$format];
+				break;
 			}else{
 				if(isset($configArray['EContent']['formatCategory'])){
 					return $configArray['EContent']['formatCategory'];
@@ -100,7 +103,36 @@ class EContentRecord extends DB_DataObject{
 		}
 		return $formatCategory;
 	}
-
+	function keywords(){
+		return $this->title . "\r\n" .
+		$this->subTitle . "\r\n" .
+		$this->author . "\r\n" .
+		$this->author2 . "\r\n" .
+		$this->description . "\r\n" .
+		$this->subject . "\r\n" .
+		$this->language . "\r\n" .
+		$this->publisher . "\r\n" .
+		$this->publishDate . "\r\n" .
+		$this->edition . "\r\n" .
+		$this->isbn . "\r\n" .
+		$this->issn . "\r\n" .
+		$this->upc . "\r\n" .
+		$this->lccn . "\r\n" .
+		$this->series . "\r\n" .
+		$this->topic . "\r\n" .
+		$this->genre . "\r\n" .
+		$this->region . "\r\n" .
+		$this->era . "\r\n" .
+		$this->target_audience . "\r\n" .
+		$this->notes . "\r\n" .
+		$this->source . "\r\n";
+	}
+	function subject_facet(){
+		return $this->getPropertyArray('subject');
+	}
+	function topic_facet(){
+		return $this->getPropertyArray('topic');
+	}
 	function getObjectStructure(){
 		global $configArray;
 		$structure = array(
@@ -111,19 +143,36 @@ class EContentRecord extends DB_DataObject{
 			'primaryKey'=>true,
 			'description'=>'The unique id of the e-pub file.',
 			'storeDb' => true,
+			'storeSolr' => false,
 		),
 
+		'recordtype' => array(
+			'property'=>'recordtype',
+			'type'=>'method',
+			'methodName'=>'recordtype',
+			'storeDb' => false,
+			'storeSolr' => true,
+		),
+		'solrId' => array(
+			'property'=>'id',
+			'type'=>'method',
+			'methodName'=>'solrId',
+			'storeDb' => false,
+			'storeSolr' => true,
+		),
 		'institution' => array(
 			'property'=>'institution',
 			'type'=>'method',
 			'methodName'=>'institution',
 			'storeDb' => false,
+			'storeSolr' => true,
 		),
 		'building' => array(
 			'property'=>'building',
 			'type'=>'method',
 			'methodName'=>'building',
 			'storeDb' => false,
+			'storeSolr' => true,
 		),
 		'title' => array(
 			'property' => 'title',
@@ -134,6 +183,7 @@ class EContentRecord extends DB_DataObject{
 			'description' => 'The title of the item.',
 			'required'=> true,
 			'storeDb' => true,
+			'storeSolr' => true,
 		),
 		'author' => array(
 			'property' => 'author',
@@ -144,6 +194,7 @@ class EContentRecord extends DB_DataObject{
 			'description' => 'The primary author of the item or editor if the title is a compilation of other works.',
 			'required'=> false,
 			'storeDb' => true,
+			'storeSolr' => true,
 		),
 		'status' => array(
 			'property' => 'status',
@@ -153,6 +204,7 @@ class EContentRecord extends DB_DataObject{
 			'description' => 'The Current Status of the record.',
 			'required'=> true,
 			'storeDb' => true,
+			'storeSolr' => false,
 		),
 		'accessType' => array(
 			'property'=>'accessType',
@@ -161,6 +213,7 @@ class EContentRecord extends DB_DataObject{
 			'label'=>'Access Type',
 			'description'=>'The type of access control to apply to the record.',
 			'storeDb' => true,
+			'storeSolr' => false,
 		),
 		'itemLevelOwnership' => array(
 			'property'=>'itemLevelOwnership',
@@ -168,6 +221,7 @@ class EContentRecord extends DB_DataObject{
 			'label'=>'Item Level Ownership (yes for most external links, no for other types)',
 			'description'=>'Whether or not item ownership is determined at the item level (certain libraries have access to specific links) or at the record level (all items can be accessed based on ownership rules).',
 			'storeDb' => true,
+			'storeSolr' => false,
 		),
 		'availableCopies' => array(
 			'property'=>'availableCopies',
@@ -175,6 +229,7 @@ class EContentRecord extends DB_DataObject{
 			'label'=>'Available Copies',
 			'description'=>'The number of copies that have been purchased and are available to patrons.',
 			'storeDb' => true,
+			'storeSolr' => false,
 		),
 		'onOrderCopies' => array(
 			'property'=>'onOrderCopies',
@@ -182,6 +237,7 @@ class EContentRecord extends DB_DataObject{
 			'label'=>'Copies On Order',
 			'description'=>'The number of copies that have been purchased but are not available for usage yet.',
 			'storeDb' => true,
+			'storeSolr' => false,
 		),
 		'trialTitle' => array(
 			'property' => 'trialTitle',
@@ -189,6 +245,7 @@ class EContentRecord extends DB_DataObject{
 			'label' => "Trial Title",
 			'description' => 'Whether or not the title was loaded on a trial basis or if it is a premanent acquisition.',
 			'storeDb' => true,
+			'storeSolr' => false,
 		),
 		'cover' => array(
 			'property' => 'cover',
@@ -200,6 +257,23 @@ class EContentRecord extends DB_DataObject{
 			'storagePath' => $configArray['Site']['coverPath'] . '/original',
 			'required'=> false,
 			'storeDb' => true,
+			'storeSolr' => false,
+		),
+		'collection' => array(
+			'property' => 'collection',
+			'type' => 'enum',
+			'values' => array_merge(array('' => 'Unknown'), EContentRecord::getCollectionValues()),
+			'label' => 'Collection',
+			'description' => 'The cover of the item.',
+			'required'=> false,
+			'storeDb' => true,
+			'storeSolr' => false,
+		),
+		'collection_group' => array(
+			'property' => 'collection_group',
+			'type' => 'method',
+			'storeDb' => false,
+			'storeSolr' => true,
 		),
 		'language' => array(
 			'property' => 'language',
@@ -210,6 +284,7 @@ class EContentRecord extends DB_DataObject{
 			'description' => 'The Language of the item.',
 			'required'=> true,
 			'storeDb' => true,
+			'storeSolr' => true,
 		),
 		'literary_form_full' => array(
 			'property' => 'literary_form_full',
@@ -231,6 +306,7 @@ class EContentRecord extends DB_DataObject{
 				'Letters' => 'Letters',
 			),
 			'storeDb' => true,
+			'storeSolr' => true,
 		),
 		'author2' => array(
 			'property' => 'author2',
@@ -241,6 +317,7 @@ class EContentRecord extends DB_DataObject{
 			'description' => 'The Additional Authors of the item.',
 			'required'=> false,
 			'storeDb' => true,
+			'storeSolr' => true,
 		),
 		'description' => array(
 			'property' => 'description',
@@ -251,6 +328,7 @@ class EContentRecord extends DB_DataObject{
 			'description' => 'A brief description of the file for indexing and display if there is not an existing record within the catalog.',
 			'required'=> false,
 			'storeDb' => true,
+			'storeSolr' => true,
 		),
 		'contents' => array(
 			'property' => 'contents',
@@ -261,12 +339,14 @@ class EContentRecord extends DB_DataObject{
 			'description' => 'The table of contents for the record.',
 			'required'=> false,
 			'storeDb' => true,
+			'storeSolr' => true,
 		),
 		'econtentText' => array(
 			'property' => 'econtentText',
 			'type' => 'method',
 			'label' => 'Full text of the eContent',
 			'storeDb' => false,
+			'storeSolr' => true,
 		),
 		'subject' => array(
 			'property' => 'subject',
@@ -277,6 +357,50 @@ class EContentRecord extends DB_DataObject{
 			'description' => 'The Subject of the item.',
 			'required'=> false,
 			'storeDb' => true,
+			'storeSolr' => false,
+		),
+		'subject_facet' => array(
+			'property' => 'subject_facet',
+			'type' => 'method',
+			'storeDb' => false,
+			'storeSolr' => true,
+		),
+		'topic_facet' => array(
+			'property' => 'topic_facet',
+			'type' => 'method',
+			'storeDb' => false,
+			'storeSolr' => true,
+		),
+
+		//'format' => array(
+		// 'property' => 'format',
+		// 'type' => 'text',
+		// 'size' => 100,
+		// 'maxLength'=>100,
+		// 'label' => 'Format',
+		// 'description' => 'The Format of the item.',
+		// 'required'=> true,
+		// 'storeDb' => false,
+		// 'storeSolr' => true,
+		// ),
+		
+		'format_category' => array(
+			'property' => 'format_category',
+			'type' => 'method',
+			'storeDb' => false,
+			'storeSolr' => true,
+		),
+		'format' => array(
+			'property' => 'format',
+			'type' => 'method',
+			'storeDb' => false,
+			'storeSolr' => true,
+		),
+		'econtent_device' => array(
+			'property' => 'econtent_device',
+			'type' => 'method',
+			'storeDb' => false,
+			'storeSolr' => true,
 		),
 		'publisher' => array(
 			'property' => 'publisher',
@@ -287,6 +411,7 @@ class EContentRecord extends DB_DataObject{
 			'description' => 'The Publisher of the item.',
 			'required'=> false,
 			'storeDb' => true,
+			'storeSolr' => true,
 		),
 		'publishDate' => array(
 			'property' => 'publishDate',
@@ -297,6 +422,7 @@ class EContentRecord extends DB_DataObject{
 			'description' => 'The year the title was published.',
 			'required'=> false,
 			'storeDb' => true,
+			'storeSolr' => true,
 		),
 		'publishLocation' => array(
 			'property' => 'publishLocation',
@@ -307,6 +433,7 @@ class EContentRecord extends DB_DataObject{
 			'description' => 'Where the title was published.',
 			'required'=> false,
 			'storeDb' => true,
+			'storeSolr' => false,
 		),
 		'physicalDescription' => array(
 			'property' => 'physicalDescription',
@@ -317,6 +444,7 @@ class EContentRecord extends DB_DataObject{
 			'description' => 'A description of the title (number of pages, etc).',
 			'required'=> false,
 			'storeDb' => true,
+			'storeSolr' => false,
 		),
 
 		'edition' => array(
@@ -328,6 +456,7 @@ class EContentRecord extends DB_DataObject{
 			'description' => 'The Edition of the item.',
 			'required'=> false,
 			'storeDb' => true,
+			'storeSolr' => true,
 		),
 		'isbn' => array(
 			'property' => 'isbn',
@@ -338,6 +467,7 @@ class EContentRecord extends DB_DataObject{
 			'description' => 'The isbn of the item.',
 			'required'=> false,
 			'storeDb' => true,
+			'storeSolr' => true,
 		),
 		'issn' => array(
 			'property' => 'issn',
@@ -348,6 +478,7 @@ class EContentRecord extends DB_DataObject{
 			'description' => 'The issn of the item.',
 			'required'=> false,
 			'storeDb' => true,
+			'storeSolr' => true,
 		),
 		'upc' => array(
 			'property' => 'upc',
@@ -358,6 +489,7 @@ class EContentRecord extends DB_DataObject{
 			'description' => 'The upc of the item.',
 			'required'=> false,
 			'storeDb' => true,
+			'storeSolr' => true,
 		),
 		'lccn' => array(
 			'property' => 'lccn',
@@ -368,6 +500,7 @@ class EContentRecord extends DB_DataObject{
 			'description' => 'The lccn of the item.',
 			'required'=> false,
 			'storeDb' => true,
+			'storeSolr' => true,
 		),
 		'series' => array(
 			'property' => 'series',
@@ -378,6 +511,7 @@ class EContentRecord extends DB_DataObject{
 			'description' => 'The Series of the item.',
 			'required'=> false,
 			'storeDb' => true,
+			'storeSolr' => true,
 		),
 		'topic' => array(
 			'property' => 'topic',
@@ -388,6 +522,7 @@ class EContentRecord extends DB_DataObject{
 			'description' => 'The Topic of the item.',
 			'required'=> false,
 			'storeDb' => true,
+			'storeSolr' => true,
 		),
 		'genre' => array(
 			'property' => 'genre',
@@ -398,6 +533,13 @@ class EContentRecord extends DB_DataObject{
 			'description' => 'The Genre of the item.',
 			'required'=> false,
 			'storeDb' => true,
+			'storeSolr' => true,
+		),
+		'genre_facet' => array(
+			'property' => 'genre_facet',
+			'type' => 'method',
+			'storeDb' => false,
+			'storeSolr' => true,
 		),
 		'region' => array(
 			'property' => 'region',
@@ -408,8 +550,20 @@ class EContentRecord extends DB_DataObject{
 			'description' => 'The Region of the item.',
 			'required'=> false,
 			'storeDb' => true,
+			'storeSolr' => false,
 		),
-
+		'geographic' => array(
+			'property' => 'geographic',
+			'type' => 'method',
+			'storeDb' => false,
+			'storeSolr' => true,
+		),
+		'geographic_facet' => array(
+			'property' => 'geographic_facet',
+			'type' => 'method',
+			'storeDb' => false,
+			'storeSolr' => true,
+		),
 		'era' => array(
 			'property' => 'era',
 			'type' => 'crSeparated',
@@ -419,6 +573,7 @@ class EContentRecord extends DB_DataObject{
 			'description' => 'The Era of the item.',
 			'required'=> false,
 			'storeDb' => true,
+			'storeSolr' => true,
 		),
 		'target_audience' => array(
 			'property' => 'target_audience',
@@ -439,8 +594,14 @@ class EContentRecord extends DB_DataObject{
 			'description' => 'The Target Audience of the item.',
 			'required'=> false,
 			'storeDb' => true,
+			'storeSolr' => true,
 		),
-
+		'target_audience_full' => array(
+			'property' => 'target_audience_full',
+			'type' => 'method',
+			'storeDb' => false,
+			'storeSolr' => true,
+		),
 		'date_added' => array(
 			'property' => 'date_added',
 			'type' => 'hidden',
@@ -448,6 +609,7 @@ class EContentRecord extends DB_DataObject{
 			'description' => 'The Date Added.',
 			'required'=> false,
 			'storeDb' => true,
+			'storeSolr' => false,
 		),
 		'notes' => array(
 			'property' => 'notes',
@@ -677,7 +839,7 @@ class EContentRecord extends DB_DataObject{
 		$allFields = "";
 		foreach ($this as $field => $value){
 
-			if (!in_array($field, array('__table', 'items', 'N', 'marcRecord')) && strpos($field, "_") !== 0){
+			if (!in_array($field, array('__table', 'items', 'N')) && strpos($field, "_") !== 0){
 				//echo ("Processing $field\r\n<br/>");
 				if (is_array($value)){
 					foreach ($value as $val){
@@ -693,7 +855,7 @@ class EContentRecord extends DB_DataObject{
 		return trim($allFields);
 	}
 	function rating(){
-		require_once ROOT_DIR . '/sys/eContent/EContentRating.php';
+		require_once 'sys/eContent/EContentRating.php';
 		$econtentRating = new EContentRating();
 		$query = "SELECT AVG(rating) as avgRating from econtent_rating where recordId = {$this->id}";
 		$econtentRating->query($query);
@@ -728,10 +890,62 @@ class EContentRecord extends DB_DataObject{
 		}
 	}
 
+	static function getCollectionValues(){
+		return array(
+			'aebf' => 'Adult ebook fiction',
+			'aebnf' => 'Adult ebook nonfiction',
+			'eaeb' => 'Easy ebook (fiction & nonfiction)',
+			'jebf' => 'Juv. ebook fiction',
+			'jebnf' => 'Juv. ebook nonfiction',
+			'yebf' => 'Ya ebook fiction',
+			'yebnf' => 'Ya ebook nonfiction',
+
+			'aeaf' => 'Adult eaudio fiction',
+			'aeanf' => 'Adult eaudio nonfiction',
+			'eaea' => 'Easy eaudio (fiction & nonfiction)',
+			'jeaf' => 'Juv. eaudio fiction',
+			'jeanf' => 'Juv. eaudio nonfiction',
+			'yeaf' => 'Ya eaudio fiction',
+			'yeanf' => 'Ya eaudio nonfiction',
+
+			'aevf' => 'Adult evideo fiction',
+			'aevnf' => 'Adult evideo nonfiction',
+			'eaev' => 'Easy evideo (fiction & nonfiction)',
+			'jevf' => 'Juv. evideo fiction',
+			'jeavf' => 'Juv. evideo nonfiction',
+			'yevf' => 'Ya evideo fiction',
+			'yevnf' => 'Ya evideo nonfiction',
+
+			'aem' => 'Adult emusic',
+			'jem' => 'Juv. emusic',
+			'yem' => 'Ya emusic',
+		);
+	}
+	function genre_facet(){
+		return $this->genre;
+	}
+	function collection_group(){
+		if (strlen($this->collection) > 0){
+			require_once 'Drivers/DCL.php';
+			$dcl = new DCL();
+			return $dcl->translateCollection($this->collection);
+		}else{
+			return null;
+		}
+	}
+	function bib_suppression(){
+		if (!isset($this->status)){
+			return "notsuppressed";
+		}elseif ($this->status == 'active' || $this->status == 'archived'){
+			return "notsuppressed";
+		}else{
+			return "suppressed";
+		}
+	}
 	function available_at(){
 		//Check to see if the item is checked out or if it has available holds
 		if ($this->status == 'active'){
-			require_once(ROOT_DIR . '/Drivers/EContentDriver.php');
+			require_once('Drivers/EContentDriver.php');
 			if ($this->source == 'Freegal'){
 				return array('Freegal');
 			}else{
@@ -748,8 +962,20 @@ class EContentRecord extends DB_DataObject{
 			return array();
 		}
 	}
-
-
+	function target_audience_full(){
+		if ($this->target_audience != null && strlen(trim($this->target_audience)) > 0){
+			return $this->target_audience;
+		}else{
+			return null;
+		}
+	}
+	function format_boost(){
+		if ($this->status == 'active'){
+			return 575;
+		}else{
+			return 0;
+		}
+	}
 	function econtent_source(){
 		return $this->source;
 	}
@@ -811,19 +1037,10 @@ class EContentRecord extends DB_DataObject{
 				$formatValue = $item->externalFormat;
 			}else{
 				$formatValue = translate($item->item_type);
-			}
+			}	
 			$formats[$formatValue] = $formatValue;
 		}
 		return $formats;
-	}
-
-	function getFirstFormat(){
-		$formats = $this->format();
-		if (count($formats) == 0){
-			return '';
-		}else{
-			return reset($formats);
-		}
 	}
 
 	/**
@@ -847,15 +1064,15 @@ class EContentRecord extends DB_DataObject{
 	 * the format separated by line.
 	 */
 	function getDeviceCompatibilityMap(){
-		global $memCache;
+		global $memcache;
 		global $configArray;
-		global $serverName;
-		$deviceMap = $memCache->get('device_compatibility_map');
+		global $servername;
+		$deviceMap = $memcache->get('device_compatibility_map');
 		if ($deviceMap == false){
 			$deviceMap = array();
-			if (file_exists("../../sites/$serverName/conf/device_compatibility_map.ini")){
+			if (file_exists("../../sites/$servername/conf/device_compatibility_map.ini")){
 				// Return the file path (note that all ini files are in the conf/ directory)
-				$deviceMapFile = "../../sites/$serverName/conf/device_compatibility_map.ini";
+				$deviceMapFile = "../../sites/$servername/conf/device_compatibility_map.ini";
 			}else{
 				$deviceMapFile = "../../sites/default/conf/device_compatibility_map.ini";
 			}
@@ -864,7 +1081,7 @@ class EContentRecord extends DB_DataObject{
 				$devices = explode(",", $devicesCsv);
 				$deviceMap[$format] = $devices;
 			}
-			$memCache->set('device_compatibility_map', $deviceMap, 0, $configArray['Caching']['device_compatibility_map']);
+			$memcache->set('device_compatibility_map', $deviceMap, 0, $configArray['Caching']['device_compatibility_map']);
 		}
 		return $deviceMap;
 	}
@@ -875,15 +1092,15 @@ class EContentRecord extends DB_DataObject{
 	 * Use a * to match any category
 	 */
 	function getFormatCategoryMap(){
-		global $memCache;
+		global $memcache;
 		global $configArray;
-		global $serverName;
-		$categoryMap = $memCache->get('econtent_category_map');
+		global $servername;
+		$categoryMap = $memcache->get('econtent_category_map');
 		if ($categoryMap == false){
 			$categoryMap = array();
-			if (file_exists("../../sites/$serverName/translation_maps/format_category_map.properties")){
+			if (file_exists("../../sites/$servername/translation_maps/format_category_map.properties")){
 				// Return the file path (note that all ini files are in the conf/ directory)
-				$categoryMapFile = "../../sites/$serverName/translation_maps/format_category_map.properties";
+				$categoryMapFile = "../../sites/$servername/translation_maps/format_category_map.properties";
 			}else{
 				$categoryMapFile = "../../sites/default/translation_maps/format_category_map.properties";
 			}
@@ -892,16 +1109,14 @@ class EContentRecord extends DB_DataObject{
 				$categoryMap[$format] = $category;
 			}
 
-			$memCache->set('econtent_category_map', $categoryMap, 0, $configArray['Caching']['econtent_category_map']);
+			$memcache->set('econtent_category_map', $categoryMap, 0, $configArray['Caching']['econtent_category_map']);
 		}
 		return $categoryMap;
 	}
 
 	function econtentText(){
 		$eContentText = "";
-		//Do not index full text for now since we get many invalid characters wih certain files
-		return $eContentText;
-		/*if (!$this->_quickReindex && strcasecmp($this->source, 'OverDrive') != 0){
+		if (!$this->_quickReindex && strcasecmp($this->source, 'OverDrive') != 0){
 			//Load items for the record
 			$items = $this->getItems();
 			//Load full text of each item if possible
@@ -909,7 +1124,7 @@ class EContentRecord extends DB_DataObject{
 				$eContentText .= $item->getFullText();
 			}
 		}
-		return $eContentText;*/
+		return $eContentText;
 	}
 
 	private $items = null;
@@ -917,7 +1132,7 @@ class EContentRecord extends DB_DataObject{
 		if ($this->items == null || $reload){
 			$this->items = array();
 
-			require_once ROOT_DIR . '/sys/eContent/EContentItem.php';
+			require_once 'sys/eContent/EContentItem.php';
 			$eContentItem = new EContentItem();
 			$eContentItem->recordId = $this->id;
 			$eContentItem->find();
@@ -933,7 +1148,7 @@ class EContentRecord extends DB_DataObject{
 		global $configArray;
 		if ($this->availability == null){
 			$this->availability = array();
-			require_once ROOT_DIR . '/sys/eContent/EContentAvailability.php';
+			require_once 'sys/eContent/EContentAvailability.php';
 			$eContentAvailability = new EContentAvailability();
 			$eContentAvailability->recordId = $this->id;
 			$eContentAvailability->find();
@@ -941,11 +1156,9 @@ class EContentRecord extends DB_DataObject{
 				$this->availability[] = clone $eContentAvailability;
 			}
 			if (strcasecmp($this->source, "OverDrive") == 0 ){
-				require_once ROOT_DIR . '/Drivers/OverDriveDriverFactory.php';
+				require_once 'Drivers/OverDriveDriverFactory.php';
 				$driver = OverDriveDriverFactory::getDriver();
-				//echo("Loading availability from overdrive, part of " . count($this->availability) . " collections");
 				foreach ($this->availability as $key => $tmpAvailability){
-					//echo("\r\n{$tmpAvailability->libraryId}");
 					//Get updated availability for each library from overdrive
 					$productKey = $configArray['OverDrive']['productsKey'];
 					if ($tmpAvailability->libraryId != -1){
@@ -956,13 +1169,13 @@ class EContentRecord extends DB_DataObject{
 					}
 					$realtimeAvailability = $driver->getProductAvailability($this->externalId, $productKey);
 					$tmpAvailability->copiesOwned = $realtimeAvailability->copiesOwned;
-					$tmpAvailability->availableCopies = $realtimeAvailability->copiesAvailable;
+					$tmpAvailability->availableCopies = isset($realtimeAvailability->copiesAvailable) ? $realtimeAvailability->copiesAvailable : null;
 					$tmpAvailability->numberOfHolds = $realtimeAvailability->numberOfHolds;
 					$this->availability[$key] = $tmpAvailability;
 				}
 			}
 
-			if (count($this->availability) == 0){
+			if (count($this->availability == 0)){
 				//Did not get availability from the Availability table
 				if ($this->itemLevelOwnership){
 					//Ownership is determined at the item level based on library ids set for the item.  Assume unlimited availability
@@ -987,9 +1200,6 @@ class EContentRecord extends DB_DataObject{
 					$checkouts->recordId = $this->id;
 					$checkouts->find();
 					$curCheckouts = $checkouts->N;
-					if ($this->accessType == 'free'){
-						$this->availableCopies = 999999;
-					}
 					$eContentAvailability->availableCopies = $this->availableCopies - $curCheckouts;
 					$eContentAvailability->copiesOwned = $this->availableCopies;
 
@@ -1006,13 +1216,109 @@ class EContentRecord extends DB_DataObject{
 		return $this->availability;
 	}
 
+	private function _getOverDriveItems($reload, $allowReindex = true){
+		//Check to see if we have cached any items
+		$dataChanged = false;
+		$eContentItems = $this->items;
+		$overDriveItemsForAllItems = array();
+		foreach ($eContentItems as $curItem){
+			$overDriveItems = array();
+
+			$overDriveItem = new OverdriveItem();
+
+			$overDriveItem->overDriveId = $curItem->overDriveId;
+			$overDriveItem->find();
+			$cachedItems = array();
+			if ($overDriveItem->N > 0){
+				while ($overDriveItem->fetch()){
+					$cachedItems[] = clone $overDriveItem;
+				}
+			}
+
+			if (count($cachedItems) == 0 || ($reload && !$this->_quickReindex)){
+				//For performance, need to store overdrive items since we fetch items
+				//to get common things like list the formats.
+				require_once 'Drivers/OverDriveDriver.php';
+				$overdriveDriver = new OverDriveDriver();
+				$currentItems = $overdriveDriver->getOverdriveHoldings($curItem->overDriveId, $curItem->link);
+
+				//Check each of the cached items to see if it has changed
+				foreach ($currentItems as $currentKey => $currentItem){
+					$currentItem->libraryId = $currentItem->libraryId;
+
+					$cachedItemFound = false;
+					/*foreach ($cachedItems as $cacheKey => $cachedItem){
+						if ($cachedItem->formatId = $currentItem->formatId){
+							if ($cachedItem->available != $currentItem->available){
+								$dataChanged = true;
+								$cachedItem->available = $currentItem->available;
+								$currentItem->update();
+							}
+							$cachedItem->availableCopies = $currentItem->availableCopies;
+							$cachedItem->totalCopies = $currentItem->totalCopies;
+							$cachedItem->numHolds = $currentItem->numHolds;
+							$overDriveItems[] = $cachedItem;
+							unset($currentItems[$currentKey]);
+							unset($cachedItems[$cacheKey]);
+							$cachedItemFound = true;
+							break;
+						}
+					}*/
+					if (!$cachedItemFound){
+						$overDriveItems[] = $currentItem;
+						$currentItem->insert();
+						$dataChanged = true;
+					}
+				}
+				//Delete any cached items that no longer exist
+				foreach ($cachedItems as $cachedKey => $cachedItem){
+					$cachedItem->delete();
+					$dataChanged = true;
+				}
+				//Mark that the record should be reindexed.
+				if ($dataChanged){
+					$this->updateDetailed($allowReindex);
+				}
+			}else{
+				$overDriveItems = $cachedItems;
+			}
+
+			$overDriveId = $curItem->overDriveId;
+			foreach ($overDriveItems as $itemKey => $item){
+				$links = array();
+				if ($item->available){
+					$links[] = array(
+								'onclick' => "return checkoutOverDriveItem('$overDriveId', '{$item->formatId}');",
+								'text' => 'Check Out',
+								'overDriveId' => $overDriveId,
+								'formatId' => $item->formatId,
+								'action' => 'CheckOut'
+								);
+				}else{
+					$links[] = array(
+								'onclick' => "return placeOverDriveHold('$overDriveId', '{$item->formatId}');",
+								'text' => 'Place Hold',
+								'overDriveId' => $overDriveId,
+								'formatId' => $item->formatId,
+								'action' => 'Hold'
+								);
+				}
+				$item->links = $links;
+				$item->libraryId = $curItem->libraryId;
+				$overDriveItems[$itemKey] = $item;
+			}
+			$overDriveItemsForAllItems = array_merge($overDriveItemsForAllItems, $overDriveItems);
+		}
+		return $overDriveItemsForAllItems;
+	}
+
 	function getNumItems(){
 		if ($this->items == null){
 			$this->items = array();
 			if (strcasecmp($this->source, 'OverDrive') == 0){
 				return -1;
 			}else{
-				require_once ROOT_DIR . '/sys/eContent/EContentItem.php';
+				require_once 'sys/eContent/EContentItem.php';
 				$eContentItem = new EContentItem();
 				$eContentItem->recordId = $this->id;
 				$eContentItem->find();
@@ -1022,9 +1328,6 @@ class EContentRecord extends DB_DataObject{
 		return count($this->items);
 	}
 
-	function isOverDrive(){
-		return strcasecmp($this->source, 'OverDrive') == 0;
-	}
 	function validateEpub(){
 		//Setup validation return array
 		$validationResults = array(
@@ -1067,7 +1370,6 @@ class EContentRecord extends DB_DataObject{
 	}
 
 	function insert(){
-		//Update Solr only on insert since if we are inserting it needs to be in the index to view it again.
 		$ret = parent::insert();
 		if ($ret){
 			$this->clearCachedCover();
@@ -1084,12 +1386,11 @@ class EContentRecord extends DB_DataObject{
 		$currentValue->id = $this->id;
 		$currentValue->find(true);
 
-		//Don't update solr, rely on the nightly reindex
 		$ret = parent::update();
 		if ($ret){
 			$this->clearCachedCover();
 			if ($currentValue->N == 1 && $currentValue->availableCopies != $this->availableCopies){
-				require_once ROOT_DIR . '/Drivers/EContentDriver.php';
+				require_once 'Drivers/EContentDriver.php';
 				$eContentDriver = new EContentDriver();
 				$eContentDriver->processHoldQueue($this->id);
 			}
@@ -1119,7 +1420,7 @@ class EContentRecord extends DB_DataObject{
 		}
 	}
 	public function getIsbn(){
-		require_once ROOT_DIR . '/sys/ISBN.php';
+		require_once 'sys/ISBN.php';
 		$isbns = $this->getPropertyArray('isbn');
 		if (count($isbns) == 0){
 			return null;
@@ -1129,14 +1430,14 @@ class EContentRecord extends DB_DataObject{
 		}
 	}
 	public function getIsbn10(){
-		require_once ROOT_DIR . '/sys/ISBN.php';
+		require_once 'sys/ISBN.php';
 		$isbn = $this->getIsbn();
 		if ($isbn == null){
 			return $isbn;
 		}elseif(strlen($isbn == 10)){
 			return $isbn;
 		}else{
-			require_once ROOT_DIR . '/Drivers/marmot_inc/ISBNConverter.php';
+			require_once 'Drivers/marmot_inc/ISBNConverter.php';
 			return ISBNConverter::convertISBN13to10($isbn);
 		}
 	}
@@ -1148,7 +1449,12 @@ class EContentRecord extends DB_DataObject{
 			return $upcs[0];
 		}
 	}
-
+	public function geographic(){
+		return $this->region;
+	}
+	public function geographic_facet(){
+		return $this->getPropertyArray('region');
+	}
 	public function delete(){
 		//Delete any items that are associated with the record
 		if (strcasecmp($this->source, 'OverDrive') != 0){
@@ -1488,6 +1794,14 @@ class EContentRecord extends DB_DataObject{
 
 	public function setliterary_form_full($literary_form_full){
 		$this->literary_form_full = $literary_form_full;
+	}
+
+	public function getmarcrecord(){
+		return $this->marcrecord;
+	}
+
+	public function setmarcrecord($marcrecord){
+		$this->marcrecord = $marcrecord;
 	}
 
 	public function getstatus(){

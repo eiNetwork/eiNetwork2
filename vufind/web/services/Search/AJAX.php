@@ -25,7 +25,7 @@ class AJAX extends Action {
 	function launch()
 	{
 		$method = $_REQUEST['method'];
-		if (in_array($method, array('GetAutoSuggestList', 'GetRatings', 'RandomSysListTitles', 'SysListTitles', 'GetListTitles', 'GetStatusSummaries','GetEContentStatusSummaries'))){
+		if (in_array($method, array('GetAutoSuggestList', 'GetRatings', 'RandomSysListTitles', 'SysListTitles', 'GetListTitles', 'GetStatusSummaries'))){
 			header('Content-type: text/plain');
 			header('Cache-Control: no-cache, must-revalidate'); // HTTP/1.1
 			header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
