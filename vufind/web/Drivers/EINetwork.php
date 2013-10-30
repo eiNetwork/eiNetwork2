@@ -537,15 +537,17 @@ class EINetwork extends MillenniumDriver{
 	 */
 	function getMyFines(){
 		global $user;
-		//global $logger;
+		global $logger;
 		
 		$r = $this->iiiWebServiceRequest("searchPatrons", "b".$user->cat_username);	
+
 		$logger->log("fine request results".print_r($r,true), PEAR_LOG_DEBUG);
 		return $r->patronFines;
 	}
 	private function iiiWebServiceRequest($method, $patron){	
 		$username = 'milwsp'; //no idea why
 		$password = 'milwsp';
+
 		$client = new SoapClient($this->getWSDL()); //switch to user dir one
 		try{
 			return $client->__soapCall($method, array($username, $password, $patron));
