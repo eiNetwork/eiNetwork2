@@ -21,6 +21,9 @@
 /** CORE APPLICATION CONTROLLER **/
 $startTime = microtime(true);
 // Retrieve values from configuration file
+
+define ('ROOT_DIR', __DIR__);
+
 require_once 'sys/Logger.php';
 require_once 'PEAR.php';
 require_once 'sys/ConfigArray.php';
