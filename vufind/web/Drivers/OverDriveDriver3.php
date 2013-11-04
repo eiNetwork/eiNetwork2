@@ -638,7 +638,8 @@ class OverDriveDriver3 {
 
 			if (isset($response->holdListPosition)){
 				$holdResult['result'] = true;
-				$holdResult['message'] = 'Your hold was placed successfully.  You are number ' . $response->holdListPosition . ' on the wait list.';
+				//$holdResult['message'] = 'Your hold was placed successfully.  You are number ' . $response->holdListPosition . ' on the wait list.';
+				$holdResult['message'] = 'Your hold was placed successfully.';
 			}else{
 				$holdResult['message'] = 'Sorry, but we could not place a hold for you on this title.  ' . $response->message;
 			}
