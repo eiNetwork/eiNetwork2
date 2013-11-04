@@ -1,5 +1,5 @@
-<script type="text/javascript" src="{$path}/services/EcontentRecord/ajax.js"></script>
- <script type="text/javascript" src="/js/ei_js/search.js"></script>
+<script type="text/javascript" src="{$path}/services/EcontentRecord/ajax.js?v3.0"></script>
+ <script type="text/javascript" src="/js/ei_js/search.js?v3.0"></script>
 {* Main Listing *}
 {if (isset($title)) }
 <script type="text/javascript">

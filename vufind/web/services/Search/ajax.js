@@ -217,15 +217,13 @@ function doGetStatusSummaries()
 
 					//var SummaryDetails = $(data).find("class").text();
 
-					if (items[i].status == "It's here"){
+					if (items[i].status == "It\'s here"){
 						$("#request-now" + elemId).css('background-color','rgb(192,192,192)');
 						$("#request-now" + elemId).css('background-color','rgb(192,192,192)');
 						$("#request-now" + elemId).css("color","rgb(248,248,248)");
 						$("#request-now" + elemId).html('<span class="glyphicon glyphicon-check glyphicon-ein-color"></span>&nbsp;&nbsp;It\'s Here');
 						$("#request-now" + elemId).css("cursor","default");
 					} else {
-
-						//alert('test')
 						
 						$("#request-now"+elemId).bind('click', function(){
 							getToRequest('/Record/.' + elemId + '/Hold');

@@ -271,7 +271,7 @@ class User extends DB_DataObject
 				return $this->roles;
 			}
 		}else{
-			return $data[$name];
+			//return $data[$name];
 		}
 	}
 
