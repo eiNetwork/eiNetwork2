@@ -29,7 +29,7 @@ require_once("PHPExcel.php");
 
 
 //BEGIN for Overdrive Checkout Items
-require_once 'Drivers/OverDriveDriver.php';
+require_once 'Drivers/OverDriveDriverFactory.php';
 require_once 'sys/eContent/EContentRecord.php';
 //END for Overdrive Checkout Items
 
@@ -69,14 +69,6 @@ class CheckedOut extends MyResearch{
 				}
 
 				if ($renewResult = $this->catalog->driver->renewItem($user->password, $data)){
-
-					/*
-					echo "<pre>";
-					print_r($renewResult);
-					echo "</pre>";
-
-					die();
-					*/
 					
 					foreach($renewResult['items'] as $key => $value){
 
@@ -377,7 +369,8 @@ class CheckedOut extends MyResearch{
 		
 		
 		/**BEGIN for Overdrive Checkout Items**/
-		$overDriveDriver = new OverDriveDriver();
+		//$overDriveDriver = new OverDriveDriver();
+		$overDriveDriver = OverDriveDriverFactory::getDriver();
 		$overDriveCheckedOutItems = $overDriveDriver->getOverDriveCheckedOutItems($user);
 		//Load the full record for each item in the wishlist
 		foreach ($overDriveCheckedOutItems['items'] as $key => $item){
@@ -399,8 +392,6 @@ class CheckedOut extends MyResearch{
 				'format'  => 'Format',
 				);
 		$interface->assign('sortOptions', $sortOptions);
-		
-		
 		
 		$interface->assign('overDriveCheckedOutItems', $overDriveCheckedOutItems['items']);
 		$interface->assign('ButtonBack',true);

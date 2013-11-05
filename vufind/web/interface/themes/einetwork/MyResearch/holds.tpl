@@ -372,10 +372,10 @@
 				</div>
 			
 			{/if}
-			{if count($overDriveHolds.unavailable) > 0}
+			{if count($overDriveHolds.holds.unavailable) > 0}
 				<div>&nbsp&nbsp&nbsp&nbspRequested items not yet available</div>
 				<div class="checkout">
-					{foreach from=$overDriveHolds.unavailable item=record}
+					{foreach from=$overDriveHolds.holds.unavailable item=record}
 					<div id="overdrive-request-unavailable{$record.recordId}" class="record overdrive-unavailable">
 						<div class="item_image">
 							<img src="{$record.imageUrl}">
