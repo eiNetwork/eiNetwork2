@@ -23,7 +23,7 @@ require_once("PHPExcel.php");
 require_once 'sys/Pager.php';
 
 //BEGIN overdrive holds
-require_once 'Drivers/OverDriveDriver.php';
+require_once 'Drivers/OverDriveDriverFactory.php';
 require_once 'sys/eContent/EContentRecord.php';
 //END overdrive holds
 
@@ -110,9 +110,10 @@ class Holds extends MyResearch
 		$interface->assign('showPosition', $showPosition);
 		
 		//BEGIN for OverdriveHolds
-		$overDriveDriver = new OverDriveDriver();
+		$overDriveDriver = OverDriveDriverFactory::getDriver();
 		$overDriveHolds = $overDriveDriver->getOverDriveHolds($user);
-		foreach ($overDriveHolds as $sectionKey => $sectionData){
+
+		foreach ($overDriveHolds['holds'] as $sectionKey => $sectionData){
 			foreach ($sectionData as $key => $item){
 				if ($item['recordId'] != -1){
 					$econtentRecord = new EContentRecord();

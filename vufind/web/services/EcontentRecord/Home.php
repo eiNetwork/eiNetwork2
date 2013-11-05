@@ -143,7 +143,10 @@ class Home extends Action{
 			//echo "</pre>";
 			
 			//echo "<pre>".print_r($this->fixSubjects($eContentRecord->getPropertyArray('subject')), 1)."</pre>";
-			$interface->assign('altTitle', $eContentRecord->getPropertyArray('title_alt'));			
+
+			//$title_alt = $eContentRecord->getPropertyArray('title_alt');
+
+			//$interface->assign('altTitle', isset($title_alt) : $title_alt ? null);			
 			$interface->assign('additionalAuthorsList', $eContentRecord->getPropertyArray('author2'));
 			$interface->assign('subjectList', $this->fixSubjects($eContentRecord->getPropertyArray('subject')));
 			$interface->assign('lccnList', $eContentRecord->getPropertyArray('lccn'));

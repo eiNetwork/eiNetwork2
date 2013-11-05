@@ -98,7 +98,7 @@
 	<div class="loginHome-left"></div>
 	<div class="loginHome-center">
 		<div class="loginMessage">
-			<p style="font-size:55%">We are receiving reports about some users not receiving email notices for upcoming due dates, hold pickups, or overdue items.         You may wish to check My Account or contact your local library for this information.   Please contact your email provider if you believe you are not receiving these notices.</p>
+			<p style="font-size:55%">The Library is undergoing a system upgrade which will cause a temporary outage for online services from Saturday, November 9th at 11:30 PM through Sunday, November 10th at 12:00 PM (times are approximate and subject to change). During this time, you will not be able to access our catalog, log in to your account or reserve or renew items.</p>
 		</div>
 		<div class="login">
 			<form id="loginForm" action="{$path}/MyResearch/Home" method="post" autocomplete="on">
