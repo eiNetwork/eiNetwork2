@@ -876,13 +876,12 @@ class OverDriveDriver3 {
 		global $logger;
 		global $memcache;
 
-		$emails = "duffymark@einetwork.net,markaduffy@gmail.com,raynerj@einetwork.net,Shwaishr@einetwork.net";
-		//$emails = "duffymark@einetwork.net";
+		//$emails = "duffymark@einetwork.net,markaduffy@gmail.com,raynerj@einetwork.net,Shwaishr@einetwork.net";
+		$emails = "duffymark@einetwork.net";
 
 		if (!$memcache->get('overdrive_issue_reported')){
 			$config = array('subject' => $error_message['subject']);
 			$logger->addLogger($emails . ':alert-5,error-5', 'mail', $config);
-			//$configArray['Logging']['email'] = 'duffymark@einetwork.net:alert-5,error-5';
 			$logger->log($error_message['message'], 1);
 			$memcache->set('overdrive_issue_reported', true, false, 1800); // remove reported flag after 30 mins (1800 seconds)
 		}

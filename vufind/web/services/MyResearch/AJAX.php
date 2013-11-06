@@ -441,8 +441,8 @@ class AJAX extends Action {
 	function getOverDriveSummary(){
 		global $user;
 		if ($user){
-			require_once 'Drivers/OverDriveDriver.php';
-			$overDriveDriver = new OverDriveDriver();
+			require_once 'Drivers/OverDriveDriverFactory.php';
+			$overDriveDriver = OverDriveDriverFactory::getDriver();
 			$summary = $overDriveDriver->getOverDriveSummary($user);
 			return json_encode($summary); 
 		}else{
@@ -474,8 +474,8 @@ class AJAX extends Action {
 			$sum;
 			$sumOfCheckoutItems = $profile["numEContentCheckedOut"] + $profile["numCheckedOut"];
 			$sumOfRequestItems = $profile["numHoldsAvailable"]+$profile["numHoldsRequested"]+$profile["numEContentUnavailableHolds"]+$profile["numEContentWishList"];
-			require_once 'Drivers/OverDriveDriver.php';
-			$overDriveDriver = new OverDriveDriver();
+			require_once 'Drivers/OverDriveDriverFactory.php';
+			$overDriveDriver = OverDriveDriverFactory::getDriver();
 			$summary = $overDriveDriver->getOverDriveSummary($user);
 			$sumOfCheckoutItems += $summary["numCheckedOut"];
 			//$sumOfRequestItems = $sumOfRequestItems + $summary["numEContentWishList"] + $summary["numUnavailableHolds"];

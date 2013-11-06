@@ -1019,7 +1019,8 @@ class OverDriveDriver {
 			);
 		}else{
 			//global $logger;
-			$logger->log("Could not login to OverDrive($matchAccount), page results: \r\n" . $myAccountMenuContent, PEAR_LOG_INFO);
+			//$logger->log("Could not login to OverDrive($matchAccount), page results: \r\n" . $myAccountMenuContent, PEAR_LOG_INFO);
+			$logger->log("Could not login to OverDrive($matchAccount)", PEAR_LOG_INFO);
 			$overDriveInfo = null;
 		}
 
