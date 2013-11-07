@@ -373,7 +373,7 @@
 					    {if $record.recordId != -1}
 						    </a>
 					    {/if}
-					    {if $record.subTitle}<br/>{$record.subTitle}{/if}
+					    {if $record.record->subTitle}<br/>{$record.record->subTitle}{/if}
 					</div>
 					<div class="item_author">
 						{if strlen($record.record->author) > 0}<br/>{$record.record->author}{/if}
@@ -405,7 +405,7 @@
 					    Expires on&nbsp;{$record.expiresOn|date_format}
 					{/if}
 					<input class="button" type="button" value="Download" onclick='DownloadCheckedoutOverdrive({$record.recordId}{if $record.lockedFormat},{$record.lockedFormat}{/if})'/>
-					{if $record.hasRead == true}
+					{if $record.overdriveRead == true}
 					<input class="button" type="button" value="Read" onclick="downloadOverDriveItem('{$record.overDriveId}','610')"/>
 					{/if}
 				</div>
@@ -444,7 +444,7 @@
 					    {if $record.recordId != -1}
 						    </a>
 					    {/if}
-					    {if $record.subTitle}<br/>{$record.subTitle}{/if}
+					    {if $record.record->subTitle}<br/>{$record.record->subTitle}{/if}
 					</div>
 					<div class="item_author">
 						{if strlen($record.record->author) > 0}<br/>{$record.record->author}{/if}
@@ -456,23 +456,22 @@
 					{/if}					
 					<div class="item_type">
 					    
-					    {if is_array($record.format)}
+					    {if is_array($record.formats)}
 					    <span></span>
-					    {elseif $record.format|rtrim eq "Kindle Book"}
+					    {elseif $record.formats|rtrim eq "Kindle Book"}
 						<span>
 						<img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/EbookDownload.png"/ alt="Ebook Download">
 						</span>
-					    {elseif $record.format|rtrim eq "Adobe PDF eBook"}
+					    {elseif $record.formats|rtrim eq "Adobe PDF eBook"}
 						<span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/EbookDownload.png"/ alt="Ebook Download"></span>
-					    {elseif $record.format|rtrim eq "OverDrive MP3 Audiobook"}
+					    {elseif $record.formats|rtrim eq "OverDrive MP3 Audiobook"}
 						<span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/AudioBookDownload.png"/ alt="Ebook Download"></span>
 					    {/if}
-					    {$record.format}
 					</div>
 				</div>
 				<div class="item_status">
 					<input class="button" type="button" value="Download" onclick='DownloadCheckedoutOverdrive({$record.recordId}{if $record.lockedFormat},{$record.lockedFormat}{/if})'/>
-					{if $record.hasRead == true}
+					{if $record.overdriveRead == true}
 					<input class="button" type="button" value="Read" onclick="downloadOverDriveItem('{$record.overDriveId}','610')"/>
 					{/if}
 				</div>
