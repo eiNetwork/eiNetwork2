@@ -392,6 +392,10 @@ class CheckedOut extends MyResearch{
 				'format'  => 'Format',
 				);
 		$interface->assign('sortOptions', $sortOptions);
+
+		// echo "<pre>";
+		// print_r($overDriveCheckedOutItems['items']);
+		// echo "</pre>";
 		
 		$interface->assign('overDriveCheckedOutItems', $overDriveCheckedOutItems['items']);
 		$interface->assign('ButtonBack',true);
