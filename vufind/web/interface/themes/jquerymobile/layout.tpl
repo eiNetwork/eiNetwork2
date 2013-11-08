@@ -31,7 +31,7 @@
 		{else}
 			{include file="$module/$pageTemplate"}	 
 		{/if}
-		<div data-role="dialog" id="Language-dialog">
+<!-- 		<div data-role="dialog" id="Language-dialog">
 			<div data-role="header" data-theme="d" data-position="inline">
 				<h1>{translate text="Language"}</h1>
 			</div>
@@ -50,7 +50,7 @@
 				</form>
 				{/if}
 			</div>
-		</div>
+		</div> -->
 		
 		{* LightBox *}
 		<div id="lightboxLoading" class="lightboxLoading" style="display: none;">{translate text="Loading"}...</div>
