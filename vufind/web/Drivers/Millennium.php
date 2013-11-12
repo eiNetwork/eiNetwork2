@@ -2689,8 +2689,7 @@ class MillenniumDriver implements DriverInterface
 			$cancel_name = str_replace('~','x', "cancel" . $key);
 			$items[$cancel_name] = $value['cancel'];
 			
-			$freeze_name = explode('~', $key);
-			$freeze_name = "freeze" . $freeze_name[0];
+			$freeze_name = str_replace('~','x', "freeze" . $key);
 			$items[$freeze_name] = $value['freeze'];
 			
 			$location_name = str_replace('~','x', "loc" . $key);
@@ -2761,7 +2760,6 @@ class MillenniumDriver implements DriverInterface
 		$post_string = implode ('&', $post_items);
 		curl_setopt($curl_connection, CURLOPT_POSTFIELDS, $post_string);
 		$sresult = curl_exec($curl_connection);
-		
 
 		$scope = $this->getDefaultScope();
 	
