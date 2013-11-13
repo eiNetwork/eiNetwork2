@@ -1313,3 +1313,7 @@ div.popupBox ul li a {
 	width:120px;
 	text-align: center;
 }
+
+.hold-row-spacing {
+	margin-bottom:10px;
+}

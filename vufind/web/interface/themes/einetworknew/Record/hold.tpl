@@ -9,42 +9,51 @@
 			<div style="margin-left: 20px">
 				<div id="loginFormWrapper">
 					{if (!isset($profile)) }
-						<div id='haveCardLabel' class='loginFormRow'>I have an Allegheny County Library Card</div>
-						<div id ='loginUsernameRow' class='loginFormRow'>
-							<div class='loginLabel'>{translate text='Username'}: </div>
-							<div class='loginField'><input type="text" name="username" id="username" value="{$username|escape}" size="15"/></div>
+
+						<div class="row hold-row-spacing">
+							<div class="col-xs-6 col-md-6">I have an Allegheny County Library Card</div>
 						</div>
-						<div id ='loginPasswordRow' class='loginFormRow'>
-							<div class='loginLabel'>{translate text='Password'}: </div>
-							<div class='loginField'><input type="password" name="password" id="password" size="15"/></div>
+
+						<div class="row hold-row-spacing">
+							<div class="col-xs-5 col-md-5">{translate text='Username'}: </div>
+							<div class="col-xs-4 col-md-4"><input type="text" name="username" id="username" value="{$username|escape}" size="15" class="form-control"/></div>
 						</div>
-						<div id='loginSubmitButtonRow' class='loginFormRow'>
-							<input id="loginButton" type="button" onclick="GetPreferredBranches('{$id|escape}');" value="Login"/>
+
+						<div class="row hold-row-spacing">
+							<div class="col-xs-5 col-md-5">{translate text='Password'}: </div>
+							<div class="col-xs-4 col-md-4"><input type="password" name="password" id="password" size="15" class="form-control"/></div>
 						</div>
+
+						<div class="row hold-row-spacing">
+							<div class="col-xs-5 col-md-5"></div>
+							<div class="col-xs-4 col-md-4"><input id="loginButton" type="button" onclick="GetPreferredBranches('{$id|escape}');" value="Login" class="btn btn-default"/></div>
+						</div>
+
 					{/if}
+
 					<div id='holdOptions' {if (!isset($profile)) }style='display:none'{/if}>
-						<div class='loginFormRow'>
-							<p>
-								<span class='loginLabel' style="margin-bottom: 12px; font-size: 15px;">{translate text="I want to pick this up at"}:</span>
-								<span class='loginField'>
-									<select name="campus" id="campus" style="margin-left: 20px;width: 260px">
-										{if count($pickupLocations) > 0}
-											{foreach from=$pickupLocations item=location}
-												<option value="{$location->code}" {if $location->selected == "selected"}selected="selected"{/if}>{$location->displayName}</option>
-											{/foreach}
-										{else} 
-											<option>placeholder</option>
-										{/if}
-									</select>
-								</span>
-								<span>
-									<input type="submit" class="button" style="margin-left: 60px;" name="submit" id="requestTitleButton" value="{translate text='Request This Title'}" {if (!isset($profile))}disabled="disabled"{/if}/>
-								</span>
-							</p>
+
+						<div class="row hold-row-spacing">
+							<div class="col-xs-3 col-md-3">{translate text="I want to pick this up at"}:</div>
+							<div class="col-xs-5 col-md-5">
+								<select name="campus" id="campus" style="margin-left: 20px;width: 260px" class="form-control">
+									{if count($pickupLocations) > 0}
+										{foreach from=$pickupLocations item=location}
+											<option value="{$location->code}" {if $location->selected == "selected"}selected="selected"{/if}>{$location->displayName}</option>
+										{/foreach}
+									{else} 
+										<option>placeholder</option>
+									{/if}
+								</select>
+							</div>
+							<div class="col-xs-4 col-md-4"><input type="submit" class="btn btn-default" style="margin-left: 60px;" name="submit" id="requestTitleButton" value="{translate text='Request This Title'}" {if (!isset($profile))}disabled="disabled"{/if}/></div>
 						</div>
-						<div class='loginFormRow'>
-							<input type="hidden" name="type" value="hold"/>
-							<input type="checkbox" style="margin-right: 0px" name="autologout" /> Log me out after requesting the item. 
+
+						<div class="row hold-row-spacing">
+							<div class="col-xs-5 col-md-5">
+								<input type="hidden" name="type" value="hold"/>
+								<input type="checkbox" style="margin-right: 0px" name="autologout" /> Log me out after requesting the item. 
+							</div>
 						</div>
 					</div>
 				</div>
