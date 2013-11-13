@@ -5,7 +5,7 @@
             <div class="col-6 col-lg-6 footer-container">
                 <div class="footer-links">
                     <ul>
-                        <li><a href="http://www.einetwork.net/ils/acquire_web_ngc.html">Suggest a Purchase</a></li>
+                        <li><a href="http://www.einetwork.net/ils/acquire_web_ngc.html">Suggest a Purchase</a>&nbsp;&nbsp;&nbsp;</li>
                         <li><a href="https://iiisy1.einetwork.net/webapp/iii/ecom/donate.do">Donate to your Library</a></li>
                     </ul>
                 </div>

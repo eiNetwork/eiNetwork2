@@ -116,11 +116,11 @@ function redrawSaveStatus() {literal}{{/literal}
                         <li>
                             <div id="availableOnline">
                                 <img class="format_img" src="/interface/themes/einetwork/images/Art/AvailabilityIcons/Available.png" alt="Available"/>
-                                {if $eContentRecord->sourceUrl }
+                                <span class="label label-success">{if $eContentRecord->sourceUrl }
                                 <a style="cursor:pointer" class="overdriveAvailable" onclick="window.location.href='{$eContentRecord->sourceUrl}'">Available Online</a>
                                 {else}
                                 <a style="cursor:pointer" class="overdriveAvailable" onclick="window.location.href='#links'">Available Online</a>
-                                {/if}
+                                {/if}</span>
                             </div>
                         </li>
                     {/if}

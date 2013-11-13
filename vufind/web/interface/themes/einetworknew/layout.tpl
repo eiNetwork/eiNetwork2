@@ -237,8 +237,6 @@
 
 		</div>
 
-		<div id="push"></div>
-
 	</div>
 
 	{include file="ei_tpl/footer.tpl"}

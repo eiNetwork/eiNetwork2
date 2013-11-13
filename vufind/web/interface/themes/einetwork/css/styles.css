@@ -2837,3 +2837,7 @@ ol.alpha li {
 	float: right;
 	cursor: pointer;
 }
+
+span.red {
+	color: #f00;
+}

@@ -361,7 +361,19 @@ class Record extends Action
 			$interface->assign('published', $published);
 			//$interface->assign('pubdate', str_replace('.', '', $this->getSubfieldData($marcField, 'c')));
 			$interface->assign('pubdate', ereg_replace("[^0-9]", "", $this->getSubfieldData($marcField, 'c')));
+		} else {
+			// find RDA 264 field for date
+			$marcFields = $marcRecord->getFields('264');
+			if ($marcFields){
+				$published = array();
+				foreach ($marcFields as $marcField){
+					$published[] = $this->concatenateSubfieldData($marcField, array('a', 'b', 'c'));
+				}
+				$interface->assign('published', $published);
+				$interface->assign('pubdate', ereg_replace("[^0-9]", "", $this->getSubfieldData($marcField, 'c')));
+			}
 		}
+
 
 		$marcFields = $marcRecord->getFields('250');
 		if ($marcFields){

@@ -1117,12 +1117,11 @@ class Solr implements IndexEngine {
 						$query,
 						$bq,
 						array("kids", "children", "teens", "tweens", "adolescent"),
-						"target_audience_full:(\"Children\")^50 OR target_audience_full:(\"Pre-Teen\")^100");								
-		
-
-				$bq = eiNetworkAuthorBoosting(
-						$query,
-						$bq);								
+						"target_audience_full:(\"Children\")^50 OR target_audience_full:(\"Pre-Teen\")^100");
+                                
+				//$bq = eiNetworkAuthorBoosting(
+				//		$query,
+				//		$bq);								
 
 				// The bq parameter creates a boost query for dismax searches;
 				$options['bq'] = $bq;
@@ -1153,11 +1152,11 @@ class Solr implements IndexEngine {
 				 *				
 				 */				
 
-				$baseQuery = eiNetworkFacetBoosting(
-						$query,
-						$baseQuery,
-						array("cats", "lion","tiger","panther","lions"),
-						"target_audience_full:(\"Juvenile\")^50 OR literary_form_full:(\"Fiction\")^100");								
+				//$baseQuery = eiNetworkFacetBoosting(
+				//		$query,
+				//		$baseQuery,
+				//		array("cats", "lion","tiger","panther","lions"),
+				//		"target_audience_full:(\"Juvenile\")^50 OR literary_form_full:(\"Fiction\")^100");								
 
 				// The logic above extends the existing $baseQuery to include the additional boosters;
 				// Author Boosting is not included here because the Keyword search default config already handles that.

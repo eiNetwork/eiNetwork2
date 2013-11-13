@@ -61,7 +61,7 @@
 		{/if}
 
 		<div class="row">
-			<div class="col-xs-12 col-md-12" style="text-align: right">
+			<div class="col-xs-12 col-md-12" style="text-align: right; border-bottom:1px #c0c0c0 solid;">
 				{if $pageLinks.all}
 					<ul class="pagination pagination-sm">{$pageLinks.all}</ul>
 				{/if}
