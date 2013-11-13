@@ -1,14 +1,7 @@
 {strip}
 <script type="text/javascript" src="{$path}/services/Record/ajax.js"></script>
-<div id="page-content" class="content">
-	<div id="left-bar">
-	{if $sideRecommendations}
-		{foreach from=$sideRecommendations item="recommendations"}
-		{include file=$recommendations}
-		{/foreach}
-	{/if}
-	</div>
-	<div id="main-content">
+<div class="row">
+	<div class="col-xs-9 col-md-9">
 		<div class="resulthead" style="margin-bottom: 25px;">
 			<h3>{translate text='Place a Hold'}</h3>
 		</div>
@@ -31,7 +24,7 @@
 					{/if}
 					<div id='holdOptions' {if (!isset($profile)) }style='display:none'{/if}>
 						<div class='loginFormRow'>
-							<p>	
+							<p>
 								<span class='loginLabel' style="margin-bottom: 12px; font-size: 15px;">{translate text="I want to pick this up at"}:</span>
 								<span class='loginField'>
 									<select name="campus" id="campus" style="margin-left: 20px;width: 260px">
@@ -48,7 +41,6 @@
 									<input type="submit" class="button" style="margin-left: 60px;" name="submit" id="requestTitleButton" value="{translate text='Request This Title'}" {if (!isset($profile))}disabled="disabled"{/if}/>
 								</span>
 							</p>
-								
 						</div>
 						<div class='loginFormRow'>
 							<input type="hidden" name="type" value="hold"/>
@@ -59,6 +51,8 @@
 			</div>
 		</form>
 	</div>
-	{include file="ei_tpl/right-bar.tpl"}
+	<div class="col-xs-3 col-md-3">
+		{include file="ei_tpl/right-bar.tpl"}
+	</div>
 </div>
 {/strip}
