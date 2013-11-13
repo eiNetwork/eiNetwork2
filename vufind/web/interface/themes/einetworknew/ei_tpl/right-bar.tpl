@@ -96,14 +96,14 @@
 					{assign var="latestupdates_link" value="right-current-link"}
 				{/if}
 				<ul>
-					<li><a class="disable-link {$wishlist_link}" href="" onclick='getWishList()'>Wish Lists</a></li>
-					<li><a class="disable-link {$checkedout_link}" href="" onclick='getCheckedOutItem()'>Checked Out Items <span id="my-item-PlaceHolder"></span></a></li>
-					<li><a class="disable-link {$requested_link}" href="" onclick='getRequestedItem()' >Requested Items <span id="my-ruest-item-placeHolder"></span></a></li>
-					<li><a class="disable-link {$readinghistory_link}" href="" onclick='getReadingHistory()' >Reading History</a></li>
-					<li><a class="{$searchhistory_link}" href="/Search/History">Saved Searches</a></li>
-					<li><a class="disable-link {$profile_link}" href="" onclick='getAccountSetting()'>Account Settings</a></li>
-					<li><a class="{$firsttime_link}" href="/MyResearch/Firsttime">First Time Using the Catalog?</a></li>
-					<li><a class="{$latestupdates_link}" href="/MyResearch/Latestupdates">Latest Website Updates</a></li>
+					<li><a class="disable-link" href="" onclick='getWishList()'>Wish Lists</a></li>
+					<li><a class="disable-link" href="" onclick='getCheckedOutItem()'>Checked Out Items <span id="my-item-PlaceHolder"></span></a></li>
+					<li><a class="disable-link" href="" onclick='getRequestedItem()' >Requested Items <span id="my-ruest-item-placeHolder"></span></a></li>
+					<li><a class="disable-link" href="" onclick='getReadingHistory()' >Reading History</a></li>
+					<li><a href="/Search/History">Saved Searches</a></li>
+					<li><a class="disable-link" href="" onclick='getAccountSetting()'>Account Settings</a></li>
+					<li><a href="/MyResearch/Firsttime">First Time Using the Catalog?</a></li>
+					<li><a href="/MyResearch/Latestupdates">Latest Website Updates</a></li>
 				</ul>
 			</div>
 		</div>
