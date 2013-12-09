@@ -245,7 +245,6 @@ function newAJAXLightbox(id, source,listId,urlToLoad, connect_type,dataToLoad,da
                         }else{
 			    
 			    for(var i = 0;i<data['avaiblity'].length;i++){
-			    //console.log(data['avaiblity'][i]);
 			    deleteItemInList(data['avaiblity'][i],'VuFind');
 			    
 			    }

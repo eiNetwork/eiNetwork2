@@ -432,10 +432,8 @@ function emailFindLibrary(email,id, unavailableShown){
 	data: data,
 	dataType: "text",
 	success: function(phpReturnResult) {
-		console.log('Success: ' + phpReturnResult);
 	},
 	error: function(errormessage) {
-		console.log('Sendmail failed possibly php script: ' + errormessage);
 	}
    });
   
