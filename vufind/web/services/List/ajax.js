@@ -241,12 +241,9 @@ function doGetStatusSummaries()
 	if (callGetEContentStatusSummaries)
 	{
 
-		console.log(eContentUrl)
-
 		$.ajax({
 			url: eContentUrl,
 			success: function(data){
-				console.log(data)
 				var items = $(data).find('item');
 				$(items).each(function(index, item){
 					var elemId = $(item).attr("id") ;
@@ -263,7 +260,6 @@ function doGetStatusSummaries()
 				});
 			},
 			error: function(xhr, ajaxOptions, thrownError){
-				console.log('fail')
 			}
 		});
 	}
