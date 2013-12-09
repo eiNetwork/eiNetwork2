@@ -184,7 +184,6 @@
 						$('#reader [id]').each(function(){
 							var anchorId = this.id;
 							var anchorTop = $(this).position().top;
-							//console.log(anchorId + " : " + $(this).offset().top + " : " + $(this).position().top) + " : " + $('#reader').scrollTop();
 							if (anchorTop < 0 ){
 								curAnchor = anchorId;
 							}else{
