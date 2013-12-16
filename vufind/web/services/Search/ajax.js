@@ -281,12 +281,14 @@ function doGetStatusSummaries()
 					//alert(sta);
 					if(sta =="Available from OverDrive"){
 						$("#RequestWord"+elemId).text("Checkout Now");
+						$("#selected" + elemId + " .resultAction_img").attr("src","/interface/themes/einetwork/images/Art/ActionIcons/RequestNow.png");
 						url = '/EcontentRecord/'+elemId+'/AJAX?method=CheckoutOverDriveItem';
 						if(document.getElementById("selected"+elemId)){
 							document.getElementById("selected"+elemId).setAttribute("onclick","checkoutOverDriveItem('" + elemId + "')");
 						}
 					}else if(sta == "Checked Out"){
 						$("#RequestWord"+elemId).text("Request Now");
+						$("#selected" + elemId + " .resultAction_img").attr("src","/interface/themes/einetwork/images/Art/ActionIcons/RequestNow.png");
 						url = '/EcontentRecord/'+elemId+'/AJAX?method=PlaceOverDriveHold&elemId=' + elemId;
 						if(document.getElementById("selected"+elemId)){
 							document.getElementById("selected"+elemId).setAttribute("onclick","placeOverDriveHold('"+elemId+"')");
