@@ -29,16 +29,30 @@
 		
 	});
 	function checkWhenSubmit(){
-		//$('input[name="phone"]').val($('input[name="phone"]').val().replace(/\D/g,'')) ;
-		var phone=$('input[name="phone"]').val(),
+
+		var phone=$('input[name="phone"]').val();
 		phoneReg=/^[2-9]\d{9}$/;
-		var email=$('input[name="email"]').val(),
+		var email=$('input[name="email"]').val();
 		emailReg=/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-		if(!phoneReg.test(phone)||!emailReg.test(email)||email==''){
+
+		noSubmit = false;
+
+		if(phone=='' || !phoneReg.test(phone)){
+			noSubmit = true;
+			$('#phoneError').text('*please enter a valid phone number');
+		}
+
+		if(email=='' || !emailReg.test(email)){
+			noSubmit = true;
+			$('#emailError').text("*please enter a valid email address");
+		}
+
+		if (noSubmit == true){
 			return false;
-		}else{
+		} else {
 			return true;
 		}
+
 	}
 
 </script>
