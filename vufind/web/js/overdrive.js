@@ -98,11 +98,9 @@ function downloadOverDriveItem(overDriveId, formatId){
 				
 				if (data.result){
 
-					console.log(data.downloadUrl);
-
-				     //window.location.href = data.downloadUrl;
-				     window.open(data.downloadUrl, '_blank');
-				     hideLightbox();
+					//window.location.href = data.downloadUrl;
+					window.open(data.downloadUrl, '_blank');
+					hideLightbox();
 				    
 				}else{
 					alert(data.message);

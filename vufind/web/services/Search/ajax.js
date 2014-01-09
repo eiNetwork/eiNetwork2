@@ -297,7 +297,6 @@ function doGetStatusSummaries()
 						$("#RequestWord"+elemId).text("Access Online");
 					}
 					$('#holdingsEContentSummary' + elemId).replaceWith($(item).find('formattedHoldingsSummary').text());
-					//console.log(sta)
 					if(sta == "Checked Out" && $("#limitToAvail").prop('checked') == true){
 						$('.availability .overdriveCheckedOut').text('Recently Checked Out');
 					}
