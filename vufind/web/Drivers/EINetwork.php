@@ -123,8 +123,13 @@ class EINetwork extends MillenniumDriver{
 			}
 		}
 
-		//Load the raw information about the patron
-		$patronDump = $this->_getPatronDump($barcode, true);
+		//Load the raw information about the patron. 
+		// @MD - blocking patron api calls whenever getsummaries ajax calls on the search results
+		if (strpos($_SERVER['REQUEST_URI'],'/Search/AJAX?method=GetStatusSummaries') !== false){
+			$patronDump = $this->_getPatronDump($barcode, false);
+		} else {
+			$patronDump = $this->_getPatronDump($barcode, true);
+		}
 
 		//Check the pin number that was entered
 		$pin = urlencode($pin);

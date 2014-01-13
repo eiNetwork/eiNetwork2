@@ -608,6 +608,7 @@ class MillenniumDriver implements DriverInterface
 		}
 
 		$issueSummaries = $this->getIssueSummaries($id, $millenniumInfo);
+
 		$timer->logTime('loaded issue summaries');
 		if (!is_null($issueSummaries)){
 			krsort($sorted_array);
@@ -646,6 +647,7 @@ class MillenniumDriver implements DriverInterface
 			return $issueSummaries;
 		}else{
 			$this->statuses[$id] = $sorted_array;
+
 			return $sorted_array;
 		}
 
@@ -833,9 +835,7 @@ class MillenniumDriver implements DriverInterface
 				$summaryInformation['showPlaceHold'] = $canShowHoldButton;
 				$summaryInformation['class'] = 'here';
 				$summaryInformation['location'] = $holding['location'];
-			}elseif ($showItsHere && !isset($summaryInformation['status']) &&
-			substr($holdingKey, 0, 1) >= 2 && (substr($holdingKey, 0, 1) <= 4) &&
-			$holding['availability'] == 1 ){
+			}elseif ($showItsHere && !isset($summaryInformation['status']) && substr($holdingKey, 0, 1) >= 2 && (substr($holdingKey, 0, 1) <= 4) && $holding['availability'] == 1 ){
 				if (!isset($summaryInformation['class']) || $summaryInformation['class'] != 'here'){
 					//The item is at one of the patron's preferred branches.
 					$summaryInformation['status'] = "It's at " . $holding['location'];
@@ -1356,7 +1356,9 @@ class MillenniumDriver implements DriverInterface
 		global $memcache;
 		global $timer;
 		$patronDump = $memcache->get("patron_dump_$barcode");
+
 		if (!$patronDump || $forceReload){
+
 			$host=$configArray['OPAC']['patron_host'];
 			//Special processing to allow MCVSD Students to login
 			//with their student id.
