@@ -101,12 +101,8 @@
             <a href="/MyResearch/Latestupdates">Latest Website Updates</a>
         </div>
     </div>
-    <br>
-    <br>
-    <br>
-    <br>
-    
-    <div class="separator" id="topBar" style="display:none;"><hr/></div>
+
+    <p class="libraries-strong"><a href="http://www.countycitylibraries.org/" target="_blank"><img src="http://www.aclalibraries.org/images/ccl200.jpg" alt="Help us keep our libraries strong!" width="200" height="57" border="0" /></a></p>
     
     <div class="prefer-branch" id="prefer-branch">
         <div id="description">
@@ -136,9 +132,6 @@
 	    })
     </script>
     {/literal}
-    
-    
-    <div class="separator"><hr/></div>
 
    {php}
         global $interface;
