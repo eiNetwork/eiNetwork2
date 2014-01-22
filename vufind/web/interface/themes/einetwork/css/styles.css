@@ -2841,3 +2841,17 @@ ol.alpha li {
 span.red {
 	color: #f00;
 }
+
+p.libraries-strong {
+	margin:80px 16px 10px 16px;
+	border:solid 1px #c0c0c0;
+	padding:4px;
+}
+
+p.libraries-strong img {
+	border:0px;
+}
+
+p.libraries-strong a:hover {
+	border:1px #c0c0c0;
+}
