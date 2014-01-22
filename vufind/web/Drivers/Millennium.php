@@ -180,6 +180,9 @@ class MillenniumDriver implements DriverInterface
 			$host = $configArray['Catalog']['url'];
 		}
 
+		// @MD - limit requests to port 443 on iiisys
+		$host = str_replace('https', 'http', $host);
+
 		// Strip ID
 		$id_ = substr(str_replace('.b', '', $id), 0, -1);
 
