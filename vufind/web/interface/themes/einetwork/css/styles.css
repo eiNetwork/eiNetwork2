@@ -2855,3 +2855,40 @@ p.libraries-strong img {
 p.libraries-strong a:hover {
 	border:1px #c0c0c0;
 }
+
+.site-message {
+	padding:4px;
+}
+
+.site-message-front {
+	margin:-20px 0 0 0;
+}
+
+.site-message-search {
+	margin:0 0 0 -30px;
+}
+
+.site-message ul.message {
+	list-style: none;
+}
+
+.site-message li {
+	padding:0;
+}
+
+.site-message p.message {
+	color: #f00;
+	margin:-35px 0 0 0;
+	padding:8px 0 0 0;
+	font-size:1.2em;
+}
+
+span.upgrade-date {
+	font-weight: bold;
+	color:#333;
+}
+
+.catalog-outage {
+	padding-right:20px;
+	margin:30px 0 0 0;
+}

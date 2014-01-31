@@ -23,6 +23,17 @@
 	</div>
     </div>
     <div id="main-content">
+    	<div class="site-message site-message-search">
+			<ul class="message">
+				<li>
+					<p class="message">
+					We are upgrading the software used by Allegheny County Public Libraries. To do so, we must take this Catalog website offline for two periods of time:
+					<br /><span class="upgrade-date">Feb 15th after 6:00pm - Feb 17th</span> and <span class="upgrade-date">Mar 21st after 6:00pm - Mar 24th</span>
+					<br />Please check with your local library for details regarding these outages.
+					</p>
+				</li>
+			</ul>
+	      </div>
     {if $user->cat_username}
 	{if $transList}
 	<div>
