@@ -1306,3 +1306,14 @@ div.popupBox ul li a {
 	border-bottom:solid 2px #414f8d;
 	font-weight: bold;
 }
+
+.label {
+	background-color: #fff !important;
+	font-size:1em;
+	color:#000;
+	font-weight: normal;
+}
+
+.label-success {
+	color: #000;
+}

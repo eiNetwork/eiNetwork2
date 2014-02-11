@@ -160,7 +160,7 @@
 			{/if}
 			
 			<div> 
-				<h2 style="margin-top:0px">{translate text='Requested Items'}</h2>
+				<h2 class="header-option" style="margin-top:0px">{translate text='Requested Items'}</h2>
 			</div>
 			
 			{if $profile.expireclose == 1}
@@ -171,7 +171,7 @@
 
 
 			<div style="margin-top: 30px">
-				<h3>Physical Requests</h3>
+				<h3 class="header-option">Physical Requests</h3>
 			</div>
 
 			<div class="row list-header">
@@ -597,7 +597,7 @@
 			
 			{*****BEGIN Overdrive Holds******}
 
-			<div style="margin-top: 20px;margin-bottom: 20px"><h3>{translate text='eContent Requests'}</h3></div>
+			<div style="margin-top: 20px;margin-bottom: 20px"><h3 class="header-option">{translate text='eContent Requests'}</h3></div>
 
 			{if count($overDriveHolds.available) > 0}
 
@@ -614,7 +614,7 @@
 					        	</div>
 					        	<div class="results-header clearfix">
 					            	<div class="row results-title-header">
-					            		<div class="col-xs-10 col-md-10 results-title">
+					            		<div class="col-xs-7 col-sm-8 col-md-9 col-xs-offset-3 col-sm-offset-1 col-md-offset-1 results-title">
 						        			{if $record.recordId != -1}
 												<a href="{$path}/EcontentRecord/{$record.recordId}/Home">
 											{/if}
@@ -624,7 +624,7 @@
 											{/if}
 											| <span class="author">{if strlen($record.author) > 0}{$record.author}{/if}</span>
 						        		</div>
-						        		<div class="col-xs-2 col-md-2">
+						        		<div class="col-xs-2 col-sm-2 col-md-2">
 				                        	<input class="btn btn-default" type="button" onclick="checkoutOverDriveItem('{$record.recordId}', 'Holds')"  value="Checkout" />
 				                        </div>
 						        	</div>
@@ -684,7 +684,7 @@
 					        	</div>
 					        	<div class="results-header clearfix">
 					            	<div class="row results-title-header">
-					            		<div class="col-xs-6 col-md-6 results-title">
+					            		<div class="col-xs-6 col-md-5 col-md-offset-1 results-title">
 						        			{if $record.recordId != -1}
 												<a href="{$path}/EcontentRecord/{$record.recordId}/Home">
 											{/if}
@@ -768,3 +768,4 @@
 		{include file="Admin/menu.tpl"}
 	</div>
 </div>
+

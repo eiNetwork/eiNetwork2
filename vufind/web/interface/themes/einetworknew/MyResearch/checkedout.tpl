@@ -493,8 +493,8 @@
 					        	</div>
 					        	<div class="results-header clearfix">
 					            	<div class="row results-title-header">
-						            		<div class="col-xs-12 col-md-12">
-						            			<ul class="requested-results">
+						            		<div class="col-xs-8 col-md-8">
+						            			<ul class="requested-results  requested-results-collapse">
 													<li class"results-title">
 									        			<a href="{$url}/Record/{$record.recordId|escape:"url"}?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}" class="title">
 															{if !$record.title|regex_replace:"/(\/|:)$/":""}
@@ -517,14 +517,7 @@
 													</li>
 												</ul>
 							        		</div>
-							        	</div>
-						        	<div class="row results-status-header">
-				        				<div class="col-xs-8 col-md-8">
-				        					<p><span class="label label-info">{if $record.expiresOn}
-														    Expires on&nbsp;{$record.expiresOn|date_format}
-														{/if}</span></p>
-				        				</div>
-					                    <div class="col-xs-4 col-md-4">
+							        		<div class="col-xs-4 col-md-4">
 				                    		<div class="btn-group btn-group-actions pull-right">
 					                            <button type="button" class="btn btn-small btn-default dropdown-toggle" data-toggle="dropdown">
 					                                Action <span class="caret"></span>
@@ -540,6 +533,13 @@
 				                                </ul>
 					                        </div>
 				                        </div>
+							        	</div>
+						        	<div class="row results-status-header results-status-collapse">
+				        				<div class="col-xs-8 col-md-8">
+				        					<p><span class="label label-info label-requested-results">{if $record.expiresOn}
+														    Expires on&nbsp;{$record.expiresOn|date_format}
+														{/if}</span></p>
+				        				</div>
 				                    </div>
 				                </div>
 					            <div id="collapse{$record.shortId|escape}" class="accordion-body collapse in">
@@ -599,8 +599,8 @@
 															{/if}
 														    {$record.format}
 														</li>
-														<li class="label-requested-results">
-															<span class="label label-info">{if $record.expiresOn}
+														<li class="label-requested-results results-status-collapse">
+															<span class="label label-info label-requested-results">{if $record.expiresOn}
 															    Expires on&nbsp;{$record.expiresOn|date_format}
 															{/if}</span>
 						                        		</li>
