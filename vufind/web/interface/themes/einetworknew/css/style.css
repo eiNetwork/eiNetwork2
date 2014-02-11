@@ -1317,3 +1317,7 @@ div.popupBox ul li a {
 .hold-row-spacing {
 	margin-bottom:10px;
 }
+
+span.label {
+	font-size:0.95em;
+}
