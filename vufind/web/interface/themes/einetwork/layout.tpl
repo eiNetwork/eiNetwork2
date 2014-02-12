@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html>
 <html lang="{$userLang}">{strip}
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
@@ -67,9 +67,9 @@
       <script type="text/javascript" src="{$path}/js/jquery-1.7.1.min.js"></script>
       <script type="text/javascript" src="{$path}/js/jqueryui/jquery-ui-1.8.18.custom.min.js"></script>
       <script type="text/javascript" src="{$path}/js/jquery.plugins.js"></script>
-      <script type="text/javascript" src="{$path}/js/scripts.js?v2.2"></script>
+      <script type="text/javascript" src="{$path}/js/scripts.js?v3.0"></script>
       <script type="text/javascript" src="{$path}/js/tablesorter/jquery.tablesorter.min.js"></script>
-      <script type="text/javascript" src="{$path}/js/ei_js/page.js?v2.2"></script>
+      <script type="text/javascript" src="{$path}/js/ei_js/page.js?v3.0"></script>
       {if $enableBookCart}
       <script type="text/javascript" src="{$path}/js/bookcart/json2.js"></script>
       <script type="text/javascript" src="{$path}/js/bookcart/bookcart.js"></script>
@@ -77,10 +77,10 @@
       
       {* Code for description pop-up and other tooltips.*}
       <script type="text/javascript" src="{$path}/js/title-scroller.js"></script>
-      <script type="text/javascript" src="{$path}/services/Search/ajax.js?v2.2"></script>
-      <script type="text/javascript" src="{$path}/services/Record/ajax.js?v2.2"></script>
-      <script type="text/javascript" src="{$path}/js/ei_js/bookcart.js?v2.2"></script>  
-      <script type="text/javascript" src="{$path}/js/overdrive.js?v2.2"></script>
+      <script type="text/javascript" src="{$path}/services/Search/ajax.js?v3.0"></script>
+      <script type="text/javascript" src="{$path}/services/Record/ajax.js?v3.0"></script>
+      <script type="text/javascript" src="{$path}/js/ei_js/bookcart.js?v3.0"></script>  
+      <script type="text/javascript" src="{$path}/js/overdrive.js?v3.0"></script>
     {/if}
     
     {* Files that should not be combined *}

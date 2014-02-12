@@ -1,37 +1,11 @@
 /* Sticky Footer */
 
-html,
-body {
-	height: 100%;
-	/* The html and body elements cannot have any padding or margin. */
-}
-
-/* Wrapper for page content to push down footer */
-#wrapper {
-	min-height: 100%;
-	height: auto !important;
-	height: 100%;
-	/* Negative indent footer by it's height */
-	margin: 0 auto -181px;
-}
-
-/* Set the fixed height of the footer here */
-#push,#footer {
+#footer {
 	height: 181px;
 }
 #footer {
 	background-color: #333333;
 	color: #fff;
-}
-
-/* Lastly, apply responsive CSS fixes as necessary */
-@media (max-width: 767px) {
-	#footer {
-		margin-left: -20px;
-		margin-right: -20px;
-		padding-left: 20px;
-		padding-right: 20px;
-	}
 }
 
 /* style.css */
@@ -45,12 +19,12 @@ h1 {
 	font-size:1.6em; /* For usability study, we have decreased font size to copy old NGC */
 }
 
-h2 {
+h2.header-option {
 	font-size: 1.45em; /* For usability study, we have decreased font size to copy old NGC */
 	font-weight: normal;
 }
 
-h3 {
+h3.header-option {
 	font-size: 1.3em; /* For usability study, we have decreased font size to copy old NGC */
 }
 
@@ -121,10 +95,10 @@ a.inactive-link:hover {
 }
 
 .label {
-	margin:0 0 0 0;
-	padding:0 10px 0 0;
+	display: inline-block;
+	margin:8px 0 0 0 !important;
 }
-
+/*
 .label-warning {
 	color:#000;
 	background-color:#fff;
@@ -143,13 +117,13 @@ a.inactive-link:hover {
 .label-default {
 	color:#000;
 	background-color:#fff;
-}
+}*/
 
-.search-box label {
+/*.search-box label {
 	min-width: 60px;
 	color: #fff;
 	margin:0 0 0 20px;
-}
+}*/
 
 .search-box input.search-txt {
 	width: 300px;
@@ -189,10 +163,10 @@ a.inactive-link:hover {
 
 .footer-links ul {
 	list-style: none;
+	padding:0;
 }
 
 .footer-links li {
-	width:180px;
 	display: inline-block;
 }
 
@@ -592,7 +566,7 @@ p.notification {
 	font-size:1em;
 }
 
-.label-requested-results {
+/*.label-requested-results {
 	display: inline-block;
 	font-size:12px;
 
@@ -600,7 +574,7 @@ p.notification {
 
 .label-checkedout-results {
 	margin:0 15px 0 0;
-}
+}*/
 
 .requested-results-actions {
 	margin:7px 0 0 0;
@@ -819,6 +793,7 @@ p.notification {
 }
 
 .search-results {
+	padding-top:20px;
 	margin:20px 0 0 0;
 	border-bottom:1px #c0c0c0 solid;
 }
@@ -1038,21 +1013,31 @@ p.notification {
 /* Override twitter bootstrap labels for now */
 
 #holdingsSummary .label-danger {
-	background-color:#fff;
-	color: #f00;
-	font-size:1.1em;
+	color: #fff;
+	font-size:1em;
 }
 
 #holdingsSummary .label-success,
 #holdingsSummary .label-success a {
-	background-color:#fff;
-	color: #00b253;
+	color: #fff;
 	font-size:1em;
 }
 
 #holdingsSummary .label-default {
 	background-color:#fff;
 	color: #333;
+	font-size:1em;
+}
+
+.book-results-location .label-success,
+.book-results-location .label-success a {
+	color: #fff;
+	font-size:1em;
+}
+
+.book-results-location .label-danger,
+.book-results-location .label-danger a {
+	color: #fff;
 	font-size:1em;
 }
 
@@ -1316,4 +1301,30 @@ div.popupBox ul li a {
 
 .label-success {
 	color: #000;
+}
+
+.searchtools {
+	margin-bottom:30px;
+}
+
+.view-select-container {
+	position: relative;
+}
+
+.view-select-saved {
+	display: none;
+	position: absolute;
+	z-index: 10;
+	top:3px;
+	left:20px;
+	padding:5px;
+	background-color:#ffcc33;
+	color: #333;
+	font-weight: bold;
+	width:120px;
+	text-align: center;
+}
+
+.hold-row-spacing {
+	margin-bottom:10px;
 }

@@ -84,11 +84,11 @@
 											<span>
 											<img class="format_img" src="/interface/themes/einetwork/images/Art/AvailabilityIcons/Available.png" alt="Available"/>
 											</span>			
-											{if $sourceUrl }
+											<span class="label label-success">{if $sourceUrl }
 											<a style="cursor:pointer" class="overdriveAvailable" onclick="window.location.href='{$sourceUrl}'">Available Online</a>
 											{else}
 											<a style="cursor:pointer" class="overdriveAvailable" onclick="window.location.href='{$url}/EcontentRecord/{$summId|escape:"url"}/Home?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}#links'">Available Online</a>
-											{/if}			
+											{/if}</span>			
 										</div>
 									{/if}
 									<div id="holdingsEContentSummary{$summId|escape:"url"}" class="holdingsSummary">
@@ -178,10 +178,10 @@
 										<span>
 										<img class="format_img" src="/interface/themes/einetwork/images/Art/AvailabilityIcons/Available.png" alt="Available"/>
 										</span>			
-										{if $sourceUrl }
+										<span class="label label-success">{if $sourceUrl }
 										<a style="cursor:pointer" class="overdriveAvailable" onclick="window.location.href='{$sourceUrl}'">Available Online</a>
 										{else}
-										<a style="cursor:pointer" class="overdriveAvailable" onclick="window.location.href='{$url}/EcontentRecord/{$summId|escape:"url"}/Home?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}#links'">Available Online</a>
+										<a style="cursor:pointer" class="overdriveAvailable" onclick="window.location.href='{$url}/EcontentRecord/{$summId|escape:"url"}/Home?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}#links'">Available Online</a></span>
 										{/if}			
 									</div>
 								{/if}

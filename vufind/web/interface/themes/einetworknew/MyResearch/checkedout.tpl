@@ -10,22 +10,9 @@
 		var collapsed = {/literal}{$checkedout_collapse}{literal};
 
 		if (collapsed == 1){
-			$('.toggle').toggles({
-				clicker: $('.clickme'),
-				text: {
-			      on: 'Brief', // text for the ON position
-			      off: 'Full' // and off
-			    },
-				on: true
-			});
+			$('#view-select').prop('selectedIndex', 1);
 		} else {
-			$('.toggle').toggles({
-				clicker: $('.clickme'),
-				text: {
-			      on: 'Brief', // text for the ON position
-			      off: 'Full' // and off
-			    }
-			});
+			$('#view-select').prop('selectedIndex', 2);
 		}
 
 		// expand and collapse functions
@@ -59,8 +46,8 @@
 
 		})
 
-		$('.toggle').on('toggle', function (e, active) {
-		    if (active) {
+		$('#view-select').change(function(){
+			if ($(this).val() == 'brief') {
 		        checkedout_collapse = 1;
 		    } else {
 		        checkedout_collapse = 0;
@@ -74,13 +61,12 @@
 					'checkedout_collapse': checkedout_collapse,
 				},
 				success: function(){
-					
+					$('.view-select-saved').show('fast').delay( 1600 ).hide('slow');
 				},
 				dataType : 'text',
 				type : 'get'
 			});
-
-		});
+		})
 
 		// save expand collapse
 		if (collapsed == 1){
@@ -164,12 +150,23 @@
 
 			<div class="row list-header">
 				<div class="col-xs-3 col-md-3">
-					<p style="font-size:13px;float:left; margin:6px 10px 0 0">Switch to</p><input type="button" id="show-all-button" class="btn btn-sm btn-default" value="Brief View" />
+					<p style="font-size:13px;float:left; margin:6px 10px 0 0" class="hidden-sm">Switch to</p><input type="button" id="show-all-button" class="btn btn-sm btn-default" value="Brief View" />
 				</div>
-				<div class="col-xs-4 col-md-4">
-					<div class="clickme" style="margin:6px 0 0 0;"><span style="font-size:13px; float: left">My Preferred View </span><div style="float:left; margin-left:10px" rel="clickme" class="toggle toggle-light"></div></div>
+				<div class="col-xs-6 col-md-6 col-sm-5">
+					<div class="clickme" style="margin:0 0 0 0;">
+						<div class"form-group"><span class="col-md-6 col-lg-5 hidden-sm" style="font-size:13px; float: left; margin:6px 0 0 0;">My Preferred View </span>
+							<div class="col-md-6 col-lg-5 col-sm-10 view-select-container">
+								<select name="view" class="form-control" id="view-select">
+									<option value=""></option>
+									<option value="brief">Brief View</option>
+									<option value="full">Full View</option>
+								</select>
+								<div class="view-select-saved">Saved</div>
+							</div>
+						</div>
+					</div>	
 				</div>
-				<div class="col-xs-5 col-md-5 btn-renew-all">
+				<div class="col-xs-3 col-md-3 col-sm-4 btn-renew-all">
 					<button type="button" class="btn btn-warning" onclick="return renewSelectedTitles();">Renew Selected Items</button>
 				</div>
 			</div>
@@ -238,7 +235,7 @@
 						        				</div>
 						                    </div>
 						        		</div>
-						        		<div class="col-xs-4 col-md-4">
+						        		<div class="col-xs-4 col-md-4" style="text-align: center">
 				                    		{if $patronCanRenew}
 					                    		{assign var=id value=$record.id scope="global"}
 											    {assign var=shortId value=$record.shortId scope="global"}
@@ -250,7 +247,7 @@
 												{else}
 
 													<label class="pull-right label-checkedout-results">
-														<span class="label label-default label-requested-results">Renew</span><br /><input type="checkbox" class="form-control titleSelect freeze_checkboxes physical_items update_all" name="selected[{$record.renewIndicator}]" id="selected{$record.itemid}" />
+														<span class="label label-default label-requested-results">Renew</span><br /><input type="checkbox" class="titleSelect freeze_checkboxes physical_items update_all" name="selected[{$record.renewIndicator}]" id="selected{$record.itemid}" />
 													</label>
 
 				                        		{/if}
@@ -295,7 +292,7 @@
 														</li>
 													</ul>
 												</div>
-												<div class="col-xs-4 col-md-4">
+												<div class="col-xs-4 col-md-4" style="text-align: center">
 														{if $patronCanRenew}
 								                    		{assign var=id value=$record.id scope="global"}
 														    {assign var=shortId value=$record.shortId scope="global"}
@@ -307,7 +304,7 @@
 															{else}
 
 																<label class="pull-right">
-																	<span class="label label-default label-requested-results">Renew</span><br /><input type="checkbox" class="form-control titleSelect freeze_checkboxes physical_items update_all" name="selected[{$record.renewIndicator}]" id="selected{$record.itemid}" />
+																	<span class="label label-default label-requested-results">Renew</span><br /><input type="checkbox" class="titleSelect freeze_checkboxes physical_items update_all" name="selected[{$record.renewIndicator}]" id="selected{$record.itemid}" />
 																</label>
 
 							                        		{/if}

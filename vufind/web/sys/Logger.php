@@ -72,7 +72,7 @@ class Logger
 	 * @param   string  $loggerType     The type of PEAR Log object to create.
 	 * @param   array   $config         Extra settings for Log factory method.
 	 */
-	private function addLogger($configString, $loggerType, $config = array())
+	public function addLogger($configString, $loggerType, $config = array())
 	{
 		if ($configString) {
 			// Construct the log object:

@@ -100,6 +100,7 @@ class AJAX extends Action {
 		require_once ('Drivers/EContentDriver.php');
 		require_once ('sys/eContent/EContentRecord.php');
 		$driver = new EContentDriver();
+
 		//Get any items that are stored for the record
 		$eContentRecord = new EContentRecord();
 		$eContentRecord->id = $id;
@@ -389,7 +390,7 @@ class AJAX extends Action {
 		$overDriveId = $_REQUEST['overDriveId'];
 		if ($user && !PEAR::isError($user)){
 			require_once('Drivers/OverDriveDriver.php');
-			$driver = new OverDriveDriver();
+            $driver = new OverDriveDriver();
 			$returnMessage = $driver->editOverDriveEmail($email, $overDriveId, $user);
 			return json_encode($returnMessage);
 		}else{
@@ -413,13 +414,14 @@ class AJAX extends Action {
 		$overDriveId = $holdings[0]->links[0]['overDriveId'];
 		
 		if ($user && !PEAR::isError($user)){
-			require_once('Drivers/OverDriveDriver.php');
-			$odriver = new OverDriveDriver();
+			require_once 'Drivers/OverDriveDriverFactory.php';
+			$odriver = OverDriveDriverFactory::getDriver();
 			$holdMessage = $odriver->placeOverDriveHold($overDriveId, $user);
 			return json_encode($holdMessage);
 		}else{
 			return json_encode(array('result'=>false, 'message'=>'You must be logged in to place a hold.'));
 		}
+
 	}
 	
 	function DownloadOverDriveItem(){
@@ -428,7 +430,7 @@ class AJAX extends Action {
 		$format = $_REQUEST['formatId'];
 		if ($user && !PEAR::isError($user)){
 			require_once('Drivers/OverDriveDriver.php');
-			$driver = new OverDriveDriver();
+            $driver = new OverDriveDriver();
 			$downloadMessage = $driver->downloadOverDriveItem($overDriveId, $format, $user);
 			return json_encode($downloadMessage);
 		}else{
@@ -438,12 +440,13 @@ class AJAX extends Action {
 	}
 	
 	function ReturnOverDriveItem(){
+
 		global $user;
 		$overDriveId = $_REQUEST['overDriveId'];
 		$transactionId = $_REQUEST['transactionId'];
 		if ($user && !PEAR::isError($user)){
-			require_once('Drivers/OverDriveDriver.php');
-			$driver = new OverDriveDriver();
+			require_once 'Drivers/OverDriveDriverFactory.php';
+			$driver = OverDriveDriverFactory::getDriver();
 			$returnMessage = $driver->returnOverDriveItem($overDriveId, $transactionId, $user);
 			return json_encode($returnMessage);
 		}else{
@@ -464,16 +467,16 @@ class AJAX extends Action {
 		$eContentRecord->find(true);
 		
 		$holdings = $driver->getHolding($id);
-		$overDriveId = $holdings[0]->links[0][overDriveId];
+		$overDriveId = $holdings[0]->links[0]['overDriveId'];
 	
 		if ($user && !PEAR::isError($user)){
-			require_once('Drivers/OverDriveDriver.php');
-			$driver = new OverDriveDriver();
+			require_once 'Drivers/OverDriveDriverFactory.php';
+			$driver = OverDriveDriverFactory::getDriver();
 			$result = $driver->checkoutOverDriveItem($overDriveId, $user);
 
 			return json_encode($result);
 		}else{
-			return json_encode(array('result'=>false, 'message'=>'You must be logged in to checkout an item.'));
+			return json_encode(array('result' => false, 'message' => 'You must be logged in to checkout an item.'));
 		}
 	}
 	
@@ -487,8 +490,8 @@ class AJAX extends Action {
 		$formatId = $_REQUEST['formatId'];
 		$interface->assign('overDriveId', $overDriveId);
 		$interface->assign('formatId', $formatId);
-		require_once 'Drivers/OverDriveDriver.php';
-		$overDriveDriver = new OverDriveDriver();
+		require_once 'Drivers/OverDriveDriverFactory.php';
+		$overDriveDriver = OverDriveDriverFactory::getDriver();
 		$loanPeriods = $overDriveDriver->getLoanPeriodsForFormat($formatId);
 		$interface->assign('loanPeriods', $loanPeriods);
 		
@@ -504,8 +507,8 @@ class AJAX extends Action {
 		global $user;
 		$overDriveId = $_REQUEST['overDriveId'];
 		if ($user && !PEAR::isError($user)){
-			require_once('Drivers/OverDriveDriver.php');
-			$driver = new OverDriveDriver();
+			require_once 'Drivers/OverDriveDriverFactory.php';
+			$driver = OverDriveDriverFactory::getDriver();
 			$result = $driver->cancelOverDriveHold($overDriveId, $user);
 			return json_encode($result);
 		}else{
