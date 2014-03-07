@@ -2,43 +2,65 @@
 {literal}
 <script type="text/javascript">
 	$(document).ready(function(){
-		$('#phone').blur(function(){
-			var phone=$(this).val(),
-			    phoneReg=/^[2-9]\d{9}$/;
-			if(!phoneReg.test(phone)){
-				$('#phoneError').text('*please enter a valid phone number');
-				phoneValid=false;
-				return false;
-			}else{
-				$('#phoneError').html('&nbsp;');
-				return true;
-			}
-		});
-
-		$('#email').blur(function(){
-			var email=$('input[name="email"]').val(),
-		            emailReg=/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-			if(!emailReg.test(email)||email==''){
-				$('#emailError').text("*please enter a vaild email address");
-				emailValid=false;
-				return false;
-			}else{
-				$('#emailError').html('&nbsp;');
-			}
-		});
+		
+		if ($('select[name="notices"]').val() == 'p'){
+			$('#phone').blur(function(){
+				var phone=$(this).val(),
+				    phoneReg=/^[2-9]\d{9}$/;
+				if(!phoneReg.test(phone)){
+					$('#phoneError').text('*please enter a valid phone number');
+					phoneValid=false;
+					return false;
+				}else{
+					$('#phoneError').html('&nbsp;');
+					return true;
+				}
+			});
+		} else if ($('select[name="notices"]').val() == 'z'){	
+			$('#email').blur(function(){
+				var email=$('input[name="email"]').val(),
+			            emailReg=/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+				if(!emailReg.test(email)||email==''){
+					$('#emailError').text("*please enter a vaild email address");
+					emailValid=false;
+					return false;
+				}else{
+					$('#emailError').html('&nbsp;');
+				}
+			});
+		}
 		
 	});
 	function checkWhenSubmit(){
-		//$('input[name="phone"]').val($('input[name="phone"]').val().replace(/\D/g,'')) ;
-		var phone=$('input[name="phone"]').val(),
+
+		var phone=$('input[name="phone"]').val();
 		phoneReg=/^[2-9]\d{9}$/;
-		var email=$('input[name="email"]').val(),
+		var email=$('input[name="email"]').val();
 		emailReg=/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-		if(!phoneReg.test(phone)||!emailReg.test(email)||email==''){
+
+		noSubmit = false;
+
+		$('#phoneError').text('');
+		$('#emailError').text('');
+
+		if ($('select[name="notices"]').val() == 'p'){
+			if(phone=='' || !phoneReg.test(phone)){
+				noSubmit = true;
+				$('#phoneError').text('You chose to be notified by phone. Please enter a valid phone number');
+			}
+		} else if ($('select[name="notices"]').val() == 'z'){
+			if(email=='' || !emailReg.test(email)){
+				noSubmit = true;
+				$('#emailError').text("You chose to be notified by email. Please enter a valid email address");
+			}
+		}
+
+		if (noSubmit == true){
 			return false;
-		}else{
+		} else {
 			return true;
 		}
+
 	}
 
 </script>
