@@ -5,15 +5,19 @@ function checkoutOverDriveItem(elemId, page){
 		$.ajax({
 			url: url,
 			success: function(data){
-				alert(data.message);
+				showProcessingIndicator(data.message);
+				console.log(data)
 				if (data.result){
+					$('.lightboxLoadingImage').hide();
+					$('.lightboxLoadingContents').append("<div class='lightboxLoadingMessage'>You may now download the title from your<br /><a class='dl-link' href='/MyResearch/CheckedOut'>checked out items</a> page.<p><a class='dl-link' href='javascript:hideLightbox()'>Close</a></p></div>");
+
 					if(page == "Holds"){ 
-					window.location.href = path + "/MyResearch/Holds";
+						window.location.href = path + "/MyResearch/Holds";
 					}
 				}else{
-					hideLightbox();
+					$('.lightboxLoadingImage').hide();
+					$('.lightboxLoadingContents').append("<div class='lightboxLoadingMessage'><a class='dl-link' href='javascript:hideLightbox()'>Close</a></div>");
 				}
-				hideLightbox();
 				getRequestAndCheckout();
 			},
 			dataType: 'json', 
