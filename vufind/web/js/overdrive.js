@@ -6,17 +6,21 @@ function checkoutOverDriveItem(elemId, page){
 			url: url,
 			success: function(data){
 				showProcessingIndicator(data.message);
-				console.log(data)
+				$('.lightboxLoadingMessage').before("<div class='close-button-container'><span onclick='hideLightbox()'><img class='close-button' src='/interface/themes/einetwork/images/closeHUDButton.png'></span></div>");	
+				if (data.result){
+					$('.lightboxLoadingMessage').before("<div class='api-icon-container'><img src='/images/api_success.png' /></div>");
+				} else {
+					$('.lightboxLoadingMessage').before("<div class='api-icon-container'><img src='/images/api_failure.png' /></div>");
+				}
 				if (data.result){
 					$('.lightboxLoadingImage').hide();
-					$('.lightboxLoadingContents').append("<div class='lightboxLoadingMessage'>You may now download the title from your<br /><a class='dl-link' href='/MyResearch/CheckedOut'>checked out items</a> page.<p><a class='dl-link' href='javascript:hideLightbox()'>Close</a></p></div>");
+					$('.lightboxLoadingContents').append("<div class='lightboxLoadingMessage'>You may now download the title from your<br /><a class='dl-link' href='/MyResearch/CheckedOut'>checked out items</a> page.</div>");
 
 					if(page == "Holds"){ 
 						window.location.href = path + "/MyResearch/Holds";
 					}
 				}else{
 					$('.lightboxLoadingImage').hide();
-					$('.lightboxLoadingContents').append("<div class='lightboxLoadingMessage'><a class='dl-link' href='javascript:hideLightbox()'>Close</a></div>");
 				}
 				getRequestAndCheckout();
 			},
@@ -70,13 +74,14 @@ function placeOverDriveHold(elemId){
 		$.ajax({
 			url: url,
 			success: function(data){
-				alert(data.message);
-				hideLightbox();
-				//if (data.result){
-				//	window.location.href = path + "/MyResearch/Holds";
-				//}else{
-				//	hideLightbox();
-				//}
+				showProcessingIndicator(data.message);
+				$('.lightboxLoadingMessage').before("<div class='close-button-container'><span onclick='hideLightbox()'><img class='close-button' src='/interface/themes/einetwork/images/closeHUDButton.png'></span></div>");	
+				if (data.result){
+					$('.lightboxLoadingMessage').before("<div class='api-icon-container'><img src='/images/api_success.png' /></div>");
+				} else {
+					$('.lightboxLoadingMessage').before("<div class='api-icon-container'><img src='/images/api_failure.png' /></div>");
+				}
+				$('.lightboxLoadingImage').hide();
 			},
 			dataType: 'json',
 			error: function(){
@@ -137,15 +142,22 @@ function returnOverDriveItem(overdriveId, transactionId){
 		$.ajax({
 			url: url,
 			success: function(data){
-				alert(data.message);
+				showProcessingIndicator(data.message);
+				$('.lightboxLoadingMessage').before("<div class='close-button-container'><span onclick='hideLightbox()'><img class='close-button' src='/interface/themes/einetwork/images/closeHUDButton.png'></span></div>");	
+				if (data.result){
+					$('.lightboxLoadingMessage').before("<div class='api-icon-container'><img src='/images/api_success.png' /></div>");
+				} else {
+					$('.lightboxLoadingMessage').before("<div class='api-icon-container'><img src='/images/api_failure.png' /></div>");
+				}
+				$('.lightboxLoadingImage').hide();
 				if (data.result){
 					
 					$('#record' + overdriveId).hide();
 					
 				}else{
-					hideLightbox();
+					//hideLightbox();
 				}
-				hideLightbox();
+				//hideLightbox();
 			},
 			dataType: 'json', 
 			error: function(){	

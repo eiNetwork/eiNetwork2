@@ -377,6 +377,7 @@ class Results extends Action {
 		$searchObject->getRecommendationsTemplates('top'));
 		$interface->assign('sideRecommendations',
 		$searchObject->getRecommendationsTemplates('side'));
+
 		// 'Finish' the search... complete timers and log search history.
 		$searchObject->close();
 		$interface->assign('time', round($searchObject->getTotalSpeed(), 2));
@@ -418,7 +419,7 @@ class Results extends Action {
 		$interface->assign('showRatings', $showRatings);
 
 		$numProspectorTitlesToLoad = 0;
-		
+
 		if(count($raw_wishLists)==1 and !$isBookCart){
 			$interface->setTemplate('noList.tpl');
 		} elseif ($searchObject->getResultTotal() == 0) {
@@ -497,31 +498,29 @@ class Results extends Action {
 
 			// Big one - our results
 			$recordSet = $searchObject->getResultRecordHTML();
+
 			$interface->assign('recordSet', $recordSet);
 			$page = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;
-                                                $list_id = $_REQUEST['goToListID'];
+            $list_id = $_REQUEST['goToListID'];
  
-                                                if (count($recordSet) < 1) {
-                                                                header( 'Location: /List/Results?goToListID=' . $list_id . '&view=list&searchSource=local&page=' . ($page - 1)) ;
-                                                }
+            if (count($recordSet) < 1){
+				header( 'Location: /List/Results?goToListID=' . $list_id . '&view=list&searchSource=local&page=' . ($page - 1));
+            }
 			$timer->logTime('load result records');
 
 			// Setup Display
 			$interface->assign('sitepath', $configArray['Site']['path']);
 			if(count($raw_wishLists)<=1&&!$isBookCart){
 				$interface->setTemplate('noList.tpl');
-				
 			}else{
 				$interface->assign('subpage', 'Search/list-list.tpl');
 				$interface->setTemplate('list.tpl');
 			}
 
-			
 			//Var for the IDCLREADER TEMPLATE
 			$interface->assign('ButtonBack',true);
 			$interface->assign('ButtonHome',true);
 			$interface->assign('MobileTitle','Search Results');
-
 
 			// Process Paging
 			$link = $searchObject->renderLinkPageTemplate();

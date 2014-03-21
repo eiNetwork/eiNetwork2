@@ -4,13 +4,26 @@
  <div id="holdingInfoPopup" style="height:auto;max-height:450px;width:auto;height:inherit;padding-left:12px;padding-right:12px">
   <div style="height:40px;padding-top:12px;border-bottom:1px solid rgb(238,238,238)" id="headhead">
     <span style="font-size:18px;">Item Call Numbers</span>
-    {if !$allAvailableItem}<span onclick="seeUnavailable()"  style="cursor: pointer;margin-left:10px;color:#9999ff;text-decoration:underline;" id="showAndHideUnavailable">(show unavailable items)</span>{/if}
+    {if !$allAvailableItem}
+
+        <input type="button" onclick="seeUnavailable()" class="button" id="showAndHideUnavailable"  style="background-color:rgb(244,213,56);" value="Hide Unavailable Items" />
+
+    {/if}
     <span onclick="hideLightbox()" style="float:right"><img class="close-button" src="/interface/themes/einetwork/images/closeHUDButton.png"></span>
   </div>
   <div style="overflow-y:auto;height:auto;max-height:400px;border-bottom:1px solid rgb(238,238,238);" id="callNumberBody">
   <div style="height:40px;font-size:15px;padding-top:12px;" id="itemTitle">{$BookTitle}</div>
  <table border="0" class="holdingsTable" style="width:510px;">
  <tbody>
+
+  <tr>
+      <td style="padding-bottom:5px;padding-left:50px;width:250px;font-weight:bold">Location</td>
+      <td></td>
+      <td></td>
+      <td style="font-weight:bold">Call Number</td>
+      <td style="font-weight:bold">Availability</td>
+      <td></td>
+  </tr>
 
  {foreach from=$holdings item=holding1}
  {foreach from=$holding1 item=holding}
@@ -62,6 +75,7 @@
   {/foreach}
  </tbody>
  </table>
+ <br /><br />
   </div>
  </div>
   <div id="actionButton" style="height:60px;padding-top:10px;">

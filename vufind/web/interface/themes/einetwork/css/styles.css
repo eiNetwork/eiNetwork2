@@ -578,11 +578,12 @@ div.warning {
 
 .lightboxLoadingMessage {
 	font-size: 15px;
+	margin:10px 0 30px 0;
 }
 
 /******BEGIN General Popup Box Style*****/
 .popup{
-	background-color: rgba(46,46,46,0.90);
+	background-color: rgba(46,46,46,1);
 	box-shadow: 0px 2px 5px 0px rgba(46,46,46,0.47);
 	color: rgb(240,240,240);
 	font-family: "Helvetica Neue Light", Helvetica, sans-serif;
@@ -629,7 +630,7 @@ div.warning {
 	height:25px;
 	vertical-align:middle;
 }
-.popupBox table{
+.popupBox table {
 	margin:5px;
 }
 
@@ -642,7 +643,7 @@ div.popupBox {
 	color: rgb(240,240,240);
 	z-index: 1000;
 	left: 33%;
-	background-color: rgba(46,46,46,0.90);
+	background-color: rgba(46,46,46,0.9);
 	border-style: solid;
 	border-width: 1px;
 	border-radius: 8px 8px 8px 8px;
@@ -2902,4 +2903,17 @@ a.dl-link:hover {
 
 a.dl-link:hover {
 	border-bottom:2px #fff solid;
+}
+
+.close-button-container {
+	display:inline-block;
+	text-align: right; 
+	width:100%; 
+	margin:-10px 0 0 0;
+}
+
+.api-icon-container {
+	display:inline-block;
+	text-align: center; 
+	width:100%;
 }
