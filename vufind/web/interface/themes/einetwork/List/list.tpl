@@ -74,10 +74,10 @@ while ($i < $bold_count){
 	<script type="text/javascript" src="/services/List/ajax.js"></script>
     <div id="searchInfo">
 	{if $pageType eq 'WishList'}
-		<h2>Wish Lists</h2>
+		<h2>My Lists</h2>
 		<h1><span id="wishTitle">{$listTitle}</span>&nbsp;<span style="font-size: 14px;">(<span style="color:#256292;cursor: pointer;" onclick="ajaxLightbox('/List/ListEdit?id={$wishListID}&source=VuFind&lightbox&method=editList',false,false,'450px',false,'200px'); return false;">edit</span>)</span></h1>
 		<span><input type="button" value="Move All Physical Items to Book Cart" onclick="saveAllToBookCart()" class="button"></span>
-		<span  style="margin-left:10px;"><input type="button" value="Delete This Wish List" onclick="getDeleteList('{$wishListID}')" class="button"></span>
+		<span  style="margin-left:10px;"><input type="button" value="Delete This List" onclick="getDeleteList('{$wishListID}')" class="button"></span>
 		{if $pageLinks.all}<div class="pagination">{$pageLinks.all}</div>{/if}
 	{/if}
 	{if $pageType eq 'BookCart'}

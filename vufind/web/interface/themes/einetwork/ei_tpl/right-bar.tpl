@@ -77,7 +77,7 @@
     
     <div class="account-links">
         <div id="wish-lists">
-            <a onclick='getWishList()'>Wish Lists</a>
+            <a onclick='getWishList()'>My Lists</a>
         </div>
 	 <div id="my-item">
             <a onclick='getCheckedOutItem()'>Checked Out Items <span id="my-item-PlaceHolder"></span></a>

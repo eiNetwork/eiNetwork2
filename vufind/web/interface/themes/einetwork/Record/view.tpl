@@ -82,8 +82,8 @@ function redrawSaveStatus() {literal}{{/literal}
 						<span class="action-lable-span">Request Now</span>
 					</div>
 					<div class="round-rectangle-button" id="add-to-wish-list" onclick="getSaveToListForm('{$id|escape}', 'VuFind'); return false;">
-						<span class="action-img-span"><img id="add-to-wish-list-img" alt="add to wish list" class="action-img" src="/interface/themes/einetwork/images/Art/ActionIcons/AddToWishList.png" /></span>
-						<span class="action-lable-span">Add To Wish List</span>
+						<span class="action-img-span"><img id="add-to-wish-list-img" alt="add to list" class="action-img" src="/interface/themes/einetwork/images/Art/ActionIcons/AddToWishList.png" /></span>
+						<span class="action-lable-span">Add To List</span>
 					</div>
 					<div class="round-rectangle-button" id="find-in-library" onclick="findInLibrary('{$id|escape:"url"}',false,'150px','570px','auto')">
 						<span class="action-img-span"><img id="find-in-library-img" alt="find in library" class="action-img" src="/interface/themes/einetwork/images/Art/ActionIcons/MoreLikeThis.png" /></span>

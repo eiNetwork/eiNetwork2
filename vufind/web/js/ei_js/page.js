@@ -411,7 +411,7 @@ function editListName(form, failMsg){
 }
 function getDeleteList(listId){
         var element = "<div id='warningDelete' >"+
-                            "<p id='deleteWarning' style='margin-left:80px;margin-top:30px'>Are your sure you want to delete this wish list?</p>"+
+                            "<p id='deleteWarning' style='margin-left:80px;margin-top:30px'>Are your sure you want to delete this list?</p>"+
                             "<p id='deleteWarningOption'>"+
                             "<span style='margin-left:140px'><input type='button' class='button' value = 'Yes' onclick='deleteList("+listId+")'/></span>"+
                             "<span><input type='button' class='button' value = 'No' onclick='hideLightbox()'/></span>"+

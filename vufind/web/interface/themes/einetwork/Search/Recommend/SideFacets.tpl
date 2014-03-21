@@ -29,7 +29,7 @@ $(document).ready(function() {
 		{if $pageType eq 'WishList'}
 			{if !$onlyBookCart}
 			 <dl class="narrowList navmenu narrowbegin">
-				<dt>{translate text='View Wish List'}</dt>
+				<dt>{translate text='View List'}</dt>
 					<dd>
 						<form id='goToList' action='/List/Results' method='GET' name='goToList'> 
 						<select id="goToListID" name='goToListID' onchange="this.form.submit()">
