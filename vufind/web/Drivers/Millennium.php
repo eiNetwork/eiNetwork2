@@ -2029,20 +2029,24 @@ class MillenniumDriver implements DriverInterface
 		$skeys = array_pad(array(),10,"");
 		foreach ($srows as $srow) {
 			$scols = preg_split("/<t(h|d)([^>]*)>/",$srow);
-			//  echo "<pre>";
-			//  print_r($scols);
-			//  echo "</pre>";
+			// echo "<pre>";
+			// print_r($scols);
+			// echo "</pre>";
 			$curHold= array();
 			$curHold['create'] = null;
 			$curHold['reqnum'] = null;
+
 			//Holds page occassionally has a header with number of items checked out.
 			for ($i=0; $i < sizeof($scols); $i++) {
+				
 				$scols[$i] = str_replace("&nbsp;"," ",$scols[$i]);
 				$scols[$i] = preg_replace ("/<br+?>/"," ", $scols[$i]);
 				$scols[$i] = html_entity_decode(trim(substr($scols[$i],0,stripos($scols[$i],"</t"))));
-				if ($scount <= 1) {
+				
+				if ($scount <= 2) {
 					$skeys[$i] = $scols[$i];
 				} else if ($scount > 1) {
+
 					if ($skeys[$i] == "CANCEL") { //Only check Cancel key, not Cancel if not filled by
 						//Extract the id from the checkbox
 						$matches = array();
@@ -2148,7 +2152,7 @@ class MillenniumDriver implements DriverInterface
 					if (stripos($skeys[$i],"CANCEL IF NOT FILLED BY") > -1) {
 						//$curHold['expire'] = strip_tags($scols[$i]);
 					}
-					if (stripos($skeys[$i],"FREEZE") > -1) {
+					if (stripos($skeys[$i],"FREEZE") > -1){
 						$matches = array();
 						$curHold['frozen'] = false;
 						if (preg_match('/<input.*name="freeze(.*?)"\\s*(\\w*)\\s*\/>/', $scols[$i], $matches)){
@@ -2169,13 +2173,15 @@ class MillenniumDriver implements DriverInterface
 				}
 			} //End of columns
 
-			if ($scount > 1) {
+			if ($scount > 2) {
 				if (!isset($curHold['status']) || strcasecmp($curHold['status'], "ready") != 0){
 					$holds['unavailable'][] = $curHold;
 				}else{
 					$holds['available'][] = $curHold;
 				}
 			}
+
+
 
 			$scount++;
 
