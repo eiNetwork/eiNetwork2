@@ -193,10 +193,6 @@ class MillenniumDriver implements DriverInterface
 		
 		$timer->logTime('got holdings from millennium');
 
-		$req =  $host . "/search~S{$scope}/.b" . $id_ . "/.b" . $id_ . "/1,1,1,B/frameset~" . $id_;
-		$millenniumCache->framesetInfo = file_get_contents($req);
-		$timer->logTime('got frameset info from millennium');
-
 		$millenniumCache->cacheDate = time();
 		//Temporarily ignore errors
 		disableErrorHandler();
@@ -229,8 +225,8 @@ class MillenniumDriver implements DriverInterface
 		$millenniumInfo = $this->getMillenniumRecordInfo($id);
 
 		//Get the number of holds
-		if ($millenniumInfo->framesetInfo){
-			if (preg_match('/(\d+) hold(s?) on .*? of \d+ (copies|copy)/', $millenniumInfo->framesetInfo, $matches)){
+		if ($millenniumInfo->holdingsInfo){
+			if (preg_match('/(\d+) hold(s?) on .*? of \d+ (copies|copy)/', $millenniumInfo->holdingsInfo, $matches)){
 				$holdQueueLength = $matches[1];
 			}else{
 				$holdQueueLength = 0;
@@ -574,7 +570,7 @@ class MillenniumDriver implements DriverInterface
 
 		//Load order records, these only show in the full page view, not the item display
 		$orderMatches = array();
-		if (preg_match_all('/<tr\\s+class="bibOrderEntry">.*?<td\\s*>(.*?)<\/td>/s', $millenniumInfo->framesetInfo, $orderMatches)){
+		if (preg_match_all('/<tr\\s+class="bibOrderEntry">.*?<td\\s*>(.*?)<\/td>/s', $millenniumInfo->holdingsInfo, $orderMatches)){
 			for ($i = 0; $i < count($orderMatches[1]); $i++) {
 				$location = trim($orderMatches[1][$i]);
 				$location = preg_replace('/\\sC\\d{3}[\\s\\.]/', '', $location);
@@ -1676,13 +1672,16 @@ class MillenniumDriver implements DriverInterface
 
 	}
 
-	public function getReadingHistory($patron, $page = 1, $recordsPerPage = -1, $sortOption = "checkedOut") {
+	public function getReadingHistory($patron, $page = 1, $recordsPerPage = -1, $sortOption = "date") {
 		global $timer;
 		$id2= $patron['id'];
 		$patronDump = $this->_getPatronDump($this->_getBarcode());
 
 		//Load the information from millenium using CURL
-		$pageContents = $this->_fetchPatronInfoPage($patronDump, 'readinghistory');
+
+		$paging = 'readinghistory&page=' . $page . '&sort=' . $sortOption;
+
+		$pageContents = $this->_fetchPatronInfoPage($patronDump, $paging);
 		$sresult = preg_replace("/<[^<]+?><[^<]+?>Reading History.\(.\d*.\)<[^<]+?>\W<[^<]+?>/", "", $pageContents);
 		$s = substr($sresult, stripos($sresult, 'patFunc'));
 		$s = substr($s,strpos($s,">")+1);
@@ -1702,10 +1701,18 @@ class MillenniumDriver implements DriverInterface
 				$scols[$i] = str_replace("&nbsp;"," ",$scols[$i]);
 				$scols[$i] = preg_replace ("/<br+?>/"," ", $scols[$i]);
 				$scols[$i] = html_entity_decode(trim(substr($scols[$i],0,stripos($scols[$i],"</t"))));
-				//print_r($scols[$i]);
-				if ($scount == 1) {
+				
+				if ($scount < 5) {
 					$skeys[$i] = $scols[$i];
-				} else if ($scount > 1) {
+
+					if (stripos($skeys[1],"Reading History") > -1) {
+
+						if (preg_match_all ("/.*?\\d+.*?\\d+.*?(\\d+)/is", $skeys[1], $matches)){
+							$total_records = $matches[1][0];
+					  	}
+					}
+
+				} elseif ($scount >= 5){
 					if (stripos($skeys[$i],"Mark") > -1) {
 						if(preg_match('@id="([^"]*)"@', $scols[$i], $m)){
 							$historyEntry['rsh'] = $m[1];
@@ -1713,8 +1720,19 @@ class MillenniumDriver implements DriverInterface
 						$historyEntry['deletable'] = "BOX";
 					}
 
+					
+
 					if (stripos($skeys[$i],"Title") > -1) {
-						if (preg_match('/.*?<a href=\\"\/record=(.*?)(?:~S\\d{1,2})\\">(.*?)<\/a>.*/', $scols[$i], $matches)) {
+
+						if (strpos($scols[$i],'is no longer available') !== false){
+
+							if ($c=preg_match_all ("/.*?((?:[a-z][a-z]*[0-9]+[a-z0-9]*))/is", $scols[$i], $matches)){
+								$shortId = $matches[1][0];
+								$bibid = '.' . $matches[1][0];
+								$title = 'Title is no longer available';
+							}
+
+						} elseif (preg_match('/.*?<a href=\\"\/record=(.*?)(?:~S\\d{1,2})\\">(.*?)<\/a>.*/', $scols[$i], $matches)) {
 							$shortId = $matches[1];
 							$bibid = '.' . $matches[1];
 							$title = $matches[2];
@@ -1736,11 +1754,13 @@ class MillenniumDriver implements DriverInterface
 						$historyEntry['details'] = strip_tags($scols[$i]);
 					}
 
-					$historyEntry['borrower_num'] = $patron['id'];
+					$historyEntry['borrower_num'] = $patron['id']; 
 				} //Done processing column
+				
 			} //Done processing row
 
-			if ($scount > 1){
+			if ($scount > 2 && $historyEntry['title']){
+
 				$historyEntry['title_sort'] = strtolower($historyEntry['title']);
 
 				$historyEntry['itemindex'] = $itemindex++;
@@ -1761,7 +1781,7 @@ class MillenniumDriver implements DriverInterface
 					$titleKey = $historyEntry['title_sort'];
 				}elseif ($sortOption == "author"){
 					$titleKey = $historyEntry['author'] . "_" . $historyEntry['title_sort'];
-				}elseif ($sortOption == "checkedOut" || $sortOption == "returned"){
+				}elseif ($sortOption == "date" || $sortOption == "returned"){
 					$checkoutTime = DateTime::createFromFormat('m-d-Y', $historyEntry['checkout']) ;
 					$titleKey = $checkoutTime->getTimestamp() . "_" . $historyEntry['title_sort'];
 				}elseif ($sortOption == "format"){
@@ -1772,25 +1792,16 @@ class MillenniumDriver implements DriverInterface
 				$titleKey .= '_' . $scount;
 				$readingHistoryTitles[$titleKey] = $historyEntry;
 			}
+			
 			$scount++;
 		}//processed all rows in the table
 
-		if ($sortOption == "checkedOut" || $sortOption == "returned"){
-			krsort($readingHistoryTitles);
-		}else{
-			ksort($readingHistoryTitles);
-		}
 		$numTitles = count($readingHistoryTitles);
-		//process pagination
-		if ($recordsPerPage != -1){
-			$startRecord = ($page - 1) * $recordsPerPage;
-			$readingHistoryTitles = array_slice($readingHistoryTitles, $startRecord, $recordsPerPage);
-		}
 
 		//The history is active if there is an opt out link.
 		$historyActive = (strpos($pageContents, 'OptOut') > 0);
 		$timer->logTime("Loaded Reading history for patron");
-		return array('historyActive'=>$historyActive, 'titles'=>$readingHistoryTitles, 'numTitles'=> $numTitles);
+		return array('historyActive'=>$historyActive, 'titles'=>$readingHistoryTitles, 'numTitles'=> $numTitles, 'total_records' => $total_records);
 	}
 
 	/**
@@ -3275,12 +3286,12 @@ class MillenniumDriver implements DriverInterface
 		self::loadNonHoldableLocations();
 		self::loadPtypeRestrictedLocations();
 
-		if (preg_match('/class\\s*=\\s*\\"bibHoldings\\"/s', $millenniumInfo->framesetInfo)){
+		if (preg_match('/class\\s*=\\s*\\"bibHoldings\\"/s', $millenniumInfo->holdingsInfo)){
 			//There are issue summaries available
 			//Extract the table with the holdings
 			$issueSummaries = array();
 			$matches = array();
-			if (preg_match('/<table\\s.*?class=\\"bibHoldings\\">(.*?)<\/table>/s', $millenniumInfo->framesetInfo, $matches)) {
+			if (preg_match('/<table\\s.*?class=\\"bibHoldings\\">(.*?)<\/table>/s', $millenniumInfo->holdingsInfo, $matches)) {
 				$issueSummaryTable = trim($matches[1]);
 				//Each holdingSummary begins with a holdingsDivider statement
 				$summaryMatches = explode('<tr><td colspan="2"><hr  class="holdingsDivider" /></td></tr>', $issueSummaryTable);
