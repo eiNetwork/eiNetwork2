@@ -288,83 +288,84 @@ class CheckedOut extends MyResearch{
 		$showPosition = ($ils == 'Horizon');
 		$interface->assign('showPosition', $showPosition);
 		
-		// Get My Transactions
-		if ($this->catalog->status) {
-			if ($user->cat_username) {
-				$patron = $this->catalog->patronLogin($user->cat_username, $user->cat_password);
-				$patronResult = $this->catalog->getMyProfile($patron);
-				if (!PEAR::isError($patronResult)) {
-					$interface->assign('profile', $patronResult);
-				}
+		// // Get My Transactions
+		// if ($this->catalog->status) {
 
-				$interface->assign('sortOptions', $sortOptions);
-				$selectedSortOption = isset($_REQUEST['accountSort']) ? $_REQUEST['accountSort'] : 'dueDate';
-				$interface->assign('defaultSortOption', $selectedSortOption);
-				$page = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;
-				$patronResult = $this->catalog->getMyProfile($patron);
-				$recordsPerPage = isset($_REQUEST['pagesize']) && (is_numeric($_REQUEST['pagesize'])) ? $_REQUEST['pagesize'] : 25;
-				$interface->assign('recordsPerPage', $recordsPerPage);
-				if (isset($_GET['exportToExcel'])) {
-					$recordsPerPage = -1;
-					$page = 1;
-				}
+		// 	if ($user->cat_username) {
+		// 		$patron = $this->catalog->patronLogin($user->cat_username, $user->cat_password);
+		// 		$patronResult = $this->catalog->getMyProfile($patron);
+		// 		if (!PEAR::isError($patronResult)) {
+		// 			$interface->assign('profile', $patronResult);
+		// 		}
+
+		// 		$interface->assign('sortOptions', $sortOptions);
+		// 		$selectedSortOption = isset($_REQUEST['accountSort']) ? $_REQUEST['accountSort'] : 'dueDate';
+		// 		$interface->assign('defaultSortOption', $selectedSortOption);
+		// 		$page = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;
+		// 		$patronResult = $this->catalog->getMyProfile($patron);
+		// 		$recordsPerPage = isset($_REQUEST['pagesize']) && (is_numeric($_REQUEST['pagesize'])) ? $_REQUEST['pagesize'] : 25;
+		// 		$interface->assign('recordsPerPage', $recordsPerPage);
+		// 		if (isset($_GET['exportToExcel'])) {
+		// 			$recordsPerPage = -1;
+		// 			$page = 1;
+		// 		}
 				
-				$result = $this->catalog->getMyHolds($patron, $page, $recordsPerPage, $selectedSortOption);
-				if (!PEAR::isError($result)) {
-					if (count($result) > 0 ) {
-						$location = new Location();
-						$pickupBranches = $location->getPickupBranches($patronResult, null);
-						$locationList = array();
-						foreach ($pickupBranches as $curLocation) {
-							$locationList[$curLocation->locationId] = $curLocation->displayName;
-						}
-						$interface->assign('pickupLocations', $locationList);
+		// 		$result = $this->catalog->getMyHolds($patron, $page, $recordsPerPage, $selectedSortOption);
+		// 		if (!PEAR::isError($result)) {
+		// 			if (count($result) > 0 ) {
+		// 				$location = new Location();
+		// 				$pickupBranches = $location->getPickupBranches($patronResult, null);
+		// 				$locationList = array();
+		// 				foreach ($pickupBranches as $curLocation) {
+		// 					$locationList[$curLocation->locationId] = $curLocation->displayName;
+		// 				}
+		// 				$interface->assign('pickupLocations', $locationList);
 
-						$xnum = -01;
-						foreach ($result['holds'] as $sectionKey => $sectionData) {
-							if ($sectionKey == 'unavailable'){
-								$link = $_SERVER['REQUEST_URI'];
-								if (preg_match('/[&?]page=/', $link)){
-									$link = preg_replace("/page=\\d+/", "page=%d", $link);
-								}else if (strpos($link, "?") > 0){
-									$link .= "&page=%d";
-								}else{
-									$link .= "?page=%d";
-								}
-								if ($recordsPerPage != '-1'){
-									$options = array('totalItems' => $result['numUnavailableHolds'],
-								                 'fileName'   => $link,
-								                 'perPage'    => $recordsPerPage,
-								                 'append'    => false,
-									);
-									$pager = new VuFindPager($options);
-									$interface->assign('pageLinks', $pager->getLinks());
-								}
-							}
+		// 				$xnum = -01;
+		// 				foreach ($result['holds'] as $sectionKey => $sectionData) {
+		// 					if ($sectionKey == 'unavailable'){
+		// 						$link = $_SERVER['REQUEST_URI'];
+		// 						if (preg_match('/[&?]page=/', $link)){
+		// 							$link = preg_replace("/page=\\d+/", "page=%d", $link);
+		// 						}else if (strpos($link, "?") > 0){
+		// 							$link .= "&page=%d";
+		// 						}else{
+		// 							$link .= "?page=%d";
+		// 						}
+		// 						if ($recordsPerPage != '-1'){
+		// 							$options = array('totalItems' => $result['numUnavailableHolds'],
+		// 						                 'fileName'   => $link,
+		// 						                 'perPage'    => $recordsPerPage,
+		// 						                 'append'    => false,
+		// 							);
+		// 							$pager = new VuFindPager($options);
+		// 							$interface->assign('pageLinks', $pager->getLinks());
+		// 						}
+		// 					}
 							
-							//Processing of freeze messages?
-							$timer->logTime("Got recordList of holds to display");
-						}
-						//Make sure available holds come before unavailable
-						$interface->assign('recordList', $result['holds']);
+		// 					//Processing of freeze messages?
+		// 					$timer->logTime("Got recordList of holds to display");
+		// 				}
+		// 				//Make sure available holds come before unavailable
+		// 				$interface->assign('recordList', $result['holds']);
 
-						//make call to export function
-						if ((isset($_GET['exportToExcelAvailable'])) || (isset($_GET['exportToExcelUnavailable']))){
-							if (isset($_GET['exportToExcelAvailable'])) {
-								$exportType = "available";
-							}
-							else {
-								$exportType = "unavailable";
-							}
-							$this->exportToExcel($result['holds'], $exportType, $showDateWhenSuspending);
-						}
+		// 				//make call to export function
+		// 				if ((isset($_GET['exportToExcelAvailable'])) || (isset($_GET['exportToExcelUnavailable']))){
+		// 					if (isset($_GET['exportToExcelAvailable'])) {
+		// 						$exportType = "available";
+		// 					}
+		// 					else {
+		// 						$exportType = "unavailable";
+		// 					}
+		// 					$this->exportToExcel($result['holds'], $exportType, $showDateWhenSuspending);
+		// 				}
 
-					} else {
-						$interface->assign('recordList', 'You do not have any holds');
-					}
-				}
-			}
-		}
+		// 			} else {
+		// 				$interface->assign('recordList', 'You do not have any holds');
+		// 			}
+		// 		}
+		// 	}
+		// }
 		
 		
 		

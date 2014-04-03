@@ -1372,12 +1372,28 @@ class MillenniumDriver implements DriverInterface
 			//Sample format of a row is as follows:
 			//P TYPE[p47]=100<BR>
 			$req =  $host . "/PATRONAPI/" . $barcode ."/dump" ;
-			$req = new Proxy_Request($req);
-			//$result = file_get_contents($req);
-			if (PEAR::isError($req->sendRequest())) {
-				return null;
-			}
-			$result = $req->getResponseBody();
+
+			// $req = new Proxy_Request($req);
+			// //$result = file_get_contents($req);
+			// if (PEAR::isError($req->sendRequest())) {
+			// 	return null;
+			// }
+			// $result = $req->getResponseBody();
+
+			$ch = curl_init($req);
+			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
+			curl_setopt($ch, CURLOPT_USERAGENT,"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+			curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded;charset=UTF-8'));
+			//curl_setopt($ch, CURLOPT_USERPWD, $configArray['OverDrive']['clientKey'] . ":" . $configArray['OverDrive']['clientSecret']);
+			curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+			curl_setopt($ch, CURLOPT_POST, 1);
+			curl_setopt($ch, CURLOPT_POSTFIELDS, "grant_type=client_credentials");
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+			$result = curl_exec($ch);
+			curl_close($ch);
 
 			//Strip the acutal contents out of the body of the page.
 			$r = substr($result, stripos($result, 'BODY'));
@@ -1438,52 +1454,66 @@ class MillenniumDriver implements DriverInterface
 	 *
 	 * @return string the result of the page load.
 	 */
-	private function _fetchPatronInfoPage($patronInfo, $page, $additionalGetInfo = array(), $additionalPostInfo = array(), $cookieJar = null, $admin = false, $startNewSession = true, $closeSession = true)
+	private function _fetchPatronInfoPage($patronInfo, $page, $additionalGetInfo = array(), $additionalPostInfo = array(), $cookieJar = null, $admin = false, $startNewSession = true, $closeSession = true, $forceReload = false)
 	{
-		$deleteCookie = false;
-		if (is_null($cookieJar)){
-			$cookieJar = tempnam ("/tmp", "CURLCOOKIE");
-			$deleteCookie = true;
-		}
-		global $logger;
-		//$logger->log('PatronInfo cookie ' . $cookie, PEAR_LOG_INFO);
 		global $configArray;
-		$scope = $this->getDefaultScope();
-		$curl_url = $configArray['Catalog']['url'] . "/patroninfo~S{$scope}/" . $patronInfo['RECORD_#'] ."/$page";
-		$logger->log('Loading page ' . $curl_url, PEAR_LOG_INFO);
-		//echo "$curl_url";
-		$this->curl_connection = curl_init($curl_url);
+		global $memcache;
 
-		curl_setopt($this->curl_connection, CURLOPT_CONNECTTIMEOUT, 30);
-		curl_setopt($this->curl_connection, CURLOPT_USERAGENT,"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
-		curl_setopt($this->curl_connection, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($this->curl_connection, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($this->curl_connection, CURLOPT_FOLLOWLOCATION, 1);
-		curl_setopt($this->curl_connection, CURLOPT_UNRESTRICTED_AUTH, true);
-		curl_setopt($this->curl_connection, CURLOPT_COOKIEJAR, $cookieJar );
-		curl_setopt($this->curl_connection, CURLOPT_COOKIESESSION, is_null($cookieJar) ? true : false);
+		$forceReload = false;
 
-		$post_data = $this->_getLoginFormValues($patronInfo, $admin);
-		foreach ($post_data as $key => $value) {
-			$post_items[] = $key . '=' . urlencode($value);
+		$barcode = $patronInfo['P_BARCODE'];
+
+		if (isset($page)){
+			$patronInfoDump = $memcache->get("patron_info_dump_" . $page . "_$barcode");
 		}
-		$post_string = implode ('&', $post_items);
-		curl_setopt($this->curl_connection, CURLOPT_POSTFIELDS, $post_string);
-		$sresult = curl_exec($this->curl_connection);
+		
+		if (!$patronInfoDump || $forceReload){
 
-		if (true){
-			curl_close($this->curl_connection);
-		}
 
-		//For debugging purposes
-		//echo "<h1>CURL Results</h1>For URL: $curl_url<br /> $sresult";
-		if ($deleteCookie){
-			unlink($cookieJar);
+			$cookieJar = $memcache->get("cookieJar_$barcode");
+
+			if (!$cookieJar){
+				$cookieJar = tempnam("/tmp", "CURLCOOKIE");
+				$memcache->set("cookieJar_$barcode", $cookieJar, 0, $configArray['Caching']['patron_dump']);
+			}
+
+			global $logger;
+			//$logger->log('PatronInfo cookie ' . $cookie, PEAR_LOG_INFO);
+			global $configArray;
+			$scope = $this->getDefaultScope();
+			$curl_url = $configArray['Catalog']['url'] . "/patroninfo~S{$scope}/" . $patronInfo['RECORD_#'] ."/$page";
+			$logger->log('Loading page ' . $curl_url, PEAR_LOG_INFO);
+			//echo "$curl_url";
+			$this->curl_connection = curl_init($curl_url);
+
+			curl_setopt($this->curl_connection, CURLOPT_CONNECTTIMEOUT, 30);
+			curl_setopt($this->curl_connection, CURLOPT_USERAGENT,"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
+			curl_setopt($this->curl_connection, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($this->curl_connection, CURLOPT_SSL_VERIFYPEER, false);
+			curl_setopt($this->curl_connection, CURLOPT_FOLLOWLOCATION, 1);
+			curl_setopt($this->curl_connection, CURLOPT_UNRESTRICTED_AUTH, true);
+			curl_setopt($this->curl_connection, CURLOPT_COOKIEJAR, $cookieJar );
+
+			curl_setopt($this->curl_connection, CURLOPT_COOKIESESSION, !($cookieJar) ? true : false);
+
+			$post_data = $this->_getLoginFormValues($patronInfo, $admin);
+			foreach ($post_data as $key => $value) {
+				$post_items[] = $key . '=' . urlencode($value);
+			}
+			$post_string = implode ('&', $post_items);
+			curl_setopt($this->curl_connection, CURLOPT_POSTFIELDS, $post_string);
+			$patronInfoDump = curl_exec($this->curl_connection);
+
+			if (true){
+				curl_close($this->curl_connection);
+			}
+
+			$memcache->set("patron_info_dump_" . $page . "_$barcode", $patronInfoDump, 0, $configArray['Caching']['patron_dump']);
 		}
 
 		//Strip HTML comments
-		$sresult = preg_replace("/<!--([^(-->)]*)-->/"," ",$sresult);
-		return $sresult;
+		$patronInfoDump = preg_replace("/<!--([^(-->)]*)-->/"," ",$patronInfoDump);
+		return $patronInfoDump;
 	}
 
 	public function getMyTransactions($patron, $page = 1, $recordsPerPage = -1, $sortOption = 'dueDate')
@@ -2235,6 +2265,9 @@ class MillenniumDriver implements DriverInterface
 	 * @access  public
 	 */
 	public function placeItemHold($recordId, $itemId, $patronId, $comment, $type){
+
+		global $memcache;
+
 		$id2= $patronId;
 		$patronDump = $this->_getPatronDump($this->_getBarcode());
 
@@ -2269,6 +2302,9 @@ class MillenniumDriver implements DriverInterface
 				$title = $record['title'];
 			}
 		}
+
+		$memcache->delete("patron_info_dump_holds_{$this->_getBarcode()}");
+		usleep(250);
 
 		//Cancel a hold
 		if ($type == 'cancel' || $type == 'recall' || $type == 'update') {
@@ -2396,6 +2432,7 @@ class MillenniumDriver implements DriverInterface
 			if ($hold_result['result'] == true){
 				UsageTracking::logTrackingData('numHolds');
 			}
+
 			return $hold_result;
 		}
 	}
@@ -2661,6 +2698,7 @@ class MillenniumDriver implements DriverInterface
 
 		//Make sure to clear any cached data
 		global $memcache;
+		$memcache->delete("patron_info_dump_holds_{$this->_getBarcode()}");
 		$memcache->delete("patron_dump_{$this->_getBarcode()}");
 		usleep(250);
 		//Clear holds for the patron
@@ -2692,6 +2730,7 @@ class MillenniumDriver implements DriverInterface
 	public function updateHoldBatched($data)
 	{
 		global $logger;
+		global $memcache;
 		global $configArray;
 		
 		$patronDump = $this->_getPatronDump($this->_getBarcode());
@@ -2831,11 +2870,11 @@ class MillenniumDriver implements DriverInterface
 		}*/
 
 		//Make sure to clear any cached data
-		global $memcache;
+		$memcache->delete("patron_info_dump_holds_{$this->_getBarcode()}");
 		$memcache->delete("patron_dump_{$this->_getBarcode()}");
+		usleep(250);
 		
 		/*
-		usleep(250);
 		//Clear holds for the patron
 		unset($this->holds[$patronId]);
 
@@ -2940,6 +2979,10 @@ class MillenniumDriver implements DriverInterface
 			$hold_result['message'] = "All items were renewed successfully.";
 		}
 		UsageTracking::logTrackingData($hold_result['Renewed']);
+
+		// clear cached data
+		$memcache->delete("patron_info_dump_items_{$this->_getBarcode()}");
+		usleep(250);
 
 		return $hold_result;
 	}
