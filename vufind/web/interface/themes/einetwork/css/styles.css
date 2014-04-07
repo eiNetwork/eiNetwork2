@@ -2892,3 +2892,14 @@ span.upgrade-date {
 	padding-right:20px;
 	margin:30px 0 0 0;
 }
+
+.summary-details a {
+	display:block;
+	padding:4px;
+	font-size:12px;
+	text-decoration: underline;
+}
+
+.summary-details-link:hover {
+	font-weight: bold !important;
+}
