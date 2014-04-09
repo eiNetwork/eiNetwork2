@@ -305,7 +305,7 @@ function deleteItemInList(itemId,source,reload){
 		}
 	});
 }
-$("#cart-descrpiion").ready(function(){
+$("#cart-description").ready(function(){
         getBookCartItemCount();
     })
 function getBookCartItemCount(){
@@ -318,16 +318,17 @@ function getBookCartItemCount(){
                 dataType: "json",
                 data: 'method=getBookCartItemCount',
 		success: function(data) {
+					data['count'] = data['count'] - 1;
                     if(data['count'] == 0){
-                        $("#cart-descrpiion").html("&nbsp;&nbsp; Your book cart is empty ");
+                        $("#cart-description").html("&nbsp;&nbsp; Your book cart is empty ");
                     }else if(data['count'] == 1){
-                        $("#cart-descrpiion").html("&nbsp;&nbsp; 1 item in your book cart ");
+                        $("#cart-description").html("&nbsp;&nbsp; 1 item in your book cart ");
                     }
                     else if(data['count']!=null && data['count'] !=0){
-                        $("#cart-descrpiion").html('&nbsp;&nbsp;'+data['count']+" items in your book cart");
+                        $("#cart-description").html('&nbsp;&nbsp;'+data['count']+" items in your book cart");
                     }
                     if(data['unavailable'] == 'yes'){
-                        $("#cart-descrpiion").html("&nbsp;&nbsp; Your book cart is empty ");
+                        $("#cart-description").html("&nbsp;&nbsp; Your book cart is empty ");
                     }
 		    if(data["count"]==null){
 			

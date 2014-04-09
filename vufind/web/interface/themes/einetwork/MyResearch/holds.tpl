@@ -39,9 +39,12 @@
 				</script>
 			{/if}
 			
-			<div> 
+			<div class="new-alert-box-container"> 
 				<h2>{translate text='Requested Items'}</h2>
-				<p style="font-size:80%;color:red">We are receiving reports about some users not receiving email notices for upcoming due dates, hold pickups, or overdue items.  You may wish to check My Account or contact your local library for this information.   Please contact your email provider if you believe you are not receiving these notices.</p>
+				<ul class="new-alert-box">
+					<li>For items that you recently requested, it may take one minute for them to appear below.</li>
+					<li>We are receiving reports about some users not receiving email notices for upcoming due dates, hold pickups, or overdue items.  You may wish to check My Account or contact your local library for this information.   Please contact your email provider if you believe you are not receiving these notices.</li>
+				</ul>
 			</div>
 			
 			<div class="hold-buttons">

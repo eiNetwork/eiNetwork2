@@ -67,7 +67,7 @@
     <div class="bookcart">
         <div id="cart-image">
             <img src="/interface/themes/einetwork/images/shopping_cart.png"  alt="cart" style="vertical-align:middle;margin-left:2px"/>
-            <span id="cart-descrpiion" style="vertical-align:middle"></span>
+            <span id="cart-description" style="vertical-align:middle"></span>
         </div>
         <div id="blank">&nbsp;</div>
         <input type="button" class="button" id="view_cart_button" onclick="getViewCart()" value="View Cart">
@@ -179,23 +179,7 @@
     {/php}    
     <div class="recommendations">
 	
-	<!-- featured lists display here -->
-        <div id="title1">
-            <a href="{$url}/MyResearch/MyList/1">{$Title1}</a>
-        </div>
-        <div id="title2">
-            <a href="{$url}/MyResearch/MyList/2">{$Title2}</a>
-        </div>
-	<div id="title3">
-            <a href="{$url}/MyResearch/MyList/5924">{$Title3}</a>
-        </div>
-        <div id="title4">
-            <a href="{$url}/MyResearch/MyList/5925">{$Title4}</a>
-        </div>
-        <div id="title5">
-            <a href="{$url}/MyResearch/MyList/3">{$Title5}</a>
-        </div>
-	<!-- end of featured lists -->
+	
 	
         <div id="articles">
             <a href="http://articles.einetwork.net">Databases and Articles</a>

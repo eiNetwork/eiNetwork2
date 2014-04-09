@@ -2,7 +2,7 @@
     <div class="bookcart">
         <div id="cart-image">
             <img src="/interface/themes/einetwork/images/Art/Materialicons/Cart.png"  alt="cart"/>
-            <span id="cart-descrpiion">&nbsp;your book cart is empty &nbsp;</span>
+            <span id="cart-description">&nbsp;your book cart is empty &nbsp;</span>
         </div>
         <div id="view-cart-button">
             <span id="view-cart-label">View Cart</span>

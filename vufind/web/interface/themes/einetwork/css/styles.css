@@ -649,6 +649,7 @@ div.popupBox {
 	-webkit-transition-property: height;
 	-webkit-transition-duration: 0.25s;
 	-webkit-transition-delay: 0.25s;
+	padding:10px;
 }
 @media all { div.popupBox { background-color: rgb(46,46,46)\0/; } } /* IE8 uses \0/ */
 div.popupBox .header a {
@@ -2249,9 +2250,9 @@ div.issueInfo {
 }
 
 .hold_result_error {
-	font-size: 10px;
+	font-size: 13px;
 	font-weight: bold;
-	color: red;
+	color: #fff;
 	margin-bottom: 4px;
 }
 
@@ -2903,3 +2904,22 @@ span.upgrade-date {
 .summary-details-link:hover {
 	font-weight: bold !important;
 }
+
+.new-alert-box-container {
+	margin:0 0 20px 0;
+}
+
+ul.new-alert-box {
+	border:solid #c0c0c0 0px;
+	background-color:#eeeecc;
+	padding:10px;
+	margin:10px 30px 10px 10px;
+	list-style: none;
+}
+
+ul.new-alert-box li {
+	font-size:13px;
+	color:#606060;
+	font-weight: bold;
+	margin:0 0 10px 0;
+} 
