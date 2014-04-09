@@ -463,10 +463,10 @@ function findAllInLibrary(left,top,width,height){
 function seeUnavailable()
 {
     $(".itemUnavailable").slideToggle('slow');
-    if( $("#showAndHideUnavailable").text()=="(show unavailable items)"){
-        $("#showAndHideUnavailable").html("(hide unavailable items)");
+    if( $("#showAndHideUnavailable").val()=="Show Available Items"){
+        $("#showAndHideUnavailable").val("Hide Unavailable Items");
     }else{
-        $("#showAndHideUnavailable").html("(show unavailable items)");
+        $("#showAndHideUnavailable").val("Show Available Items");
     }
 }
 

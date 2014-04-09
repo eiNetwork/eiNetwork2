@@ -72,6 +72,23 @@ class Hold extends Action {
 
 		//Get title information for the record.
 		$holding = $this->catalog->getHolding($recordId);
+
+
+		// foreach($holding as $key=>$value){
+
+
+
+		// }
+
+		echo "<pre>";
+		print_r(count($holding));
+		echo "</pre>";
+
+		echo "<pre>";
+		print_r($holding);
+		echo "</pre>";
+		die();
+
 		if (PEAR::isError($holding)) {
 			PEAR::raiseError($holding);
 		}
@@ -80,9 +97,10 @@ class Hold extends Action {
 		if (isset($_REQUEST['autologout'])){
 			$_SESSION['autologout'] = true;
 		}
-
+		
 		$showMessage = false;
 		$type = isset($_REQUEST['holdType']) ? $_REQUEST['holdType'] : '';
+
 		if (isset($_POST['submit']) || $type == 'recall' || $type == 'update' || $type == 'hold') {
 			if (isset($_REQUEST['username']) && isset($_REQUEST['password'])){
 				//Log the user in

@@ -88,7 +88,7 @@
 	    <span class="resultAction_span" name="bad_reuslt_this" >Remove</span>
 	</div>
     {elseif $pageType eq 'BookCart'}
-	  <div class="round-rectangle-button" id="request-now{if $summShortId}{$summShortId}{else}{$summId|escape}{/if}" style="border-bottom-width:0px;border-bottom-left-radius:0px;border-bottom-right-radius:0px" onclick="requestItem('{$summId|escape:"url"}','{$wishListID}')">
+	  <div class="round-rectangle-button" id="request-now{if $summShortId}{$summShortId}{else}{$summId|escape}{/if}" style="border-bottom-width:0px;border-bottom-left-radius:0px;border-bottom-right-radius:0px" onclick="getToRequest('/Record/{$summId|escape:"url"}/Hold');">
 	      <span class="resultAction_img_span"><img alt="view_details" src="/interface/themes/einetwork/images/Art/ActionIcons/RequestNow.png" class="resultAction_img"></span>
 	      <span class="resultAction_span">Request Now</span>
 	  </div>
