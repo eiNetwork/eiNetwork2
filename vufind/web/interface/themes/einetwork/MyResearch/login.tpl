@@ -100,11 +100,10 @@
 		<div class="site-message site-message-front">
 			<ul class="message">
 				<li>
-					<p class="message">
-					We are upgrading the software used by Allegheny County Public Libraries. To do so, we must take this Catalog website offline for two periods of time:
-					<br /><span class="upgrade-date">Feb 15th after 6:00pm - Feb 17th</span> and <span class="upgrade-date">Mar 21st after 6:00pm - Mar 24th</span>
-					<br />Please check with your local library for details regarding these outages.
-					</p>
+					<p class="message"; align="center">
+					We have completed the library software upgrade.   
+Library notices will now come from <a href="mailto:librarycatalog@einetwork.net">librarycatalog@einetwork.net</a>.  You may need to update your email spam filter settings to accept email from this address.
+                                        </p>
 				</li>
 			</ul>
 	      </div>
