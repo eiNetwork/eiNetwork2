@@ -15,7 +15,7 @@
 
 	{/if}
 	{else}
-	  {*{css filename="record.css"}*}
+      <link rel="stylesheet" href="/interface/themes/einetwork/css/ei_css/Record/record.css?v3.2" type="text/css" media="screen" />
       {/if}
       {if isset($isSearch)}
 
@@ -69,7 +69,7 @@
       <script type="text/javascript" src="{$path}/js/jquery.plugins.js"></script>
       <script type="text/javascript" src="{$path}/js/scripts.js?v3.0"></script>
       <script type="text/javascript" src="{$path}/js/tablesorter/jquery.tablesorter.min.js"></script>
-      <script type="text/javascript" src="{$path}/js/ei_js/page.js?v3.0"></script>
+      <script type="text/javascript" src="{$path}/js/ei_js/page.js?v3.2"></script>
       {if $enableBookCart}
       <script type="text/javascript" src="{$path}/js/bookcart/json2.js"></script>
       <script type="text/javascript" src="{$path}/js/bookcart/bookcart.js"></script>

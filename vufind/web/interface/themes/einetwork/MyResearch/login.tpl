@@ -100,13 +100,10 @@
 		<div class="site-message site-message-front">
 			<ul class="message">
 				<li>
-					<p class="message"; align="center">
-					We have completed the library software upgrade.   
-Library notices will now come from <a href="mailto:librarycatalog@einetwork.net">librarycatalog@einetwork.net</a>.  You may need to update your email spam filter settings to accept email from this address.
-                                        </p>
+					<p class="message" align="center">There have been some temporary changes made to the new catalog. <a href="/MyResearch/Tempchanges">Read More...</a></p>
 				</li>
 			</ul>
-	      </div>
+		</div>
 		<div class="login">
 			<form id="loginForm" action="{$path}/MyResearch/Home" method="post" autocomplete="on">
 				<div><b>I have a Library Card</b></div>
