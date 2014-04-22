@@ -67,7 +67,7 @@
     <div class="bookcart">
         <div id="cart-image">
             <img src="/interface/themes/einetwork/images/shopping_cart.png"  alt="cart" style="vertical-align:middle;margin-left:2px"/>
-            <span id="cart-descrpiion" style="vertical-align:middle"></span>
+            <span id="cart-description" style="vertical-align:middle"></span>
         </div>
         <div id="blank">&nbsp;</div>
         <input type="button" class="button" id="view_cart_button" onclick="getViewCart()" value="View Cart">
@@ -77,7 +77,7 @@
     
     <div class="account-links">
         <div id="wish-lists">
-            <a onclick='getWishList()'>Wish Lists</a>
+            <a onclick='getWishList()'>My Lists</a>
         </div>
 	 <div id="my-item">
             <a onclick='getCheckedOutItem()'>Checked Out Items <span id="my-item-PlaceHolder"></span></a>
@@ -99,6 +99,9 @@
         </div>
 	<div id="latest-updates">
             <a href="/MyResearch/Latestupdates">Latest Website Updates</a>
+        </div>
+        <div id="temp-changes">
+            <a href="/MyResearch/Tempchanges">Temporary Changes *</a>
         </div>
     </div>
 
@@ -179,23 +182,7 @@
     {/php}    
     <div class="recommendations">
 	
-	<!-- featured lists display here -->
-        <div id="title1">
-            <a href="{$url}/MyResearch/MyList/1">{$Title1}</a>
-        </div>
-        <div id="title2">
-            <a href="{$url}/MyResearch/MyList/2">{$Title2}</a>
-        </div>
-	<div id="title3">
-            <a href="{$url}/MyResearch/MyList/5924">{$Title3}</a>
-        </div>
-        <div id="title4">
-            <a href="{$url}/MyResearch/MyList/5925">{$Title4}</a>
-        </div>
-        <div id="title5">
-            <a href="{$url}/MyResearch/MyList/3">{$Title5}</a>
-        </div>
-	<!-- end of featured lists -->
+	
 	
         <div id="articles">
             <a href="http://articles.einetwork.net">Databases and Articles</a>

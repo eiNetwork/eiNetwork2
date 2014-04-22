@@ -21,6 +21,13 @@
   {* End Narrow Search Options *}
 
   <div id="main-content">
+  	<div class="site-message site-message-search">
+			<ul class="message">
+				<li>
+					<p class="message" align="center">There have been some temporary changes made to the new catalog. <a href="/MyResearch/Tempchanges">Read More...</a></p>
+				</li>
+			</ul>
+		</div>
     <div id="searchInfo">
 	<div class="resulthead" style="height:30px; ">
 		<div class="yui-u first" style="float:left; width:75%">

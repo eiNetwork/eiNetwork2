@@ -305,7 +305,7 @@ function deleteItemInList(itemId,source,reload){
 		}
 	});
 }
-$("#cart-descrpiion").ready(function(){
+$("#cart-description").ready(function(){
         getBookCartItemCount();
     })
 function getBookCartItemCount(){
@@ -318,16 +318,17 @@ function getBookCartItemCount(){
                 dataType: "json",
                 data: 'method=getBookCartItemCount',
 		success: function(data) {
+					data['count'] = data['count'] - 1;
                     if(data['count'] == 0){
-                        $("#cart-descrpiion").html("&nbsp;&nbsp; Your book cart is empty ");
+                        $("#cart-description").html("&nbsp;&nbsp; Your book cart is empty ");
                     }else if(data['count'] == 1){
-                        $("#cart-descrpiion").html("&nbsp;&nbsp; 1 item in your book cart ");
+                        $("#cart-description").html("&nbsp;&nbsp; 1 item in your book cart ");
                     }
                     else if(data['count']!=null && data['count'] !=0){
-                        $("#cart-descrpiion").html('&nbsp;&nbsp;'+data['count']+" items in your book cart");
+                        $("#cart-description").html('&nbsp;&nbsp;'+data['count']+" items in your book cart");
                     }
                     if(data['unavailable'] == 'yes'){
-                        $("#cart-descrpiion").html("&nbsp;&nbsp; Your book cart is empty ");
+                        $("#cart-description").html("&nbsp;&nbsp; Your book cart is empty ");
                     }
 		    if(data["count"]==null){
 			
@@ -411,7 +412,7 @@ function editListName(form, failMsg){
 }
 function getDeleteList(listId){
         var element = "<div id='warningDelete' >"+
-                            "<p id='deleteWarning' style='margin-left:80px;margin-top:30px'>Are your sure you want to delete this wish list?</p>"+
+                            "<p id='deleteWarning' style='margin-left:80px;margin-top:30px'>Are your sure you want to delete this list?</p>"+
                             "<p id='deleteWarningOption'>"+
                             "<span style='margin-left:140px'><input type='button' class='button' value = 'Yes' onclick='deleteList("+listId+")'/></span>"+
                             "<span><input type='button' class='button' value = 'No' onclick='hideLightbox()'/></span>"+
@@ -463,10 +464,10 @@ function findAllInLibrary(left,top,width,height){
 function seeUnavailable()
 {
     $(".itemUnavailable").slideToggle('slow');
-    if( $("#showAndHideUnavailable").text()=="(show unavailable items)"){
-        $("#showAndHideUnavailable").html("(hide unavailable items)");
+    if( $("#showAndHideUnavailable").val()=="Show All"){
+        $("#showAndHideUnavailable").val("Hide Unavailable Items");
     }else{
-        $("#showAndHideUnavailable").html("(show unavailable items)");
+        $("#showAndHideUnavailable").val("Show All");
     }
 }
 

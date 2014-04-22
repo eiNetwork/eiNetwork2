@@ -125,8 +125,8 @@ function redrawSaveStatus() {literal}{{/literal}
 	    {/if}
 
 	    <div class="round-rectangle-button" id="add-to-wish-list" onclick="getSaveToListForm('{$id|escape}', 'eContent'); return false;" style="border-top-width:1px;border-bottom-left-radius:8px;border-bottom-right-radius:8px;">
-		  <span class="action-img-span"><img id="add-to-wish-list-img" alt="add to wish list" class="action-img" src="/interface/themes/einetwork/images/Art/ActionIcons/AddToWishList.png" /></span>
-		  <span class="action-lable-span">Add To Wish List</span>
+		  <span class="action-img-span"><img id="add-to-wish-list-img" alt="add to list" class="action-img" src="/interface/themes/einetwork/images/Art/ActionIcons/AddToWishList.png" /></span>
+		  <span class="action-lable-span">Add To List</span>
 	    </div>
      
       {* Place hold link *}
@@ -146,7 +146,7 @@ function redrawSaveStatus() {literal}{{/literal}
 -->	  
 	  {* Add to Wish List *}
 	  <div class='addToWishListLink' id="addToWishList{$id|escape:"url"}" style="display:none">
-	    <a href="{$path}/EcontentRecord/{$id|escape:"url"}/AddToWishList"><img src="{$path}/interface/themes/default/images/add_to_wishlist.png" alt="Add To Wish List"/></a>
+	    <a href="{$path}/EcontentRecord/{$id|escape:"url"}/AddToWishList"><img src="{$path}/interface/themes/default/images/add_to_wishlist.png" alt="Add To List"/></a>
 	  </div>
 	  
 			</div>

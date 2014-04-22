@@ -24,6 +24,13 @@
 	
 	
 	<div id="main-content">
+		<div class="site-message site-message-search">
+			<ul class="message">
+				<li>
+					<p class="message" align="center">There have been some temporary changes made to the new catalog. <a href="/MyResearch/Tempchanges">Read More...</a></p>
+				</li>
+			</ul>
+		</div>
 		{if $user->cat_username}
 			{if $showStrands && $user->disableRecommendations == 0}
 				{assign var="scrollerName" value="Recommended"}
@@ -39,9 +46,12 @@
 				</script>
 			{/if}
 			
-			<div> 
+			<div class="new-alert-box-container"> 
 				<h2>{translate text='Requested Items'}</h2>
-				<p style="font-size:80%;color:red">We are receiving reports about some users not receiving email notices for upcoming due dates, hold pickups, or overdue items.  You may wish to check My Account or contact your local library for this information.   Please contact your email provider if you believe you are not receiving these notices.</p>
+				<ul class="new-alert-box">
+					<li>For items that you recently requested, it may take one minute for them to appear below.</li>
+					<li>We are receiving reports about some users not receiving email notices for upcoming due dates, hold pickups, or overdue items.  You may wish to check My Account or contact your local library for this information.   Please contact your email provider if you believe you are not receiving these notices.</li>
+				</ul>
 			</div>
 			
 			<div class="hold-buttons">
@@ -327,6 +337,19 @@
 					{/if}
 				{/if}
 			{/foreach}
+			<br>
+			<div class="hold-buttons">
+				<div class="requested-items-button">
+					{if $freezeButton eq 'freeze'}
+						<a id="freeze-all-btn" href="#" onclick="" class="button">Freeze All</a>
+					{else}
+						<a id="unfreeze-all-btn" href="#" onclick="" class="button">Unfreeze All</a>
+					{/if}
+				</div>
+				<div class="requested-items-button">
+					<a id="update-selected-btn" href="#" onclick="" class="button">Update Selected</a>
+				</div>
+			</div>
 			
 			{*****BEGIN Overdrive Holds******}
 			<div style="margin-top: 20px;margin-bottom: 20px"><h3>{translate text='eContent Requests'}</h3></div>

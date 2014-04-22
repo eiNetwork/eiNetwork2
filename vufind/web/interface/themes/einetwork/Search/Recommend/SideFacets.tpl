@@ -29,7 +29,7 @@ $(document).ready(function() {
 		{if $pageType eq 'WishList'}
 			{if !$onlyBookCart}
 			 <dl class="narrowList navmenu narrowbegin">
-				<dt>{translate text='View Wish List'}</dt>
+				<dt>{translate text='View List'}</dt>
 					<dd>
 						<form id='goToList' action='/List/Results' method='GET' name='goToList'> 
 						<select id="goToListID" name='goToListID' onchange="this.form.submit()">
@@ -48,7 +48,7 @@ $(document).ready(function() {
 			 {/if}
 			 <dl class="narrowList navmenu narrowbegin" {if count($wishList)<=1}style="margin-top:10px"{/if}>
 				<dd>
-					<input type="button" onclick="ajaxLightbox('/List/ListEdit?id=&amp;source=VuFind&amp;lightbox',false,false,'450px',false,'200px'); return false;" class="button navmenu dd" value="Create New Wish List" style="width:180px"/>
+					<input type="button" onclick="ajaxLightbox('/List/ListEdit?id=&amp;source=VuFind&amp;lightbox',false,false,'450px',false,'200px'); return false;" class="button navmenu dd" value="Create New List" style="width:180px"/>
 				</dd>
 				<dd>
 					<input type="button" class="button yellow" onclick="window.location = '/List/Import';" class="button navmenu dd" value="Import List From Old Catalog" style="width:auto"/>

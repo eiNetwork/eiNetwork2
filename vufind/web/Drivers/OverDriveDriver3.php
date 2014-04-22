@@ -727,7 +727,7 @@ class OverDriveDriver3 {
 			//print_r($response);
 			if (isset($response->expires)){
 				$result['result'] = true;
-				$result['message'] = 'Your title was checked out successfully. You may now download the title from your Account.';
+				$result['message'] = 'Your title was checked out successfully.';
 			}else{
 				$result['message'] = 'Sorry, we could not checkout this title to you.  ' . $response->message;
 			}

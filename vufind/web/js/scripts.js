@@ -1024,15 +1024,24 @@ function performSaveRecord(id, source, formElem, strings, service, successCallba
 							// "notes=" + encodeURIComponent(notes) + "&" +
 							 "id=" + id + "&" +
 							 "source=" + source;
+	
+	hideLightbox();
+
+	showProcessingIndicator('Adding item to list.');
+
 	$.ajax({
 		url: url+'?'+params,
 		dataType: "json",
 		success: function(data) {
 			if (data.result) {
+				showProcessingIndicator('Item added to list.');
+				$('.lightboxLoadingMessage').before("<div class='close-button-container'><span onclick='hideLightbox()'><img class='close-button' src='/interface/themes/einetwork/images/closeHUDButton.png'></span></div>");	
+				$('.lightboxLoadingImage').hide();
+					$('.lightboxLoadingMessage').before("<div class='api-icon-container'><img src='/images/api_success.png' /></div>");
 					var value = data.result;
 					if (value == "Done") {
 							successCallback();
-							hideLightbox();
+							
 							if($("#listId").val()!=null&&$("#listId").val()!=""){
 								deleteItemInList(id,source);
 							}
@@ -1040,6 +1049,9 @@ function performSaveRecord(id, source, formElem, strings, service, successCallba
 							getLightbox('Record', 'Save', id, null, strings.add);
 					}
 			} else {
+					$('.lightboxLoadingImage').hide();
+					$('.lightboxLoadingMessage').before("<div class='api-icon-container'><img src='/images/api_failure.png' /></div>");
+					showProcessingIndicator(strings.error);
 					document.getElementById('popupbox').innerHTML = strings.error;
 					setTimeout("hideLightbox();", 3000);
 			}

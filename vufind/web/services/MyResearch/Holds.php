@@ -82,12 +82,11 @@ class Holds extends MyResearch
 		$interface->assign('allowFreezeHolds', true);
 
 		// Define sorting options
-		$sortOptions = array('title' => 'Title',
-                         'author' => 'Author',
+		$sortOptions = array(
+			 'title' => 'Title',
+			 'author' => 'Author',
                          'format' => 'Format',
-                         'placed' => 'Date Placed',
                          'location' => 'Pickup Location',
-                         'position' => 'Position',
                          'status' => 'Status',
 		);
 		$interface->assign('sortOptions', $sortOptions);

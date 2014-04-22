@@ -97,6 +97,13 @@
 {/literal}
 	<div class="loginHome-left"></div>
 	<div class="loginHome-center">
+		<div class="site-message site-message-front">
+			<ul class="message">
+				<li>
+					<p class="message" align="center">There have been some temporary changes made to the new catalog. <a href="/MyResearch/Tempchanges">Read More...</a></p>
+				</li>
+			</ul>
+		</div>
 		<div class="login">
 			<form id="loginForm" action="{$path}/MyResearch/Home" method="post" autocomplete="on">
 				<div><b>I have a Library Card</b></div>
@@ -110,7 +117,7 @@
 				</div>
 				<div id="password">
 					4 digit PIN number:
-					<input id="pin" class="text" type="password" name="password" number" maxlength="8"/>
+					<input id="pin" class="text" type="password" name="password" maxlength="8"/>
 					<div id="pinError">&nbsp;</div>
 					<div><a href="/MyResearch/PinReset"> I forgot or don't have my PIN <br> I need to get a PIN for the first time.</a></div>
 				</div>
