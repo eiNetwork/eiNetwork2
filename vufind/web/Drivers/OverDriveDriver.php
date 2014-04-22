@@ -958,7 +958,7 @@ class OverDriveDriver {
 
 		$urlWithSession = $pageInfo['url'];
 		//$logger->log("Session URL ".$urlWithSession, PEAR_LOG_INFO);
-		$urlWithSessionSSL = str_replace('http://', 'https://secure23.libraryreserve.com/', $urlWithSession);
+		$urlWithSessionSSL = str_replace('http://', 'https://carnegie.lib.overdrive.com', $urlWithSession);
 		//$logger->log("Session URL SSL ".$urlWithSessionSSL, PEAR_LOG_INFO);
 		
 		//Go to the login form
