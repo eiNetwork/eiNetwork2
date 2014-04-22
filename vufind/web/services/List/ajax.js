@@ -76,167 +76,167 @@ function doGetStatusSummaries()
 	var ts = Date.UTC(now.getFullYear(),now.getMonth(),now.getDay(),now.getHours(),now.getMinutes(),now.getSeconds(),now.getMilliseconds());
 	var callGetEContentStatusSummaries = false;
 	var eContentUrl = path + "/Search/AJAX?method=GetEContentStatusSummaries";
-	for (var j=0; j<GetEContentStatusList.length; j++) {
-		eContentUrl += "&id[]=" + encodeURIComponent(GetEContentStatusList[j]);
-		callGetEContentStatusSummaries = true;
-	}
-	// url += "&id[]=" + encodeURIComponent($id);
-	eContentUrl += "&time=" +ts;
-	//Since the ILS can be slow, make individual cals to print titles
-	// Modify this to return status summaries one at a time to improve
-	// the perceived performance
-	var callGetStatusSummaries = false;
-	for (var j=0; j<GetStatusList.length; j++) {
-		var url = path + "/Search/AJAX?method=GetStatusSummaries";
-		url += "&id[]=" + encodeURIComponent(GetStatusList[j]);
-		url += "&time="+ts;
-		$.getJSON(url, function(data){
-			var items = data.items;
-			var elemId;
-			var statusDiv;
-			var status;
-			var reserves;
-			var showPlaceHold;
-			var placeHoldLink;
-			var numHoldable = 0;
-			for (var i=0; i<items.length; i++) {
-				try{
-					elemId = items[i].shortId;
+	// for (var j=0; j<GetEContentStatusList.length; j++) {
+	// 	eContentUrl += "&id[]=" + encodeURIComponent(GetEContentStatusList[j]);
+	// 	callGetEContentStatusSummaries = true;
+	// }
+	// // url += "&id[]=" + encodeURIComponent($id);
+	// eContentUrl += "&time=" +ts;
+	// //Since the ILS can be slow, make individual cals to print titles
+	// // Modify this to return status summaries one at a time to improve
+	// // the perceived performance
+	// var callGetStatusSummaries = false;
+	// for (var j=0; j<GetStatusList.length; j++) {
+	// 	var url = path + "/Search/AJAX?method=GetStatusSummaries";
+	// 	url += "&id[]=" + encodeURIComponent(GetStatusList[j]);
+	// 	url += "&time="+ts;
+	// 	$.getJSON(url, function(data){
+	// 		var items = data.items;
+	// 		var elemId;
+	// 		var statusDiv;
+	// 		var status;
+	// 		var reserves;
+	// 		var showPlaceHold;
+	// 		var placeHoldLink;
+	// 		var numHoldable = 0;
+	// 		for (var i=0; i<items.length; i++) {
+	// 			try{
+	// 				elemId = items[i].shortId;
 
-					// Place hold link
-					if (items[i].showPlaceHold == null){
-						showPlaceHold = 0;
-					}else{	
-						showPlaceHold = items[i].showPlaceHold;
-					}
+	// 				// Place hold link
+	// 				if (items[i].showPlaceHold == null){
+	// 					showPlaceHold = 0;
+	// 				}else{	
+	// 					showPlaceHold = items[i].showPlaceHold;
+	// 				}
 
-					// Multi select place hold options
-					if (showPlaceHold == '1' || showPlaceHold == true){
-						numHoldable++;
-						// show the place hold button
-						var placeHoldButton = $('#placeHold' + elemId );
-						if (placeHoldButton.length > 0){
-							placeHoldButton.show();
-						}
-					}
+	// 				// Multi select place hold options
+	// 				if (showPlaceHold == '1' || showPlaceHold == true){
+	// 					numHoldable++;
+	// 					// show the place hold button
+	// 					var placeHoldButton = $('#placeHold' + elemId );
+	// 					if (placeHoldButton.length > 0){
+	// 						placeHoldButton.show();
+	// 					}
+	// 				}
 
-					// Change outside border class.
-					var holdingSum= $('#holdingsSummary' + elemId);
-					if (holdingSum.length > 0){
-						divClass= items[i]['class'];
-						holdingSum.addClass(divClass);
-						var formattedHoldingsSummary = items[i].formattedHoldingsSummary;
-						holdingSum.replaceWith(formattedHoldingsSummary);
-					}
+	// 				// Change outside border class.
+	// 				var holdingSum= $('#holdingsSummary' + elemId);
+	// 				if (holdingSum.length > 0){
+	// 					divClass= items[i]['class'];
+	// 					holdingSum.addClass(divClass);
+	// 					var formattedHoldingsSummary = items[i].formattedHoldingsSummary;
+	// 					holdingSum.replaceWith(formattedHoldingsSummary);
+	// 				}
 					
-					//Load eAudio link
-					if (items[i].eAudioLink != null){
-						var eAudioLink = items[i].eAudioLink;
-						if (eAudioLink) {
-							if (eAudioLink.length > 0 && $("#eAudioLink" + elemId).length > 0) {
-								$("#eAudioLink" + elemId).html("<a href='" + eAudioLink + "'><img src='" + path + "/interface/themes/wcpl/images/access_eaudio.png' alt='Access eAudio'/></a>");
-								$("#eAudioLink" + elemId).show();
-							}
-						}
-					}
+	// 				//Load eAudio link
+	// 				if (items[i].eAudioLink != null){
+	// 					var eAudioLink = items[i].eAudioLink;
+	// 					if (eAudioLink) {
+	// 						if (eAudioLink.length > 0 && $("#eAudioLink" + elemId).length > 0) {
+	// 							$("#eAudioLink" + elemId).html("<a href='" + eAudioLink + "'><img src='" + path + "/interface/themes/wcpl/images/access_eaudio.png' alt='Access eAudio'/></a>");
+	// 							$("#eAudioLink" + elemId).show();
+	// 						}
+	// 					}
+	// 				}
 					
-					//Load eBook link
-					if (items[i].eBookLink != null){
-						var eBookLink = items[i].eBookLink;
-						if (eBookLink) {
-							if (eBookLink.length > 0 && $("#eBookLink" + elemId).length > 0) {
-								$("#eBookLink" + elemId).html("<a href='" + eBookLink + "'><img src='" + path + "/interface/themes/wcpl/images/access_ebook.png' alt='Access eBook'/></a>");
-								$("#eBookLink" + elemId).show();
-							}
-						}
-					}
+	// 				//Load eBook link
+	// 				if (items[i].eBookLink != null){
+	// 					var eBookLink = items[i].eBookLink;
+	// 					if (eBookLink) {
+	// 						if (eBookLink.length > 0 && $("#eBookLink" + elemId).length > 0) {
+	// 							$("#eBookLink" + elemId).html("<a href='" + eBookLink + "'><img src='" + path + "/interface/themes/wcpl/images/access_ebook.png' alt='Access eBook'/></a>");
+	// 							$("#eBookLink" + elemId).show();
+	// 						}
+	// 					}
+	// 				}
 					
-					// Load call number
-					var callNumberSpan= $('#callNumberValue' + elemId);
-					if (callNumberSpan.length > 0){
-						var callNumber = items[i].callnumber;
-						if (callNumber){
-							callNumberSpan.html(callNumber);
-						}else{
-							callNumberSpan.html("N/A");
-						}
-					}
+	// 				// Load call number
+	// 				var callNumberSpan= $('#callNumberValue' + elemId);
+	// 				if (callNumberSpan.length > 0){
+	// 					var callNumber = items[i].callnumber;
+	// 					if (callNumber){
+	// 						callNumberSpan.html(callNumber);
+	// 					}else{
+	// 						callNumberSpan.html("N/A");
+	// 					}
+	// 				}
 					
-					// Load location
-					var locationSpan= $('#locationValue' + elemId);
-					if (locationSpan.length > 0){
-						var availableAt = items[i].availableAt;
-						if (availableAt){
-							locationSpan.html(availableAt);
-						}else{
-							locationSpan.html("N/A");
-						}
-					}
+	// 				// Load location
+	// 				var locationSpan= $('#locationValue' + elemId);
+	// 				if (locationSpan.length > 0){
+	// 					var availableAt = items[i].availableAt;
+	// 					if (availableAt){
+	// 						locationSpan.html(availableAt);
+	// 					}else{
+	// 						locationSpan.html("N/A");
+	// 					}
+	// 				}
 					
-					// Load status
-					var statusSpan= $('#statusValue' + elemId);
-					if (statusSpan.length > 0){
-						var status = items[i].status;
-						if (status){
-							if (status == "Available At"){
-								status = "Available";
-							}
-							statusSpan.html(status);
-						}else{
-							statusSpan.html("Unknown");
-						}
-					}
+	// 				// Load status
+	// 				var statusSpan= $('#statusValue' + elemId);
+	// 				if (statusSpan.length > 0){
+	// 					var status = items[i].status;
+	// 					if (status){
+	// 						if (status == "Available At"){
+	// 							status = "Available";
+	// 						}
+	// 						statusSpan.html(status);
+	// 					}else{
+	// 						statusSpan.html("Unknown");
+	// 					}
+	// 				}
 					
-					// Load Download Link
-					var downloadLinkSpan= $('#downloadLinkValue' + elemId);
-					if (downloadLinkSpan.length > 0){
-						var isDownloadable = items[i].isDownloadable;
-						if (isDownloadable == 1){
-							var downloadLink = items[i].downloadLink;
-							var downloadText = items[i].downloadText;
-							$("#downloadLinkValue" + elemId).html("<a href='" + decodeURIComponent(downloadLink) + "'>" + downloadText + "</a>");
-							$("#downloadLink" + elemId).show();
-						}
-					}
-					// Disable Request Now if local copy is available
-					var SummaryDetails = items[i].status;
-					//var SummaryDetails = $(data).find("status").text();
-					//var SummaryDetails = "Hi There";
-					//alert(SummaryDetails);
-					//alert(elemId +"    " + SummaryDetails);
-					if(SummaryDetails =="It's here"){
-						$("#request-now"+elemId).css('background-color','rgb(192,192,192)');
-						$("#request-now"+elemId).css("color","rgb(248,248,248)");
-						$("#request-now"+elemId+" .resultAction_span").text("It's Here");
-						$("#request-now"+elemId).css("cursor","default");
-						$("#request-now"+elemId).addClass("it-is-here");
-						if($("#selected."+elemId)!=null){
+	// 				// Load Download Link
+	// 				var downloadLinkSpan= $('#downloadLinkValue' + elemId);
+	// 				if (downloadLinkSpan.length > 0){
+	// 					var isDownloadable = items[i].isDownloadable;
+	// 					if (isDownloadable == 1){
+	// 						var downloadLink = items[i].downloadLink;
+	// 						var downloadText = items[i].downloadText;
+	// 						$("#downloadLinkValue" + elemId).html("<a href='" + decodeURIComponent(downloadLink) + "'>" + downloadText + "</a>");
+	// 						$("#downloadLink" + elemId).show();
+	// 					}
+	// 				}
+	// 				// Disable Request Now if local copy is available
+	// 				var SummaryDetails = items[i].status;
+	// 				//var SummaryDetails = $(data).find("status").text();
+	// 				//var SummaryDetails = "Hi There";
+	// 				//alert(SummaryDetails);
+	// 				//alert(elemId +"    " + SummaryDetails);
+	// 				if(SummaryDetails =="It's here"){
+	// 					$("#request-now"+elemId).css('background-color','rgb(192,192,192)');
+	// 					$("#request-now"+elemId).css("color","rgb(248,248,248)");
+	// 					$("#request-now"+elemId+" .resultAction_span").text("It's Here");
+	// 					$("#request-now"+elemId).css("cursor","default");
+	// 					$("#request-now"+elemId).addClass("it-is-here");
+	// 					if($("#selected."+elemId)!=null){
 							
-							$("#selected."+elemId).addClass("here");
-							//alert("#selected."+elemId);
-						}
-				//$("#request-now .action-lable-span").css('background-color','rgb(192,192,192)').text("It's Here")
-				//document.getElementById("request-now").disabled='true';
-				document.getElementById("request-now"+elemId).setAttribute("onclick","");
+	// 						$("#selected."+elemId).addClass("here");
+	// 						//alert("#selected."+elemId);
+	// 					}
+	// 			//$("#request-now .action-lable-span").css('background-color','rgb(192,192,192)').text("It's Here")
+	// 			//document.getElementById("request-now").disabled='true';
+	// 			document.getElementById("request-now"+elemId).setAttribute("onclick","");
 				
-					//	alert("Here")
-					//$("#request-now .resultAction_span" + elemId).text("It's Here");
-					//document.getElementById("request-now").disabled='true';
-					//document.getElementById("request-now").setAttribute("onclick","");
-					}
+	// 				//	alert("Here")
+	// 				//$("#request-now .resultAction_span" + elemId).text("It's Here");
+	// 				//document.getElementById("request-now").disabled='true';
+	// 				//document.getElementById("request-now").setAttribute("onclick","");
+	// 				}
 
-				}catch (err){
-					//alert("Unexpected error " + err);
-				}
-			}
-			// Check to see if the Request selected button should show
-			if (numHoldable > 0){
-				$('.requestSelectedItems').show();
-			}
-		}).error(function(jqXHR, textStatus, errorThrown){
-			//alert("Unexpected error trying to get status " + textStatus);
-		});
-	}
+	// 			}catch (err){
+	// 				//alert("Unexpected error " + err);
+	// 			}
+	// 		}
+	// 		// Check to see if the Request selected button should show
+	// 		if (numHoldable > 0){
+	// 			$('.requestSelectedItems').show();
+	// 		}
+	// 	}).error(function(jqXHR, textStatus, errorThrown){
+	// 		//alert("Unexpected error trying to get status " + textStatus);
+	// 	});
+	// }
 	//alert(eContentUrl);
 	if (callGetEContentStatusSummaries)
 	{

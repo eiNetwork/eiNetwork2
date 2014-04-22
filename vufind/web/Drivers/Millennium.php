@@ -193,10 +193,6 @@ class MillenniumDriver implements DriverInterface
 		
 		$timer->logTime('got holdings from millennium');
 
-		$req =  $host . "/search~S{$scope}/.b" . $id_ . "/.b" . $id_ . "/1,1,1,B/frameset~" . $id_;
-		$millenniumCache->framesetInfo = file_get_contents($req);
-		$timer->logTime('got frameset info from millennium');
-
 		$millenniumCache->cacheDate = time();
 		//Temporarily ignore errors
 		disableErrorHandler();
@@ -229,8 +225,8 @@ class MillenniumDriver implements DriverInterface
 		$millenniumInfo = $this->getMillenniumRecordInfo($id);
 
 		//Get the number of holds
-		if ($millenniumInfo->framesetInfo){
-			if (preg_match('/(\d+) hold(s?) on .*? of \d+ (copies|copy)/', $millenniumInfo->framesetInfo, $matches)){
+		if ($millenniumInfo->holdingsInfo){
+			if (preg_match('/(\d+) hold(s?) on .*? of \d+ (copies|copy)/', $millenniumInfo->holdingsInfo, $matches)){
 				$holdQueueLength = $matches[1];
 			}else{
 				$holdQueueLength = 0;
@@ -574,7 +570,7 @@ class MillenniumDriver implements DriverInterface
 
 		//Load order records, these only show in the full page view, not the item display
 		$orderMatches = array();
-		if (preg_match_all('/<tr\\s+class="bibOrderEntry">.*?<td\\s*>(.*?)<\/td>/s', $millenniumInfo->framesetInfo, $orderMatches)){
+		if (preg_match_all('/<tr\\s+class="bibOrderEntry">.*?<td\\s*>(.*?)<\/td>/s', $millenniumInfo->holdingsInfo, $orderMatches)){
 			for ($i = 0; $i < count($orderMatches[1]); $i++) {
 				$location = trim($orderMatches[1][$i]);
 				$location = preg_replace('/\\sC\\d{3}[\\s\\.]/', '', $location);
@@ -1376,12 +1372,28 @@ class MillenniumDriver implements DriverInterface
 			//Sample format of a row is as follows:
 			//P TYPE[p47]=100<BR>
 			$req =  $host . "/PATRONAPI/" . $barcode ."/dump" ;
-			$req = new Proxy_Request($req);
-			//$result = file_get_contents($req);
-			if (PEAR::isError($req->sendRequest())) {
-				return null;
-			}
-			$result = $req->getResponseBody();
+
+			// $req = new Proxy_Request($req);
+			// //$result = file_get_contents($req);
+			// if (PEAR::isError($req->sendRequest())) {
+			// 	return null;
+			// }
+			// $result = $req->getResponseBody();
+
+			$ch = curl_init($req);
+			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
+			curl_setopt($ch, CURLOPT_USERAGENT,"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+			curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded;charset=UTF-8'));
+			//curl_setopt($ch, CURLOPT_USERPWD, $configArray['OverDrive']['clientKey'] . ":" . $configArray['OverDrive']['clientSecret']);
+			curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+			curl_setopt($ch, CURLOPT_POST, 1);
+			curl_setopt($ch, CURLOPT_POSTFIELDS, "grant_type=client_credentials");
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+			$result = curl_exec($ch);
+			curl_close($ch);
 
 			//Strip the acutal contents out of the body of the page.
 			$r = substr($result, stripos($result, 'BODY'));
@@ -1442,52 +1454,66 @@ class MillenniumDriver implements DriverInterface
 	 *
 	 * @return string the result of the page load.
 	 */
-	private function _fetchPatronInfoPage($patronInfo, $page, $additionalGetInfo = array(), $additionalPostInfo = array(), $cookieJar = null, $admin = false, $startNewSession = true, $closeSession = true)
+	private function _fetchPatronInfoPage($patronInfo, $page, $additionalGetInfo = array(), $additionalPostInfo = array(), $cookieJar = null, $admin = false, $startNewSession = true, $closeSession = true, $forceReload = false)
 	{
-		$deleteCookie = false;
-		if (is_null($cookieJar)){
-			$cookieJar = tempnam ("/tmp", "CURLCOOKIE");
-			$deleteCookie = true;
-		}
-		global $logger;
-		//$logger->log('PatronInfo cookie ' . $cookie, PEAR_LOG_INFO);
 		global $configArray;
-		$scope = $this->getDefaultScope();
-		$curl_url = $configArray['Catalog']['url'] . "/patroninfo~S{$scope}/" . $patronInfo['RECORD_#'] ."/$page";
-		$logger->log('Loading page ' . $curl_url, PEAR_LOG_INFO);
-		//echo "$curl_url";
-		$this->curl_connection = curl_init($curl_url);
+		global $memcache;
 
-		curl_setopt($this->curl_connection, CURLOPT_CONNECTTIMEOUT, 30);
-		curl_setopt($this->curl_connection, CURLOPT_USERAGENT,"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
-		curl_setopt($this->curl_connection, CURLOPT_RETURNTRANSFER, true);
-		curl_setopt($this->curl_connection, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($this->curl_connection, CURLOPT_FOLLOWLOCATION, 1);
-		curl_setopt($this->curl_connection, CURLOPT_UNRESTRICTED_AUTH, true);
-		curl_setopt($this->curl_connection, CURLOPT_COOKIEJAR, $cookieJar );
-		curl_setopt($this->curl_connection, CURLOPT_COOKIESESSION, is_null($cookieJar) ? true : false);
+		$forceReload = false;
 
-		$post_data = $this->_getLoginFormValues($patronInfo, $admin);
-		foreach ($post_data as $key => $value) {
-			$post_items[] = $key . '=' . urlencode($value);
+		$barcode = $patronInfo['P_BARCODE'];
+
+		if (isset($page)){
+			$patronInfoDump = $memcache->get("patron_info_dump_" . $page . "_$barcode");
 		}
-		$post_string = implode ('&', $post_items);
-		curl_setopt($this->curl_connection, CURLOPT_POSTFIELDS, $post_string);
-		$sresult = curl_exec($this->curl_connection);
+		
+		if (!$patronInfoDump || $forceReload){
 
-		if (true){
-			curl_close($this->curl_connection);
-		}
 
-		//For debugging purposes
-		//echo "<h1>CURL Results</h1>For URL: $curl_url<br /> $sresult";
-		if ($deleteCookie){
-			unlink($cookieJar);
+			$cookieJar = $memcache->get("cookieJar_$barcode");
+
+			if (!$cookieJar){
+				$cookieJar = tempnam("/tmp", "CURLCOOKIE");
+				$memcache->set("cookieJar_$barcode", $cookieJar, 0, $configArray['Caching']['patron_dump']);
+			}
+
+			global $logger;
+			//$logger->log('PatronInfo cookie ' . $cookie, PEAR_LOG_INFO);
+			global $configArray;
+			$scope = $this->getDefaultScope();
+			$curl_url = $configArray['Catalog']['url'] . "/patroninfo~S{$scope}/" . $patronInfo['RECORD_#'] ."/$page";
+			$logger->log('Loading page ' . $curl_url, PEAR_LOG_INFO);
+			//echo "$curl_url";
+			$this->curl_connection = curl_init($curl_url);
+
+			curl_setopt($this->curl_connection, CURLOPT_CONNECTTIMEOUT, 30);
+			curl_setopt($this->curl_connection, CURLOPT_USERAGENT,"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
+			curl_setopt($this->curl_connection, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($this->curl_connection, CURLOPT_SSL_VERIFYPEER, false);
+			curl_setopt($this->curl_connection, CURLOPT_FOLLOWLOCATION, 1);
+			curl_setopt($this->curl_connection, CURLOPT_UNRESTRICTED_AUTH, true);
+			curl_setopt($this->curl_connection, CURLOPT_COOKIEJAR, $cookieJar );
+
+			curl_setopt($this->curl_connection, CURLOPT_COOKIESESSION, !($cookieJar) ? true : false);
+
+			$post_data = $this->_getLoginFormValues($patronInfo, $admin);
+			foreach ($post_data as $key => $value) {
+				$post_items[] = $key . '=' . urlencode($value);
+			}
+			$post_string = implode ('&', $post_items);
+			curl_setopt($this->curl_connection, CURLOPT_POSTFIELDS, $post_string);
+			$patronInfoDump = curl_exec($this->curl_connection);
+
+			if (true){
+				curl_close($this->curl_connection);
+			}
+
+			$memcache->set("patron_info_dump_" . $page . "_$barcode", $patronInfoDump, 0, $configArray['Caching']['patron_dump']);
 		}
 
 		//Strip HTML comments
-		$sresult = preg_replace("/<!--([^(-->)]*)-->/"," ",$sresult);
-		return $sresult;
+		$patronInfoDump = preg_replace("/<!--([^(-->)]*)-->/"," ",$patronInfoDump);
+		return $patronInfoDump;
 	}
 
 	public function getMyTransactions($patron, $page = 1, $recordsPerPage = -1, $sortOption = 'dueDate')
@@ -1676,13 +1702,16 @@ class MillenniumDriver implements DriverInterface
 
 	}
 
-	public function getReadingHistory($patron, $page = 1, $recordsPerPage = -1, $sortOption = "checkedOut") {
+	public function getReadingHistory($patron, $page = 1, $recordsPerPage = -1, $sortOption = "date") {
 		global $timer;
 		$id2= $patron['id'];
 		$patronDump = $this->_getPatronDump($this->_getBarcode());
 
 		//Load the information from millenium using CURL
-		$pageContents = $this->_fetchPatronInfoPage($patronDump, 'readinghistory');
+
+		$paging = 'readinghistory&page=' . $page . '&sort=' . $sortOption;
+
+		$pageContents = $this->_fetchPatronInfoPage($patronDump, $paging);
 		$sresult = preg_replace("/<[^<]+?><[^<]+?>Reading History.\(.\d*.\)<[^<]+?>\W<[^<]+?>/", "", $pageContents);
 		$s = substr($sresult, stripos($sresult, 'patFunc'));
 		$s = substr($s,strpos($s,">")+1);
@@ -1702,10 +1731,18 @@ class MillenniumDriver implements DriverInterface
 				$scols[$i] = str_replace("&nbsp;"," ",$scols[$i]);
 				$scols[$i] = preg_replace ("/<br+?>/"," ", $scols[$i]);
 				$scols[$i] = html_entity_decode(trim(substr($scols[$i],0,stripos($scols[$i],"</t"))));
-				//print_r($scols[$i]);
-				if ($scount == 1) {
+				
+				if ($scount < 5) {
 					$skeys[$i] = $scols[$i];
-				} else if ($scount > 1) {
+
+					if (stripos($skeys[1],"Reading History") > -1) {
+
+						if (preg_match_all ("/.*?\\d+.*?\\d+.*?(\\d+)/is", $skeys[1], $matches)){
+							$total_records = $matches[1][0];
+					  	}
+					}
+
+				} elseif ($scount >= 5){
 					if (stripos($skeys[$i],"Mark") > -1) {
 						if(preg_match('@id="([^"]*)"@', $scols[$i], $m)){
 							$historyEntry['rsh'] = $m[1];
@@ -1713,8 +1750,19 @@ class MillenniumDriver implements DriverInterface
 						$historyEntry['deletable'] = "BOX";
 					}
 
+					
+
 					if (stripos($skeys[$i],"Title") > -1) {
-						if (preg_match('/.*?<a href=\\"\/record=(.*?)(?:~S\\d{1,2})\\">(.*?)<\/a>.*/', $scols[$i], $matches)) {
+
+						if (strpos($scols[$i],'is no longer available') !== false){
+
+							if ($c=preg_match_all ("/.*?((?:[a-z][a-z]*[0-9]+[a-z0-9]*))/is", $scols[$i], $matches)){
+								$shortId = $matches[1][0];
+								$bibid = '.' . $matches[1][0];
+								$title = 'Title is no longer available';
+							}
+
+						} elseif (preg_match('/.*?<a href=\\"\/record=(.*?)(?:~S\\d{1,2})\\">(.*?)<\/a>.*/', $scols[$i], $matches)) {
 							$shortId = $matches[1];
 							$bibid = '.' . $matches[1];
 							$title = $matches[2];
@@ -1736,11 +1784,13 @@ class MillenniumDriver implements DriverInterface
 						$historyEntry['details'] = strip_tags($scols[$i]);
 					}
 
-					$historyEntry['borrower_num'] = $patron['id'];
+					$historyEntry['borrower_num'] = $patron['id']; 
 				} //Done processing column
+				
 			} //Done processing row
 
-			if ($scount > 1){
+			if ($scount > 2 && $historyEntry['title']){
+
 				$historyEntry['title_sort'] = strtolower($historyEntry['title']);
 
 				$historyEntry['itemindex'] = $itemindex++;
@@ -1761,7 +1811,7 @@ class MillenniumDriver implements DriverInterface
 					$titleKey = $historyEntry['title_sort'];
 				}elseif ($sortOption == "author"){
 					$titleKey = $historyEntry['author'] . "_" . $historyEntry['title_sort'];
-				}elseif ($sortOption == "checkedOut" || $sortOption == "returned"){
+				}elseif ($sortOption == "date" || $sortOption == "returned"){
 					$checkoutTime = DateTime::createFromFormat('m-d-Y', $historyEntry['checkout']) ;
 					$titleKey = $checkoutTime->getTimestamp() . "_" . $historyEntry['title_sort'];
 				}elseif ($sortOption == "format"){
@@ -1772,25 +1822,16 @@ class MillenniumDriver implements DriverInterface
 				$titleKey .= '_' . $scount;
 				$readingHistoryTitles[$titleKey] = $historyEntry;
 			}
+			
 			$scount++;
 		}//processed all rows in the table
 
-		if ($sortOption == "checkedOut" || $sortOption == "returned"){
-			krsort($readingHistoryTitles);
-		}else{
-			ksort($readingHistoryTitles);
-		}
 		$numTitles = count($readingHistoryTitles);
-		//process pagination
-		if ($recordsPerPage != -1){
-			$startRecord = ($page - 1) * $recordsPerPage;
-			$readingHistoryTitles = array_slice($readingHistoryTitles, $startRecord, $recordsPerPage);
-		}
 
 		//The history is active if there is an opt out link.
 		$historyActive = (strpos($pageContents, 'OptOut') > 0);
 		$timer->logTime("Loaded Reading history for patron");
-		return array('historyActive'=>$historyActive, 'titles'=>$readingHistoryTitles, 'numTitles'=> $numTitles);
+		return array('historyActive'=>$historyActive, 'titles'=>$readingHistoryTitles, 'numTitles'=> $numTitles, 'total_records' => $total_records);
 	}
 
 	/**
@@ -2029,20 +2070,24 @@ class MillenniumDriver implements DriverInterface
 		$skeys = array_pad(array(),10,"");
 		foreach ($srows as $srow) {
 			$scols = preg_split("/<t(h|d)([^>]*)>/",$srow);
-			//  echo "<pre>";
-			//  print_r($scols);
-			//  echo "</pre>";
+			// echo "<pre>";
+			// print_r($scols);
+			// echo "</pre>";
 			$curHold= array();
 			$curHold['create'] = null;
 			$curHold['reqnum'] = null;
+
 			//Holds page occassionally has a header with number of items checked out.
 			for ($i=0; $i < sizeof($scols); $i++) {
+				
 				$scols[$i] = str_replace("&nbsp;"," ",$scols[$i]);
 				$scols[$i] = preg_replace ("/<br+?>/"," ", $scols[$i]);
 				$scols[$i] = html_entity_decode(trim(substr($scols[$i],0,stripos($scols[$i],"</t"))));
-				if ($scount <= 1) {
+				
+				if ($scount <= 2) {
 					$skeys[$i] = $scols[$i];
 				} else if ($scount > 1) {
+
 					if ($skeys[$i] == "CANCEL") { //Only check Cancel key, not Cancel if not filled by
 						//Extract the id from the checkbox
 						$matches = array();
@@ -2148,7 +2193,7 @@ class MillenniumDriver implements DriverInterface
 					if (stripos($skeys[$i],"CANCEL IF NOT FILLED BY") > -1) {
 						//$curHold['expire'] = strip_tags($scols[$i]);
 					}
-					if (stripos($skeys[$i],"FREEZE") > -1) {
+					if (stripos($skeys[$i],"FREEZE") > -1){
 						$matches = array();
 						$curHold['frozen'] = false;
 						if (preg_match('/<input.*name="freeze(.*?)"\\s*(\\w*)\\s*\/>/', $scols[$i], $matches)){
@@ -2169,13 +2214,15 @@ class MillenniumDriver implements DriverInterface
 				}
 			} //End of columns
 
-			if ($scount > 1) {
+			if ($scount > 2) {
 				if (!isset($curHold['status']) || strcasecmp($curHold['status'], "ready") != 0){
 					$holds['unavailable'][] = $curHold;
 				}else{
 					$holds['available'][] = $curHold;
 				}
 			}
+
+
 
 			$scount++;
 
@@ -2218,6 +2265,9 @@ class MillenniumDriver implements DriverInterface
 	 * @access  public
 	 */
 	public function placeItemHold($recordId, $itemId, $patronId, $comment, $type){
+
+		global $memcache;
+
 		$id2= $patronId;
 		$patronDump = $this->_getPatronDump($this->_getBarcode());
 
@@ -2252,6 +2302,9 @@ class MillenniumDriver implements DriverInterface
 				$title = $record['title'];
 			}
 		}
+
+		$memcache->delete("patron_info_dump_holds_{$this->_getBarcode()}");
+		usleep(250);
 
 		//Cancel a hold
 		if ($type == 'cancel' || $type == 'recall' || $type == 'update') {
@@ -2297,11 +2350,27 @@ class MillenniumDriver implements DriverInterface
 
 			list($first, $last)=explode(' ', $username);
 
+			// // Get user IP
+			// if ( isset($_SERVER['HTTP_CLIENT_IP']) && ! empty($_SERVER['HTTP_CLIENT_IP'])) {
+			//     $ip = $_SERVER['HTTP_CLIENT_IP'];
+			// } elseif ( isset($_SERVER['HTTP_X_FORWARDED_FOR']) && ! empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+			//     $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+			// } else {
+			//     $ip = (isset($_SERVER['REMOTE_ADDR'])) ? $_SERVER['REMOTE_ADDR'] : '0.0.0.0';
+			// }
+
+			// $ip = filter_var($ip, FILTER_VALIDATE_IP);
+			// $ip = ($ip === false) ? '0.0.0.0' : $ip;
+
+			$ip = $_SERVER['HTTP_CLIENT_IP'];
+
 			$header=array();
 			$header[0] = "Accept: text/xml,application/xml,application/xhtml+xml,";
 			$header[0] .= "text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5";
 			$header[] = "Cache-Control: max-age=0";
 			$header[] = "Connection: keep-alive";
+			$header[] = "REMOTE_ADDR: $ip";
+			$header[] = "HTTP_X_FORWARDED_FOR: $ip";
 			$header[] = "Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7";
 			$header[] = "Accept-Language: en-us,en;q=0.5";
 			$id=$patronDump['RECORD_#'];
@@ -2379,6 +2448,7 @@ class MillenniumDriver implements DriverInterface
 			if ($hold_result['result'] == true){
 				UsageTracking::logTrackingData('numHolds');
 			}
+
 			return $hold_result;
 		}
 	}
@@ -2644,6 +2714,7 @@ class MillenniumDriver implements DriverInterface
 
 		//Make sure to clear any cached data
 		global $memcache;
+		$memcache->delete("patron_info_dump_holds_{$this->_getBarcode()}");
 		$memcache->delete("patron_dump_{$this->_getBarcode()}");
 		usleep(250);
 		//Clear holds for the patron
@@ -2675,6 +2746,7 @@ class MillenniumDriver implements DriverInterface
 	public function updateHoldBatched($data)
 	{
 		global $logger;
+		global $memcache;
 		global $configArray;
 		
 		$patronDump = $this->_getPatronDump($this->_getBarcode());
@@ -2814,11 +2886,11 @@ class MillenniumDriver implements DriverInterface
 		}*/
 
 		//Make sure to clear any cached data
-		global $memcache;
+		$memcache->delete("patron_info_dump_holds_{$this->_getBarcode()}");
 		$memcache->delete("patron_dump_{$this->_getBarcode()}");
+		usleep(250);
 		
 		/*
-		usleep(250);
 		//Clear holds for the patron
 		unset($this->holds[$patronId]);
 
@@ -2923,6 +2995,10 @@ class MillenniumDriver implements DriverInterface
 			$hold_result['message'] = "All items were renewed successfully.";
 		}
 		UsageTracking::logTrackingData($hold_result['Renewed']);
+
+		// clear cached data
+		$memcache->delete("patron_info_dump_items_{$this->_getBarcode()}");
+		usleep(250);
 
 		return $hold_result;
 	}
@@ -3269,12 +3345,12 @@ class MillenniumDriver implements DriverInterface
 		self::loadNonHoldableLocations();
 		self::loadPtypeRestrictedLocations();
 
-		if (preg_match('/class\\s*=\\s*\\"bibHoldings\\"/s', $millenniumInfo->framesetInfo)){
+		if (preg_match('/class\\s*=\\s*\\"bibHoldings\\"/s', $millenniumInfo->holdingsInfo)){
 			//There are issue summaries available
 			//Extract the table with the holdings
 			$issueSummaries = array();
 			$matches = array();
-			if (preg_match('/<table\\s.*?class=\\"bibHoldings\\">(.*?)<\/table>/s', $millenniumInfo->framesetInfo, $matches)) {
+			if (preg_match('/<table\\s.*?class=\\"bibHoldings\\">(.*?)<\/table>/s', $millenniumInfo->holdingsInfo, $matches)) {
 				$issueSummaryTable = trim($matches[1]);
 				//Each holdingSummary begins with a holdingsDivider statement
 				$summaryMatches = explode('<tr><td colspan="2"><hr  class="holdingsDivider" /></td></tr>', $issueSummaryTable);

@@ -60,8 +60,7 @@ class ReadingHistory extends MyResearch
 				if (strcasecmp($configArray['Catalog']['ils'], 'Millennium') == 0){
 					$sortOptions = array('title' => 'Title',
 					                     'author' => 'Author',
-					                     'checkedOut' => 'Checkout Date',
-					                     'format' => 'Format',
+					                     'date' => 'Checkout Date'
 					);
 				}else{
 					$sortOptions = array('title' => 'Title',
@@ -72,11 +71,11 @@ class ReadingHistory extends MyResearch
 					);
 				}
 				$interface->assign('sortOptions', $sortOptions);
-				$selectedSortOption = isset($_REQUEST['accountSort']) ? $_REQUEST['accountSort'] : 'returned';
+				$selectedSortOption = isset($_REQUEST['accountSort']) ? $_REQUEST['accountSort'] : 'date';
 				$interface->assign('defaultSortOption', $selectedSortOption);
 				$page = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;
 
-				$recordsPerPage = isset($_REQUEST['pagesize']) && (is_numeric($_REQUEST['pagesize'])) ? $_REQUEST['pagesize'] : 20;
+				$recordsPerPage = isset($_REQUEST['pagesize']) && (is_numeric($_REQUEST['pagesize'])) ? $_REQUEST['pagesize'] : 50;
 				$interface->assign('recordsPerPage', $recordsPerPage);
 				if (isset($_REQUEST['readingHistoryAction']) && $_REQUEST['readingHistoryAction'] == 'exportToExcel'){
 					$recordsPerPage = -1;
@@ -94,7 +93,7 @@ class ReadingHistory extends MyResearch
 					$link .= "?page=%d";
 				}
 				if ($recordsPerPage != '-1'){
-					$options = array('totalItems' => $result['numTitles'],
+					$options = array('totalItems' => $result['total_records'],
 					                 'fileName'   => $link,
 					                 'perPage'    => $recordsPerPage,
 					                 'append'    => false,

@@ -26,19 +26,17 @@
     	<div class="site-message site-message-search">
 			<ul class="message">
 				<li>
-					<p class="message">
-					We are upgrading the software used by Allegheny County Public Libraries. To do so, we must take this Catalog website offline for two periods of time:
-					<br /><span class="upgrade-date">Feb 15th after 6:00pm - Feb 17th</span> and <span class="upgrade-date">Mar 21st after 6:00pm - Mar 24th</span>
-					<br />Please check with your local library for details regarding these outages.
-					</p>
+					<p class="message" align="center">There have been some temporary changes made to the new catalog. <a href="/MyResearch/Tempchanges">Read More...</a></p>
 				</li>
 			</ul>
-	      </div>
+		</div>
     {if $user->cat_username}
 	{if $transList}
-	<div>
-	    <h2>Checked Out Items</h2>
-<p style="font-size:80%;color:red">We are receiving reports about some users not receiving email notices for upcoming due dates, hold pickups, or overdue items.  You may wish to check My Account or contact your local library for this information.   Please contact your email provider if you believe you are not receiving these notices.</p>
+	<div class="new-alert-box-container">
+		<h2>{translate text='Checked Out Items'}</h2>
+		<ul class="new-alert-box">
+			<li>We are receiving reports about some users not receiving email notices for upcoming due dates, hold pickups, or overdue items.  You may wish to check My Account or contact your local library for this information.   Please contact your email provider if you believe you are not receiving these notices.</li>
+		</ul>
 	</div>
 	    
 	<form id="renewForm" action="{$path}/MyResearch/CheckedOut">

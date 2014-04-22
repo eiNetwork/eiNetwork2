@@ -65,7 +65,7 @@
     
   <div id = "holdingsSummary{if $summShortId}{$summShortId}{else}{$summId|escape}{/if}" class="holdingsSummary">
     <div class="statusSummary" id="statusSummary{if $summShortId}{$summShortId}{else}{$summId|escape}{/if}">
-      <span class="unknown" style="font-size: 8pt;">{translate text='Loading'}...</span>
+      <span class="unknown summary-details" style="font-size: 8pt;"><a class="summary-details-link" href="javascript:findInLibrary('{$summId|escape:"url"}',false,'150px','570px','auto')">Check Availability</a></span>
     </div>
   </div>
   </div>
@@ -88,8 +88,8 @@
 	    <span class="resultAction_span" name="bad_reuslt_this" >Remove</span>
 	</div>
     {elseif $pageType eq 'BookCart'}
-	  <div class="round-rectangle-button" id="request-now{if $summShortId}{$summShortId}{else}{$summId|escape}{/if}" style="border-bottom-width:0px;border-bottom-left-radius:0px;border-bottom-right-radius:0px" onclick="requestItem('{$summId|escape:"url"}','{$wishListID}')">
-	      <span class="resultAction_img_span"><img alt="view_details" src="/interface/themes/einetwork/images/Art/ActionIcons/ViewDetails.png" class="resultAction_img"></span>
+	  <div class="round-rectangle-button" id="request-now{if $summShortId}{$summShortId}{else}{$summId|escape}{/if}" style="border-bottom-width:0px;border-bottom-left-radius:0px;border-bottom-right-radius:0px" onclick="getToRequest('/Record/{$summId|escape:"url"}/Hold');">
+	      <span class="resultAction_img_span"><img alt="view_details" src="/interface/themes/einetwork/images/Art/ActionIcons/RequestNow.png" class="resultAction_img"></span>
 	      <span class="resultAction_span">Request Now</span>
 	  </div>
 	  <div class="round-rectangle-button" style="border-radius:0px;border-bottom-width:0px" name="selected[{if $summShortId}{$summShortId}{else}{$summId|escape}{/if}]" id="selected{if $summShortId}{$summShortId}{else}{$summId|escape}{/if}" onclick="getSaveToListForm('{$summId|escape:"url"}', 'VuFind'); return false;">
@@ -110,7 +110,7 @@
 	    <span class="resultAction_img_span"><img alt="view_details" src="/interface/themes/einetwork/images/Art/ActionIcons/ViewDetails.png" class="resultAction_img"></span>
 	    <span class="resultAction_span">View Details</span>
 	</div>
-  <div class="round-rectangle-button request-now-button" id="request-now{if $summShortId}{$summShortId}{else}{$summId|escape}{/if}" style="border-bottom-width:0px;border-top-left-radius:0px;border-top-right-radius:0px;border-bottom-left-radius:0px;border-bottom-right-radius:0px;{if isset($noRequest)}background-color: rgb(192, 192, 192); color: rgb(248, 248, 248); cursor: default;{/if}">
+  <div class="round-rectangle-button request-now-button" id="request-now{if $summShortId}{$summShortId}{else}{$summId|escape}{/if}" style="border-bottom-width:0px;border-top-left-radius:0px;border-top-right-radius:0px;border-bottom-left-radius:0px;border-bottom-right-radius:0px;{if isset($noRequest)}background-color: rgb(192, 192, 192); color: rgb(248, 248, 248); cursor: default;{/if}" onclick="getToRequest('/Record/{$summId|escape:"url"}/Hold');">
             <span class="action-img-span"><img id="request-now-img" alt="request now" class="action-img" src="/interface/themes/einetwork/images/Art/ActionIcons/RequestNow.png" alt="Request Now"/></span>
             <span class="action-lable-span">Request Now</span>
           </div>

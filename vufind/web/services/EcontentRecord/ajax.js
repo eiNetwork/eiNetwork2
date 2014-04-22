@@ -67,12 +67,14 @@ function GetEContentHoldingsInfo(id, type, callback) {
 			//document.getElementById("access-online")
 			if(SummaryDetails =="Checked Out"){
 				$("#access-online .action-lable-span").text("Request Now");
+				$("#access-online img").attr("src","/interface/themes/einetwork/images/Art/ActionIcons/RequestNow.png");
 				if(document.getElementById("access-online")){
 					document.getElementById("access-online").setAttribute("onclick","placeOverDriveHold('" + id + "')");
 				}
 				//document.getElementById("access-online").setAttribute("onclick","ajaxLightbox('"+url+"?method=GetHoldingsInfoPopup',false,false,'600px',false,'auto')");
 			}else if(SummaryDetails =="Available from OverDrive"){
 				$("#access-online .action-lable-span").text("Checkout Now");
+				$("#access-online img").attr("src","/interface/themes/einetwork/images/Art/ActionIcons/RequestNow.png");
 				if(document.getElementById("access-online")){
 					document.getElementById("access-online").setAttribute("onclick","checkoutOverDriveItem('" + id + "')");
 				}
