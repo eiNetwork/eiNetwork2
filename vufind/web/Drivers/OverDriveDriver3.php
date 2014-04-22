@@ -791,7 +791,7 @@ class OverDriveDriver3 {
 			'reserveId' => $overDriveId,
 			'formatType' => $formatId
 		);
-		$response = $this->_callPatronUrl($user->cat_password, $user->cat_password, $url, $params);
+		$response = $this->_callPatronUrl($user->cat_username, $user->cat_password, $url, $params);
 
 		$result = array();
 		$result['result'] = false;
