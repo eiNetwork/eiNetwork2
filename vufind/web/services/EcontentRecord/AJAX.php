@@ -105,6 +105,9 @@ class AJAX extends Action {
 		$eContentRecord = new EContentRecord();
 		$eContentRecord->id = $id;
 		$eContentRecord->find(true);
+
+		$overDriveId = $eContentRecord->externalId;
+		$interface->assign('overDriveId', $overDriveId);
 		
 		$holdings = $driver->getHolding($id);
 		$showEContentNotes = false;
@@ -130,9 +133,6 @@ class AJAX extends Action {
 			$interface->assign('showOtherEditionsPopup', false);
 		}
 		$interface->assign('holdings', $holdings);
-		echo "<pre>";
-		print_r($holdings);
-		echo "</pre>";
 		//Load status summary
 		$result = $driver->getStatusSummary($id, $holdings);
 		if (PEAR::isError($result)) {
@@ -434,7 +434,7 @@ class AJAX extends Action {
 		if ($user && !PEAR::isError($user)){
 			require_once 'Drivers/OverDriveDriverFactory.php';
 			$odriver = OverDriveDriverFactory::getDriver();
-			$downloadMessage = $odriver->getDownloadLink($overDriveId, $format, $user);
+			$downloadMessage = $odriver->selectOverDriveDownloadFormat($overDriveId, $format, $user);
 			return json_encode($downloadMessage);
 		}else{
 			return json_encode(array('result'=>false, 'message'=>'You must be logged in to place a hold.'));
