@@ -337,6 +337,19 @@
 					{/if}
 				{/if}
 			{/foreach}
+			<br>
+			<div class="hold-buttons">
+				<div class="requested-items-button">
+					{if $freezeButton eq 'freeze'}
+						<a id="freeze-all-btn" href="#" onclick="" class="button">Freeze All</a>
+					{else}
+						<a id="unfreeze-all-btn" href="#" onclick="" class="button">Unfreeze All</a>
+					{/if}
+				</div>
+				<div class="requested-items-button">
+					<a id="update-selected-btn" href="#" onclick="" class="button">Update Selected</a>
+				</div>
+			</div>
 			
 			{*****BEGIN Overdrive Holds******}
 			<div style="margin-top: 20px;margin-bottom: 20px"><h3>{translate text='eContent Requests'}</h3></div>

@@ -105,7 +105,7 @@
 	  </div>
 	  <div class="round-rectangle-button" style="border-radius:0px;border-bottom-width:0px" name="selected[{if $summShortId}{$summShortId}{else}{$summId|escape}{/if}]" id="selected{if $summShortId}{$summShortId}{else}{$summId|escape}{/if}" onclick="getSaveToListForm('{$summId|escape:"url"}', 'VuFind'); return false;">
 	      <span class="resultAction_img_span"><img alt="add_to_cart" src="/interface/themes/einetwork/images/Art/ActionIcons/AddToCart.png" class="resultAction_img"></span>
-	      <span class="resultAction_span" >Move to Wish List</span>
+	      <span class="resultAction_span" >Move to List</span>
 	  </div>
 	  <div class="round-rectangle-button"  style="border-radius:0px;border-bottom-width:0px;" onclick="findInLibrary('{$summId|escape:"url"}',false,'150px','570px','auto')">
 	      <span class="resultAction_img_span"><img alt="more like this" src="/interface/themes/einetwork/images/Art/ActionIcons/MoreLikeThis.png" class="resultAction_img"></span>

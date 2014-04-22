@@ -3,7 +3,7 @@
 	<span onclick="hideLightbox()"><img class="close-button" src="/interface/themes/einetwork/images/closeHUDButton.png" style="float:right" ></span>
 </div>
 <div id="popupboxContent" class="popupContent">
-<form onSubmit="saveRecord('{$id|escape}', '{$source|escape}', this, {literal}{{/literal}add: '{translate text='Add to wish list'}', error: '{translate text='add_favorite_fail'}'{literal}}{/literal}); return false;">
+<form onSubmit="saveRecord('{$id|escape}', '{$source|escape}', this, {literal}{{/literal}add: '{translate text='Add to list'}', error: '{translate text='add_favorite_fail'}'{literal}}{/literal}); return false;">
 <input type="hidden" name="submit" value="1" />
 <input type="hidden" name="record_id" value="{$id|escape}" />
 <input type="hidden" name="source" value="{$source|escape}" />
@@ -41,12 +41,12 @@
         <option value="{$list.id}">{$list.title|escape:"html"}</option>
 	{/if}
         {foreachelse}
-        <option value="">{translate text='My Wish Lists'}</option>
+        <option value="">{translate text='My Lists'}</option>
         {/foreach}
       </select>
       {/if}
-      <a style="color:#9999FF" href="{$path}/MyResearch/ListEdit?id={$id|escape:"url"}&amp;source={$source|escape}"
-         onclick="ajaxLightbox('{$path}/MyResearch/ListEdit?id={$id|escape}&source={$source|escape}&lightbox',false,false,'450px',false,'200px'); return false;">{translate text="or create a new list"}</a>
+      <button  class="button"
+         onclick="ajaxLightbox('{$path}/MyResearch/ListEdit?id={$id|escape}&source={$source|escape}&lightbox',false,false,'450px',false,'200px'); return false;">{translate text="Create a new list"}</button>
     </td>
   </tr>
   {if $showLists}

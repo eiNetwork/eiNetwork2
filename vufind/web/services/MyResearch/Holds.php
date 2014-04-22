@@ -83,7 +83,6 @@ class Holds extends MyResearch
 
 		// Define sorting options
 		$sortOptions = array(
-			 ''      =>  '',		     
 			 'title' => 'Title',
 			 'author' => 'Author',
                          'format' => 'Format',
