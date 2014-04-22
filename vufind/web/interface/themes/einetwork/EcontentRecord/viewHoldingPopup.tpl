@@ -23,8 +23,8 @@
 				<td>
 					{* Options for the user to view online or download *}
 					{foreach from=$eContentItem->links item=link}
-						{if ($lockedFormat == 0 || $link.formatId == $lockedFormat) && $link.formatId != 610}
-						<a href="{if $link.url}{$link.url}{else}#{/if}" {if $link.onclick}onclick="downloadOverDriveItem('{$link.overDriveId}', '{$link.formatId}')"{/if} class="button" style="background-color:rgb(244,213,56);width:95px;height:20px;padding-top:0px;padding-bottom:0px;text-align:center;">{if $link.text eq 'Place Hold'}Download Now{elseif $link.text eq 'Check Out'}Checkout Now{else}{$link.text}{/if}</a>
+						{if ($lockedFormat == 0 || $link.externalFormatId == $lockedFormat) && $link.externalFormatId != 610}
+						<a href="{if $link.url}{$link.url}{else}#{/if}" {if $link.onclick}onclick="downloadOverDriveItem('{$link.overDriveId}', '{$eContentItem->externalFormatId}')"{/if} class="button" style="background-color:rgb(244,213,56);width:95px;height:20px;padding-top:0px;padding-bottom:0px;text-align:center;">{if $link.text eq 'Place Hold'}Download Now{elseif $link.text eq 'Check Out'}Checkout Now{else}{$link.text}{/if}</a>
 						{/if}	
 					{/foreach}
 					{if $user && $user->hasRole('epubAdmin')}

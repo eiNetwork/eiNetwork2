@@ -833,6 +833,7 @@ class OverDriveDriver3 {
 		global $configArray;
 
 		$url = $configArray['OverDrive']['patronApiUrl'] . "/v1/patrons/me/checkouts/{$overDriveId}/formats/{$format}/downloadlink";
+
 		$url .= '?errorpageurl=' . urlencode($configArray['Site']['url'] . '/Help/OverDriveError');
 		if ($format == 'ebook-overdrive'){
 			$url .= '&odreadauthurl=' . urlencode($configArray['Site']['url'] . '/Help/OverDriveReadError');
@@ -850,7 +851,7 @@ class OverDriveDriver3 {
 				$result['message'] = 'Created Download Link';
 				$result['downloadUrl'] = $response->links->contentlink->href;
 			}else{
-				$result['message'] = 'Sorry, but we could not get a download link for you.  ' . $response;
+				$result['message'] = 'Sorry, but we could not get a download link for you.  ' . $response->message;
 			}
 		} else {
 			$error_message = array(

@@ -12,13 +12,13 @@ class AJAX extends Action {
 
 	function launch() {
 		$method = $_GET['method'];
-		if (in_array($method, array('RateTitle', 'GetSeriesTitles', 'GetComments', 'DeleteItem', 'DownloadOverDriveItem', 'EditOverDriveEmail', 'SaveComment', 'CheckoutOverDriveItem', 'PlaceOverDriveHold', 'ReturnOverDriveItem', 'CancelOverDriveHold'))){
+		if (in_array($method, array('RateTitle', 'GetSeriesTitles', 'GetComments', 'DeleteItem', 'DownloadOverDriveItem', 'EditOverDriveEmail', 'SaveComment', 'CheckoutOverDriveItem', 'PlaceOverDriveHold', 'ReturnOverDriveItem', 'CancelOverDriveHold','SelectOverDriveDownloadFormat', 'GetDownloadLink'))){
 			header('Content-type: text/plain');
 			header('Cache-Control: no-cache, must-revalidate'); // HTTP/1.1
 			header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
 			$result = $this->$method();
 			echo $result;
-		}else if (in_array($method, array('GetGoDeeperData', 'AddItem', 'EditItem', 'GetOverDriveLoanPeriod', 'getPurchaseOptions','GetHoldingsInfoPopup'))){
+		}else if (in_array($method, array('GetGoDeeperData', 'AddItem', 'EditItem', 'GetOverDriveLoanPeriod', 'getPurchaseOptions', 'getDescription','GetHoldingsInfoPopup', 'SelectOverDriveFormat'))){
 			header('Content-type: text/html');
 			header('Cache-Control: no-cache, must-revalidate'); // HTTP/1.1
 			header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
@@ -130,6 +130,9 @@ class AJAX extends Action {
 			$interface->assign('showOtherEditionsPopup', false);
 		}
 		$interface->assign('holdings', $holdings);
+		echo "<pre>";
+		print_r($holdings);
+		echo "</pre>";
 		//Load status summary
 		$result = $driver->getStatusSummary($id, $holdings);
 		if (PEAR::isError($result)) {
@@ -429,9 +432,9 @@ class AJAX extends Action {
 		$overDriveId = $_REQUEST['overDriveId'];
 		$format = $_REQUEST['formatId'];
 		if ($user && !PEAR::isError($user)){
-			require_once('Drivers/OverDriveDriver.php');
-            $driver = new OverDriveDriver();
-			$downloadMessage = $driver->downloadOverDriveItem($overDriveId, $format, $user);
+			require_once 'Drivers/OverDriveDriverFactory.php';
+			$odriver = OverDriveDriverFactory::getDriver();
+			$downloadMessage = $odriver->getDownloadLink($overDriveId, $format, $user);
 			return json_encode($downloadMessage);
 		}else{
 			return json_encode(array('result'=>false, 'message'=>'You must be logged in to place a hold.'));
@@ -570,4 +573,20 @@ class AJAX extends Action {
 		
 		echo $interface->fetch('EcontentRecord/ajax-purchase-options.tpl');
 	}
+
+	function SelectOverDriveDownloadFormat(){
+		global $user;
+		$overDriveId = $_REQUEST['overDriveId'];
+		$formatId = $_REQUEST['formatId'];
+		if ($user && !PEAR_Singleton::isError($user)){
+			require_once ROOT_DIR . '/Drivers/OverDriveDriverFactory.php';
+			$driver = OverDriveDriverFactory::getDriver();
+			$result = $driver->selectOverDriveDownloadFormat($overDriveId, $formatId, $user);
+			//$logger->log("Checkout result = $result", PEAR_LOG_INFO);
+			return json_encode($result);
+		}else{
+			return json_encode(array('result'=>false, 'message'=>'You must be logged in to download a title.'));
+		}
+	}
+
 }
