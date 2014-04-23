@@ -80,7 +80,7 @@
       <script type="text/javascript" src="{$path}/services/Search/ajax.js?v3.0"></script>
       <script type="text/javascript" src="{$path}/services/Record/ajax.js?v3.0"></script>
       <script type="text/javascript" src="{$path}/js/ei_js/bookcart.js?v3.0"></script>  
-      <script type="text/javascript" src="{$path}/js/overdrive.js?v3.3.1"></script>
+      <script type="text/javascript" src="{$path}/js/overdrive.js?v3.3.2"></script>
     {/if}
     
     {* Files that should not be combined *}
