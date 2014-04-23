@@ -91,7 +91,7 @@ function downloadOverDriveItem(overDriveId, formatId){
 	if (loggedIn){
 		showProcessingIndicator("Downloading the title for you in OverDrive.  This may take a minute.");
 
-		var url = path + "/EcontentRecord/AJAX?method=DownloadOverDriveItem&overDriveId=" + overDriveId + "&formatId=" + formatId;
+		var url = path + "/EcontentRecord/AJAX?method=readOverDriveItem&overDriveId=" + overDriveId + "&formatId=" + formatId;
 		$.ajax({
 			url: url,
 			cache: false,
