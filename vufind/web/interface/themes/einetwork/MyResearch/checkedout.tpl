@@ -415,7 +415,7 @@
 					{/if}
 					<input class="button" type="button" value="Download" onclick="DownloadCheckedoutOverdrive({$record.recordId},{if $record.formatSelected},'{$record.selectedFormat.format}'{/if})"/>
 					{if $record.overdriveRead == true}
-					<input class="button" type="button" value="Read" onclick="downloadOverDriveItem('{$record.overDriveId}','ebook-overdrive')"/>
+					<input class="button" type="button" value="Read" onclick="downloadOverDriveItem('{$record.overDriveId}','ebook-overdrive','read')"/>
 					{/if}
 				</div>
 			</div>
@@ -481,7 +481,7 @@
 				<div class="item_status">
 					<input class="button" type="button" value="Download" onclick="DownloadCheckedoutOverdrive({$record.recordId}{if $record.formatSelected},'{$record.selectedFormat.format}'{/if})"/>
 					{if $record.overdriveRead == true}
-					<input class="button" type="button" value="Read" onclick="downloadOverDriveItem('{$record.overDriveId}','ebook-overdrive')"/>
+					<input class="button" type="button" value="Read" onclick="downloadOverDriveItem('{$record.overDriveId}','ebook-overdrive','read')"/>
 					{/if}
 				</div>
 			</div>
