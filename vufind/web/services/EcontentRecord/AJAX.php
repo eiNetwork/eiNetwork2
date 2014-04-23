@@ -12,7 +12,7 @@ class AJAX extends Action {
 
 	function launch() {
 		$method = $_GET['method'];
-		if (in_array($method, array('RateTitle', 'GetSeriesTitles', 'GetComments', 'DeleteItem', 'DownloadOverDriveItem', 'EditOverDriveEmail', 'SaveComment', 'CheckoutOverDriveItem', 'PlaceOverDriveHold', 'ReturnOverDriveItem', 'CancelOverDriveHold','SelectOverDriveDownloadFormat', 'GetDownloadLink'))){
+		if (in_array($method, array('RateTitle', 'GetSeriesTitles', 'GetComments', 'DeleteItem', 'DownloadOverDriveItem', 'EditOverDriveEmail', 'SaveComment', 'CheckoutOverDriveItem', 'PlaceOverDriveHold', 'ReturnOverDriveItem', 'CancelOverDriveHold','SelectOverDriveDownloadFormat', 'GetDownloadLink','readOverDriveItem'))){
 			header('Content-type: text/plain');
 			header('Cache-Control: no-cache, must-revalidate'); // HTTP/1.1
 			header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
@@ -440,6 +440,20 @@ class AJAX extends Action {
 			return json_encode(array('result'=>false, 'message'=>'You must be logged in to place a hold.'));
 		}		
 		
+	}
+
+	function readOverDriveItem(){
+		global $user;
+		$overDriveId = $_REQUEST['overDriveId'];
+		$format = $_REQUEST['formatId'];
+		if ($user && !PEAR::isError($user)){
+			require_once 'Drivers/OverDriveDriverFactory.php';
+			$odriver = OverDriveDriverFactory::getDriver();
+			$downloadMessage = $odriver->getDownloadLink($overDriveId, $format, $user);
+			return json_encode($downloadMessage);
+		}else{
+			return json_encode(array('result'=>false, 'message'=>'You must be logged in to place a hold.'));
+		}
 	}
 	
 	function ReturnOverDriveItem(){

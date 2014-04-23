@@ -804,7 +804,7 @@ class OverDriveDriver3 {
 				$downloadLink = $this->getDownloadLink($overDriveId, $formatId, $user);
 				$result = $downloadLink;
 			}else{
-				$result['message'] = 'Sorry, but we could not select a format for you. ' . $response;
+				$result['message'] = 'Sorry, but we could not select a format for you. ' . $response->message;
 				
 			}
 		} else {
