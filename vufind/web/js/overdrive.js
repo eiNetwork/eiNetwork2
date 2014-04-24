@@ -106,6 +106,7 @@ function downloadOverDriveItem(overDriveId, formatId, read){
 
 					//window.location.href = data.downloadUrl;
 					window.open(data.downloadUrl, '_blank');
+					location.reload();
 					hideLightbox();
 				    
 				}else{
