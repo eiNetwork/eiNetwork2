@@ -1724,15 +1724,23 @@ class MillenniumDriver implements DriverInterface
 		$skeys = array_pad(array(),10,"");
 		$readingHistoryTitles = array();
 		$itemindex = 0;
+
+		// check to see if paging is switched on. Increment scrape index
+		if (strpos($pageContents, 'Result page:') > 0){
+			$scrape_row_index = 5;
+		} else {
+			$scrape_row_index = 4;	
+		}
+
 		foreach ($srows as $srow) {
+
 			$scols = preg_split("/<t(h|d)([^>]*)>/",$srow);
 			$historyEntry = array();
 			for ($i=0; $i < sizeof($scols); $i++) {
 				$scols[$i] = str_replace("&nbsp;"," ",$scols[$i]);
 				$scols[$i] = preg_replace ("/<br+?>/"," ", $scols[$i]);
 				$scols[$i] = html_entity_decode(trim(substr($scols[$i],0,stripos($scols[$i],"</t"))));
-				
-				if ($scount < 5) {
+				if ($scount < $scrape_row_index) {
 					$skeys[$i] = $scols[$i];
 
 					if (stripos($skeys[1],"Reading History") > -1) {
@@ -1742,15 +1750,13 @@ class MillenniumDriver implements DriverInterface
 					  	}
 					}
 
-				} elseif ($scount >= 5){
+				} elseif ($scount >= 4){
 					if (stripos($skeys[$i],"Mark") > -1) {
 						if(preg_match('@id="([^"]*)"@', $scols[$i], $m)){
 							$historyEntry['rsh'] = $m[1];
 						}
 						$historyEntry['deletable'] = "BOX";
 					}
-
-					
 
 					if (stripos($skeys[$i],"Title") > -1) {
 
