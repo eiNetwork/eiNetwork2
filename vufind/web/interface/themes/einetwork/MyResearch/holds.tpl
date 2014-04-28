@@ -6,6 +6,46 @@
 <script type="text/javascript" src="{$path}/js/holds.js"></script>
 <script type="text/javascript" src="{$path}/services/MyResearch/ajax.js"></script>
 <script type="text/javascript" src="{$path}/js/tablesorter/jquery.tablesorter.min.js"></script>
+<script type="text/javascript" src="{$path}/js/jquery.selectric.js"></script>
+{literal}
+<script type="text/javascript">
+
+	$(function(){
+		$('.location_dropdown').selectric();
+	});
+
+</script>
+<style>
+{/literal}
+
+{php}
+
+$bold_count = $this->get_template_vars('preferred_count');
+
+$i=0;
+while ($i < $bold_count){
+
+	$i++;
+
+	if ($i < $bold_count){
+		echo '.selectricItems li:nth-child(' . $i . '),';
+	} else {
+		echo '.selectricItems li:nth-child(' . $i . ')';
+	}
+
+	
+}
+{/php}
+{literal}
+{
+	font-size:14px;
+	font-weight: bolder;
+}
+
+</style>
+
+{/literal}
+<link rel="stylesheet" type="text/css" href="{$path}/interface/themes/einetwork/css/selectric.css">
 <div id="page-content" class="content">
 	<div id="left-bar">
 		<div class="sort">
