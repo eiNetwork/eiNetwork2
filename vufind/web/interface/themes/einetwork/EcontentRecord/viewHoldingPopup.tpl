@@ -6,7 +6,7 @@
 <div id="popupboxContent" class="popupContent" style="margin-top:10px">
 {if count($holdings) > 0}
     <div style="overflow-y:auto;height:auto;max-height:4000px;margin-left:8px">
-	{if $lockedFormat == 0 }
+	{if $lockedFormat == '' }
 	<div><span>You may select one format.</span></div>
 	{/if}
 	<table>
@@ -16,20 +16,13 @@
 	<tbody>
 	{foreach from=$holdings item=eContentItem key=index}
 		{if $eContentItem->item_type == 'overdrive'}
-			{if $eContentItem->links[0].formatId != 610 }
+			{if $eContentItem->externalFormatId != 'ebook-overdrive' }
 			<tr id="itemRow{$index}" style="height:30px">
 				<td>{$eContentItem->externalFormat}</td>
 				<td>OverDrive</td>
 				<td>
-					{* Options for the user to view online or download *}
-					{foreach from=$eContentItem->links item=link}
-						{if ($lockedFormat == 0 || $link.formatId == $lockedFormat) && $link.formatId != 610}
-						<a href="{if $link.url}{$link.url}{else}#{/if}" {if $link.onclick}onclick="downloadOverDriveItem('{$link.overDriveId}', '{$link.formatId}')"{/if} class="button" style="background-color:rgb(244,213,56);width:95px;height:20px;padding-top:0px;padding-bottom:0px;text-align:center;">{if $link.text eq 'Place Hold'}Download Now{elseif $link.text eq 'Check Out'}Checkout Now{else}{$link.text}{/if}</a>
-						{/if}	
-					{/foreach}
-					{if $user && $user->hasRole('epubAdmin')}
-						<a href="#" onclick="return editItem('{$id}', '{$eContentItem->id}')" class="button" style="background-color:rgb(244,213,56);width:95px;height:20px;padding-top:0px;padding-bottom:0px;text-align:center;">Edit</a>
-						<a href="#" onclick="return deleteItem('{$id}', '{$eContentItem->id}')" class="button" style="background-color:rgb(244,213,56);width:95px;height:20px;padding-top:0px;padding-bottom:0px;text-align:center;">Delete</a>
+					{if ($lockedFormat == 'undefined' || $eContentItem->externalFormatId == $lockedFormat) && $eContentItem->externalFormatId != 'ebook-overdrive'}
+						<a href="#" onclick="downloadOverDriveItem('{$overDriveId}', '{$eContentItem->externalFormatId}')" class="button" style="background-color:rgb(244,213,56);width:95px;height:20px;padding-top:0px;padding-bottom:0px;text-align:center;">Download Now</a>
 					{/if}
 				</td>
 			</tr>

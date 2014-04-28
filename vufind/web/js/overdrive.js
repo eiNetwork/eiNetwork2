@@ -96,10 +96,16 @@ function placeOverDriveHold(elemId){
 	}
 }
 
-function downloadOverDriveItem(overDriveId, formatId){
+function downloadOverDriveItem(overDriveId, formatId, read){
 	if (loggedIn){
 		showProcessingIndicator("Downloading the title for you in OverDrive.  This may take a minute.");
-		var url = path + "/EcontentRecord/AJAX?method=DownloadOverDriveItem&overDriveId=" + overDriveId + "&formatId=" + formatId;
+
+		if (read == 'read'){
+			var url = path + "/EcontentRecord/AJAX?method=ReadOverDriveItem&overDriveId=" + overDriveId + "&formatId=" + formatId;
+		} else {
+			var url = path + "/EcontentRecord/AJAX?method=DownloadOverDriveItem&overDriveId=" + overDriveId + "&formatId=" + formatId;
+		}
+		
 		$.ajax({
 			url: url,
 			cache: false,
@@ -109,6 +115,7 @@ function downloadOverDriveItem(overDriveId, formatId){
 
 					//window.location.href = data.downloadUrl;
 					window.open(data.downloadUrl, '_blank');
+					location.reload();
 					hideLightbox();
 				    
 				}else{
