@@ -27,7 +27,7 @@
 
 {php}
 
-$bold_count = $this->get_template_vars('preferred_count') + 1;
+$bold_count = $this->get_template_vars('preferred_count');
 
 $i=0;
 while ($i < $bold_count){
