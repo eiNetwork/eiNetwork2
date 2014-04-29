@@ -2962,3 +2962,21 @@ ul.new-alert-box li {
 #temp-changes a:hover {
 	text-decoration: none;
 }
+
+.holdsUpdateBranchSelection {
+	float:right;
+	clear:left;
+	margin-top:20px;
+} 
+
+.holdsUpdateBranchSelection-Large {
+	float:right;
+	clear:left;
+	margin-top:45px;
+} 
+
+.requested_update_check {
+	float:right;
+	width:100px;
+	margin-top:20px;
+}

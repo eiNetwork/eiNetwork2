@@ -97,13 +97,13 @@ while ($i < $bold_count){
 			<div class="hold-buttons">
 				<div class="requested-items-button">
 					{if $freezeButton eq 'freeze'}
-						<a id="freeze-all-btn" href="#" onclick="" class="button">Freeze All</a>
+						<a class="freeze-all-btn button" href="#">Freeze All</a>
 					{else}
-						<a id="unfreeze-all-btn" href="#" onclick="" class="button">Unfreeze All</a>
+						<a class="unfreeze-all-btn button" href="#">Unfreeze All</a>
 					{/if}
 				</div>
 				<div class="requested-items-button">
-					<a id="update-selected-btn" href="#" onclick="" class="button">Update Selected</a>
+					<a class="update-selected-btn button" href="#">Update Selected</a>
 				</div>
 			</div>
 
@@ -298,14 +298,14 @@ while ($i < $bold_count){
 								
 								{if $record.status eq "Available"}
 								
-									<div class="requested_update_check" style="float:right;width:100px;margin-top:20px">
+									<div class="requested_update_check">
 								
 										<input class="physical_items cancel_checkboxes" type="checkbox" name="data[{$record.cancelId}][cancel]" /> Cancel
 										
 									</div>
 									
-									<div id='holdsUpdateBranchSelction' style="float:right;clear:left;margin-top:20px;">
-										&nbsp&nbsp&nbsp&nbspChange Pickup Location to:<br />
+									<div class='holdsUpdateBranchSelection-Large'>
+										Change Pickup Location to:<br />
 										
 										<select name="data[{$record.cancelId}][location]" class="physical_items update_all location_dropdown">
 										   {html_options options=$pickupLocations selected=$record.currentPickupId}
@@ -315,7 +315,7 @@ while ($i < $bold_count){
 									
 								{elseif $record.status eq "Frozen"}
 								
-									<div class="requested_update_check" style="float:right;width:100px;margin-top:20px">
+									<div class="requested_update_check">
 								
 										{if $record.frozen}
 											<input id="frozen_state_on" class="physical_items freeze_checkboxes update_all" type="checkbox" name="data[{$record.cancelId}][freeze]" /> Unfreeze<br />
@@ -327,7 +327,7 @@ while ($i < $bold_count){
 									
 									</div>
 										
-									<div id='holdsUpdateBranchSelction' style="float:right;clear:left;margin-top:20px;">
+									<div class='holdsUpdateBranchSelection'>
 										Change Pickup Location to:<br />
 										
 										<select name="data[{$record.cancelId}][location]" class="physical_items update_all location_dropdown">
@@ -345,14 +345,14 @@ while ($i < $bold_count){
 								
 								{else}
 								
-									<div class="requested_update_check" style="float:right;width:100px;margin-top:20px">
+									<div class="requested_update_check">
 								
 										<input id="frozen_state_off" class="physical_items freeze_checkboxes update_all" type="checkbox" name="data[{$record.cancelId}][freeze]" /> Freeze<br />
 										<input class="physical_items cancel_checkboxes" type="checkbox" name="data[{$record.cancelId}][cancel]" /> Cancel
 								
 									</div>
 									
-									<div id='holdsUpdateBranchSelction' style="float:right;clear:left;margin-top:20px;">
+									<div class='holdsUpdateBranchSelection'>
 										Change Pickup Location to:<br />
 								
 											<select name="data[{$record.cancelId}][location]" class="physical_items update_all location_dropdown">
@@ -381,13 +381,13 @@ while ($i < $bold_count){
 			<div class="hold-buttons">
 				<div class="requested-items-button">
 					{if $freezeButton eq 'freeze'}
-						<a id="freeze-all-btn" href="#" onclick="" class="button">Freeze All</a>
+						<a class="freeze-all-btn button" href="#">Freeze All</a>
 					{else}
-						<a id="unfreeze-all-btn" href="#" onclick="" class="button">Unfreeze All</a>
+						<a class="unfreeze-all-btn button" href="#">Unfreeze All</a>
 					{/if}
 				</div>
 				<div class="requested-items-button">
-					<a id="update-selected-btn" href="#" onclick="" class="button">Update Selected</a>
+					<a class="update-selected-btn button" href="#">Update Selected</a>
 				</div>
 			</div>
 			
@@ -395,7 +395,7 @@ while ($i < $bold_count){
 			<div style="margin-top: 20px;margin-bottom: 20px"><h3>{translate text='eContent Requests'}</h3></div>
 			{if count($overDriveHolds.available) > 0}
 				
-				<div >&nbsp&nbsp&nbsp&nbspTitles available for checkout</div>
+				<div >&nbsp;&nbsp;&nbsp;&nbsp;Titles available for checkout</div>
 				<div class="checkout">
 					{foreach from=$overDriveHolds.available item=record}
 					<div id="overdrive-request-available{$record.recordId}" class="record overdrive-available">

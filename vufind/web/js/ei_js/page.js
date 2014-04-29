@@ -318,7 +318,7 @@ function getBookCartItemCount(){
                 dataType: "json",
                 data: 'method=getBookCartItemCount',
 		success: function(data) {
-					data['count'] = data['count'] - 1;
+					data['count'] = data['count'];
                     if(data['count'] == 0){
                         $("#cart-description").html("&nbsp;&nbsp; Your book cart is empty ");
                     }else if(data['count'] == 1){

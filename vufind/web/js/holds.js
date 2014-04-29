@@ -1,15 +1,15 @@
 var activeOverDriveConnections = 0;
 
 $(document).ready(function() {
-	$('#update-selected-btn').click(function(){
+	$('.update-selected-btn').click(function(){
 		checkSelected();
 	});
 	
-	$('#freeze-all-btn').click(function(){
+	$('.freeze-all-btn').click(function(){
 		freezeAll();
 	});
 	
-	$('#unfreeze-all-btn').click(function(){
+	$('.unfreeze-all-btn').click(function(){
 		unfreezeAll();
 	});
 
