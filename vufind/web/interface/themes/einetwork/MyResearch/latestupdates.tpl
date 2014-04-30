@@ -6,7 +6,39 @@
         <h3>We’re listening to you.   The ongoing changes and planned enhancements are driven by the comments and feedback you submit when completing the new catalog survey.  We want to continue to hear from you and we appreciate your feedback.</h3>
         <br>
         <div class="releases">
-            <h2><b>Current release version 3.0</b></h2>
+            <h2><span class="bold">Upcoming Release</span></h2>
+            <h2><span class="bold">Release version 4.0</span></h2>
+            Our current development is focused on the following features and enhancements:
+            <ol class="decimal">
+                <li>Improving the speed of My Account functionality and especially the initial time for login to My Account.</li>
+                <li>Improving the user’s ability to find materials in the library.</li>
+                <li>Improving user accessibility to enhanced content.</li>
+                <li>Enabling the ability for users to email search results.</li>
+                <li>Creating shortcuts to popular filters and lists.</li>
+                <li>Improving the site wide language and user instructions.</li>
+                <li>Improving search results when doing an author search.</li>
+            </ol>
+        </div>
+        <div class="releases">
+            <h2><span class="bold">Current release version 3.3</span></h2>
+            Release date 4/30/2013
+            <ol class="decimal">
+                <li>Change Wish List name to My List.</li> 
+                <li>For Paying Fines - Add notice to  tell users they will be forwarded to classic catalog to pay fines.</li>
+                <li>Improve popup when checking out overdrive items.</li>
+                <li>Add confirmation box when items added to Wish List.</li>
+                <li>Find In Library should default to show all items (available or not) and have a button to show Available Only.</li>
+                <li>Add Update All buttons to top and bottom wherever used.</li>
+                <li>Make Create Wish List a button.</li>
+                <li>Book cart count not correct.</li>
+                <li>Add call number label to search results, details page and Find In Library heading.</li>
+                <li>Bold preferred libraries in dropdowns.</li>
+            </ol>
+        </div>
+
+        <div class="releases">
+            <h2><span class="bold">Previous Releases</span></h2>
+            <h2>Release version 3.0</h2>
             Release date 9/10/2013
             <ol class="decimal">
                 <li>Improve search results for title searches when using a search phrase that exactly matches the title.</li>
@@ -16,8 +48,8 @@
                 <li>Enable users to select and save their preference for a full or brief display of information when viewing checked out items, requests, wishlists, and  the bookcart  while  logged into My Account. <span class="red">** This feature is currently still in development and will be included in an upcoming release. **</span></li>
             </ol>
         </div>
+
         <div class="releases">
-            <h2><span class="bold">Previous Releases</span></h2>
             <h2>Release version 2.2</h2>
             Release date 7/29/2013
             <ol class="decimal">
