@@ -20,19 +20,18 @@
             </ol>
         </div>
         <div class="releases">
-            <h2><span class="bold">Current release version 3.3</span></h2>
+            <h2><span class="bold">Current Release version 3.3</span></h2>
             Release date 4/30/2013
             <ol class="decimal">
-                <li>Change Wish List name to My List.</li> 
-                <li>For Paying Fines - Add notice to  tell users they will be forwarded to classic catalog to pay fines.</li>
-                <li>Improve popup when checking out overdrive items.</li>
-                <li>Add confirmation box when items added to Wish List.</li>
-                <li>Find In Library should default to show all items (available or not) and have a button to show Available Only.</li>
-                <li>Add Update All buttons to top and bottom wherever used.</li>
-                <li>Make Create Wish List a button.</li>
-                <li>Book cart count not correct.</li>
-                <li>Add call number label to search results, details page and Find In Library heading.</li>
-                <li>Bold preferred libraries in dropdowns.</li>
+                <li>Improve the  messaging for users by notifying them that they will be directed to Classic Catalog when paying fines.</li>
+                <li>Added a popup with instructions for users wanting to download their checked out OverDrive materials.</li>
+                <li>Modified  the name for user’s  Wish Lists to "My Lists".</li>
+                <li>Enabled users to make batch updates from the top and the bottom of "My Account" pages.</li> 
+                <li>Added a  confirmation box notifying the users that items have been  successfully added to "My Lists".</li>
+                <li>Added a call number label to Find In Library.</li>
+                <li>Made it more apparent to users how to create a new list while using "My Lists".</li> 
+                <li>Modified "Find In Library" so the default  display includes all items (available and unavailable) and also includes an option for the user option to hide unavailable items.</li>
+                <li>Make the user's preferred libraries more apparent in location dropdown lists.</li>
             </ol>
         </div>
 
