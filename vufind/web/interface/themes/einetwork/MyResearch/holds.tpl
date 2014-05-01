@@ -6,6 +6,46 @@
 <script type="text/javascript" src="{$path}/js/holds.js"></script>
 <script type="text/javascript" src="{$path}/services/MyResearch/ajax.js"></script>
 <script type="text/javascript" src="{$path}/js/tablesorter/jquery.tablesorter.min.js"></script>
+<script type="text/javascript" src="{$path}/js/jquery.selectric.js"></script>
+{literal}
+<script type="text/javascript">
+
+	$(function(){
+		$('.location_dropdown').selectric();
+	});
+
+</script>
+<style>
+{/literal}
+
+{php}
+
+$bold_count = $this->get_template_vars('preferred_count');
+
+$i=0;
+while ($i < $bold_count){
+
+	$i++;
+
+	if ($i < $bold_count){
+		echo '.selectricItems li:nth-child(' . $i . '),';
+	} else {
+		echo '.selectricItems li:nth-child(' . $i . ')';
+	}
+
+	
+}
+{/php}
+{literal}
+{
+	font-size:14px;
+	font-weight: bolder;
+}
+
+</style>
+
+{/literal}
+<link rel="stylesheet" type="text/css" href="{$path}/interface/themes/einetwork/css/selectric.css">
 <div id="page-content" class="content">
 	<div id="left-bar">
 		<div class="sort">
@@ -27,7 +67,7 @@
 		<div class="site-message site-message-search">
 			<ul class="message">
 				<li>
-					<p class="message" align="center">There have been some temporary changes made to the new catalog. <a href="/MyResearch/Tempchanges">Read More...</a></p>
+					<p class="message" align="center">There have been some recent changes to the new catalog. <a href="/MyResearch/Tempchanges">Read More...</a></p>
 				</li>
 			</ul>
 		</div>
@@ -57,13 +97,13 @@
 			<div class="hold-buttons">
 				<div class="requested-items-button">
 					{if $freezeButton eq 'freeze'}
-						<a id="freeze-all-btn" href="#" onclick="" class="button">Freeze All</a>
+						<a class="freeze-all-btn button" href="#">Freeze All</a>
 					{else}
-						<a id="unfreeze-all-btn" href="#" onclick="" class="button">Unfreeze All</a>
+						<a class="unfreeze-all-btn button" href="#">Unfreeze All</a>
 					{/if}
 				</div>
 				<div class="requested-items-button">
-					<a id="update-selected-btn" href="#" onclick="" class="button">Update Selected</a>
+					<a class="update-selected-btn button" href="#">Update Selected</a>
 				</div>
 			</div>
 
@@ -258,14 +298,14 @@
 								
 								{if $record.status eq "Available"}
 								
-									<div class="requested_update_check" style="float:right;width:100px;margin-top:20px">
+									<div class="requested_update_check">
 								
 										<input class="physical_items cancel_checkboxes" type="checkbox" name="data[{$record.cancelId}][cancel]" /> Cancel
 										
 									</div>
 									
-									<div id='holdsUpdateBranchSelction' style="float:right;clear:left;margin-top:20px;">
-										&nbsp&nbsp&nbsp&nbspChange Pickup Location to:<br />
+									<div class='holdsUpdateBranchSelection-Large'>
+										Change Pickup Location to:<br />
 										
 										<select name="data[{$record.cancelId}][location]" class="physical_items update_all location_dropdown">
 										   {html_options options=$pickupLocations selected=$record.currentPickupId}
@@ -275,7 +315,7 @@
 									
 								{elseif $record.status eq "Frozen"}
 								
-									<div class="requested_update_check" style="float:right;width:100px;margin-top:20px">
+									<div class="requested_update_check">
 								
 										{if $record.frozen}
 											<input id="frozen_state_on" class="physical_items freeze_checkboxes update_all" type="checkbox" name="data[{$record.cancelId}][freeze]" /> Unfreeze<br />
@@ -287,7 +327,7 @@
 									
 									</div>
 										
-									<div id='holdsUpdateBranchSelction' style="float:right;clear:left;margin-top:20px;">
+									<div class='holdsUpdateBranchSelection'>
 										Change Pickup Location to:<br />
 										
 										<select name="data[{$record.cancelId}][location]" class="physical_items update_all location_dropdown">
@@ -305,14 +345,14 @@
 								
 								{else}
 								
-									<div class="requested_update_check" style="float:right;width:100px;margin-top:20px">
+									<div class="requested_update_check">
 								
 										<input id="frozen_state_off" class="physical_items freeze_checkboxes update_all" type="checkbox" name="data[{$record.cancelId}][freeze]" /> Freeze<br />
 										<input class="physical_items cancel_checkboxes" type="checkbox" name="data[{$record.cancelId}][cancel]" /> Cancel
 								
 									</div>
 									
-									<div id='holdsUpdateBranchSelction' style="float:right;clear:left;margin-top:20px;">
+									<div class='holdsUpdateBranchSelection'>
 										Change Pickup Location to:<br />
 								
 											<select name="data[{$record.cancelId}][location]" class="physical_items update_all location_dropdown">
@@ -337,12 +377,25 @@
 					{/if}
 				{/if}
 			{/foreach}
+			<br>
+			<div class="hold-buttons">
+				<div class="requested-items-button">
+					{if $freezeButton eq 'freeze'}
+						<a class="freeze-all-btn button" href="#">Freeze All</a>
+					{else}
+						<a class="unfreeze-all-btn button" href="#">Unfreeze All</a>
+					{/if}
+				</div>
+				<div class="requested-items-button">
+					<a class="update-selected-btn button" href="#">Update Selected</a>
+				</div>
+			</div>
 			
 			{*****BEGIN Overdrive Holds******}
 			<div style="margin-top: 20px;margin-bottom: 20px"><h3>{translate text='eContent Requests'}</h3></div>
 			{if count($overDriveHolds.available) > 0}
 				
-				<div >&nbsp&nbsp&nbsp&nbspTitles available for checkout</div>
+				<div >&nbsp;&nbsp;&nbsp;&nbsp;Titles available for checkout</div>
 				<div class="checkout">
 					{foreach from=$overDriveHolds.available item=record}
 					<div id="overdrive-request-available{$record.recordId}" class="record overdrive-available">

@@ -26,7 +26,7 @@
     	<div class="site-message site-message-search">
 			<ul class="message">
 				<li>
-					<p class="message" align="center">There have been some temporary changes made to the new catalog. <a href="/MyResearch/Tempchanges">Read More...</a></p>
+					<p class="message" align="center">There have been some recent changes to the new catalog. <a href="/MyResearch/Tempchanges">Read More...</a></p>
 				</li>
 			</ul>
 		</div>
@@ -356,6 +356,15 @@
 		    </div>
 		</div>
 		{/foreach}
+		<div class="item_renew">
+		{if $patronCanRenew}
+			<div class="item_renew" style="text-align:right; padding-right:5px; padding-top:15px;" >
+			<a href="#" onclick="return renewSelectedTitles();" class="button"> Renew Selected Items</a>
+			</div>
+		{else}
+		    <font color="red"><b>Our apologies, you cannot renew items because {$renewalBlockReason}.  Please visit your local library to ensure access to all online service.  </a></b></font>
+		{/if}
+	    </div>
 	    </div>
 	    {*******END checked out item list*****}
 	    

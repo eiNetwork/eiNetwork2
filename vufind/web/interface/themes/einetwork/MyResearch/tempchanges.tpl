@@ -1,9 +1,27 @@
 <div id="page-content" class="content">
     <div id="left-bar">&nbsp;</div>
     <div id="main-content">
-        <h1>Temporary Changes </h1>
+        <h1>Recent Changes</h1>
 
         <div class="releases">
+            <h2><span class="bold">Current Release version 3.3</span></h2>
+            Release date 4/30/2014
+            <ol class="decimal">
+                <li>Improve the  messaging for users by notifying them that they will be directed to Classic Catalog when paying fines.</li>
+                <li>Added a popup with instructions for users wanting to download their checked out OverDrive materials.</li>
+                <li>Modified  the name for user’s  Wish Lists to "My Lists".</li>
+                <li>Enabled users to make batch updates from the top and the bottom of "My Account" pages.</li> 
+                <li>Added a  confirmation box notifying the users that items have been  successfully added to "My Lists".</li>
+                <li>Added a call number label to Find In Library.</li>
+                <li>Made it more apparent to users how to create a new list while using "My Lists".</li> 
+                <li>Modified "Find In Library" so the default  display includes all items (available and unavailable) and also includes an option for the user option to hide unavailable items.</li>
+                <li>Make the user's preferred libraries more apparent in location dropdown lists.</li>
+            </ol>
+        </div>
+
+        <div class="releases">
+            <h2><span class="bold">Temporary Changes</span></h2>
+            Release date 4/22/2014
             <h3>Unfortunately due to some issues caused during our recent system upgrade, it was necessary to temporarily disable the new library catalog website. We continue to work on the underlying system issues and have made some temporary changes to allow us to re-enable the new catalog. These changes allow continued use of popular features in the new catalog, while we work to address the underlying problems. Below is a list of the changes we have made.</h3>
         </div>
 

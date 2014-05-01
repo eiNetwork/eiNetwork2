@@ -388,7 +388,6 @@ class CheckedOut extends MyResearch{
 		}
 		
 		$sortOptions = array(
-				''	  => '',
 				'title'   => 'Title',
 				'author'  => 'Author',
 				'format'  => 'Format',
