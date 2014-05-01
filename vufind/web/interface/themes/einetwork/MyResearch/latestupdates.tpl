@@ -21,7 +21,7 @@
         </div>
         <div class="releases">
             <h2><span class="bold">Current Release version 3.3</span></h2>
-            Release date 4/30/2013
+            Release date 4/30/2014
             <ol class="decimal">
                 <li>Improve the  messaging for users by notifying them that they will be directed to Classic Catalog when paying fines.</li>
                 <li>Added a popup with instructions for users wanting to download their checked out OverDrive materials.</li>

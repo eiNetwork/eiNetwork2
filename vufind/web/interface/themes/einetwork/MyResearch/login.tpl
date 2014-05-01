@@ -100,7 +100,7 @@
 		<div class="site-message site-message-front">
 			<ul class="message">
 				<li>
-					<p class="message" align="center">There have been some temporary changes made to the new catalog. <a href="/MyResearch/Tempchanges">Read More...</a></p>
+					<p class="message" align="center">There have been some recent changes to the new catalog. <a href="/MyResearch/Tempchanges">Read More...</a></p>
 				</li>
 			</ul>
 		</div>
