@@ -7,6 +7,8 @@
 
 		$('#placeHoldForm').submit(function(){
 
+			alert('test')
+
 			if ($('#campus').val() == ''){
 				alert('Please select a pickup location.');
 				return false;
@@ -101,6 +103,45 @@ while ($i < $bold_count){
 			</div>
 		</div>
 	{/if}
+	
+	{if $pageType eq 'BookCart' && count($recordSet)>0}
+		<form name='placeHoldForm' id='placeHoldForm' action="{$url}/MyResearch/HoldMultiple" method="post">
+		<div>
+			<div id="loginFormWrapper" style="border-bottom-color: rgb(238,238,238);border-bottom-style: solid;border-bottom-width: 1px;padding-bottom: 10px;padding-left: 2px;width: 638px;padding-top: 0px">
+			  {foreach from=$ids item=id}
+			     <input type="hidden" name="selected[{$id|escape:url}]" value="on" id="selected{$id|escape:url}" class="selected"/>
+			  {/foreach}
+			<div id='holdOptions'>
+		        <div class='loginFormRow'>
+		        	<div style="display:inline">
+						<span style="display: inline-block;margin:10px 20px 0 0;vertical-align:top">{translate text="Pickup Location"}:</span>
+					</div>
+					<div style="display:inline-block;">
+						<select name="campus" id="campus">
+							{if $preferred_count < 1}
+							<option value=""></option>
+							{/if}
+							{if count($pickupLocations) > 0}
+							{foreach from=$pickupLocations item=location}
+
+							<option value="{$location->code}" {if $location->selected == "selected"}selected="selected"{/if}>{$location->displayName}</option>
+							{/foreach}
+							{else} 
+							<option>placeholder</option>
+							{/if}
+							</select>
+					</div>
+					<div style="display:inline">
+						<span style="display: inline-block;margin:-5px 20px 0 0;vertical-align:top">
+							<input type="button" onclick="requestAllItems('{$wishListID}')" class="button yellow" name="submit" id="requestTitleButton" value="{translate text='Request All'}" {if (!isset($profile))}disabled="disabled"{/if}/>
+						</span>
+					</div>
+		        </div>
+			</div>
+			</div>
+		</div>
+		</form>
+	{/if}
       {* End Listing Options *}
 
       {if $subpage}
@@ -123,3 +164,6 @@ while ($i < $bold_count){
   {*right-bar template*}
   {include file="ei_tpl/right-bar.tpl"}
 </div>
+
+
+
