@@ -129,14 +129,19 @@
 Author:
   QueryFields:
     - author:
-      - [onephrase, 350]
-      - [and, 200]
+       - [and, 400]
+
+Contributor:
+  QueryFields:
+    - author:
+       - [and, 400]
+       - [or, 50]
     - author2:
-      - [onephrase, 100]
-      - [and, 50]
+       - [and, 100]
+       - [or, ~]
     - author_additional:
-      - [onephrase, 100]
-      - [and, 50]
+       - [and, 100]
+       - [or, ~]
 
 ISN:
   DismaxFields:
