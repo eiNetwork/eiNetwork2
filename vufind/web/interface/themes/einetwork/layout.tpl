@@ -24,7 +24,7 @@ f
 	{css filename="holdingsSummary.css"}
       {/if}
       {css filename="jqueryui.css"}
-      <link rel="stylesheet" href="/interface/themes/einetwork/css/styles.css?v2.1" type="text/css" media="screen" />
+      <link rel="stylesheet" href="/interface/themes/einetwork/css/styles.css?v4.0" type="text/css" media="screen" />
       {css filename="basicHtml.css"}
       {css filename="top-menu.css"}
       {css filename="ei_css/Record/record.css"}
