@@ -24,7 +24,7 @@ f
 	{css filename="holdingsSummary.css"}
       {/if}
       {css filename="jqueryui.css"}
-      <link rel="stylesheet" href="/interface/themes/einetwork/css/styles.css?v2.1" type="text/css" media="screen" />
+      <link rel="stylesheet" href="/interface/themes/einetwork/css/styles.css?v4.0.1" type="text/css" media="screen" />
       {css filename="basicHtml.css"}
       {css filename="top-menu.css"}
       {css filename="ei_css/Record/record.css"}
@@ -144,7 +144,7 @@ f
 		</div>
 	    {else}
 		<div class="button yellow" style="margin-top:20px;height:38px;font-size:15px;padding:0px;" onclick='window.location.href=" https://www.surveymonkey.com/s/56S3RKL"' >
-		    <p style="margin-top:10px;vertical-align:middle;text-align: center"><span style="vertical-align:middle">Democat Staff Survey</span></p>
+		    <p style="margin-top:8px;vertical-align:middle;text-align: center"><span style="vertical-align:middle">Democat Staff Survey</span></p>
 		</div>   
 	    {/if}
 	  </div>
