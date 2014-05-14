@@ -6,7 +6,6 @@
 	alert("{$title}");
 </script>
 {/if}
-
 <div id="page-content" class="content">
   {* Narrow Search Options *}
   <div id="left-bar">
@@ -22,18 +21,51 @@
 
   <div id="main-content">
   	<div class="site-message site-message-search">
-			<ul class="message">
-				<li>
-					<p class="message" align="center">There have been some recent changes to the new catalog. <a href="/MyResearch/Tempchanges">Read More...</a></p>
-				</li>
-			</ul>
+		<ul class="message">
+			<li>
+				<p class="message" align="center">There have been some recent changes to the new catalog. <a href="/MyResearch/Tempchanges">Read More...</a></p>
+			</li>
+		</ul>
+	</div>
+	{php}
+
+		$author_filter = false;
+
+		if (!empty($_REQUEST['filter'])){
+			foreach($_REQUEST['filter'] as $key=>$value){
+				if (strpos($value, "authorStr:") === false){
+					$author_filter = false;
+				} else {
+					$author_filter = true;
+				}
+			}
+		}
+
+		if (($_REQUEST['basicType'] == 'Author' || $_REQUEST['basicType'] == 'Author/Artist/Contributor') && $author_filter == false){
+
+			{/php}{literal}
+				<script type="text/javascript">
+					$(document).ready(function(){
+						$("#sort-select option:eq(1)").attr('disabled','disabled');
+						$("#sort-select option:eq(2)").attr('disabled','disabled');
+					});
+				</script>
+			{/literal}{php}
+
+
+	{/php}
+		<div class="author-sort-message">
+			<p>You must select an author from the filters on the left, before you can sort by<br /><span class="bold">date ascending</span> or <span class="bold">date descending</span>.</p>
 		</div>
+	{php}
+		}
+	{/php}
     <div id="searchInfo">
 	<div class="resulthead" style="height:30px; ">
 		<div class="yui-u first" style="float:left; width:75%">
 		{if $recordCount}
 			{translate text='Sort by'}
-			<select name="sort" onchange="document.location.href = this.options[this.selectedIndex].value;">
+			<select name="sort" onchange="document.location.href = this.options[this.selectedIndex].value;" id="sort-select">
 				{foreach from=$sortList item=sortData key=sortLabel}
 					<option value="{$sortData.sortUrl|escape}"{if $sortData.selected} selected="selected"{/if}>{translate text=$sortData.desc}</option>
 				{/foreach}
