@@ -131,17 +131,14 @@ Author:
     - author:
        - [and, 400]
 
-Contributor:
+Author/Artist/Contributor:
   QueryFields:
     - author:
        - [and, 400]
-       - [or, 50]
     - author2:
        - [and, 100]
-       - [or, ~]
     - author_additional:
        - [and, 100]
-       - [or, ~]
 
 ISN:
   DismaxFields:
@@ -254,9 +251,9 @@ Title:
     - title_short:
       - [onephrase, 500]
     - title_full:
-      - [onephrase, 400]
+      - [onephrase, 200]
     - title:
-      - [onephrase, 300]
+      - [onephrase, 400]
       - [and, 250]
     - title_alt:
       - [and, 200]
@@ -274,11 +271,24 @@ Title:
     - series2:
       - [onephrase, 50]
       - [and , ~]
-      
+ DismaxFields:
+      -title^100
+      -title_short^600
+      -title_alt^100
+      -title_new
+      -title_old
+      -title_auth
+      -series^100
+      -series2  
+  DismaxParams:
+    - [pf, "title_short^600"]
+        
 TitleProper:
   DismaxFields:
     - title_proper^500
     - series_proper^100
+  DismaxParams:
+    - [pf, "title_proper^6000"]
   QueryFields:
     - title_proper:
       - [onephrase, 500]
@@ -326,43 +336,38 @@ AllFieldsProper:
 Keyword:
   QueryFields:
     - 
-      - [OR, 50]
+      - [OR, ~]
       - title_proper:
-        - [onephrase, 300]
-        - [and, 200]
-      - title:
-        - [onephrase, 200]
-        - [and, 125]
+        - [onephrase, 600]
+      - title_short:
+        - [onephrase, 50]
+      - title_auth:
+        - [onephrase, 50]
       - title_alt:
-        - [and, 100]
+        - [onephrase, 20] 
       - title_new:
-        - [and, 50]
+        - [onephrase, 20]	  
     series:
-      - [onephrase, 300]
-      - [and, 50]
+      - [onephrase, 20]
     series2:
-      - [and, 30]
-    word_think_heading:
-      - [onephrase, 300]
-      - [and, 50]
+      - [onephrase, 20]
     author:
-      - [onephrase, 250]
-      - [and, 200]
+      - [and, 20]
     author2:
-      - [and, 50]
-    author_additional:
-      - [and, 50]
-    contents:
       - [and, 10]
+    author_additional:
+      - [and, 10]
+    contents:
+      - [and, 5]
     topic:
-      - [onephrase, 125]
+      - [onephrase, 50]
     geographic:
-      - [onephrase, 75]
+      - [onephrase, 25]
     genre:
-      - [onephrase, 75]
+      - [onephrase, 25]
     keywords:
-      - [onephrase, 200]
-      - [and, 100]
+      - [onephrase, 20]
+      - [and, 10]
     issn:
       - [and, 100]
       - [or, ~]
@@ -372,9 +377,19 @@ Keyword:
     upc:
       - [and, 100]
       - [or, ~]
-    econtentText:
-      - [onephrase, 500]
-      
+  DismaxFields:
+      -title^100
+      -title_short^600
+      -title_alt^100
+      -title_new
+      -title_old
+      -title_auth
+      -series^100
+      -series2
+      -keywords	  
+  DismaxParams:
+    - [pf, "title_short^600"]
+	
 KeywordProper:
   DismaxFields:
     - title_proper^850
