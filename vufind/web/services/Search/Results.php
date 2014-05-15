@@ -240,6 +240,17 @@ class Results extends Action {
 			$interface->assign('MobileTitle','No Results Found');
 			
 			// No record found
+			if ($_REQUEST['basicType'] == 'Author'){
+				$new_basic_type = urlencode('Author/Artist/Contributor');
+				$interface->assign('author',true);
+				$filterlink = null;
+				if (isset($_REQUEST['filter'])){
+					//$filterlink = '&filter[]=' . urlencode($_REQUEST['filter']);
+					$filterlink = '&filter[]=' . implode('&amp;filter[]=', array_map('urlencode', $_REQUEST['filter']));
+				}
+				$interface->assign('contrib_search_link', '/' . $_REQUEST['module'] . '/' . $_REQUEST['action'] . '?basicType=' . $new_basic_type . '&lookfor=' . $_REQUEST['lookfor'] . '&searchSource=' . $_REQUEST['searchSource'] . '&type=' . $new_basic_type . $filterlink);
+			}
+
 			$interface->setTemplate('list-none.tpl');
 			$interface->assign('recordCount', 0);
 
