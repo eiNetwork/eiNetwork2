@@ -1125,12 +1125,6 @@ class SearchObject_Solr extends SearchObject_Base
 
 		// Build a list of facets we want from the index
 		$facetSet = array();
-                
-                //Force the contributor facet to use the facets give in facets.ini
-                if (isset($_REQUEST['type']) && $_REQUEST['type'] == 'Author/Artist/Contributor') {
-                    $this->facetConfig = isset($this->allFacetSettings['Author/Artist/Contributor']) ? $this->allFacetSettings['Author/Artist/Contributor'] : array();
-                }
-                
 		if (!empty($this->facetConfig)) {
 			$facetSet['limit'] = $this->facetLimit;
 			foreach ($this->facetConfig as $facetField => $facetName) {
