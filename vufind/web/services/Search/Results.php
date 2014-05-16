@@ -357,8 +357,24 @@ class Results extends Action {
 			{
 				$interface->assign('subpage', 'ei_tpl/Cart/list-list.tpl');
 				$interface->setTemplate('../ei_tpl/Cart/list.tpl');
-			}
-			else{
+			} else {
+
+				$author_filter = false;
+
+				if (!empty($_REQUEST['filter'])){
+					foreach($_REQUEST['filter'] as $key=>$value){
+						if (strpos($value, "authorStr:") === false){
+							$author_filter = false;
+						} else {
+							$author_filter = true;
+						}
+					}
+				}
+
+				if (($_REQUEST['basicType'] == 'Author' || $_REQUEST['basicType'] == 'Author/Artist/Contributor') && $author_filter == false){
+					$interface->assign('author_sort_message', true);
+				}
+
 				$interface->assign('subpage', 'Search/list-list.tpl');
 				$interface->setTemplate('list.tpl');
 			}

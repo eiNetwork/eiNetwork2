@@ -27,39 +27,19 @@
 			</li>
 		</ul>
 	</div>
-	{php}
-
-		$author_filter = false;
-
-		if (!empty($_REQUEST['filter'])){
-			foreach($_REQUEST['filter'] as $key=>$value){
-				if (strpos($value, "authorStr:") === false){
-					$author_filter = false;
-				} else {
-					$author_filter = true;
-				}
-			}
-		}
-
-		if (($_REQUEST['basicType'] == 'Author' || $_REQUEST['basicType'] == 'Author/Artist/Contributor') && $author_filter == false){
-
-			{/php}{literal}
+	{if $author_sort_message}
+		{literal}
 				<script type="text/javascript">
 					$(document).ready(function(){
 						$("#sort-select option:eq(1)").attr('disabled','disabled');
 						$("#sort-select option:eq(2)").attr('disabled','disabled');
 					});
 				</script>
-			{/literal}{php}
-
-
-	{/php}
+		{/literal}
 		<div class="author-sort-message">
 			<p>You must select an author from the filters on the left, before you can sort by<br /><span class="bold">date ascending</span> or <span class="bold">date descending</span>.</p>
 		</div>
-	{php}
-		}
-	{/php}
+	{/if}
     <div id="searchInfo">
 	<div class="resulthead" style="height:30px; ">
 		<div class="yui-u first" style="float:left; width:75%">
