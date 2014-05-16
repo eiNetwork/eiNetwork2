@@ -12,10 +12,10 @@
             <ol class="decimal">
                 <li>Improved the initial time for login to My Account.</li>
                 <li>Improved Author search relevancy by limiting author search to primary Author and fixed bug with location filter when searching by Author.</li>
-                <li>Added additional search type Author/Artist/Contributor.</li>
-                <li>Alphabetized Author filter moved to top of left panel.</li>
-                <li>Disabled date sort on Author searching until Author is selected from filter.</li>
-                <li>Added search help text to 'no results' page. Also added instructions to change search type to Author/Artist/Contributor.</li>
+                <li>Added additional search type Author/Artist/Contributor. This searches this same fields as the old Author search but it must find all of the search terms in those fields.</li>
+                <li>The Author filters are now ordered alphabetically.</li>
+                <li>Disabled the date sort on Author searching until an Author is selected in the filters.</li>
+                <li>Additional search help text added to 'no results' page, including a suggestion to change search type to Author/Artist/Contributor.</li>
             </ol>
         </div>
         <div class="releases">

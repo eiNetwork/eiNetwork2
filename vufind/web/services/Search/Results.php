@@ -245,7 +245,6 @@ class Results extends Action {
 				$interface->assign('author',true);
 				$filterlink = null;
 				if (isset($_REQUEST['filter'])){
-					//$filterlink = '&filter[]=' . urlencode($_REQUEST['filter']);
 					$filterlink = '&filter[]=' . implode('&amp;filter[]=', array_map('urlencode', $_REQUEST['filter']));
 				}
 				$interface->assign('contrib_search_link', '/' . $_REQUEST['module'] . '/' . $_REQUEST['action'] . '?basicType=' . $new_basic_type . '&lookfor=' . $_REQUEST['lookfor'] . '&searchSource=' . $_REQUEST['searchSource'] . '&type=' . $new_basic_type . $filterlink);
@@ -372,6 +371,18 @@ class Results extends Action {
 				}
 
 				if (($_REQUEST['basicType'] == 'Author' || $_REQUEST['basicType'] == 'Author/Artist/Contributor') && $author_filter == false){
+					$sort = isset($_REQUEST['sort']) ? $_REQUEST['sort'] : null;
+					if (strpos($sort, "year") === false){
+						
+					} else {
+						$type = $_REQUEST['type'];
+						$filterlink = null;
+						if (isset($_REQUEST['filter'])){
+							$filterlink = '&filter[]=' . implode('&amp;filter[]=', array_map('urlencode', $_REQUEST['filter']));
+						}
+						header('Location: /' . $_REQUEST['module'] . '/' . $_REQUEST['action'] . '?lookfor=' . $_REQUEST['lookfor'] . '&basicType=' . $type . $filterlink);
+						//echo "redirect would happen here";
+					}
 					$interface->assign('author_sort_message', true);
 				}
 
