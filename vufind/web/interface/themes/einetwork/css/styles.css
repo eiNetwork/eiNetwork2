@@ -2980,3 +2980,7 @@ ul.new-alert-box li {
 	width:100px;
 	margin-top:20px;
 }
+
+.pinresetform-button input {
+	margin:20px 0 60px 68px;
+}
