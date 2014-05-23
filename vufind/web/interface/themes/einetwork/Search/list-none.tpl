@@ -1,20 +1,6 @@
 <div id="page-content" class="content">
   {* Narrow Search Options *}
   <div id="sidebar">
-    {* Display spelling suggestions if any *}
-	{if $spellingSuggestions}
-	  <div class="sidegroup" id="spellingSuggestions">
-	  	<h4>{translate text='spell_suggest'}</h4>
-	  	<div class="sidegroupContents">
-	  	  <dl class="narrowList navmenu narrow_begin">
-	      {foreach from=$spellingSuggestions item=details key=term name=termLoop}
-	        <dd>{$term|escape} &raquo; {foreach from=$details.suggestions item=data key=word name=suggestLoop}<a href="{$data.replace_url|escape}">{$word|escape}</a>{if $data.expand_url} <a href="{$data.expand_url|escape}"><img src="/images/silk/expand.png" alt="{translate text='spell_expand_alt'}"/></a> {/if}{if !$smarty.foreach.suggestLoop.last}, {/if}{/foreach}</dd>
-	      {/foreach}
-	      </dl>
-	    </div>
-	  </div>
-	{/if}
-      
     {if $sideRecommendations}
       {foreach from=$sideRecommendations item="recommendations"}
         {include file=$recommendations}
@@ -35,14 +21,8 @@
 
     <div>
     <ul id="noResultsSuggest">
-    <li>Check the spelling of your search terms.</li>
-    <li>Restate your query by using more, other or broader terms.</li>
-    </ul>
-
-      {if $parseError}
-          <p class="error">{translate text='nohit_parse_error'}</p>
-      {/if}
-      
+    {if $author}<li>Try searching <a href="{$contrib_search_link}">Author/Artist/Contributor</a> instead. This is a broader search that also searches for performers, composers, directors, and organizations that contributed to the work.</br></br></li>{/if}
+    <li>Check the <b>spelling</b> of your search terms.
       {if $spellingSuggestions}
         <div class="correction">{translate text='nohit_spelling'}:<br/>
         {foreach from=$spellingSuggestions item=details key=term name=termLoop}
@@ -50,14 +30,22 @@
         {/foreach}
         </div>
         <br/>
-      {/if}
+      {/if}</li>
+    <li>If you're not sure of the spelling, you can use <b>wildcard characters</b> in your search terms to substitute for any characters where you're not sure of the spelling.<br /><br /></li>
+	    <ul><li><b>The question mark ?</b> can substitute for any single character.    For example, a search for S?dney Crosby will find Sidney or Sydney</li>
+	    <li><b>The asterisk *</b> can substitute for multiple characters.  For example, a search for Prisoner of Az*  will find Prisoner of Azkhaban</li>
+	    <li><b>The tilde ~ </b>used at the end of a single word search term will search for similar, "sounds like" spellings of your search term.   For example, a search for King~ will find Kynge, Ting, Xing, and Kinde</li>
+      
+    </ul></br>
+    <li>Are there filters applied at left?   Try <b>removing some or all of the filters</b>.</li></br>
+    <li>Restate your query by using more, other or broader terms.</li>
+    </ul>
 
-      {if $prospectorNumTitlesToLoad > 0}
-     <script type="text/javascript">getProspectorResults({$prospectorNumTitlesToLoad}, {$prospectorSavedSearchId});</script>
-     {* Prospector Results *}
-     <div id='prospectorSearchResultsPlaceholder'></div>
+      {if $parseError}
+          <p class="error">{translate text='nohit_parse_error'}</p>
       {/if}
       
+
       
       {* Display Repeat this search links *}
       {if strlen($lookfor) > 0 && count($repeatSearchOptions) > 0}
