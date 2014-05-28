@@ -783,6 +783,7 @@ class OverDriveDriver {
 		}
 		$post_string = implode ('&', $post_items);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $post_string);
+
 		$submitUrl = $overDriveInfo['baseLoginUrl'] . '?Action=EditWaitingList';
 		//$logger->log("waiting list URL QQQ---> ". $submitUrl, PEAR_LOG_INFO);
 		//$logger->log("post string---> ". $post_string, PEAR_LOG_INFO);
@@ -943,6 +944,11 @@ class OverDriveDriver {
 		global $configArray;
 		global $logger;
 		$overdriveUrl = $configArray['OverDrive']['url'];
+
+		echo "<pre>";
+		print_r($overdriveUrl);
+		echo "</pre>";
+
 		curl_setopt_array($ch, array(
 			CURLOPT_FOLLOWLOCATION => true,
 			CURLOPT_HTTPGET => true,
@@ -958,7 +964,7 @@ class OverDriveDriver {
 
 		$urlWithSession = $pageInfo['url'];
 		//$logger->log("Session URL ".$urlWithSession, PEAR_LOG_INFO);
-		$urlWithSessionSSL = str_replace('http://', 'https://carnegie.lib.overdrive.com', $urlWithSession);
+		$urlWithSessionSSL = str_replace('http://', 'https://pittsburgh.libraryreserve.com', $urlWithSession);
 		//$logger->log("Session URL SSL ".$urlWithSessionSSL, PEAR_LOG_INFO);
 		
 		//Go to the login form
@@ -969,6 +975,10 @@ class OverDriveDriver {
 		$loginPageInfo = curl_getinfo($ch);
 		$loginFormUrl = $loginPageInfo['url'];
 		//$logger->log("Login Form URL ".$loginFormUrl, PEAR_LOG_INFO);
+
+		echo "<pre>";
+		print_r($loginPageInfo);
+		echo "</pre>";
 
 		//Post to the login form
 		curl_setopt($ch, CURLOPT_POST, true);
