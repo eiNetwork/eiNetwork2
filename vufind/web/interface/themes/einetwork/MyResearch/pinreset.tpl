@@ -24,28 +24,7 @@
 	});
 </script>
 {/literal}	
-	
-	<div class="loginHome-left"></div>
-	<div class="loginHome-center">
-		<div class="login">
-			<form id="pinresetform" class="getacard" method="POST" action="{$path}/MyResearch/PinReset">
-				<div><b>Enter your Library Card Number</b></div>
-				<div><p>Please enter your library card number.   An email from helpdesk@einetwork.net will be sent to the email address in your patron record with a link to reset or create your PIN.</p></div>
-				<div>
-					<input name="barcode" type="text" class="text" title="Library Card Number for PIN"/>
-				</div>
-				<div> 
-					<input class="button" type="submit" name="submit" value="Request PIN" alt='{translate text="Login"}' />
-				</div>
-			</form>
-		</div>
-	</div>
-	<div class="loginHome-right"></div>
-</div>
-
-
-
-<!--<div id="page-content" class="content">
+<div id="page-content" class="content">
 	<div class="loginHome-left"></div>
 	<div class="loginHome-center">
 		<p>Please enter your barcode.   An email from helpdesk@einetwork.net will be sent to the email address in your patron record</p>
@@ -59,7 +38,7 @@
 						</div>
 					</div>
 				</div>
-				<div>
+				<div class="pinresetform-button">
 					<input class="button" type="submit" name="submit" value="Request PIN Reset" alt='{translate text="Login"}' />
 				</div>
 			</form>
@@ -67,4 +46,3 @@
 	<div>
 	<div class="loginHome-right"></div>
 </div>
--->

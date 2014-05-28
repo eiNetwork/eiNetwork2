@@ -30,10 +30,10 @@ class Profile extends MyResearch
 		global $profile;
 
 		if (isset($_POST['update'])) {
-			$result = $this->catalog->updatePatronInfo($user->cat_password);
+			$result = $this->catalog->updatePatronInfo($user->cat_username);
 			$_SESSION['profileUpdateErrors'] = $result;
-			require_once 'Drivers/OverDriveDriver.php';
-			$overDriveDriver = new OverDriveDriver();
+			require_once 'Drivers/OverDriveDriver2.php';
+			$overDriveDriver = new OverDriveDriver2();
 			$result = $overDriveDriver->updateLendingOptions();
 			//global $logger;
 			//$logger->log("Lending options post " . print_r($_POST,true), PEAR_LOG_DEBUG);
@@ -52,9 +52,9 @@ class Profile extends MyResearch
 			$interface->assign('edit', false);
 		}
 		
-		require_once 'Drivers/OverDriveDriver.php';
-		$overDriveDriver = new OverDriveDriver();
-		$overDriveSummary = $overDriveDriver->getOverDriveSummary($user);
+		require_once 'Drivers/OverDriveDriver2.php';
+		$overDriveDriver = new OverDriveDriver2();
+		$overDriveSummary = $overDriveDriver->getAccountDetails($user);
 		$interface->assign('overDriveLendingOptions', $overDriveSummary['lendingOptions']);
 		
 		if (isset($_SESSION['profileUpdateErrors'])){
