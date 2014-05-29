@@ -6,19 +6,6 @@
         <h3>We’re listening to you.   The ongoing changes and planned enhancements are driven by the comments and feedback you submit when completing the new catalog survey.  We want to continue to hear from you and we appreciate your feedback.</h3>
         <br>
         <div class="releases">
-            <h2><span class="bold">Democat Preview</span></h2>
-            <h2><span class="bold">Release version 4.0beta</span></h2>
-            Below is the list of changes you can preview that are coming in Release version 4.0. Please provide feedback using the <a href="https://www.surveymonkey.com/s/56S3RKL" target="_blank">Democat Staff Survey</a>.
-            <ol class="decimal">
-                <li>Improved the initial time for login to My Account.</li>
-                <li>Improved Author search relevancy by limiting author search to primary Author and fixed bug with location filter when searching by Author.</li>
-                <li>Added additional search type Author/Artist/Contributor. This searches this same fields as the old Author search but it must find all of the search terms in those fields.</li>
-                <li>The Author filters are now ordered alphabetically.</li>
-                <li>Disabled the date sort on Author searching until an Author is selected in the filters.</li>
-                <li>Additional search help text added to 'no results' page, including a suggestion to change search type to Author/Artist/Contributor.</li>
-            </ol>
-        </div>
-        <div class="releases">
             <h2><span class="bold">Upcoming Release</span></h2>
             <h2><span class="bold">Release version 4.0</span></h2>
             Our current development is focused on the following features and enhancements:
