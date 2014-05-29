@@ -1660,7 +1660,7 @@ class SearchObject_Solr extends SearchObject_Base
 
 			//Sort the facet alphabetically?
 			//Sort the system and location alphabetically unless we are in the global scope
-			if (in_array($field, array('institution', 'building', 'available_at'))){
+			if (in_array($field, array('institution', 'building', 'available_at', 'authorStr'))){
 				$list[$field]['showAlphabetically'] = true;
 			}else{
 				$list[$field]['showAlphabetically'] = false;

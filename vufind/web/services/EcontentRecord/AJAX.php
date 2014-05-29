@@ -392,8 +392,8 @@ class AJAX extends Action {
 		$email = trim($_REQUEST['email']);
 		$overDriveId = $_REQUEST['overDriveId'];
 		if ($user && !PEAR::isError($user)){
-			require_once('Drivers/OverDriveDriver.php');
-            $driver = new OverDriveDriver();
+			require_once('Drivers/OverDriveDriver2.php');
+            $driver = new OverDriveDriver2();
 			$returnMessage = $driver->editOverDriveEmail($email, $overDriveId, $user);
 			return json_encode($returnMessage);
 		}else{

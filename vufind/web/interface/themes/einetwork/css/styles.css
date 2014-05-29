@@ -2981,6 +2981,19 @@ ul.new-alert-box li {
 	margin-top:20px;
 }
 
+.author-sort-message {
+	margin:10px 30px 20px 10px;
+	border:1px solid #c0c0c0;
+	padding:6px;
+	text-align: center;
+}
+
+.author-sort-message p {
+	padding:0;
+	margin:0;
+	font-size:1.1em;
+}
+
 .pinresetform-button input {
 	margin:20px 0 60px 68px;
 }

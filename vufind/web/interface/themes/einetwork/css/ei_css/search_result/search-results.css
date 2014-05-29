@@ -91,10 +91,12 @@
 
 #noResultsSuggest ul {
   margin-left:20px;
+  margin-right: 20px;
   list-style-type:disc
   }
 #noResultsSuggest li {
   margin-left:20px;
+  margin-right: 20px;
   list-style-type:disc
   }
 .result_middle{

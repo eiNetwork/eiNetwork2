@@ -74,7 +74,8 @@ class Home extends MyResearch
 				// Connect to Database
 				$catalog = new CatalogConnection($configArray['Catalog']['driver']);
 				$patron = $catalog->patronLogin($user->cat_username, $user->cat_password);
-				$profile = $catalog->getMyProfile($patron);
+				//We commented the line below so the login will go stright to the my account page and will not go to CheckedOut items page or Holds page
+				//$profile = $catalog->getMyProfile($patron);
 				if ($profile['numCheckedOut'] > 0){
 					$action ='CheckedOut';
 				}elseif ($profile['numHolds'] > 0){
