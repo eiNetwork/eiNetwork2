@@ -7,20 +7,31 @@
         <br>
         <div class="releases">
             <h2><span class="bold">Upcoming Release</span></h2>
-            <h2><span class="bold">Release version 4.0</span></h2>
+            <h2><span class="bold">Release version 4.x</span></h2>
             Our current development is focused on the following features and enhancements:
             <ol class="decimal">
-                <li>Improving the speed of My Account functionality and especially the initial time for login to My Account.</li>
                 <li>Improving the user’s ability to find materials in the library.</li>
                 <li>Improving user accessibility to enhanced content.</li>
                 <li>Enabling the ability for users to email search results.</li>
                 <li>Creating shortcuts to popular filters and lists.</li>
                 <li>Improving the site wide language and user instructions.</li>
-                <li>Improving search results when doing an author search.</li>
             </ol>
         </div>
         <div class="releases">
-            <h2><span class="bold">Current Release version 3.3</span></h2>
+            <h2><span class="bold">Current Release version 4.0</span></h2>
+            Release date 5/30/2014
+            <ol class="decimal">
+                <li>Improved the initial time for users to login to My Account.</li>
+                <li>Improved  search results for Author searches by limiting the search to primary Author information.</li>
+                <li>Added new Author/Artist/Contributor search which is a broader search to find composers, performers, directors, illustrators, etc.</li>
+                <li>Display Author facet  information  in alphabetical order to enable users to easily refine their search results.</li>
+                <li>Disabled the date sort option for Author searching  until user has selected a specific author from the author facet.</li>
+                <li>Improved help text for users when search returns 'no results'.</li>
+            </ol>
+        </div>
+        <div class="releases">
+            <h2><span class="bold">Previous Releases</span></h2>
+            <h2><span class="bold">Release version 3.3</span></h2>
             Release date 4/30/2014
             <ol class="decimal">
                 <li>Improve the  messaging for users by notifying them that they will be directed to Classic Catalog when paying fines.</li>
@@ -36,7 +47,6 @@
         </div>
 
         <div class="releases">
-            <h2><span class="bold">Previous Releases</span></h2>
             <h2>Release version 3.0</h2>
             Release date 9/10/2013
             <ol class="decimal">
