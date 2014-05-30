@@ -153,7 +153,7 @@ class MillenniumDriver implements DriverInterface
 		//$logger->log('Loaded millennium info for id ' . $id . ' scope ' . $scope, PEAR_LOG_INFO);
 		$millenniumCache = new MillenniumCache();
 		//First clean out any records that are more than 5 minutes old
-		$cacheExpirationTime = time() - 5 * 60;
+		$cacheExpirationTime = 0;
 		$millenniumCache->whereAdd("cacheDate < $cacheExpirationTime");
 		$millenniumCache->delete(true);
 		//Now see if the record already exists in our cache.
@@ -186,7 +186,14 @@ class MillenniumDriver implements DriverInterface
 		// Strip ID
 		$id_ = substr(str_replace('.b', '', $id), 0, -1);
 
-		$req =  $host . "/search~S{$scope}/.b" . $id_ . "/.b" . $id_ . "/1,1,1,B/holdings~" . $id_;
+		
+
+		$req =  $host . "/search~S{$scope}/.b" . $id_ . "/.b" . $id_ . "/1,1,1,B/frameset~" . $id_;
+
+		echo "<pre>";
+		print_r($req);
+		echo "</pre>";
+
 		//convert holdings info to handle diacritics
 		$holdingsInfo = file_get_contents($req);
 		$millenniumCache->holdingsInfo = mb_convert_encoding($holdingsInfo,"UTF-8",mb_detect_encoding($holdingsInfo));
@@ -755,6 +762,7 @@ class MillenniumDriver implements DriverInterface
 		$allItemStatus = '';
 		$firstCallNumber = null;
 		$firstLocation = null;
+
 		foreach ($holdings as $holdingKey => $holding){
 			if (is_null($allItemStatus)){
 				//Do nothing, the status is not distinct
