@@ -153,7 +153,7 @@ class MillenniumDriver implements DriverInterface
 		//$logger->log('Loaded millennium info for id ' . $id . ' scope ' . $scope, PEAR_LOG_INFO);
 		$millenniumCache = new MillenniumCache();
 		//First clean out any records that are more than 5 minutes old
-		$cacheExpirationTime = 0;
+		$cacheExpirationTime = time() - 5 * 60;
 		$millenniumCache->whereAdd("cacheDate < $cacheExpirationTime");
 		$millenniumCache->delete(true);
 		//Now see if the record already exists in our cache.
@@ -189,10 +189,6 @@ class MillenniumDriver implements DriverInterface
 		
 
 		$req =  $host . "/search~S{$scope}/.b" . $id_ . "/.b" . $id_ . "/1,1,1,B/frameset~" . $id_;
-
-		echo "<pre>";
-		print_r($req);
-		echo "</pre>";
 
 		//convert holdings info to handle diacritics
 		$holdingsInfo = file_get_contents($req);
