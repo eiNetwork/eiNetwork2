@@ -186,7 +186,10 @@ class MillenniumDriver implements DriverInterface
 		// Strip ID
 		$id_ = substr(str_replace('.b', '', $id), 0, -1);
 
-		$req =  $host . "/search~S{$scope}/.b" . $id_ . "/.b" . $id_ . "/1,1,1,B/holdings~" . $id_;
+		
+
+		$req =  $host . "/search~S{$scope}/.b" . $id_ . "/.b" . $id_ . "/1,1,1,B/frameset~" . $id_;
+
 		//convert holdings info to handle diacritics
 		$holdingsInfo = file_get_contents($req);
 		$millenniumCache->holdingsInfo = mb_convert_encoding($holdingsInfo,"UTF-8",mb_detect_encoding($holdingsInfo));
@@ -755,6 +758,7 @@ class MillenniumDriver implements DriverInterface
 		$allItemStatus = '';
 		$firstCallNumber = null;
 		$firstLocation = null;
+
 		foreach ($holdings as $holdingKey => $holding){
 			if (is_null($allItemStatus)){
 				//Do nothing, the status is not distinct
