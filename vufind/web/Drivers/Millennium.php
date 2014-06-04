@@ -186,15 +186,17 @@ class MillenniumDriver implements DriverInterface
 		// Strip ID
 		$id_ = substr(str_replace('.b', '', $id), 0, -1);
 
-		
-
-		$req =  $host . "/search~S{$scope}/.b" . $id_ . "/.b" . $id_ . "/1,1,1,B/frameset~" . $id_;
+		$req =  $host . "/search~S{$scope}/.b" . $id_ . "/.b" . $id_ . "/1,1,1,B/holdings~" . $id_;
 
 		//convert holdings info to handle diacritics
 		$holdingsInfo = file_get_contents($req);
 		$millenniumCache->holdingsInfo = mb_convert_encoding($holdingsInfo,"UTF-8",mb_detect_encoding($holdingsInfo));
 		
 		$timer->logTime('got holdings from millennium');
+
+		$req =  $host . "/search~S{$scope}/.b" . $id_ . "/.b" . $id_ . "/1,1,1,B/frameset~" . $id_;
+		$millenniumCache->framesetInfo = file_get_contents($req);
+		$timer->logTime('got frameset info from millennium');
 
 		$millenniumCache->cacheDate = time();
 		//Temporarily ignore errors
@@ -228,8 +230,8 @@ class MillenniumDriver implements DriverInterface
 		$millenniumInfo = $this->getMillenniumRecordInfo($id);
 
 		//Get the number of holds
-		if ($millenniumInfo->holdingsInfo){
-			if (preg_match('/(\d+) hold(s?) on .*? of \d+ (copies|copy)/', $millenniumInfo->holdingsInfo, $matches)){
+		if ($millenniumInfo->framesetInfo){
+			if (preg_match('/(\d+) hold(s?) on .*? of \d+ (copies|copy)/', $millenniumInfo->framesetInfo, $matches)){
 				$holdQueueLength = $matches[1];
 			}else{
 				$holdQueueLength = 0;
@@ -573,7 +575,7 @@ class MillenniumDriver implements DriverInterface
 
 		//Load order records, these only show in the full page view, not the item display
 		$orderMatches = array();
-		if (preg_match_all('/<tr\\s+class="bibOrderEntry">.*?<td\\s*>(.*?)<\/td>/s', $millenniumInfo->holdingsInfo, $orderMatches)){
+		if (preg_match_all('/<tr\\s+class="bibOrderEntry">.*?<td\\s*>(.*?)<\/td>/s', $millenniumInfo->framesetInfo, $orderMatches)){
 			for ($i = 0; $i < count($orderMatches[1]); $i++) {
 				$location = trim($orderMatches[1][$i]);
 				$location = preg_replace('/\\sC\\d{3}[\\s\\.]/', '', $location);
@@ -3355,12 +3357,12 @@ class MillenniumDriver implements DriverInterface
 		self::loadNonHoldableLocations();
 		self::loadPtypeRestrictedLocations();
 
-		if (preg_match('/class\\s*=\\s*\\"bibHoldings\\"/s', $millenniumInfo->holdingsInfo)){
+		if (preg_match('/class\\s*=\\s*\\"bibHoldings\\"/s', $millenniumInfo->framesetInfo)){
 			//There are issue summaries available
 			//Extract the table with the holdings
 			$issueSummaries = array();
 			$matches = array();
-			if (preg_match('/<table\\s.*?class=\\"bibHoldings\\">(.*?)<\/table>/s', $millenniumInfo->holdingsInfo, $matches)) {
+			if (preg_match('/<table\\s.*?class=\\"bibHoldings\\">(.*?)<\/table>/s', $millenniumInfo->framesetInfo, $matches)) {
 				$issueSummaryTable = trim($matches[1]);
 				//Each holdingSummary begins with a holdingsDivider statement
 				$summaryMatches = explode('<tr><td colspan="2"><hr  class="holdingsDivider" /></td></tr>', $issueSummaryTable);
