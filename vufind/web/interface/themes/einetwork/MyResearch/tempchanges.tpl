@@ -4,18 +4,15 @@
         <h1>Recent Changes</h1>
 
         <div class="releases">
-            <h2><span class="bold">Current Release version 3.3</span></h2>
-            Release date 4/30/2014
+            <h2><span class="bold">Current Release version 4.0</span></h2>
+            Release date 5/30/2014
             <ol class="decimal">
-                <li>Improve the  messaging for users by notifying them that they will be directed to Classic Catalog when paying fines.</li>
-                <li>Added a popup with instructions for users wanting to download their checked out OverDrive materials.</li>
-                <li>Modified  the name for user’s  Wish Lists to "My Lists".</li>
-                <li>Enabled users to make batch updates from the top and the bottom of "My Account" pages.</li> 
-                <li>Added a  confirmation box notifying the users that items have been  successfully added to "My Lists".</li>
-                <li>Added a call number label to Find In Library.</li>
-                <li>Made it more apparent to users how to create a new list while using "My Lists".</li> 
-                <li>Modified "Find In Library" so the default  display includes all items (available and unavailable) and also includes an option for the user option to hide unavailable items.</li>
-                <li>Make the user's preferred libraries more apparent in location dropdown lists.</li>
+                <li>Improved the initial time for users to login to My Account.</li>
+                <li>Improved  search results for Author searches by limiting the search to primary Author information.</li>
+                <li>Added new Author/Artist/Contributor search which is a broader search to find composers, performers, directors, illustrators, etc.</li>
+                <li>Display Author facet  information  in alphabetical order to enable users to easily refine their search results.</li>
+                <li>Disabled the date sort option for Author searching  until user has selected a specific author from the author facet.</li>
+                <li>Improved help text for users when search returns 'no results'.</li>
             </ol>
         </div>
 

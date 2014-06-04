@@ -2993,3 +2993,7 @@ ul.new-alert-box li {
 	margin:0;
 	font-size:1.1em;
 }
+
+.pinresetform-button input {
+	margin:20px 0 60px 68px;
+}
