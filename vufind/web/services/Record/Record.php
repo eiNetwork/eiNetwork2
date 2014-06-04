@@ -517,8 +517,11 @@ class Record extends Action
 
 		if ($upcField = $this->marcRecord->getField('024')) {
 			if ($upcField = $upcField->getSubfield('a')) {
-				$this->upc = trim($upcField->getData());
-				$interface->assign('upc', $this->upc);
+				//UPCs are 12 digits
+				if (strlen($upcField) == 12) {
+					$this->upc = trim($upcField->getData());
+					$interface->assign('upc', $this->upc);
+				}
 			}
 		}
 		if($oclcField = $this->marcRecord->getField('035')){
@@ -602,6 +605,11 @@ class Record extends Action
 		}	
 
 		//Load description from Syndetics
+		echo "<pre>isbn";
+		print_r($this->isbn);
+		echo "upc";
+		print_r($this->upc);
+		echo "</pre>";	
 		$useMarcSummary = true;
 		if ($this->isbn || $this->upc){
 			require_once 'Drivers/marmot_inc/GoDeeperData.php';
@@ -1066,12 +1074,12 @@ class Record extends Action
     			//Get the link
     			if ($marcField->getSubfield('u') && ($isFull != $supp)){
     				$link = $marcField->getSubfield('u')->getData();
-    				if ($marcField->getSubfield('3')){
-    					$linkText = $marcField->getSubfield('3')->getData();
+    				if ($marcField->getSubfield('z')){
+    					$linkText = $marcField->getSubfield('z')->getData();
     				}elseif ($marcField->getSubfield('y')){
     					$linkText = $marcField->getSubfield('y')->getData();
-    				}elseif ($marcField->getSubfield('z')){
-    					$linkText = $marcField->getSubfield('z')->getData();
+    				}elseif ($marcField->getSubfield('3')){
+    					$linkText = $marcField->getSubfield('3')->getData();
     				}else{
     					$linkText = $link;
     				}
