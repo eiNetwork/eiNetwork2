@@ -100,6 +100,9 @@
 	<div id="latest-updates">
             <a href="/MyResearch/Latestupdates">Latest Website Updates</a>
         </div>
+	<div id="latest-updates">
+            <a href="/MyResearch/einhelp">Catalog Help</a>
+        </div>
         <div id="temp-changes">
             <a href="/MyResearch/Tempchanges">Temporary Changes *</a>
         </div>

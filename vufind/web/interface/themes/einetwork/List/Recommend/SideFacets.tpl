@@ -1,3 +1,4 @@
+
 {*commented and modified by Xiaolin Lin 2012-06-05*}
 {*with 'see all' function*}
 {if $recordCount > 0 || $filterList || ($sideFacetSet && $recordCount > 0)}

@@ -1,3 +1,18 @@
+<!--{literal}
+<script type="text/javascript">
+
+$(document).ready(function() {
+
+	$('.selector').qtip({
+	    content: {
+	        text: 'My simple tooltip'
+	    },
+	    style: 'tooltip'
+	});
+
+});
+</script>
+{/literal}-->
 <script type="text/javascript" src="{$path}/services/EcontentRecord/ajax.js?v3.0"></script>
  <script type="text/javascript" src="/js/ei_js/search.js?v3.0"></script>
 {* Main Listing *}
@@ -27,6 +42,7 @@
 			</li>
 		</ul>
 	</div>
+	{*<span class="selector" style="display:inline-block; margin:10px; width:100px"> Demo tool tip <img src="/images/help_icon.png"></span>*}
 	{if $author_sort_message}
 		{literal}
 				<script type="text/javascript">

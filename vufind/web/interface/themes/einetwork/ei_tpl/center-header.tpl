@@ -11,6 +11,28 @@
 		});
 		*/
 	});
+	
+	$(document).ready(function() {
+
+	$('.limit1').qtip({
+	    content: {
+	        text: 'Select to limit serach results to available materials only'
+	    },
+	    style: 'tooltip'
+	});
+
+});
+	
+	$(document).ready(function() {
+
+	$('.keep1').qtip({
+	    content: {
+	        text: 'Select to keep left column filters applied on your next serach'
+	    },
+	    style: 'tooltip'
+	});
+
+});
 </script>
 {/literal}
 
@@ -52,7 +74,7 @@
   {/if}
   {if $filterList || $hasCheckboxFilters}
     <div class="keepFilters">
-      <input type="checkbox" checked="checked" onclick="filterAll(this);" /> {translate text="basic_search_keep_filters"}
+      <input type="checkbox" checked="checked" onclick="filterAll(this);" /> <font class="keep1" color="white">{translate text="basic_search_keep_filters"}</font>
       <div style="display:none;">
 	{foreach from=$filterList item=data key=field}
 	  {foreach from=$data item=value}
@@ -71,7 +93,7 @@
     {php}
 
       if (strpos($_SERVER['REQUEST_URI'], 'Search', 0) > 0){
-        echo '<div class="availFilter"><input name="limit_avail" id="limitToAvail" type="checkbox"> Limit to available</div>';
+        echo '<div class="availFilter"><input name="limit_avail" id="limitToAvail" type="checkbox"> <font class="limit1" color="white">Limit to available</font></div>';
       }
 
     {/php}

@@ -13,7 +13,7 @@
 			{if $current.selected}checked="checked"{/if}
 			onclick="document.location.href='{$current.toggleUrl|escape}';" />
 		</td>
-		<td>{translate text=$current.desc}<br /></td>
+		<td>{translate text=$current.desc}<br/></td>
 		</tr>
 	{/foreach}
 	</table>
