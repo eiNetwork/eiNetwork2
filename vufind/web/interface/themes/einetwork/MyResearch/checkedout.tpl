@@ -28,9 +28,11 @@
 				<li>
     {if $user->cat_username}
 	{if $transList}
-	<div>
-	    <h2>Checked Out Items</h2>
-<p style="font-size:80%;color:red">We are receiving reports about some users not receiving email notices for upcoming due dates, hold pickups, or overdue items.  You may wish to check My Account or contact your local library for this information.   Please contact your email provider if you believe you are not receiving these notices.</p>
+	<div class="new-alert-box-container">
+		<h2>{translate text='Checked Out Items'}</h2>
+		<ul class="new-alert-box">
+			<li>We are receiving reports about some users not receiving email notices for upcoming due dates, hold pickups, or overdue items.  You may wish to check My Account or contact your local library for this information.   Please contact your email provider if you believe you are not receiving these notices.</li>
+		</ul>
 	</div>
 	    
 	<form id="renewForm" action="{$path}/MyResearch/CheckedOut">

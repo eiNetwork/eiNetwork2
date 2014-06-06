@@ -100,9 +100,6 @@
 	<div id="latest-updates">
             <a href="/MyResearch/Latestupdates">Latest Website Updates</a>
         </div>
-        <div id="temp-changes">
-            <a href="/MyResearch/Tempchanges">Temporary Changes *</a>
-        </div>
     </div>
 
     <p class="libraries-strong"><a href="http://www.countycitylibraries.org/" target="_blank"><img src="http://www.aclalibraries.org/images/ccl200.jpg" alt="Help us keep our libraries strong!" width="200" height="57" border="0" /></a></p>

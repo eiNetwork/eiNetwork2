@@ -73,22 +73,6 @@ class Hold extends Action {
 		//Get title information for the record.
 		$holding = $this->catalog->getHolding($recordId);
 
-
-		// foreach($holding as $key=>$value){
-
-
-
-		// }
-
-		echo "<pre>";
-		print_r(count($holding));
-		echo "</pre>";
-
-		echo "<pre>";
-		print_r($holding);
-		echo "</pre>";
-		die();
-
 		if (PEAR::isError($holding)) {
 			PEAR::raiseError($holding);
 		}
