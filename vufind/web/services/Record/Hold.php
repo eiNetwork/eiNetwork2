@@ -81,10 +81,9 @@ class Hold extends Action {
 		if (isset($_REQUEST['autologout'])){
 			$_SESSION['autologout'] = true;
 		}
-		
+
 		$showMessage = false;
 		$type = isset($_REQUEST['holdType']) ? $_REQUEST['holdType'] : '';
-
 		if (isset($_POST['submit']) || $type == 'recall' || $type == 'update' || $type == 'hold') {
 			if (isset($_REQUEST['username']) && isset($_REQUEST['password'])){
 				//Log the user in
