@@ -26,10 +26,6 @@
     	<div class="site-message site-message-search">
 			<ul class="message">
 				<li>
-					<p class="message" align="center">There have been some recent changes to the new catalog. <a href="/MyResearch/Tempchanges">Read More...</a></p>
-				</li>
-			</ul>
-		</div>
     {if $user->cat_username}
 	{if $transList}
 	<div class="new-alert-box-container">

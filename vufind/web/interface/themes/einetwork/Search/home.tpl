@@ -106,13 +106,6 @@
 	<div class="loginHome-left"></div>
 
 	<div class="loginHome-center">
-		<div class="site-message site-message-front">
-			<ul class="message">
-				<li>
-					<p class="message" align="center">There have been some recent changes to the new catalog. <a href="/MyResearch/Tempchanges">Read More...</a></p>
-				</li>
-			</ul>
-		</div>
 		<div class="startMessage">
 			Get started by entering your search above.
 		</div>

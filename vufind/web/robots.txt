@@ -8,8 +8,3 @@ Disallow: /MyResearch/
 Disallow: /images/fiveStar/
 Disallow: /bookcover.php
 Disallow: /vufind/
-Disallow: /Record/*/Details
-Disallow: /Record/*/Export
-Disallow: /Record/*/Cite
-Disallow: /Record/*/Email
-Disallow: /Record/*/Holdings
