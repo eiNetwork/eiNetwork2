@@ -77,11 +77,7 @@
 		{/if}
 		{if $user->cat_username}
 		<div><h2>Account Settings</h2></div>
-		<div class="new-alert-box-container"> 
-			<ul class="new-alert-box">
-				<li>We are receiving reports about some users not receiving email notices for upcoming due dates, hold pickups, or overdue items.  You may wish to check My Account or contact your local library for this information.   Please contact your email provider if you believe you are not receiving these notices.</li>
-			</ul>
-		</div>
+		<div><p style="font-size:80%;color:red">We are receiving reports about some users not receiving email notices for upcoming due dates, hold pickups, or overdue items.  You may wish to check My Account or contact your local library for this information.   Please contact your email provider if you believe you are not receiving these notices.</p></div>
 		<form id="profileForm" action="" method="post" {if $edit == true}onsubmit="return checkWhenSubmit();"{/if}>
 		<h3 id="info">Information</h3>
 		<input class="button" type="button" onclick="ajaxLightbox('/MyResearch/AJAX?method=getPinUpdateForm',false,false,'400px',false,'250px');return false;" value="Modify PIN Number"/>

@@ -20,13 +20,6 @@
   {* End Narrow Search Options *}
 
   <div id="main-content">
-  	<div class="site-message site-message-search">
-		<ul class="message">
-			<li>
-				<p class="message" align="center">There have been some recent changes to the new catalog. <a href="/MyResearch/Tempchanges">Read More...</a></p>
-			</li>
-		</ul>
-	</div>
 	{if $author_sort_message}
 		{literal}
 				<script type="text/javascript">
