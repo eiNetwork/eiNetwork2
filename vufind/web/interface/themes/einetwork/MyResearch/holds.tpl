@@ -86,12 +86,9 @@ while ($i < $bold_count){
 				</script>
 			{/if}
 			
-			<div class="new-alert-box-container"> 
+			<div> 
 				<h2>{translate text='Requested Items'}</h2>
-				<ul class="new-alert-box">
-					<li>For items that you recently requested, it may take one minute for them to appear below.</li>
-					<li>We are receiving reports about some users not receiving email notices for upcoming due dates, hold pickups, or overdue items.  You may wish to check My Account or contact your local library for this information.   Please contact your email provider if you believe you are not receiving these notices.</li>
-				</ul>
+				<p style="font-size:80%;color:red">We are receiving reports about some users not receiving email notices for upcoming due dates, hold pickups, or overdue items.  You may wish to check My Account or contact your local library for this information.   Please contact your email provider if you believe you are not receiving these notices.</p>
 			</div>
 			
 			<div class="hold-buttons">

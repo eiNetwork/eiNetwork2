@@ -73,6 +73,22 @@ class Hold extends Action {
 		//Get title information for the record.
 		$holding = $this->catalog->getHolding($recordId);
 
+
+		// foreach($holding as $key=>$value){
+
+
+
+		// }
+
+		echo "<pre>";
+		print_r(count($holding));
+		echo "</pre>";
+
+		echo "<pre>";
+		print_r($holding);
+		echo "</pre>";
+		die();
+
 		if (PEAR::isError($holding)) {
 			PEAR::raiseError($holding);
 		}
@@ -104,49 +120,19 @@ class Hold extends Action {
 				$interface->assign('focusElementId', 'username');
 				$showMessage = true;
 			}
-		} else {
-
+		} else{
+			//Get the referrer so we can go back there.
+			if (isset($_SERVER['HTTP_REFERER'])){
+				$referer = $_SERVER['HTTP_REFERER'];
+				$_SESSION['hold_referrer'] = $referer;
+			}
 
 			//Showing place hold form.
 			if ($user){
-
-				global $locationSingleton;
-
-				$active_location = $locationSingleton->getActiveLocation();
-
-				//Get the referrer so we can go back there.
-				if (isset($_SERVER['HTTP_REFERER'])){
-					$referer = $_SERVER['HTTP_REFERER'];
-					$_SESSION['hold_referrer'] = $referer;
-				}
-
-				$local_avail_count = 0;
-
-				foreach($holding as $key=>$value){
-
-					if ($value['libraryDisplayName'] == $active_location->defaultLocationFacet){
-						if ($value['availability'] == 1 && $value['holdable'] == 1){
-							$local_avail_count++;
-						}
-					}
-
-				}
-
-				if ($local_avail_count > 0){
-
-					$hold_message_data = array(
-		              'successful' => $return['result'] ? 'all' : 'none',
-		              'error' => "This library owns a copy of this item. Check with a staff member to find it.",
-		              'titles' => null
-					);
-					$hold_message_data['items'] = $return['items'];
-					$_SESSION['hold_message'] = $hold_message_data;
-					header("Location: " . $referer);
-				}
-
 				$profile = $this->catalog->getMyProfile($user);
 				$interface->assign('profile', $profile);
 
+				global $locationSingleton;
 				//Get the list of pickup branch locations for display in the user interface.
 				$locations = $locationSingleton->getPickupBranchesPreferLocationFirst($profile, $profile['homeLocationId']);
 				$interface->assign('home_library', $locations['home_library']);

@@ -650,7 +650,6 @@ div.popupBox {
 	-webkit-transition-property: height;
 	-webkit-transition-duration: 0.25s;
 	-webkit-transition-delay: 0.25s;
-	padding:10px;
 }
 @media all { div.popupBox { background-color: rgb(46,46,46)\0/; } } /* IE8 uses \0/ */
 div.popupBox .header a {
@@ -2251,9 +2250,9 @@ div.issueInfo {
 }
 
 .hold_result_error {
-	font-size: 13px;
+	font-size: 10px;
 	font-weight: bold;
-	color: #fff;
+	color: red;
 	margin-bottom: 4px;
 }
 
