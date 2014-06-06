@@ -64,13 +64,6 @@ while ($i < $bold_count){
 	
 	
 	<div id="main-content">
-		<div class="site-message site-message-search">
-			<ul class="message">
-				<li>
-					<p class="message" align="center">There have been some recent changes to the new catalog. <a href="/MyResearch/Tempchanges">Read More...</a></p>
-				</li>
-			</ul>
-		</div>
 		{if $user->cat_username}
 			{if $showStrands && $user->disableRecommendations == 0}
 				{assign var="scrollerName" value="Recommended"}
