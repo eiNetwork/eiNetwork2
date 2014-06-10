@@ -865,7 +865,8 @@ class MillenniumDriver implements DriverInterface
 				$summaryInformation['showPlaceHold'] = $canShowHoldButton;
 				$summaryInformation['class'] = 'available';
 			}elseif (substr($holdingKey, 0, 1) == 7){
-				$numCopiesOnOrder++;
+				$total_orders = substr($holding['location'], 0, 1);
+				$numCopiesOnOrder = $numCopiesOnOrder + $total_orders;
 				$numCopies--; //Don't increment number of copies for titles we don't have yet.
 			}
 		}

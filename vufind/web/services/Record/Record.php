@@ -605,11 +605,6 @@ class Record extends Action
 		}	
 
 		//Load description from Syndetics
-		echo "<pre>isbn";
-		print_r($this->isbn);
-		echo "upc";
-		print_r($this->upc);
-		echo "</pre>";	
 		$useMarcSummary = true;
 		if ($this->isbn || $this->upc){
 			require_once 'Drivers/marmot_inc/GoDeeperData.php';
