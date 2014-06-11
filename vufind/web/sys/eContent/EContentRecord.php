@@ -55,6 +55,7 @@ class EContentRecord extends SolrDataObject {
 	public $literary_form_full;
 	public $marcRecord;
 	public $status; //'active', 'archived', or 'deleted'
+	public $full_title;
 
 	/* Static get */
 	function staticGet($k,$v=NULL) { return DB_DataObject::staticGet('EContentRecord',$k,$v); }
@@ -1810,5 +1811,74 @@ class EContentRecord extends SolrDataObject {
 
 	public function setstatus($status){
 		$this->status = $status;
+	}
+
+	public function getMarc($marc, $field){
+
+		require_once 'File/MARC.php';
+
+		$marc = trim($marc);
+
+		$marc = preg_replace('/#29;/', "\x1D", $marc);
+		$marc = preg_replace('/#30;/', "\x1E", $marc);
+		$marc = preg_replace('/#31;/', "\x1F", $marc);
+		$marc = preg_replace('/#163;/', "\xA3", $marc);
+		$marc = preg_replace('/#169;/', "\xA9", $marc);
+		$marc = preg_replace('/#174;/', "\xAE", $marc);
+		$marc = preg_replace('/#230;/', "\xE6", $marc);
+		$marc = new File_MARC($marc, File_MARC::SOURCE_STRING);
+
+		if (!($marcRecord = $marc->next())) {
+			PEAR::raiseError(new PEAR_Error('Could not load marc record for record'));
+		}
+
+
+		if ($field == 'full_title'){
+			$marcField = $marcRecord->getField('245');
+			$recordTitle = $this->getSubfieldData($marcField, 'a');
+			$recordTitleSubtitle = trim($this->concatenateSubfieldData($marcField, array('a', 'b', 'h', 'n', 'p')));
+			$recordTitleSubtitle = preg_replace('~\s+[\/:]$~', '', $recordTitleSubtitle);
+			$recordTitleWithAuth = trim($this->concatenateSubfieldData($marcField, array('a', 'b', 'h', 'n', 'p', 'c')));
+
+			
+			$full_title = str_replace('/', ' ', $recordTitleSubtitle);
+			$full_title = str_replace('[electronic resource]', '', $full_title);
+			$full_title = str_replace('. . ', ' - ', $full_title);
+			$full_title = trim($full_title);
+
+			return $full_title;
+		}
+
+		
+
+	}
+
+	public function getSubfieldData($marcField, $subField){
+		if ($marcField){
+			return $marcField->getSubfield($subField) ? $marcField->getSubfield($subField)->getData() : '';
+		}else{
+			return '';
+		}
+	}
+
+	public function concatenateSubfieldData($marcField, $subFields){
+		$value = '';
+		foreach ($subFields as $subField){
+			$subFieldValue = $this->getSubfieldData($marcField, $subField);
+			if (strlen($subFieldValue) > 0){
+				$value .= ' ' . $subFieldValue;
+			}
+		}
+		return $value;
+	}
+
+	public function find($flag){
+
+		$eContentRecord = parent::find($flag);
+
+		$this->full_title = $this->getMarc($this->marcRecord, 'full_title');
+
+		return $eContentRecord;
+
 	}
 }

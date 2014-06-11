@@ -112,6 +112,7 @@ class Home extends Action{
 		if (!$eContentRecord->find(true)){
 			//TODO: display record not found error
 		}else{
+
 			if ($configArray['Catalog']['ils'] == 'Millennium'){
 				if (isset($eContentRecord->ilsId) && strlen($eContentRecord->ilsId) > 0){
 					$interface->assign('classicId', substr($eContentRecord->ilsId, 1, strlen($eContentRecord->ilsId) -2));
