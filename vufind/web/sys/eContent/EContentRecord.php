@@ -1824,25 +1824,34 @@ class EContentRecord extends SolrDataObject {
 	 * @return   either array or full_title
 	 *
 	 */
-	public function getMarc($marc, $field){
+	public function getMarc($marc, $field, $record_id){
+
+		global $memcache;
+		global $configArray;
 
 		require_once 'File/MARC.php';
 
 		$marc = trim($marc);
 
-		$marc = preg_replace('/#29;/', "\x1D", $marc);
-		$marc = preg_replace('/#30;/', "\x1E", $marc);
-		$marc = preg_replace('/#31;/', "\x1F", $marc);
-		$marc = preg_replace('/#163;/', "\xA3", $marc);
-		$marc = preg_replace('/#169;/', "\xA9", $marc);
-		$marc = preg_replace('/#174;/', "\xAE", $marc);
-		$marc = preg_replace('/#230;/', "\xE6", $marc);
-		$marc = new File_MARC($marc, File_MARC::SOURCE_STRING);
+		$marcRecord = $memcache->get('marc_record_econtent_' . $record_id);
+		if ($marcRecord == false){
 
-		if (!($marcRecord = $marc->next())) {
-			PEAR::raiseError(new PEAR_Error('Could not load marc record for record'));
+			$marc = preg_replace('/#29;/', "\x1D", $marc);
+			$marc = preg_replace('/#30;/', "\x1E", $marc);
+			$marc = preg_replace('/#31;/', "\x1F", $marc);
+			$marc = preg_replace('/#163;/', "\xA3", $marc);
+			$marc = preg_replace('/#169;/', "\xA9", $marc);
+			$marc = preg_replace('/#174;/', "\xAE", $marc);
+			$marc = preg_replace('/#230;/', "\xE6", $marc);
+			$marc = new File_MARC($marc, File_MARC::SOURCE_STRING);
+
+			if (!($marcRecord = $marc->next())) {
+				PEAR::raiseError(new PEAR_Error('Could not load marc record for econtent record ' . $record_id));
+			} else {
+				$memcache->set('marc_record_econtent_' . $record_id, $marcRecord, 0, $configArray['Caching']['marc_record']);
+			}
+
 		}
-
 
 		if ($field == 'full_title'){
 			$marcField = $marcRecord->getField('245');
@@ -1892,7 +1901,7 @@ class EContentRecord extends SolrDataObject {
 
 		$eContentRecord = parent::find($flag);
 
-		$this->full_title = $this->getMarc($this->marcRecord, 'full_title');
+		$this->full_title = $this->getMarc($this->marcRecord, 'full_title', $this->id);
 
 		return $eContentRecord;
 
