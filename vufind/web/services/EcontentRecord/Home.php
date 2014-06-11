@@ -114,7 +114,7 @@ class Home extends Action{
 			//TODO: display record not found error
 		}else{
 
-			$marcLinks = $eContentRecord->getMarc($eContentRecord->marcRecord,'856Links', $eContentRecord->id);
+			$marcLinks = $eContentRecord->getMarc($eContentRecord->marcRecord,'856Links', $eContentRecord->getid());
 			$interface->assign('marcLinks', $marcLinks);
 			
 			if ($configArray['Catalog']['ils'] == 'Millennium'){
