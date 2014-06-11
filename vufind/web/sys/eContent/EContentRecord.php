@@ -1813,6 +1813,17 @@ class EContentRecord extends SolrDataObject {
 		$this->status = $status;
 	}
 
+
+	/**
+	 *
+	 * @MD - Custimizations to some eContent object fields. Either not provided by reindexing or needs refactoring.
+	 * Currently working on title and 856 links. Grabbing from MARC record.
+	 *
+	 * @param    string $marc marc record stored in database
+	 * @param    string $field marc record field required
+	 * @return   either array or full_title
+	 *
+	 */
 	public function getMarc($marc, $field){
 
 		require_once 'File/MARC.php';
@@ -1840,13 +1851,18 @@ class EContentRecord extends SolrDataObject {
 			$recordTitleSubtitle = preg_replace('~\s+[\/:]$~', '', $recordTitleSubtitle);
 			$recordTitleWithAuth = trim($this->concatenateSubfieldData($marcField, array('a', 'b', 'h', 'n', 'p', 'c')));
 
-			
 			$full_title = str_replace('/', ' ', $recordTitleSubtitle);
 			$full_title = str_replace('[electronic resource]', '', $full_title);
 			$full_title = str_replace('. . ', ' - ', $full_title);
 			$full_title = trim($full_title);
 
 			return $full_title;
+		} elseif ($field == '856Links'){
+
+			$internetLinks = $this->get856Links($marcRecord);
+
+			return $internetLinks;
+
 		}
 
 		
@@ -1881,4 +1897,52 @@ class EContentRecord extends SolrDataObject {
 		return $eContentRecord;
 
 	}
+
+	protected function get856Links($marcRecord, $supp = true){
+    	global $configArray;
+    	$linkFields = $marcRecord->getFields('856');
+    	$internetLinks = array();
+    	if ($linkFields){
+    		$field856Index = 0;
+    		foreach ($linkFields as $marcField){
+    			$field856Index++;
+    			$isFull = $this->isLinkFull($marcField);
+    			//Get the link
+    			if ($marcField->getSubfield('u') && ($isFull != $supp)){
+    				$link = $marcField->getSubfield('u')->getData();
+    				if ($marcField->getSubfield('z')){
+    					$linkText = $marcField->getSubfield('z')->getData();
+    				}elseif ($marcField->getSubfield('y')){
+    					$linkText = $marcField->getSubfield('y')->getData();
+    				}elseif ($marcField->getSubfield('3')){
+    					$linkText = $marcField->getSubfield('3')->getData();
+    				}else{
+    					$linkText = $link;
+    				}
+    				$showLink = true;
+    				//Process some links differently so we can either hide them
+    				//or show them in different areas of the catalog.
+    				if (preg_match('/purchase|buy/i', $linkText) ||
+    						preg_match('/barnesandnoble|tatteredcover|amazon|smashwords\.com/i', $link)){
+    					$showLink = false;
+    				}
+    				$isBookLink = preg_match('/acs\.dcl\.lan|vufind\.douglascountylibraries\.org|catalog\.douglascountylibraries\.org/i', $link);
+    				if ($isBookLink == 1){
+    					//e-book link, don't show
+    					$showLink = false;
+    				}
+    	
+    				if ($showLink){
+    					//Rewrite the link so we can track usage
+    					//$link = $configArray['Site']['path'] . '/Record/' . $this->id . '/Link?index=' . $field856Index; // @MD - Do not need to track for now
+    					$internetLinks[] = array(
+    							'link' => $link,
+    							'linkText' => $linkText,
+    					);
+    				}
+    			}
+    		}
+    	}
+    	return $internetLinks;
+    }
 }

@@ -497,14 +497,25 @@ function redrawSaveStatus() {literal}{{/literal}
 						{/if}
 					{/if}
 					{if !$eContentRecord->sourceUrl}
-						{foreach from=$eContentRecord->getItems() item=eRec name=links}
-							{if $eRec->link}
-								<tr>
-									<td class="details_lable" id="links">{if $smarty.foreach.links.index == 0}Links{/if}</td>
-									<td><a href="{$eRec->link}" target="_blank">{if $eRec->notes}{$eRec->notes}{else}{$eRec->link}{/if}</a></td>
-								</tr>
-							{/if}
-						{/foreach}
+						{if $marcLinks}
+							{foreach from=$marcLinks key=myId item=marcLink}
+								{if $marcLink.link}
+									<tr>
+										<td class="details_lable" id="links">{if $myId == 0}Links{/if}</td>
+										<td><a href="{$marcLink.link}" target="_blank">{$marcLink.linkText}</a></td>
+									</tr>
+								{/if}
+							{/foreach}
+						{else}
+							{foreach from=$eContentRecord->getItems() item=eRec name=links}
+								{if $eRec->link}
+									<tr>
+										<td class="details_lable" id="links">{if $smarty.foreach.links.index == 0}Links{/if}</td>
+										<td><a href="{$eRec->link}" target="_blank">{if $eRec->notes}{$eRec->notes}{else}{$eRec->link}{/if}</a></td>
+									</tr>
+								{/if}
+							{/foreach}
+						{/if}
 					{/if}
 					{foreach from=$eContentRecord->getItems() item=eRec}
 						{if $eRec->sampleName_1}
