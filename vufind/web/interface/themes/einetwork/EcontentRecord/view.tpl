@@ -43,7 +43,7 @@ function redrawSaveStatus() {literal}{{/literal}
 				    </div>
 			      </div>
 			      <div id="record_record_up_middle">
-						<div id='recordTitle'>{$eContentRecord->title|regex_replace:"/(\/|:)$/":""|escape}
+						<div id='recordTitle'>{$eContentRecord->full_title|regex_replace:"/(\/|:)$/":""|escape}
 						{if $user && $user->hasRole('epubAdmin')}
 						{if $eContentRecord->status != 'active'}<span id="eContentStatus">({$eContentRecord->status})</span>{/if}
 						<span id="editEContentLink"><a href='{$path}/EcontentRecord/{$id}/Edit'>(edit)</a></span>
@@ -497,14 +497,25 @@ function redrawSaveStatus() {literal}{{/literal}
 						{/if}
 					{/if}
 					{if !$eContentRecord->sourceUrl}
-						{foreach from=$eContentRecord->getItems() item=eRec name=links}
-							{if $eRec->link}
-								<tr>
-									<td class="details_lable" id="links">{if $smarty.foreach.links.index == 0}Links{/if}</td>
-									<td><a href="{$eRec->link}" target="_blank">{if $eRec->notes}{$eRec->notes}{else}{$eRec->link}{/if}</a></td>
-								</tr>
-							{/if}
-						{/foreach}
+						{if $marcLinks}
+							{foreach from=$marcLinks key=myId item=marcLink}
+								{if $marcLink.link}
+									<tr>
+										<td class="details_lable" id="links">{if $myId == 0}Links{/if}</td>
+										<td><a href="{$marcLink.link}" target="_blank">{$marcLink.linkText}</a></td>
+									</tr>
+								{/if}
+							{/foreach}
+						{else}
+							{foreach from=$eContentRecord->getItems() item=eRec name=links}
+								{if $eRec->link}
+									<tr>
+										<td class="details_lable" id="links">{if $smarty.foreach.links.index == 0}Links{/if}</td>
+										<td><a href="{$eRec->link}" target="_blank">{if $eRec->notes}{$eRec->notes}{else}{$eRec->link}{/if}</a></td>
+									</tr>
+								{/if}
+							{/foreach}
+						{/if}
 					{/if}
 					{foreach from=$eContentRecord->getItems() item=eRec}
 						{if $eRec->sampleName_1}

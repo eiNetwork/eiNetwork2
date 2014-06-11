@@ -55,6 +55,7 @@ class EContentRecord extends SolrDataObject {
 	public $literary_form_full;
 	public $marcRecord;
 	public $status; //'active', 'archived', or 'deleted'
+	public $full_title;
 
 	/* Static get */
 	function staticGet($k,$v=NULL) { return DB_DataObject::staticGet('EContentRecord',$k,$v); }
@@ -1811,4 +1812,148 @@ class EContentRecord extends SolrDataObject {
 	public function setstatus($status){
 		$this->status = $status;
 	}
+
+
+	/**
+	 *
+	 * @MD - Custimizations to some eContent object fields. Either not provided by reindexing or needs refactoring.
+	 * Currently working on title and 856 links. Grabbing from MARC record.
+	 *
+	 * @param    string $marc marc record stored in database
+	 * @param    string $field marc record field required
+	 * @return   either array or full_title
+	 *
+	 */
+	public function getMarc($marc, $field, $record_id){
+
+		global $memcache;
+		global $configArray;
+
+		if ($marc){
+
+			require_once 'File/MARC.php';
+			$marc = trim($marc);
+
+			$marcRecord = $memcache->get('marc_record_econtent_' . $record_id);
+			if ($marcRecord == false){
+
+				$marc = preg_replace('/#29;/', "\x1D", $marc);
+				$marc = preg_replace('/#30;/', "\x1E", $marc);
+				$marc = preg_replace('/#31;/', "\x1F", $marc);
+				$marc = preg_replace('/#163;/', "\xA3", $marc);
+				$marc = preg_replace('/#169;/', "\xA9", $marc);
+				$marc = preg_replace('/#174;/', "\xAE", $marc);
+				$marc = preg_replace('/#230;/', "\xE6", $marc);
+				$marc = new File_MARC($marc, File_MARC::SOURCE_STRING);
+
+				if (!($marcRecord = $marc->next())) {
+					PEAR::raiseError(new PEAR_Error('Could not load marc record for econtent record ' . $record_id));
+				} else {
+					$memcache->set('marc_record_econtent_' . $record_id, $marcRecord, 0, $configArray['Caching']['marc_record']);
+				}
+
+			}
+
+			if ($field == 'full_title'){
+				$marcField = $marcRecord->getField('245');
+				$recordTitle = $this->getSubfieldData($marcField, 'a');
+				$recordTitleSubtitle = trim($this->concatenateSubfieldData($marcField, array('a', 'b', 'h', 'n', 'p')));
+				$recordTitleSubtitle = preg_replace('~\s+[\/:]$~', '', $recordTitleSubtitle);
+				$recordTitleWithAuth = trim($this->concatenateSubfieldData($marcField, array('a', 'b', 'h', 'n', 'p', 'c')));
+
+				$full_title = str_replace('/', ' ', $recordTitleSubtitle);
+				$full_title = str_replace('[electronic resource]', '', $full_title);
+				$full_title = str_replace('. . ', ' - ', $full_title);
+				$full_title = trim($full_title);
+
+				return $full_title;
+			} elseif ($field == '856Links'){
+
+				$internetLinks = $this->get856Links($marcRecord);
+
+				return $internetLinks;
+
+			}
+		} else {
+			return null;
+		}
+
+	}
+
+	public function getSubfieldData($marcField, $subField){
+		if ($marcField){
+			return $marcField->getSubfield($subField) ? $marcField->getSubfield($subField)->getData() : '';
+		}else{
+			return '';
+		}
+	}
+
+	public function concatenateSubfieldData($marcField, $subFields){
+		$value = '';
+		foreach ($subFields as $subField){
+			$subFieldValue = $this->getSubfieldData($marcField, $subField);
+			if (strlen($subFieldValue) > 0){
+				$value .= ' ' . $subFieldValue;
+			}
+		}
+		return $value;
+	}
+
+	public function find($flag){
+
+		$eContentRecord = parent::find($flag);
+
+		$this->full_title = $this->getMarc($this->marcRecord, 'full_title', $this->getid());
+
+		return $eContentRecord;
+
+	}
+
+	protected function get856Links($marcRecord, $supp = true){
+    	global $configArray;
+    	$linkFields = $marcRecord->getFields('856');
+    	$internetLinks = array();
+    	if ($linkFields){
+    		$field856Index = 0;
+    		foreach ($linkFields as $marcField){
+    			$field856Index++;
+    			$isFull = $this->isLinkFull($marcField);
+    			//Get the link
+    			if ($marcField->getSubfield('u') && ($isFull != $supp)){
+    				$link = $marcField->getSubfield('u')->getData();
+    				if ($marcField->getSubfield('z')){
+    					$linkText = $marcField->getSubfield('z')->getData();
+    				}elseif ($marcField->getSubfield('y')){
+    					$linkText = $marcField->getSubfield('y')->getData();
+    				}elseif ($marcField->getSubfield('3')){
+    					$linkText = $marcField->getSubfield('3')->getData();
+    				}else{
+    					$linkText = $link;
+    				}
+    				$showLink = true;
+    				//Process some links differently so we can either hide them
+    				//or show them in different areas of the catalog.
+    				if (preg_match('/purchase|buy/i', $linkText) ||
+    						preg_match('/barnesandnoble|tatteredcover|amazon|smashwords\.com/i', $link)){
+    					$showLink = false;
+    				}
+    				$isBookLink = preg_match('/acs\.dcl\.lan|vufind\.douglascountylibraries\.org|catalog\.douglascountylibraries\.org/i', $link);
+    				if ($isBookLink == 1){
+    					//e-book link, don't show
+    					$showLink = false;
+    				}
+    	
+    				if ($showLink){
+    					//Rewrite the link so we can track usage
+    					//$link = $configArray['Site']['path'] . '/Record/' . $this->id . '/Link?index=' . $field856Index; // @MD - Do not need to track for now
+    					$internetLinks[] = array(
+    							'link' => $link,
+    							'linkText' => $linkText,
+    					);
+    				}
+    			}
+    		}
+    	}
+    	return $internetLinks;
+    }
 }
