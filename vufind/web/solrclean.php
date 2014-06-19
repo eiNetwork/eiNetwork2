@@ -1,46 +1,111 @@
 <?php
 
-function curl_download($url){
- 
-    if (!function_exists('curl_init')){
-        die('Sorry cURL is not installed!');
+function get_duplicates(){
+
+
+    echo "Searching for Duplicates\n\n";
+
+    $link = mysql_connect('localhost', 'vufind', 'vufind');
+    if (!$link) {
+        die('Could not connect: ' . mysql_error());
     }
- 
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_USERAGENT, "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/36.0.1944.0 Safari/537.36");
-    curl_setopt($ch, CURLOPT_HEADER, 0);
-    curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true); 
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_TIMEOUT, 0);
-    $output = curl_exec($ch);
-    echo "<pre>";
-    print_r($output);
-    echo "</pre>";
-    curl_close($ch);
- 
-    return $output;
+
+    mysql_select_db('econtent', $link) or die('Could not select database.');
+
+    $query = "SELECT 
+            ec.id, 
+            ec.ilsid, 
+            FROM_UNIXTIME(date_added) as DateAdded, 
+            dup.LastAddDate
+        FROM econtent_record ec
+        JOIN duplicateilsid dup on dup.ilsid = ec.ilsid
+        WHERE FROM_UNIXTIME(ec.date_added) <> dup.LastAddDate";
+
+    $result = mysql_query($query);
+
+    while ($row = mysql_fetch_assoc($result)) {
+        $db_records[] = $row;
+    }
+
+    if (count($db_records) > 1){
+        echo "Found " . count($db_records) . " Duplicates\n\n";
+    } else {
+        echo "Found 0 Duplicates\n\n";
+        die();
+    }
+
+    mysql_close($link);
+
+    return $db_records;
+
 }
 
-$id = "econtentRecord703964";
-$title = urlencode("Ancient Egypt from prehistory to the Islamic Conquest /");
+function solr_clean($db_records){
 
-$url = "http://vufindplus.einetwork.net:8080/solr/econtent/select/?q=id:" . $id . " AND title:" . $title . "&version=2.2&start=0&rows=10&indent=on&wt=json";
+    $delete_core_1_count = 0;
+    $delete_core_2_count = 0;
 
-echo "<pre>";
-print_r($url);
-echo "</pre>";
+    echo "Removing Records from SOLR cores\n\n";
 
-$response = curl_download($url);
+    foreach($db_records as $key => $value){
 
-$results = json_decode($response);
+        $id = $value['id'];
 
-echo "<pre>";
-print_r("Doc Count: " . count($results->response->docs));
-echo "</pre>";
+        $cmd = "curl -H 'Content-Type: text/xml' http://localhost:8080/solr/econtent/update?commit=true --data-binary '<delete><id>econtentRecord" . $id . "</id></delete>'";
+        exec($cmd);
+        $delete_core_1_count++;
 
-echo "<pre>";
-print_r($results);
-echo "</pre>";
+        echo "\n\nDeleted econtentRecord" . $id . " from core 1\n\n";
+
+        $cmd = "curl -H 'Content-Type: text/xml' http://localhost:8080/solr/econtent2/update?commit=true --data-binary '<delete><id>econtentRecord" . $id . "</id></delete>'";
+        exec($cmd);
+        $delete_core_2_count++;
+
+        echo "\n\nDeleted econtentRecord" . $id . " from core 2\n\n";
+
+    }
+
+    echo "Deleted " . $delete_core_1_count . " records from Solr Core 1\n";
+    echo "Deleted " . $delete_core_2_count . " records from Solr Core 2\n";
+
+}
+
+function remove_records($db_records){
+
+    echo "Removing Records from econtent database\n\n";
+
+    $link = mysql_connect('localhost', 'vufind', 'vufind');
+
+    mysql_select_db('econtent', $link) or die('Could not select database.');
+
+    $deleted_econtent_records = 0;
+    $deleted_econtent_items = 0;
+
+    foreach($db_records as $key => $value){
+
+        $id = $value['id'];
+
+        $query = "DELETE FROM econtent_record WHERE id = " . $id;
+        mysql_query($query) or die(mysql_error());
+
+        $deleted_econtent_records++;
+
+        $query = "DELETE FROM econtent_item WHERE recordId = " . $id;
+        mysql_query($query) or die(mysql_error());
+
+        $deleted_econtent_items++;
+
+    }
+
+    echo "Deleted " . $deleted_econtent_records . " records from econtent_record\n\n";
+    echo "Deleted " . $deleted_econtent_items . " records from econtent_item\n\n";
+
+    mysql_close($link);
+
+}
+
+$db_records = get_duplicates();
+solr_clean($db_records);
+remove_records($db_records);
 
 ?>
