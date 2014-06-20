@@ -1,10 +1,9 @@
 <?php
 
     /**
-     * Catalog Connection Class
+     * Solr Clean Tool
      *
-     * This wrapper works with a driver class to pass information from the ILS to
-     * VuFind.
+     * Current cleans SOLR econtent cores and database tables of duplicate titles.
      *
      * @category VuFind
      * @package  Econtent SOLR maintenance
