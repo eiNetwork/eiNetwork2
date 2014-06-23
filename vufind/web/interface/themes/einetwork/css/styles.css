@@ -2997,3 +2997,6 @@ ul.new-alert-box li {
 .pinresetform-button input {
 	margin:20px 0 60px 68px;
 }
+.qtip-content {
+	font-size: 13px;
+}

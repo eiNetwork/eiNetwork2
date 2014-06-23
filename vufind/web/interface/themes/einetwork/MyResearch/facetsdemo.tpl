@@ -7,11 +7,36 @@ $(document).ready(function() {
 	    content: {
 	        text: 'Click on the library locations below to limit your search results to the holdings of the selected locations'
 	    },
+	    style: 'tooltip',
+	    classes: {
+		content:'eintooltip'
+	    }
+	    
+	});
+
+});
+
+$(document).ready(function() {
+
+	$('.remove1').qtip({
+	    content: {
+	        text: 'Click on the red icon to remove the filter.'
+	    },
 	    style: 'tooltip'
 	});
 
 });
 
+$(document).ready(function() {
+
+	$('.remove2').qtip({
+	    content: {
+	        text: 'Click here to remove all fitlers'
+	    },
+	    style: 'tooltip'
+	});
+
+});
 $(document).ready(function() {
 
 	$('.mat1').qtip({
@@ -85,7 +110,12 @@ $(document).ready(function() {
     <div id="main-content">
         <h1>Facets Demo</h1>
         <br>
-<h3><font class="location1">Location  </font><a href="/MyResearch/einfacets"><img src="/images/help_icon.png"></a></h3>
+<h3><font class="remove1">Remove Filters  </font><a href="/MyResearch/einfacets" class="remove1"><img src="/images/help_icon.png"></a></h3>
+    Location: CLP - Main Library<br>
+    <font class="remove2">remove all filters</font><br>
+
+
+<h3><font class="location1">Location  </font><a href="/MyResearch/einfacets" class="location1"><img src="/images/help_icon.png"></a></h3>
     CLP - Main Library	(3888) <br>
     Digital Collection	(1521) <br>
     more ... <br>

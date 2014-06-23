@@ -18,7 +18,10 @@
 	    content: {
 	        text: 'Select to limit serach results to available materials only'
 	    },
-	    style: 'tooltip'
+	    style: 'tooltip',
+	    classes: {
+		content:'eintooltip'
+	    }
 	});
 
 });
@@ -29,7 +32,10 @@
 	    content: {
 	        text: 'Select to keep left column filters applied on your next serach'
 	    },
-	    style: 'tooltip'
+	   style: 'tooltip',
+	    classes: {
+		content:'eintooltip'
+	    }
 	});
 
 });
