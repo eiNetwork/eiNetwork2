@@ -34,7 +34,7 @@
       <p>Yes. Clicking on several filters will further narrow your results set.  For example, choosing print books as a material type and short stories as a literary form will limit your results to items that satisfy both criteria.</p>
     </dd>
     
-  <dt id="Available Filters">Available Filters</dt>
+  <dt class="subheading" id="Available Filters">Available Filters</dt>
     <dt id="Age Group">Age Group</dt>
       <dd>
         <p>Allows you to limit your search results to one of four age groups: general interest, children, pre-teen, and adult.  General Interest serves as the default category unless a more specific designation is provided in the Target Audience field of the bibliographic record for a resource.  Materials may also fall in to the General Interest category if they are not age-specific (for example, musical scores and recordings).  </p>
@@ -58,7 +58,7 @@
         <p>Limits your search results to materials available in a specified language based on your search term.</p>
       </dd>
 
-  <dt id="Other Options">Other Options</dt>
+  <dt class="subheading" id="Other Options">Other Options</dt>
     <dt id="Using the Sort Function">Using the Sort Function</dt>
       <dd>
         <p>Using the Sort function, which is located in the middle panel of the search results page below the search bar, it is possible to order your search results in five different ways.</p>  
