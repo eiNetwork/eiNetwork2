@@ -53,14 +53,15 @@
 </div>
 
 <div id="Other Options">
-  <h2 id="Using the Sort by Function">Using the Sort by Function</h2>
-    <p>Using the Sort by function, which is located in the middle panel of the search results page below the search bar, it is possible to order your search results in five different ways.</p>  
-    <p>The default sort is by Relevance, which displays your results in order of their relevance to your search criteria.  In other words, items that most closely match your criteria are displayed first.  </p>
-    <p>You can also sort by Newest First or Oldest First, which orders your results from most current to oldest publication date.</p>
-    <p>Choosing to Sort by Author will arrange your results alphabetically by author last name.  Likewise, Title sorts alphabetically by Title, omitting leading articles such as “A” and “The”.</p>
+  <h2>Other Options</h2>
+    <h3 id="Using the Sort by Function">Using the Sort by Function</h3>
+      <p>Using the Sort by function, which is located in the middle panel of the search results page below the search bar, it is possible to order your search results in five different ways.</p>  
+      <p>The default sort is by Relevance, which displays your results in order of their relevance to your search criteria.  In other words, items that most closely match your criteria are displayed first.  </p>
+      <p>You can also sort by Newest First or Oldest First, which orders your results from most current to oldest publication date.</p>
+      <p>Choosing to Sort by Author will arrange your results alphabetically by author last name.  Likewise, Title sorts alphabetically by Title, omitting leading articles such as “A” and “The”.</p>
 
-  <h2 id="Item Availability">Item Availability</h2>
-    <p>There are several ways to find items that are currently available.  Selecting the “Limit to available” check box limits your search results to items that were available at the time of the most recent update, a process which occurs nightly.  </p>
-    <p>For more current information, click the “Find in Library” link that displays with each item on the search results page.  This option displays real-time information about the availability of the item, including locations that own copies of this item, the collection it belongs to (nonfiction, audiovisual, etc.), the item’s call number,  and whether it is checked out or available.  </p>
-    <p>From this pop-up, you can also print or email this information.  If an item is on order, it will also be displayed here and it is possible to place holds on these items.</p>
+    <h3 id="Item Availability">Item Availability</h3>
+      <p>There are several ways to find items that are currently available.  Selecting the “Limit to available” check box limits your search results to items that were available at the time of the most recent update, a process which occurs nightly.  </p>
+      <p>For more current information, click the “Find in Library” link that displays with each item on the search results page.  This option displays real-time information about the availability of the item, including locations that own copies of this item, the collection it belongs to (nonfiction, audiovisual, etc.), the item’s call number,  and whether it is checked out or available.  </p>
+      <p>From this pop-up, you can also print or email this information.  If an item is on order, it will also be displayed here and it is possible to place holds on these items.</p>
 </div>
