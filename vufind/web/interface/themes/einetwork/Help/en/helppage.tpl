@@ -5,7 +5,7 @@
 
 <ul class="HelpMenu">
   <li><a href="#Using Filters">Using Filters</a></li>
-  <li><a href="#Can Filters be Combined?">Can Filters be Combined?</a></li>
+  <li><a href="#Can Filters Be Combined?">Can Filters Be Combined?</a></li>
   <li><a href="#Available Filters">Available Filters</a>
     <ul>
       <li><a href="#Age Group">Age Group</a></li>
@@ -29,7 +29,7 @@
       <p>You can narrow your search results using filters that are shown in the left column of the search results page.  Clicking one or more of the options listed will limit your search based on the criteria selected.  The number shown in parentheses next to each option indicates the quantity of items available for a given category.</p>
     </dd>   
 
-  <dt id="Can Filters be Combined?">Can Filters be Combined?</dt>
+  <dt id="Can Filters Be Combined?">Can Filters Be Combined?</dt>
     <dd>
       <p>Yes. Clicking on several filters will further narrow your results set.  For example, choosing print books as a material type and short stories as a literary form will limit your results to items that satisfy both criteria.</p>
     </dd>
