@@ -24,23 +24,23 @@
 </ul>
 
 <dl class="Content">
-  <dt a name="Using Filters"></a>Using Filters</dt>
+  <dt id="Using Filters">Using Filters</dt>
     <dd>
       <p>You can narrow your search results using filters that are shown in the left column of the search results page.  Clicking one or more of the options listed will limit your search based on the criteria selected.  The number shown in parentheses next to each option indicates the quantity of items available for a given category.</p>
     </dd>   
 
-  <dt a name="Can Filters be Combined?"></a>Can Filters be Combined?</dt>
+  <dt id="Can Filters be Combined?">Can Filters be Combined?</dt>
     <dd>
       <p>Yes. Clicking on several filters will further narrow your results set.  For example, choosing print books as a material type and short stories as a literary form will limit your results to items that satisfy both criteria.</p>
     </dd>
     
   <h2 a name="Available Filters"></a>Available Filters</h2>
-    <dt a name="Age Group"></a>Age Group</dt>
+    <dt id="Age Group">Age Group</dt>
       <dd>
         <p>Allows you to limit your search results to one of four age groups: general interest, children, pre-teen, and adult.  General Interest serves as the default category unless a more specific designation is provided in the Target Audience field of the bibliographic record for a resource.  Materials may also fall in to the General Interest category if they are not age-specific (for example, musical scores and recordings).  </p>
       </dd>
       
-    <dt a name="Literary Form"></a>Literary Form</dt>
+    <dt id="Literary Form">Literary Form</dt>
       <dd>
         <p>Allows you to filter your search results by selecting a Literary Form from the list of available options.  An item’s Literary Form is defined by its relationship to a genre of literature, even if the resource itself is manifested in a non-textual form.  For example, books on CD and films, which are generally based on literary works, fall in to this category.  Materials not based on literary works may not have an associated Literary Form.  Recorded music, photographs and other non-textual images, as well as some maps and atlases are all examples of these types of resources.  In some cases, a resource may not appear in a Literary Form category simply because this information was not recorded in the bibliographic record.  </p>
       </dd>
