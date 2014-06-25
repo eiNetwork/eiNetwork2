@@ -51,3 +51,9 @@ pre {
     font-style: italic;
     margin-left: 1em;
 }
+
+h2{
+	text-transform: uppercase;
+	margin-bottom:5px;
+	
+}
