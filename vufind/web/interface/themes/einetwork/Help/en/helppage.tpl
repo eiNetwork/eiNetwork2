@@ -17,8 +17,8 @@
   </li>
   <li><a href="#Other Options">Other Options</a>
     <ul>
-      <li><a href="Using the Sort Function">Using the Sort Function</li>
-      <li><a href="Item Availability">Item Availability</li>
+      <li><a href="Using the Sort Function">Using the Sort Function</a></li>
+      <li><a href="Item Availability">Item Availability</a></li>
     </ul>
   </li>
 </ul>
