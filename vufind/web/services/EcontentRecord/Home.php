@@ -109,9 +109,14 @@ class Home extends Action{
 		$eContentRecord = new EContentRecord();
 		$this->id = strip_tags($_REQUEST['id']);
 		$eContentRecord->id = $this->id;
+
 		if (!$eContentRecord->find(true)){
 			//TODO: display record not found error
 		}else{
+
+			$marcLinks = $eContentRecord->getMarc($eContentRecord->marcRecord,'856Links', $eContentRecord->getid());
+			$interface->assign('marcLinks', $marcLinks);
+			
 			if ($configArray['Catalog']['ils'] == 'Millennium'){
 				if (isset($eContentRecord->ilsId) && strlen($eContentRecord->ilsId) > 0){
 					$interface->assign('classicId', substr($eContentRecord->ilsId, 1, strlen($eContentRecord->ilsId) -2));
