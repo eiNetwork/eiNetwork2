@@ -59,9 +59,9 @@
       </dd>
 
   <dt id="Other Options">Other Options</dt>
-    <dt id="Using the Sort by Function">Using the Sort by Function</dt>
+    <dt id="Using the Sort Function">Using the Sort Function</dt>
       <dd>
-        <p>Using the Sort by function, which is located in the middle panel of the search results page below the search bar, it is possible to order your search results in five different ways.</p>  
+        <p>Using the Sort function, which is located in the middle panel of the search results page below the search bar, it is possible to order your search results in five different ways.</p>  
         <p>The default sort is by Relevance, which displays your results in order of their relevance to your search criteria.  In other words, items that most closely match your criteria are displayed first.  </p>
         <p>You can also sort by Newest First or Oldest First, which orders your results from most current to oldest publication date.</p>
         <p>Choosing to Sort by Author will arrange your results alphabetically by author last name.  Likewise, Title sorts alphabetically by Title, omitting leading articles such as “A” and “The”.</p>
