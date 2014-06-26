@@ -26,7 +26,7 @@
 
 <div id="Using Filters">
   <h2>Using Filters</h2>
-    <p>You can narrow your search results using filters that are shown in the left column of the search results page.  Clicking one or more of the options listed will limit your search based on the criteria selected.  The number shown in parentheses next to each option indicates the quantity of items available for a given category.</p>   
+    <p>You can narrow your search results using the filters that are shown in the left column of the search results page.  Clicking one or more of the options listed will limit your search based on the criteria selected.  The number shown in parentheses next to each option indicates the quantity of items available for a given category.</p>   
 </div>
 
 <div id="Can Filters be Combined?">
@@ -37,13 +37,15 @@
 <div id="Available Filters"
   <h2>Available Filters</h2>
     <h3 id="Age Group">Age Group</h3>
-      <p>Allows you to limit your search results to one of four age groups: general interest, children, pre-teen, and adult.  General Interest serves as the default category unless a more specific designation is provided in the Target Audience field of the bibliographic record for a resource.  Materials may also fall in to the General Interest category if they are not age-specific (for example, musical scores and recordings).  
+      <p>Allows you to limit your search results to one of four age groups: General Interest, Children, Pre-teen, and Adult.  General Interest serves as the default category unless a more specific designation is provided in the Target Audience field of the bibliographic record for a resource.  Materials may also fall in to the General Interest category if they are not age-specific (for example, musical scores and recordings).  
 
     <h3 id="Literary Form">Literary Form</h3>
-      <p>Allows you to filter your search results by selecting a Literary Form from the list of available options.  An item’s Literary Form is defined by its relationship to a genre of literature, even if the resource itself is manifested in a non-textual form.  For example, books on CD and films, which are generally based on literary works, fall in to this category.  Materials not based on literary works may not have an associated Literary Form.  Recorded music, photographs and other non-textual images, as well as some maps and atlases are all examples of these types of resources.  In some cases, a resource may not appear in a Literary Form category simply because this information was not recorded in the bibliographic record.  </p>
+      <p>Allows you to filter your search results by selecting a Literary Form from the list of available options.  An item’s Literary Form is defined by its relationship to a genre of literature, even if the resource itself is manifested in a non-textual form.  For example, books on CD and films, which are generally based on literary works, fall in to this category.</p>  
+      <p>Materials not based on literary works may not have an associated Literary Form.  Recorded music, photographs and other non-textual images, as well as some maps and atlases are all examples of these types of resources.  In some cases, a resource may not appear in a Literary Form category simply because this information was not recorded in the bibliographic record.  </p>
 
     <h3 id="Subject">Subject</h3>
-      <p>Allows you to limit your search results according to Subject terms.  Supplied in the bibliographic record for a resource, these terms belong to a controlled vocabulary called the Library of Congress Subject Headings .  One function of controlled vocabularies is to group similar items by subject, which makes them ideal for filtering your search results.  Because this list is designed to be browsed, it contains only a small subset of broad Subject terms the categories are very broad and not every possible subject is represented here.  Combining a keyword search with the use of Subject filters may help narrow your results to a more specific subject.  </p>
+      <p>Allows you to limit your search results according to Subject terms.  Supplied in the bibliographic record for a resource, these terms belong to a controlled vocabulary called the Library of Congress Subject Headings .  One function of controlled vocabularies is to group similar items by subject, which makes them ideal for filtering your search results.</p>  
+      <p>Because this list is designed to be browsed, it contains only a small subset of broad Subject terms and not every possible subject is represented here.  Combining a keyword search with the use of Subject filters may help narrow your results to a more specific subject.  </p>
 
     <h3 id="Author">Author</h3>
       <p>Limits your search results to materials by a particular author based on your search term.</p>
@@ -56,8 +58,8 @@
   <h2 id="Using the Sort by Function">Using the Sort by Function</h2>
     <p>Using the Sort by function, which is located in the middle panel of the search results page below the search bar, it is possible to order your search results in five different ways.</p>  
     <p>The default sort is by Relevance, which displays your results in order of their relevance to your search criteria.  In other words, items that most closely match your criteria are displayed first.  </p>
-    <p>You can also sort by Newest First or Oldest First, which orders your results from most current to oldest publication date.</p>
-    <p>Choosing to Sort by Author will arrange your results alphabetically by author last name.  Likewise, Title sorts alphabetically by Title, omitting leading articles such as “A” and “The”.</p>
+    <p>You can also sort by Newest First or Oldest First, which orders your results from most current or oldest publication date.</p>
+    <p>Choosing Sort by Author will arrange your results alphabetically by author last name.  Likewise, Title sorts alphabetically by Title, omitting leading articles such as “A” and “The”.</p>
 
   <h2 id="Item Availability">Item Availability</h2>
     <p>There are several ways to find items that are currently available.  Selecting the “Limit to available” check box limits your search results to items that were available at the time of the most recent update, a process which occurs nightly.  </p>
