@@ -19,6 +19,7 @@
     <ul>
       <li><a href="#Using the Sort Function">Using the Sort Function</a></li>
       <li><a href="#Item Availability">Item Availability</a></li>
+      <li><a href="#Retain Filters">Retain Filters</a></li>
     </ul>
   </li>
 </ul>
