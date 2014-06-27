@@ -8,6 +8,7 @@
   <li><a href="#Can Filters Be Combined?">Can Filters Be Combined?</a></li>
   <li><a href="#Available Filters">Available Filters</a>
     <ul>
+      <li><a href="#Location">Location</a></li>
       <li><a href="#Age Group">Age Group</a></li>
       <li><a href="#Literary Form">Literary Form</a></li>
       <li><a href="#Subject">Subject</a></li>
@@ -36,6 +37,13 @@
     </dd>
     
   <h2 id="Available Filters">Available Filters</h2>
+  
+  
+    <dt id="Location">Location</dt>
+      <dd>
+        <p>The location filter will limit your search results to the library locations selected.  The user can limit the search results to more than one location.More than one location can be selected.</p>
+      </dd>
+
     <dt id="Age Group">Age Group</dt>
       <dd>
         <p>Allows you to limit your search results to one of four age groups: General Interest, Children, Pre-teen, and Adult.  General Interest serves as the default category unless a more specific designation is provided in the Target Audience field of the bibliographic record for a resource.  Materials may also fall in to the General Interest category if they are not age-specific (for example, musical scores and recordings).  </p>
