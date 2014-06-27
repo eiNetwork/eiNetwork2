@@ -41,7 +41,7 @@
   
     <dt id="Location">Location</dt>
       <dd>
-        <p>The location filter will limit your search results to the library locations selected.  The user can limit the search results to more than one location.More than one location can be selected.</p>
+        <p>The location filter will limit your search results to the library locations selected.  More than one location can be selected.</p>
       </dd>
 
     <dt id="Age Group">Age Group</dt>
