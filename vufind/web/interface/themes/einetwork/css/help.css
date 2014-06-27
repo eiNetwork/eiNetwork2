@@ -16,6 +16,7 @@ dl.content {
     height: 430px;
     width: 390px;
     overflow: auto;
+    padding-bottom: 20%;
 }
 
 dl dt {
