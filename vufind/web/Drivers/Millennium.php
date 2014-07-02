@@ -2363,27 +2363,11 @@ class MillenniumDriver implements DriverInterface
 
 			list($first, $last)=explode(' ', $username);
 
-			// // Get user IP
-			// if ( isset($_SERVER['HTTP_CLIENT_IP']) && ! empty($_SERVER['HTTP_CLIENT_IP'])) {
-			//     $ip = $_SERVER['HTTP_CLIENT_IP'];
-			// } elseif ( isset($_SERVER['HTTP_X_FORWARDED_FOR']) && ! empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-			//     $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-			// } else {
-			//     $ip = (isset($_SERVER['REMOTE_ADDR'])) ? $_SERVER['REMOTE_ADDR'] : '0.0.0.0';
-			// }
-
-			// $ip = filter_var($ip, FILTER_VALIDATE_IP);
-			// $ip = ($ip === false) ? '0.0.0.0' : $ip;
-
-			$ip = $_SERVER['HTTP_CLIENT_IP'];
-
 			$header=array();
 			$header[0] = "Accept: text/xml,application/xml,application/xhtml+xml,";
 			$header[0] .= "text/html;q=0.9,text/plain;q=0.8,image/png,*/*;q=0.5";
 			$header[] = "Cache-Control: max-age=0";
 			$header[] = "Connection: keep-alive";
-			$header[] = "REMOTE_ADDR: $ip";
-			$header[] = "HTTP_X_FORWARDED_FOR: $ip";
 			$header[] = "Accept-Charset: ISO-8859-1,utf-8;q=0.7,*;q=0.7";
 			$header[] = "Accept-Language: en-us,en;q=0.5";
 			$id=$patronDump['RECORD_#'];
