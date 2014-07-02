@@ -57,7 +57,7 @@
       
     <dt id="Subject">Subject</dt>
       <dd>
-        <p>Allows you to limit your search results according to Subject terms.  Supplied in the bibliographic record for a resource, these terms belong to a controlled vocabulary called the Library of Congress Subject Headings .  One function of controlled vocabularies is to group similar items by subject, which makes them ideal for filtering your search results.</p>  
+        <p>Allows you to limit your search results according to specific Subject terms.  The Subject terms contained in a title's bibliographic record belong to a controlled vocabulary called the Library of Congress Subject Headings.  Controlled vocabularies group similar items by subject, which makes them ideal for filtering your search results.</p>  
         <p>Because this list is designed to be browsed, it contains only a small subset of broad Subject terms and not every possible subject is represented here.  Combining a keyword search with the use of Subject filters may help narrow your results to a more specific subject.  </p>
       </dd>
     <dt id="Author">Author</dt>
@@ -80,7 +80,7 @@
       
     <dt id="Item Availability">Item Availability</dt>
       <dd>
-        <p>There are several ways to find items that are currently available.  Selecting the “Limit to available” check box limits your search results to items that were available at the time of the most recent update, a process which occurs nightly.  </p>
+        <p>There are several ways to find items that are currently available.  Selecting the “Limit to available” check box, which is available under the search bar, limits your search results to items that were available at the time of the most recent update, a process which occurs nightly.  </p>
         <p>For more current information, click the “Find in Library” link that displays with each item on the search results page.  This option displays real-time information about the availability of the item, including locations that own copies of this item, the collection it belongs to (nonfiction, audiovisual, etc.), the item’s call number,  and whether it is checked out or available.  </p>
         <p>From this pop-up, you can also print or email this information.  If an item is on order, it will also be displayed here and it is possible to place holds on these items.</p>
       </dd>
