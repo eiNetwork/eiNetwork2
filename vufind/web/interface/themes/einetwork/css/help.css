@@ -54,6 +54,7 @@ pre {
 }
 
 h2{
+	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 	text-transform: uppercase;
 	margin-bottom:10px;
 	margin-top: 10px;
@@ -62,22 +63,26 @@ h2{
 }
 
 a:link {
+	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 	color: #202020;
 	text-decoration:none;
 	font-weight:bold;
 }
 
 a:visited {
+	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 	color: #202020;
 	text-decoration:none;
 	font-weight:bold;
 }
 a:hover {
+	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 	color: #202020;
 	text-decoration:underline;
 	font-weight:bold;	
 }
 a:active {
+	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 	color: #202020;
 	text-decoration:none;
 	font-weight:bold;
