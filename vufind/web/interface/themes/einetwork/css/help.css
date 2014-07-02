@@ -62,23 +62,23 @@ h2{
 }
 
 a:link {
-	color: #F0F0F0;
+	color: #202020;
 	text-decoration:none;
 	font-weight:bold;
 }
 
 a:visited {
-	color: #F0F0F0;
+	color: #202020;
 	text-decoration:none;
 	font-weight:bold;
 }
 a:hover {
-	color: #F0F0F0;
+	color: #202020;
 	text-decoration:underline;
 	font-weight:bold;	
 }
 a:active {
-	color: #F0F0F0;
+	color: #202020;
 	text-decoration:none;
 	font-weight:bold;
 }
