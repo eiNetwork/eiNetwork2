@@ -67,7 +67,7 @@
     <div class="bookcart">
         <div id="cart-image">
             <img src="/interface/themes/einetwork/images/shopping_cart.png"  alt="cart" style="vertical-align:middle;margin-left:2px"/>
-            <span id="cart-descrpiion" style="vertical-align:middle"></span>
+            <span id="cart-description" style="vertical-align:middle"></span>
         </div>
         <div id="blank">&nbsp;</div>
         <input type="button" class="button" id="view_cart_button" onclick="getViewCart()" value="View Cart">

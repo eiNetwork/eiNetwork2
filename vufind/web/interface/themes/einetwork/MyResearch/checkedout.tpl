@@ -501,7 +501,7 @@
 	{else}
 	    You must login to view this information. Click <a href="{$path}/MyResearch/Login">here</a> to login.
 	{/if}
-    </div>
+    </div></div>
     
     <div id="right-bar">
 	{include file="MyResearch/menu.tpl"}
