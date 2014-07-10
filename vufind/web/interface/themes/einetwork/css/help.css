@@ -7,7 +7,7 @@ ul.HelpMenu {
     float: left;
     width: 150px;
     background-color: #F0F0F0;
-    padding: 10px;
+    padding: 10px 5px;
 }
 
 dl.content {
@@ -89,6 +89,6 @@ a:active {
 	font-weight:bold;
 }
 
-#bold {
+.bold {
 	font-weight: bold;
 }
