@@ -1,4 +1,4 @@
-<h1>My Account</h1>
+<h1>My Account Help</h1>
 
 <ul class="HelpMenu">
   <li><a href="#Using the Book Cart">Using the Book Cart</a></li>
