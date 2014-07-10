@@ -7,6 +7,7 @@ ul.HelpMenu {
     float: left;
     width: 150px;
     background-color: #F0F0F0;
+    padding: 10px;
 }
 
 dl.content {
@@ -64,26 +65,30 @@ h2{
 
 a:link {
 	font-family: "Helvetica Neue Light", Helvetica, Sans-Serif;
-	color: #202020;
+	color: #3366FF;
 	text-decoration:none;
 	font-weight:bold;
 }
 
 a:visited {
 	font-family: "Helvetica Neue Light", Helvetica, Sans-Serif;
-	color: #202020;
+	color: #3366FF;
 	text-decoration:none;
 	font-weight:bold;
 }
 a:hover {
 	font-family: "Helvetica Neue Light", Helvetica, Sans-Serif;
-	color: #202020;
-	text-decoration:underline;
+	color: #3366FF;
+	text-decoration:none;
 	font-weight:bold;	
 }
 a:active {
 	font-family: "Helvetica Neue Light", Helvetica, Sans-Serif;
-	color: #202020;
+	color: #3366FF;
 	text-decoration:none;
 	font-weight:bold;
+}
+
+#bold {
+	font-weight: bold;
 }
