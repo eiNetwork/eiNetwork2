@@ -77,6 +77,11 @@ class EcontentRecordDriver extends IndexRecord
 		$interface->assign('sourceUrl', $this->eContentRecord->sourceUrl);
 		$searchResultTemplate = parent::getSearchResult();
 		//Override fields as needed
+		if ($this->eContentRecord->marcRecord){
+			$interface->assign('summTitle', $this->eContentRecord->full_title);
+		} else {
+			$interface->assign('summTitle', $this->eContentRecord->title);
+		}
 		return 'RecordDrivers/Econtent/result.tpl';
 	}
 
@@ -97,7 +102,7 @@ class EcontentRecordDriver extends IndexRecord
 		$pubPlaces = array();
 		$details = array(
             'authors' => $authors,
-            'title' => $this->eContentRecord->title,
+            'title' => $this->eContentRecord->full_title,
             'subtitle' => $this->eContentRecord->subTitle(),
             'pubPlace' => count($pubPlaces) > 0 ? $pubPlaces[0] : null,
             'pubName' => count($publishers) > 0 ? $publishers[0] : null,
@@ -211,7 +216,7 @@ class EcontentRecordDriver extends IndexRecord
 	public function getTitle()
 	{
 		if (isset($this->eContentRecord)){
-			$title = $this->eContentRecord->title;
+			$title = $this->eContentRecord->full_title;
 			if ($this->eContentRecord->subTitle != null && strlen($this->eContentRecord->subTitle) > 0){
 				$title .= ': ' . $this->eContentRecord->subTitle;
 			}

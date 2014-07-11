@@ -348,6 +348,7 @@ class EINetwork extends MillenniumDriver{
 		}
 		$patronUpdateParams = implode ('&', $post_items);
 		curl_setopt($curl_connection, CURLOPT_POSTFIELDS, $patronUpdateParams);
+		$scope = isset($scope) ? $scope : null;
 		$curl_url = $configArray['Catalog']['url'] . "/patroninfo~S{$scope}/" . $patronDump['RECORD_#'] ."/modpinfo";
 		curl_setopt($curl_connection, CURLOPT_URL, $curl_url);
 		$sresult = curl_exec($curl_connection);

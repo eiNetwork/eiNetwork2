@@ -69,7 +69,7 @@ f
       <script type="text/javascript" src="{$path}/js/jquery.plugins.js"></script>
       <script type="text/javascript" src="{$path}/js/scripts.js?v3.0"></script>
       <script type="text/javascript" src="{$path}/js/tablesorter/jquery.tablesorter.min.js"></script>
-      <script type="text/javascript" src="{$path}/js/ei_js/page.js?v3.2.1"></script>
+      <script type="text/javascript" src="{$path}/js/ei_js/page.js?v4.0.2"></script>
       {if $enableBookCart}
       <script type="text/javascript" src="{$path}/js/bookcart/json2.js"></script>
       <script type="text/javascript" src="{$path}/js/bookcart/bookcart.js"></script>
@@ -143,8 +143,8 @@ f
 		    <p style="margin-top:10px;margin-left:10px;vertical-align:middle"><span><img alt="BackArrow" src="/interface/themes/einetwork/images/Art/BackArrow.png" style="vertical-align:middle"/></span><span style="margin-left:8px;vertical-align:middle">{translate text="Back to Advanced Search"}</span></p>
 		</div>
 	    {else}
-		<div class="button yellow" style="margin-top:20px;height:38px;font-size:15px;padding:0px;" onclick='window.location.href=" https://www.surveymonkey.com/s/56S3RKL"' >
-		    <p style="margin-top:8px;vertical-align:middle;text-align: center"><span style="vertical-align:middle">Democat Staff Survey</span></p>
+		<div class="button yellow" style="margin-top:20px;height:38px;font-size:15px;padding:0px;" onclick='window.location.href="http://www.surveymonkey.com/s/NewLibraryCatalog"' >
+		    <p style="margin-top:8px;vertical-align:middle;text-align: center"><span style="vertical-align:middle">A Quick Survey</span></p>
 		</div>   
 	    {/if}
 	  </div>

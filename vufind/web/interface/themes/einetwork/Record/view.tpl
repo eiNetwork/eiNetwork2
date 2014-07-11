@@ -77,7 +77,7 @@ function redrawSaveStatus() {literal}{{/literal}
 						<span class="action-lable-span">Add to Cart</span>
 					</div>
 					{/if}
-					<div class="round-rectangle-button" id="request-now{$id|regex_replace:"/\./":""}" style="border-bottom-width:1px;border-bottom-left-radius:0px;border-bottom-right-radius:0px;{if isset($noRequest)}background-color: rgb(192, 192, 192); color: rgb(248, 248, 248); cursor: default;{/if}" {if !isset($noRequest)}onclick="getToRequest('{$path}/Record/{$id|escape:'url'}/Hold')"{/if}>
+					<div class="round-rectangle-button" id="request-now{$id|regex_replace:"/\./":""}" style="border-bottom-width:1px;border-bottom-left-radius:0px;border-bottom-right-radius:0px;" {if !isset($noRequest)}onclick="getToRequest('{$path}/Record/{$id|escape:'url'}/Hold')"{/if}>
 						<span class="action-img-span"><img id="request-now-img" alt="request now" class="action-img" src="/interface/themes/einetwork/images/Art/ActionIcons/RequestNow.png" alt="Request Now"/></span>
 						<span class="action-lable-span">Request Now</span>
 					</div>
@@ -188,7 +188,7 @@ function redrawSaveStatus() {literal}{{/literal}
 				</div>
 			</div>
 			 <div class="resultInformation">
-				<div class="resultInformationLabel">{translate text='Community Reviews'}</div>
+				<div class="resultInformationLabel">{translate text='Community Reviews test'}</div>
 				<div class="recordSubjects">
 					
 						{*include file="$module/view-comments.tpl"*}

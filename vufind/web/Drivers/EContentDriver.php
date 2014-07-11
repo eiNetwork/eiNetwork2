@@ -94,6 +94,7 @@ class EContentDriver implements DriverInterface{
 		$eContentRecord = new EContentRecord();
 		$eContentRecord->id = $id;
 		$eContentRecord->find(true);
+
 		if ($eContentRecord->accessType != 'external'){
 			//Check to see if the record is checked out or on hold within VuFind
 			$checkedOutToUser = false;

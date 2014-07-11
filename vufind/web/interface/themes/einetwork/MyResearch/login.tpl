@@ -97,13 +97,6 @@
 {/literal}
 	<div class="loginHome-left"></div>
 	<div class="loginHome-center">
-		<div class="site-message site-message-front">
-			<ul class="message">
-				<li>
-					<p class="message" align="center">There have been some recent changes to the new catalog. <a href="/MyResearch/Tempchanges">Read More...</a></p>
-				</li>
-			</ul>
-		</div>
 		<div class="login">
 			<form id="loginForm" action="{$path}/MyResearch/Home" method="post" autocomplete="on">
 				<div><b>I have a Library Card</b></div>

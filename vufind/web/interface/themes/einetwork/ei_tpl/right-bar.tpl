@@ -100,9 +100,6 @@
 	<div id="latest-updates">
             <a href="/MyResearch/Latestupdates">Latest Website Updates</a>
         </div>
-        <div id="temp-changes">
-            <a href="/MyResearch/Tempchanges">Temporary Changes *</a>
-        </div>
     </div>
 
     <p class="libraries-strong"><a href="http://www.countycitylibraries.org/" target="_blank"><img src="http://www.aclalibraries.org/images/ccl200.jpg" alt="Help us keep our libraries strong!" width="200" height="57" border="0" /></a></p>
@@ -182,7 +179,23 @@
     {/php}    
     <div class="recommendations">
 	
-	
+	<!-- featured lists display here -->
+        <div id="title1">
+            <a href="{$url}/MyResearch/MyList/1">{$Title1}</a>
+        </div>
+        <div id="title2">
+            <a href="{$url}/MyResearch/MyList/2">{$Title2}</a>
+        </div>
+	<div id="title3">
+            <a href="{$url}/MyResearch/MyList/5924">{$Title3}</a>
+        </div>
+        <div id="title4">
+            <a href="{$url}/MyResearch/MyList/5925">{$Title4}</a>
+        </div>
+        <div id="title5">
+            <a href="{$url}/MyResearch/MyList/3">{$Title5}</a>
+        </div>
+	<!-- end of featured lists -->
 	
         <div id="articles">
             <a href="http://articles.einetwork.net">Databases and Articles</a>
