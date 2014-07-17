@@ -38,7 +38,7 @@ These items will remain in your book cart from session to session.  To save an i
     <ol>
     
       <li>Go to <span class="bold">Account Settings</span>, click <span class="bold">Edit Profile</span>, and make your Preferred and Alternative Library selections.</li>
-      <li>When you are logged in to the online catalog, your Preferred Libraries selections are displayed in the right hand navigation panel beneath the banner that says “Keep Our Libraries Strong”.  From here you can click <span class="bold">Edit</span> and make selections for your Preferred Library and an Alternate Library.  The third choice for preferred libraries is set to your home library by default.  After choosing your preferences from the drop down menus, click span class="bold">Update Profile</span> to save your settings.</li>
+      <li>When you are logged in to the online catalog, your Preferred Libraries selections are displayed in the right hand navigation panel beneath the banner that says “Keep Our Libraries Strong”.  From here you can click <span class="bold">Edit</span> and make selections for your Preferred Library and an Alternate Library.  The third choice for preferred libraries is set to your home library by default.  After choosing your preferences from the drop down menus, click <span class="bold">Update Profile</span> to save your settings.</li>
       
     </ol>
     
