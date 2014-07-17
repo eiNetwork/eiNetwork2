@@ -68,9 +68,12 @@ These items will remain in your book cart from session to session.  To save an i
     <li> 
       <p id="Other Online Resources"> <span class="bold">Other Online Resources</span></p>
       <p>You might also encounter materials such as digitized images, government documents, and public domain eBooks in your library catalog search results.  These items can be accessed by clicking the <span class="bold">Access Online </span> button to the right of the item information on the search results or item detail page, or by navigating to the item detail page and clicking the link at the bottom of the record.  Some of these items may require you to hold a valid library card for access. </p>
+      <p><a href= “http://eresources.einetwork.net/”> Click here </a> for more information about these and other eResources available from your library.</p>
     </li>
     
     </ul>
+    
+    
     
 </dd>
 </dl>
