@@ -32,7 +32,7 @@ These items will remain in your book cart from session to session.  To save an i
   </dd>
   <dt id="Online Content">Online Content</dt>
   <dd> 
-  <p>Your library card enables you to access eBooks, Audiobooks, music downloads and many other types of eResources from various sources.  For more information, including access details, supported devices, and more, visit the <a href=“http://eresources.einetwork.net/”>Allegheny County Library Association’s eResources page</a>.  </p>  
+  <p>Your library card enables you to access eBooks, Audiobooks, music downloads and many other types of eResources from various sources.  For more information, including access details, supported devices, and more, visit the <a href=“http://www.eresources.einetwork.net/”>Allegheny County Library Association’s eResources page</a>.  </p>  
   <p>Some of these items, including OverDrive and OneClickdigital resources, can be discovered by searching the library catalog but require you to set up a free account on another site in order to access them.    See below for information on accessing these items through the online catalog.</p>
   <ul>
     <li><p id="OverDrive">OverDrive eBooks, Audiobooks, and online Videos:</p>  
