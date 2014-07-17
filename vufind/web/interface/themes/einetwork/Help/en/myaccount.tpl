@@ -38,9 +38,9 @@ These items will remain in your book cart from session to session.  To save an i
     <li><p id="OverDrive">OverDrive eBooks, Audiobooks, and online Videos:</p>  
       <p>Click the <span class="bold">Checkout Now</span> button to the right of the item information on the search results or item detail page.  If you are not already logged in to My Account, you will be prompted to enter your library card number and PIN.  If your checkout has been successful, a pop-up will appear letting you know that the item has been checked out and available for download from your <span class="bold">Checked Out Items</span> page.  Click the link provided to navigate to this page immediately or, if you would prefer to continue browsing, you can go to this page at any time by clicking the <span class="bold">Checked Out Items</span> link in the right hand navigation panel. </p>
       </li>
-    <li><p id="OneClick">OneClickdigital eBooks and Audiobooks: </p> 
+    <li><p id="OneClick"> OneClickdigital eBooks and Audiobooks: </p> 
     <p>Accessing OneClickdigital items requires setting up a free OneClickdigital account.  It is recommended that you do this before searching the catalog for OneClickdigital items.  To do this, <a href= http://carnegielbyofpittpa.oneclickdigital.com/Home/Featured.aspx> click here </a> to go to the OneClickdigital site and click the <span class="bold">Create New Account</span> link in the upper right hand corner.  </p>
-</li>
+
     <p>To access OneClickdigital items from the library catalog, click the <span class="bold">Access Online </span>button to the right of the item record on either the search results page or the item detail page.  This will take you to the OneClickdigital item information page.  From there click <span class="bold">Checkout Now!</span>  and you will be prompted to log in with your OneClickdigital credentials.</p>
     </li>
     <li> <p id="Other Online Resources>Other Online Resources</p>
