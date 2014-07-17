@@ -40,7 +40,7 @@ These items will remain in your book cart from session to session.  To save an i
       </li>
     <li><p id="OneClick">OneClickdigital eBooks and Audiobooks: </p> 
     <p>Accessing OneClickdigital items requires setting up a free OneClickdigital account.  It is recommended that you do this before searching the catalog for OneClickdigital items.  To do this, <a href= http://carnegielbyofpittpa.oneclickdigital.com/Home/Featured.aspx> click here </a> to go to the OneClickdigital site and click the <span class="bold">Create New Account</span> link in the upper right hand corner.  </p>
-
+</li>
     <p>To access OneClickdigital items from the library catalog, click the <span class="bold">Access Online </span>button to the right of the item record on either the search results page or the item detail page.  This will take you to the OneClickdigital item information page.  From there click <span class="bold">Checkout Now!</span>  and you will be prompted to log in with your OneClickdigital credentials.</p>
     </li>
     <li> <p id="Other Online Resources>Other Online Resources</p>
