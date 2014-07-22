@@ -140,7 +140,9 @@ class CheckedOut extends MyResearch{
 					$page = 1;
 				}
 
-				$result = $this->catalog->getMyTransactions($patron, $page, $recordsPerPage, $selectedSortOption);
+				//$result = $this->catalog->getMyTransactions($patron, $page, $recordsPerPage, $selectedSortOption);
+				$result = $this->catalog->getSierraCheckedOutItems($patron['username']);
+				
 				$timer->logTime("Loaded transactions from catalog.");
 				if (!PEAR::isError($result)) {
 

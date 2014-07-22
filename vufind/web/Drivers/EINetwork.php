@@ -19,6 +19,9 @@
  */
 require_once 'Drivers/Millennium.php';
 
+// for connection to sierra.
+require_once 'sys/postgresConnection.php';
+
 /**
  * VuFind Connector for Marmot's Innovative catalog (millenium)
  *
@@ -692,13 +695,103 @@ class EINetwork extends MillenniumDriver{
 		}
 		return $return;
 	}
+
 	private function hrefRows($elements){
-			$str = array();
-			foreach ($elements as $element){
-				if($element->hasChildNodes()){
-					$str[] = $element->getAttribute('href');
-				}
+		$str = array();
+		foreach ($elements as $element){
+			if($element->hasChildNodes()){
+				$str[] = $element->getAttribute('href');
 			}
-			return $str;
 		}
+		return $str;
+	}
+
+	public function getSierraCheckedOutItems($patron_id){
+
+		$pg = new postgresConnection();
+
+		$sql = "SELECT 
+			c.id, 
+			b.id as bib_record_id,
+			b.record_type_code || b.record_num as shortid, 
+			b.title,
+			c.item_record_id, 
+			c.due_gmt, 
+			c.checkout_gmt, 
+			c.renewal_count, 
+			c.overdue_count,
+			v.field_content as author
+			FROM sierra_view.patron_view AS p
+			JOIN sierra_view.checkout c 
+				ON c.patron_record_id = p.id
+			JOIN sierra_view.bib_record_item_record_link l 
+				ON l.item_record_id = c.item_record_id
+			JOIN sierra_view.bib_view b 
+				ON b.id = l.bib_record_id
+			LEFT JOIN sierra_view.varfield v 
+				ON b.id = v.record_id
+			WHERE p.record_num = $patron_id AND 
+				p.record_type_code = 'p' AND
+				v.varfield_type_code = 'a'
+		";
+		
+		$rs = $pg->pgquery($sql, $GLOBALS['sierra_db']);
+
+		$checkedOutTitles = pg_fetch_all($rs[0]);
+
+		$i = 0;
+		foreach($checkedOutTitles as $key => $value){
+
+			$checkout_gmt = strtotime($value['checkout_gmt']);
+			$title = $value['title'];
+
+			unset($checkedOutTitles[$i]);
+
+			$isbns = $this->getSierraISBNs($pg, $value['bib_record_id']);
+
+			$checkedOutTitles[$checkout_gmt . '-' . $title]['id'] = "." . $value['shortid'];
+			$checkedOutTitles[$checkout_gmt . '-' . $title]['duedate'] = $checkout_gmt;
+			$checkedOutTitles[$checkout_gmt . '-' . $title]['title'] = $title;
+			$checkedOutTitles[$checkout_gmt . '-' . $title]['renewCount'] = $value['renewal_count'];
+			$checkedOutTitles[$checkout_gmt . '-' . $title]['overdue'] = $value['overdue_count'];
+			$checkedOutTitles[$checkout_gmt . '-' . $title]['shortId'] = $value['shortid'];
+			$checkedOutTitles[$checkout_gmt . '-' . $title]['author'] = str_replace('|d', ' ', str_replace('|a','', $value['author']));
+			if (count($isbns) > 0){
+				$checkedOutTitles[$checkout_gmt . '-' . $title]['isbn'] = str_replace('|a', '', $isbns[0]['field_content']);
+			}
+
+			$i++;
+
+		}
+
+		$numTransactions = count($checkedOutTitles);
+
+		return array(
+			"transactions" => $checkedOutTitles,
+			"numTransactions" => $numTransactions,
+			"stats" => $rs[1]
+		);
+
+	}
+
+	/**
+	 * 	Get ISBN numbers from var_fields table
+	 * 	Marc 020 field
+	 */
+	private function getSierraISBNs($pg, $record_id){
+
+
+		$sql = "SELECT field_content FROM sierra_view.varfield WHERE marc_tag = '020' AND record_id = $record_id";
+
+		$rs = $pg->pgquery($sql, $GLOBALS['sierra_db']);
+
+		if (isset($rs[0])){
+			return pg_fetch_all($rs[0]);
+		} else {
+			return null;
+		}
+
+		
+
+	}
 }
