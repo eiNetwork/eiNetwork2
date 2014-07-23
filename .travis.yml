@@ -5,3 +5,4 @@ before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -y libxml2-dev
   - /home/travis/.phpenv/versions/5.3/bin/composer self-update
+script:
