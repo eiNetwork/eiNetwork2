@@ -2999,3 +2999,74 @@ ul.new-alert-box li {
 .qtip-content {
 	font-size: 13px;
 }
+
+.limit-avail {
+	position: relative;
+	width:250px;
+	display: inline-block;
+	color:#fff;
+}
+
+.limit-avail img {
+	background-color:transparent;
+	position: relative;
+	right:-6px;
+}
+
+.retain-filters {
+	position: relative;
+	width:300px;
+	display: inline-block;
+	color:#fff;
+}
+
+.retain-filters img {
+	background-color:transparent;
+	position: relative;
+	right:-6px;
+}
+
+.header-filters-container {
+	display: block !important; 
+	clear:left !important; 
+	margin:0 0 0 250px !important;
+}
+
+.header-filters {
+	list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.header-filters li {
+    display: inline;
+    float: left;
+    width:180px;
+    color: #fff;
+}
+
+.header-filter-text {
+	display:inline !important;
+	margin:0 0 0 0 !important;
+	padding:0 0 4px 0 !important;
+	font-family: "Helvetica Neue Light", Helvetica, Sans-serif !important;
+	font-size: 13px;
+	font-weight: bold;
+}
+
+.qtip-ein {
+	font-size:18px;
+}
+
+.qtip-retain-filters {
+	cursor: pointer;
+}
+
+.qtip-tipped {
+	
+}
+
+.qtip-rounded {
+	border-color: #606060 !important;
+	background-color: #f9f9f9 !important;
+}

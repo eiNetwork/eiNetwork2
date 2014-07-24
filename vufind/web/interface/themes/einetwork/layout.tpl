@@ -91,9 +91,11 @@
     {if isset($theme_css)}
     <link rel="stylesheet" type="text/css" href="{$theme_css}" />
     {/if}
-    <script src="http://cdn.jsdelivr.net/qtip2/2.2.0/jquery.qtip.min.js"></script>
+    <script src="{$path}/js/jquery.qtip.min.js"></script>
+    <script src="{$path}/js/ei_js/help.js"></script>
 
-    <link href="http://cdn.jsdelivr.net/qtip2/2.2.0/jquery.qtip.min.css" rel="stylesheet" 	type="text/css" media="all" />
+    {css filename="jquery.qtip.min.css"}
+
   </head>
   
   <body class="{$module} {$action}">

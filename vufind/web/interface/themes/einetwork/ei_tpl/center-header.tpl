@@ -1,44 +1,31 @@
 {literal}
 <script type="text/javascript">
+	
 	$(document).ready(function() {
-		/*
-		$("#GoButton").hide();
-		
-		$("#lookfor").focus(function(){
-			$("#GoButton").show();
-		}).blur(function(){
-			$("#GoButton").hide();
+
+		$('.limit1').qtip({
+		    content: {
+		        text: 'Select to limit serach results to available materials only'
+		    },
+		    style: 'tooltip',
+		    classes: {
+			content:'eintooltip'
+		    }
 		});
-		*/
-	});
-	
-	$(document).ready(function() {
 
-	$('.limit1').qtip({
-	    content: {
-	        text: 'Select to limit serach results to available materials only'
-	    },
-	    style: 'tooltip',
-	    classes: {
-		content:'eintooltip'
-	    }
-	});
 
-});
-	
-	$(document).ready(function() {
+		$('.keep1').qtip({
+		    content: {
+		        text: 'Select to keep left column filters applied on your next serach'
+		    },
+		   style: 'tooltip',
+		    classes: {
+			content:'eintooltip'
+		    }
+		});
 
-	$('.keep1').qtip({
-	    content: {
-	        text: 'Select to keep left column filters applied on your next serach'
-	    },
-	   style: 'tooltip',
-	    classes: {
-		content:'eintooltip'
-	    }
 	});
 
-});
 </script>
 {/literal}
 
@@ -69,40 +56,17 @@
       <input id="GoButton" class="button" type="submit" value=""/>
     </div>
 
-   {* Do we have any checkbox filters? *}
-  {assign var="hasCheckboxFilters" value="0"}
-  {if isset($checkboxFilters) && count($checkboxFilters) > 0}
-    {foreach from=$checkboxFilters item=current}
-      {if $current.selected}
-	{assign var="hasCheckboxFilters" value="1"}
-      {/if}
-    {/foreach}
-  {/if}
-  {if $filterList || $hasCheckboxFilters}
-    <div class="keepFilters">
-      <input type="checkbox" checked="checked" onclick="filterAll(this);" /> <font class="keep1" color="white">{translate text="basic_search_keep_filters"}</font>
-      <div style="display:none;">
-	{foreach from=$filterList item=data key=field}
-	  {foreach from=$data item=value}
-	    <input type="checkbox" checked="checked" name="filter[]" value='{$value.field}:"{$value.value|escape}"' />
-	  {/foreach}
-	{/foreach}
-	{foreach from=$checkboxFilters item=current}
-	  {if $current.selected}
-	    <input type="checkbox" checked="checked" name="filter[]" value="{$current.filter|escape}" />
-	  {/if}
-	{/foreach}
-      </div>
-    </div>
+  	<div class="header-filters-container">
+
+  		<ul class="header-filters">
+  			<li><input type="checkbox" checked="checked" /> <span class="header-filter-text">{translate text="basic_search_keep_filters"} <img class="qtip-retain-filters" src="/images/help_icon_white.png" /></span></li>
+  			<li><input type="checkbox" checked="checked" /> <span class="header-filter-text">Limit to available <img class="qtip-limit-avail" src="/images/help_icon_white.png" /></span></li>
+  		</ul>
+
+  	</div>
+
+
     
-  {/if}
-    {php}
-
-      if (strpos($_SERVER['REQUEST_URI'], 'Search', 0) > 0){
-        echo '<div class="availFilter"><input name="limit_avail" id="limitToAvail" type="checkbox"> <font class="limit1" color="white">Limit to available</font></div>';
-      }
-
-    {/php}
   </form>
     {if false && strlen($lookfor) > 0 && count($repeatSearchOptions) > 0}
     <div class='repeatSearchBox'>
