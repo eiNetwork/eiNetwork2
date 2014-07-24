@@ -77,6 +77,11 @@ class EcontentRecordDriver extends IndexRecord
 		$interface->assign('sourceUrl', $this->eContentRecord->sourceUrl);
 		$searchResultTemplate = parent::getSearchResult();
 		//Override fields as needed
+		if ($this->eContentRecord->marcRecord){
+			$interface->assign('summTitle', $this->eContentRecord->full_title);
+		} else {
+			$interface->assign('summTitle', $this->eContentRecord->title);
+		}
 		return 'RecordDrivers/Econtent/result.tpl';
 	}
 

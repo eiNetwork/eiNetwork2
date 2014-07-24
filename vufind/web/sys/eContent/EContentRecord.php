@@ -1903,8 +1903,12 @@ class EContentRecord extends SolrDataObject {
 
 		$eContentRecord = parent::find($flag);
 
-		$this->full_title = $this->getMarc($this->marcRecord, 'full_title', $this->getid());
-
+		if ($this->marcRecord){
+			$this->full_title = $this->getMarc($this->marcRecord, 'full_title', $this->getid());
+		} else {
+			$this->full_title = $this->gettitle();
+		}
+		
 		return $eContentRecord;
 
 	}

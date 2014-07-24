@@ -35,14 +35,6 @@ $(document).ready(function() {
   {* End Narrow Search Options *}
 
   <div id="main-content">
-  	<div class="site-message site-message-search">
-		<ul class="message">
-			<li>
-				<p class="message" align="center">There have been some recent changes to the new catalog. <a href="/MyResearch/Tempchanges">Read More...</a></p>
-			</li>
-		</ul>
-	</div>
-	{*<span class="selector" style="display:inline-block; margin:10px; width:100px"> Demo tool tip <img src="/images/help_icon.png"></span>*}
 	{if $author_sort_message}
 		{literal}
 				<script type="text/javascript">

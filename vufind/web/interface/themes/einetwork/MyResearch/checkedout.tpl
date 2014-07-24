@@ -26,10 +26,6 @@
     	<div class="site-message site-message-search">
 			<ul class="message">
 				<li>
-					<p class="message" align="center">There have been some recent changes to the new catalog. <a href="/MyResearch/Tempchanges">Read More...</a></p>
-				</li>
-			</ul>
-		</div>
     {if $user->cat_username}
 	{if $transList}
 	<div class="new-alert-box-container">
@@ -505,7 +501,7 @@
 	{else}
 	    You must login to view this information. Click <a href="{$path}/MyResearch/Login">here</a> to login.
 	{/if}
-    </div>
+    </div></div>
     
     <div id="right-bar">
 	{include file="MyResearch/menu.tpl"}

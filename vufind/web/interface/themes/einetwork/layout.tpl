@@ -69,7 +69,7 @@
       <script type="text/javascript" src="{$path}/js/jquery.plugins.js"></script>
       <script type="text/javascript" src="{$path}/js/scripts.js?v3.0"></script>
       <script type="text/javascript" src="{$path}/js/tablesorter/jquery.tablesorter.min.js"></script>
-      <script type="text/javascript" src="{$path}/js/ei_js/page.js?v3.2.1"></script>
+      <script type="text/javascript" src="{$path}/js/ei_js/page.js?v4.0.2"></script>
       {if $enableBookCart}
       <script type="text/javascript" src="{$path}/js/bookcart/json2.js"></script>
       <script type="text/javascript" src="{$path}/js/bookcart/bookcart.js"></script>
