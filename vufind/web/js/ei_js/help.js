@@ -170,7 +170,17 @@ $( document ).ready(function() {
 	        classes: 'qtip-rounded'
 	    }
 	})
-
+	$('.qtip-preferred-libraries').qtip({ // Grab some elements to apply the tooltip to
+	    content: {
+	        text: 'Specifying Preferred Libraries sets your default pickup location for items requested online.'
+	    },
+	    hide: {
+	        delay: 1000
+	    },
+	    style: {
+	        classes: 'qtip-rounded'
+	    }
+	})
 	$('.qtip-building').qtip({ // Grab some elements to apply the tooltip to
 	    content: {
 	        text: 'Click on a <span class="bold">Location</span> below to limit your search results to the holdings of the selected library. <a id="qtip-link-building" href="/Help/Home?topic=helppage#Location">Read More...</a>'
