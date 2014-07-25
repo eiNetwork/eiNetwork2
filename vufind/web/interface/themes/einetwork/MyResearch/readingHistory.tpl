@@ -12,7 +12,7 @@
   <div id="left-bar">
 	{if $sortOptions}
 		 <dl class="narrowList navmenu narrowbegin">
-			<dt>{translate text='Sort'}</dt>
+			<dt>{translate text='Sort by'}<span><img class="qtip-sort-by-history help-icon" style="vertical-align: middle" src="/images/help_icon.png" /></span></dt>
 			<dd>
 				<select name="sort" onchange="document.location.href = '/MyResearch/ReadingHistory?page={$page|escape}&accountSort='+this.options[this.selectedIndex].value;">
 				{foreach from=$sortOptions item=sortLabel key=sortData}

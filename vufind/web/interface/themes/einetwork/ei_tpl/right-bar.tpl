@@ -66,11 +66,11 @@
 
     <div class="bookcart">
         <div id="cart-image">
-            <span><img class="qtip-book-cart help-icon" style="float:left" src="/images/help_icon.png" /></span><img src="/interface/themes/einetwork/images/shopping_cart.png"  alt="cart" style="vertical-align:middle;margin-left:2px"/>
+            <img src="/interface/themes/einetwork/images/shopping_cart.png"  alt="cart" style="vertical-align:middle;margin-left:2px"/>
             <span id="cart-description" style="vertical-align:middle"></span>
         </div>
 
-        <input type="button" class="button" id="view_cart_button" onclick="getViewCart()" value="View Cart">
+        <input type="button" class="button" id="view_cart_button" onclick="getViewCart()" value="View Cart"><span><img class="qtip-book-cart help-icon" src="/images/help_icon.png" /></span>
     </div>
     <div id="blank">&nbsp;</div>  
     <div class="separator"><hr/></div>

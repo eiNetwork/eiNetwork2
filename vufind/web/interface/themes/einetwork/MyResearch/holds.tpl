@@ -50,7 +50,7 @@ while ($i < $bold_count){
 	<div id="left-bar">
 		<div class="sort">
 			<div id="sortLabel">
-			{translate text='Sort by'}
+			{translate text='Sort by'}<span><img class="qtip-sort-by-request help-icon" style="vertical-align: middle" src="/images/help_icon.png" /></span>
 			</div>
 			<div class="sortOptions">
 				<select name="accountSort" id="sort{$sectionKey}" onchange="changeAccountSort($(this).val());">
