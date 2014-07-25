@@ -27,6 +27,56 @@ $( document ).ready(function() {
 		});
 	});
 
+	$('#qtip-link-target_audience_full').live('click', function(e){
+	    e.preventDefault();
+	    $("#dialog").html("");
+		$("#dialog").dialog("option", "title", "Loading...").dialog("open");
+		$("#dialog").load(this.href, function() {
+			$(this).dialog("option", "title", $(this).find("h1").text());
+			$(this).find("h1").remove();
+		});
+	});
+
+	$('#qtip-link-literary_form_full').live('click', function(e){
+	    e.preventDefault();
+	    $("#dialog").html("");
+		$("#dialog").dialog("option", "title", "Loading...").dialog("open");
+		$("#dialog").load(this.href, function() {
+			$(this).dialog("option", "title", $(this).find("h1").text());
+			$(this).find("h1").remove();
+		});
+	});
+
+	$('#qtip-link-topic_facet').live('click', function(e){
+	    e.preventDefault();
+	    $("#dialog").html("");
+		$("#dialog").dialog("option", "title", "Loading...").dialog("open");
+		$("#dialog").load(this.href, function() {
+			$(this).dialog("option", "title", $(this).find("h1").text());
+			$(this).find("h1").remove();
+		});
+	});
+
+	$('#qtip-link-authorStr').live('click', function(e){
+	    e.preventDefault();
+	    $("#dialog").html("");
+		$("#dialog").dialog("option", "title", "Loading...").dialog("open");
+		$("#dialog").load(this.href, function() {
+			$(this).dialog("option", "title", $(this).find("h1").text());
+			$(this).find("h1").remove();
+		});
+	});
+	
+	$('#qtip-link-language').live('click', function(e){
+	    e.preventDefault();
+	    $("#dialog").html("");
+		$("#dialog").dialog("option", "title", "Loading...").dialog("open");
+		$("#dialog").load(this.href, function() {
+			$(this).dialog("option", "title", $(this).find("h1").text());
+			$(this).find("h1").remove();
+		});
+	});
+
 	$('.qtip-retain-filters').qtip({ // Grab some elements to apply the tooltip to
 	    content: {
 	        text: 'Need Copy'
@@ -41,7 +91,7 @@ $( document ).ready(function() {
 
 	$('.qtip-limit-avail').qtip({ // Grab some elements to apply the tooltip to
 	    content: {
-	        text: 'Limits to items that were available at the time of the last nightly update. <a href="">Read More....</a>'
+	        text: 'Limits to items that were available at the time of the last nightly update.'
 	    },
 	    hide: {
 	        delay: 2000
@@ -147,7 +197,7 @@ $( document ).ready(function() {
 
 	$('.qtip-target_audience_full').qtip({ // Grab some elements to apply the tooltip to
 	    content: {
-	        text: 'To limit your search by <span class="bold">Age Group</span>, click on one of the four options below.'
+	        text: 'To limit your search by <span class="bold">Age Group</span>, click on one of the four options below. <a id="qtip-link-target_audience_full" href="/Help/Home?topic=helppage#AgeGroup">Read More...</a>'
 	    },
 	    hide: {
 	        delay: 2000
@@ -159,7 +209,7 @@ $( document ).ready(function() {
 
 	$('.qtip-literary_form_full').qtip({ // Grab some elements to apply the tooltip to
 	    content: {
-	        text: 'To limit your search by <span class="bold">Literary Form</span>, click on an option below.'
+	        text: 'To limit your search by <span class="bold">Literary Form</span>, click on an option below. <a id="qtip-link-literary_form_full" href="/Help/Home?topic=helppage#LiteraryForm">Read More...</a>'
 	    },
 	    hide: {
 	        delay: 2000
@@ -171,7 +221,7 @@ $( document ).ready(function() {
 
 	$('.qtip-topic_facet').qtip({ // Grab some elements to apply the tooltip to
 	    content: {
-	        text: 'To limit your search by <span class="bold">Subject</span>, click on an option below.'
+	        text: 'To limit your search by <span class="bold">Subject</span>, click on an option below. <a id="qtip-link-topic_facet" href="/Help/Home?topic=helppage#Subject">Read More...</a>'
 	    },
 	    hide: {
 	        delay: 2000
@@ -195,7 +245,7 @@ $( document ).ready(function() {
 
 	$('.qtip-authorStr').qtip({ // Grab some elements to apply the tooltip to
 	    content: {
-	        text: 'To limit your search by <span class="bold">Author</span>, click on an author’s name in the list below.'
+	        text: 'To limit your search by <span class="bold">Author</span>, click on an author’s name in the list below. <a id="qtip-link-authorStr" href="/Help/Home?topic=helppage#Author">Read More...</a>'
 	    },
 	    hide: {
 	        delay: 2000
@@ -218,7 +268,7 @@ $( document ).ready(function() {
 
 	$('.qtip-language').qtip({ // Grab some elements to apply the tooltip to
 	    content: {
-	        text: 'To limit your search by <span class="bold">Language</span>, click on an available language option in the list below.'
+	        text: 'To limit your search by <span class="bold">Language</span>, click on an available language option in the list below. <a id="qtip-link-language" href="/Help/Home?topic=helppage#Language">Read More...</a>'
 	    },
 	    hide: {
 	        delay: 2000

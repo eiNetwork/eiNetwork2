@@ -2997,7 +2997,9 @@ ul.new-alert-box li {
 	margin:20px 0 60px 68px;
 }
 .qtip-content {
+	padding:6px;
 	font-size: 13px;
+	line-height: 18px;
 }
 
 .limit-avail {
