@@ -1,34 +1,3 @@
-{literal}
-<script type="text/javascript">
-	
-	$(document).ready(function() {
-
-		$('.limit1').qtip({
-		    content: {
-		        text: 'Select to limit search results to available materials only'
-		    },
-		    style: 'tooltip',
-		    classes: {
-			content:'eintooltip'
-		    }
-		});
-
-
-		$('.keep1').qtip({
-		    content: {
-		        text: 'Select to keep left column filters applied on your next search'
-		    },
-		   style: 'tooltip',
-		    classes: {
-			content:'eintooltip'
-		    }
-		});
-
-	});
-
-</script>
-{/literal}
-
 <div class="center-header-middle">
 	{*}
 	{if $searchType == 'advanced'}
@@ -56,17 +25,44 @@
       <input id="GoButton" class="button" type="submit" value=""/>
     </div>
 
-  	<div class="header-filters-container">
+    {* Do we have any checkbox filters? *}
+  {assign var="hasCheckboxFilters" value="0"}
+  {if isset($checkboxFilters) && count($checkboxFilters) > 0}
+    {foreach from=$checkboxFilters item=current}
+      {if $current.selected}
+	{assign var="hasCheckboxFilters" value="1"}
+      {/if}
+    {/foreach}
+  {/if}
 
+  	<div class="header-filters-container">
   		<ul class="header-filters">
-  			<li><input type="checkbox" checked="checked" /> <span class="header-filter-text">{translate text="basic_search_keep_filters"} <img class="qtip-retain-filters" src="/images/help_icon_white.png" /></span></li>
-  			<li><input type="checkbox" checked="checked" /> <span class="header-filter-text">Limit to available <img class="qtip-limit-avail" src="/images/help_icon_white.png" /></span></li>
+  			{if $filterList || $hasCheckboxFilters}
+  			<li>
+  				<input type="checkbox" checked="checked" onclick="filterAll(this);" />
+  					<span class="header-filter-text">{translate text="basic_search_keep_filters"} <img class="qtip-retain-filters" src="/images/help_icon_white.png" /></span>
+  					<div style="display:none;">
+					{foreach from=$filterList item=data key=field}
+					  {foreach from=$data item=value}
+					    <input type="checkbox" checked="checked" name="filter[]" value='{$value.field}:"{$value.value|escape}"' />
+					  {/foreach}
+					{/foreach}
+					{foreach from=$checkboxFilters item=current}
+					  {if $current.selected}
+					    <input type="checkbox" checked="checked" name="filter[]" value="{$current.filter|escape}" />
+					  {/if}
+					{/foreach}
+				      </div>
+  			</li>
+  			{/if}
+  			{php}
+  				if (strpos($_SERVER['REQUEST_URI'], 'Search', 0) > 0){
+  					echo '<li><input name="limit_avail" id="limitToAvail" type="checkbox"> <span class="header-filter-text">Limit to available <img class="qtip-limit-avail" src="/images/help_icon_white.png" /></span></li>';
+  				}
+  			{/php}
   		</ul>
 
   	</div>
-
-
-    
   </form>
     {if false && strlen($lookfor) > 0 && count($repeatSearchOptions) > 0}
     <div class='repeatSearchBox'>
@@ -82,4 +78,3 @@
 </div>
 
 <div class="center-header-buttom">&nbsp;</div>
-
