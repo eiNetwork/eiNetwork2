@@ -66,7 +66,7 @@
 
     <div class="bookcart">
         <div id="cart-image">
-            <img src="/interface/themes/einetwork/images/shopping_cart.png"  alt="cart" style="vertical-align:middle;margin-left:2px"/>
+            <span><img class="qtip-book-cart help-icon" style="float:left" src="/images/help_icon.png" /></span><img src="/interface/themes/einetwork/images/shopping_cart.png"  alt="cart" style="vertical-align:middle;margin-left:2px"/>
             <span id="cart-description" style="vertical-align:middle"></span>
         </div>
         <div id="blank">&nbsp;</div>
@@ -80,19 +80,19 @@
             <a onclick='getWishList()'>My Lists</a>
         </div>
 	 <div id="my-item">
-            <a onclick='getCheckedOutItem()'>Checked Out Items <span id="my-item-PlaceHolder"></span></a>
+            <a onclick='getCheckedOutItem()'>Renew Items <span id="my-item-PlaceHolder"></span></a><span><img class="qtip-checked-out help-icon" src="/images/help_icon.png" /></span>
         </div>
 	<div id="my-request">
-          <a onclick='getRequestedItem()' >Requested Items<span id="my-ruest-item-placeHolder"></span></a>
+          <a onclick='getRequestedItem()' >Update Requests<span id="my-ruest-item-placeHolder"></span></a>
 	</div>
 	<div id="reading-history">
             <a onclick='getReadingHistory()' >Reading History</a>
         </div>
         <div id="history">
-            <a href="/Search/History">Saved Searches</a>
+            <a href="/Search/History">Save Searches</a>
         </div>
         <div id="account-settings">
-            <a onclick='getAccountSetting()'>Account Settings</a>
+            <a onclick='getAccountSetting()'>Update Profile</a>
         </div>
 	<div id="first-time">
             <a href="/MyResearch/Firsttime">First Time Using the Catalog?</a>

@@ -3070,3 +3070,7 @@ ul.new-alert-box li {
 	border-color: #606060 !important;
 	background-color: #f9f9f9 !important;
 }
+
+.help-icon {
+	padding: 5px;
+}

@@ -5,7 +5,7 @@
 
 		$('.limit1').qtip({
 		    content: {
-		        text: 'Select to limit serach results to available materials only'
+		        text: 'Select to limit search results to available materials only'
 		    },
 		    style: 'tooltip',
 		    classes: {
@@ -16,7 +16,7 @@
 
 		$('.keep1').qtip({
 		    content: {
-		        text: 'Select to keep left column filters applied on your next serach'
+		        text: 'Select to keep left column filters applied on your next search'
 		    },
 		   style: 'tooltip',
 		    classes: {

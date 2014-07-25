@@ -52,7 +52,7 @@ $(document).ready(function() {
 	<div class="resulthead" style="height:30px; ">
 		<div class="yui-u first" style="float:left; width:75%">
 		{if $recordCount}
-			{translate text='Sort by'}
+			{translate text='Sort by'}<span><img class="qtip-sort-by help-icon" style="float:left" src="/images/help_icon.png" /></span>
 			<select name="sort" onchange="document.location.href = this.options[this.selectedIndex].value;" id="sort-select">
 				{foreach from=$sortList item=sortData key=sortLabel}
 					<option value="{$sortData.sortUrl|escape}"{if $sortData.selected} selected="selected"{/if}>{translate text=$sortData.desc}</option>
