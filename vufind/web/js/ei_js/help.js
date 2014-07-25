@@ -36,6 +36,18 @@ $( document ).ready(function() {
 	    }
 	})
 
+	$('.qtip-building').qtip({ // Grab some elements to apply the tooltip to
+	    content: {
+	        text: 'Click on a <span class="bold">Location</span> below to limit your search results to the holdings of the selected library.'
+	    },
+	    hide: {
+	        delay: 2000
+	    },
+	    style: {
+	        classes: 'qtip-rounded'
+	    }
+	})
+
 	$('.qtip-format').qtip({ // Grab some elements to apply the tooltip to
 	    content: {
 	        text: 'To limit your search by <span class="bold">Material Type(s)</span>, click on those you wish to include.  For example, DVD and Book on CD.  Click See All to view all available material types.'
