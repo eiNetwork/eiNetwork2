@@ -45,6 +45,7 @@
       {css filename="suggestions.css"}
       {css filename="reports.css"}
       {css filename="dcl.css"}
+      {css filename="help.css"}
  
     {/if}
 	
@@ -99,6 +100,7 @@
   </head>
   
   <body class="{$module} {$action}">
+    <div id="dialog"></div>
    {*google analytics*}
     <div>
         {literal}

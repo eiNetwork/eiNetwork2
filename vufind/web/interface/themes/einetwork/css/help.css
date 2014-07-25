@@ -1,4 +1,4 @@
-body {
+.help-content {
     font-family: Arial, Helvetica;
     font-size: 10pt;
 }
@@ -13,7 +13,7 @@ ul.HelpMenu {
    
 }
 
-dl.content {
+dl.help-content {
     border-left: solid 1px #999999;
     /*margin-left: 190px;*/
     padding-left: 10px;
@@ -23,16 +23,16 @@ dl.content {
    
 }
 
-dl dt {
+dl.help dt {
    font-weight: bold;
 }
 
-dl dd {
+dl.help dd {
     padding: 0px;
     margin: 2px 0px 2px 10px;
 }
 
-pre {
+pre.help {
     padding: 10px;
     margin: 10px;
     background-color: #EEEEEE;
@@ -57,7 +57,7 @@ pre {
     margin-left: 1em;
 }
 
-h2{
+h2.help {
 	font-family: "Helvetica Neue Light", Helvetica, Sans-Serif;
 	text-transform: uppercase;
 	margin-bottom:10px;
@@ -66,26 +66,26 @@ h2{
 	
 }
 
-a:link {
+a.help:link {
 	font-family: "Helvetica Neue Light", Helvetica, Sans-Serif;
 	color: #3366FF;
 	text-decoration:none;
 	font-weight:bold;
 }
 
-a:visited {
+a.help:visited {
 	font-family: "Helvetica Neue Light", Helvetica, Sans-Serif;
 	color: #3366FF;
 	text-decoration:none;
 	font-weight:bold;
 }
-a:hover {
+a.help:hover {
 	font-family: "Helvetica Neue Light", Helvetica, Sans-Serif;
 	color: #3366FF;
 	text-decoration:none;
 	font-weight:bold;	
 }
-a:active {
+a.help:active {
 	font-family: "Helvetica Neue Light", Helvetica, Sans-Serif;
 	color: #3366FF;
 	text-decoration:none;

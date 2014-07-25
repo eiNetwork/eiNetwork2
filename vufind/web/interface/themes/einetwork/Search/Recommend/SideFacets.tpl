@@ -92,7 +92,7 @@ $(document).ready(function() {
 	{if $sideFacetSet && $recordCount > 0}
 		{foreach from=$sideFacetSet item=cluster key=title}
 			<dl class="narrowList navmenu narrow_begin">
-				<dt>{translate text=$cluster.label} <img class="qtip-{$title}" src="/images/help_icon.png" /></dt>
+				<dt>{translate text=$cluster.label} <img class="qtip-{$title} help-icon" src="/images/help_icon.png" /></dt>
 				{if $title == 'publishDate' || $title == 'birthYear' || $title == 'deathYear'}
 					<dd>
 						<form name='{$title}Filter' id='{$title}Filter' action='{$fullPath}'>

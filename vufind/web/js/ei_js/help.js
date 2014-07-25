@@ -1,5 +1,32 @@
 $( document ).ready(function() {
 
+	$("#dialog").dialog({
+			autoOpen: false,
+		modal: true,
+		width: 620,
+		height: 520,
+	});
+
+	$('#qtip-link-available_at').live('click', function(e){
+	    e.preventDefault();
+		$("#dialog").html("");
+		$("#dialog").dialog("option", "title", "Loading...").dialog("open");
+		$("#dialog").load(this.href, function() {
+			$(this).dialog("option", "title", $(this).find("h1").text());
+			$(this).find("h1").remove();
+		});
+	});
+
+	$('#qtip-link-building').live('click', function(e){
+	    e.preventDefault();
+	    $("#dialog").html("");
+		$("#dialog").dialog("option", "title", "Loading...").dialog("open");
+		$("#dialog").load(this.href, function() {
+			$(this).dialog("option", "title", $(this).find("h1").text());
+			$(this).find("h1").remove();
+		});
+	});
+
 	$('.qtip-retain-filters').qtip({ // Grab some elements to apply the tooltip to
 	    content: {
 	        text: 'Need Copy'
@@ -73,7 +100,7 @@ $( document ).ready(function() {
 	
 	$('.qtip-available_at').qtip({ // Grab some elements to apply the tooltip to
 	    content: {
-	        text: 'Click on a <span class="bold">Location</span> below to limit your search results to the holdings of the selected library.'
+	        text: 'Click on a <span class="bold">Location</span> below to limit your search results to the holdings of the selected library. <a id="qtip-link-available_at" href="/Help/Home?topic=helppage#Location">Read More...</a>'
 	    },
 	    hide: {
 	        delay: 2000
@@ -96,7 +123,7 @@ $( document ).ready(function() {
 
 	$('.qtip-building').qtip({ // Grab some elements to apply the tooltip to
 	    content: {
-	        text: 'Click on a <span class="bold">Location</span> below to limit your search results to the holdings of the selected library.'
+	        text: 'Click on a <span class="bold">Location</span> below to limit your search results to the holdings of the selected library. <a id="qtip-link-building" href="/Help/Home?topic=helppage#Location">Read More...</a>'
 	    },
 	    hide: {
 	        delay: 2000
@@ -108,7 +135,7 @@ $( document ).ready(function() {
 
 	$('.qtip-format').qtip({ // Grab some elements to apply the tooltip to
 	    content: {
-	        text: 'To limit your search by <span class="bold">Material Type(s)</span>, click on those you wish to include.  For example, DVD and Book on CD.  Click See All to view all available material types.'
+	        text: 'To limit your search by <span class="bold">Material Type(s)</span>, click on those you wish to include.  For example, DVD and Book on CD.  Click "See All" to view all available material types.'
 	    },
 	    hide: {
 	        delay: 2000
