@@ -200,4 +200,16 @@ $( document ).ready(function() {
 	        classes: 'qtip-rounded'
 	    }
 	})
+	
+	$('.qtip-email').qtip({ // Grab some elements to apply the tooltip to
+	    content: {
+	        text: 'If yout notification preference is email, you will receive email notices at this address for upcoming due date, hold pickups, and overdue items.  Please make sure your spam filtering allows email from librarycatalog@einetwork.net'
+	    },
+	    hide: {
+	        delay: 2000
+	    },
+	    style: {
+	        classes: 'qtip-rounded'
+	    }
+	})
 });
