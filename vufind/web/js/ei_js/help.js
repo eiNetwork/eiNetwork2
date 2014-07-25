@@ -47,6 +47,30 @@ $( document ).ready(function() {
 	    }
 	})
 	
+	$('.qtip-sort-by-request').qtip({ // Grab some elements to apply the tooltip to
+	    content: {
+	        text: 'Orders your requests by by Title, Author, Format, Pickup Location, or Status'
+	    },
+	    hide: {
+	        delay: 2000
+	    },
+	    style: {
+	        classes: 'qtip-rounded'
+	    }
+	})
+
+	$('.qtip-sort-by-history').qtip({ // Grab some elements to apply the tooltip to
+	    content: {
+	        text: 'Orders your reading history by Checkout Date, Title, or Author'
+	    },
+	    hide: {
+	        delay: 2000
+	    },
+	    style: {
+	        classes: 'qtip-rounded'
+	    }
+	})
+	
 	$('.qtip-available_at').qtip({ // Grab some elements to apply the tooltip to
 	    content: {
 	        text: 'Click on a <span class="bold">Location</span> below to limit your search results to the holdings of the selected library.'
