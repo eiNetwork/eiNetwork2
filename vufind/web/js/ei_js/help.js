@@ -34,6 +34,18 @@ $( document ).ready(function() {
 	        classes: 'qtip-rounded'
 	    }
 	})
+
+	$('.qtip-sort-by-checked').qtip({ // Grab some elements to apply the tooltip to
+	    content: {
+	        text: 'Orders your checked out items by Title, Author, or Format'
+	    },
+	    hide: {
+	        delay: 2000
+	    },
+	    style: {
+	        classes: 'qtip-rounded'
+	    }
+	})
 	
 	$('.qtip-available_at').qtip({ // Grab some elements to apply the tooltip to
 	    content: {

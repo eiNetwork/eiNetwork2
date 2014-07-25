@@ -69,10 +69,10 @@
             <span><img class="qtip-book-cart help-icon" style="float:left" src="/images/help_icon.png" /></span><img src="/interface/themes/einetwork/images/shopping_cart.png"  alt="cart" style="vertical-align:middle;margin-left:2px"/>
             <span id="cart-description" style="vertical-align:middle"></span>
         </div>
-        <div id="blank">&nbsp;</div>
+
         <input type="button" class="button" id="view_cart_button" onclick="getViewCart()" value="View Cart">
     </div>
-    
+    <div id="blank">&nbsp;</div>  
     <div class="separator"><hr/></div>
     
     <div class="account-links">
@@ -80,7 +80,7 @@
             <a onclick='getWishList()'>My Lists</a>
         </div>
 	 <div id="my-item">
-            <a onclick='getCheckedOutItem()'>Renew Items <span id="my-item-PlaceHolder"></span></a><span><img class="qtip-checked-out help-icon" src="/images/help_icon.png" /></span>
+            <a onclick='getCheckedOutItem()'>Renew Items <span id="my-item-PlaceHolder"></span></a><span><img class="qtip-checked-out help-icon" style="vertical-align:middle" src="/images/help_icon.png" /></span>
         </div>
 	<div id="my-request">
           <a onclick='getRequestedItem()' >Update Requests<span id="my-ruest-item-placeHolder"></span></a>

@@ -11,7 +11,7 @@
     <div id="left-bar">
 	<div class="sort">
 	    <div id="sortLabel">
-		{translate text='Sort by'}
+		{translate text='Sort by'}<span><img class="qtip-sort-by-checked" style="float:left" src="/images/help_icon.png" /></span>
 	    </div>
 	    <div class="sortOptions">
 		<select name="accountSort" id="sort" onchange="changeAccountSort($(this).val());">

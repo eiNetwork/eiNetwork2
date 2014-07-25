@@ -1,5 +1,5 @@
 <div id="preferred_alternative" class="profile_row">
-    <div style="font-size:16px;margin-bottom:5px">Your Preferred Libraries<span><img class="qtip-preferred-libs help-icon" src="/images/help_icon.png" /></span></div>
+    <div style="font-size:16px;margin-bottom:5px">Your Preferred Libraries<span><img class="qtip-preferred-libs help-icon" style="vertical-align:middle" src="/images/help_icon.png" /></span></div>
     
     <div style="font-size:14px;margin-left:10px">
         {if $edit == true}
