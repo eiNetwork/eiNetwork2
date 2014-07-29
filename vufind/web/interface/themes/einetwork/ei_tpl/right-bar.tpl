@@ -102,7 +102,7 @@
         </div>
     </div>
 
-    <p class="libraries-strong"><a href="http://www.countycitylibraries.org/" target="_blank"><img src="http://www.aclalibraries.org/images/ccl200.jpg" alt="Help us keep our libraries strong!" width="200" height="57" border="0" /></a></p>
+    <p class="libraries-strong"><a href="http://www.pewinternet.org/quiz/library-typology/group/3200132" target="_blank" title="Library User Quiz"><img src="/images/new_survey1.png" alt="Library User Quiz" width="200" height="67" border="0" /></a></p>
     
     <div class="prefer-branch" id="prefer-branch">
         <div id="description">
