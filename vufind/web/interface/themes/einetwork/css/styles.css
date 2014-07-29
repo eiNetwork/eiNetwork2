@@ -2845,9 +2845,10 @@ span.red {
 }
 
 p.libraries-strong {
-	margin:75px 16px 10px 16px;
+	width:200px;
+	margin:75px 0 10px 16px;
 	border:solid 1px #c0c0c0;
-	padding:4px;
+	padding:0 4px 0 4px;
 }
 
 p.libraries-strong img {
@@ -2855,7 +2856,9 @@ p.libraries-strong img {
 }
 
 p.libraries-strong a:hover {
-	border:1px #c0c0c0;
+	border:0px;
+	padding:0px;
+	margin:0px;
 }
 
 .site-message {
