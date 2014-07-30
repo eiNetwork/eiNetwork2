@@ -368,18 +368,6 @@ $( document ).ready(function() {
 	    style: {
 	        classes: 'qtip-rounded'
 	    }
-	})    
-
-	$('.qtip-preferred-libs').qtip({ // Grab some elements to apply the tooltip to
-	    content: {
-	        text: 'Specifying Preferred Libraries sets your default pickup location for items requested online.'
-	    },
-	    hide: {
-	        delay: 1000
-	    },
-	    style: {
-	        classes: 'qtip-rounded'
-	    }
 	})
 
 	$('.qtip-authorStr').qtip({ // Grab some elements to apply the tooltip to

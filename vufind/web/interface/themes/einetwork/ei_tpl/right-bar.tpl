@@ -117,21 +117,31 @@
     <script type="text/javascript">
 	$("#prefer-branch").ready(function(){
 	    $.ajax({
-		type: 'get',
-                url: "/MyResearch/AJAX?method=getLocations",
-		dataType:"html",
-		success: function(data) {
-		    $("#prefer-branch").html(data);
-			 if(data){
-				$("#topBar").css("display","block");
-			}
-		},
-		error: function() {
-			$('#popupbox').html(failMsg);
-			setTimeout("hideLightbox();", 3000);
-		}
-	    });
-	    
+			type: 'get',
+            url: "/MyResearch/AJAX?method=getLocations",
+			dataType:"html",
+			success: function(data) {
+			    $("#prefer-branch").html(data);
+				 if(data){
+					$("#topBar").css("display","block");
+				}
+				$('.qtip-preferred-libs').qtip({ // Grab some elements to apply the tooltip to
+				    content: {
+				        text: 'Specifying Preferred Libraries sets your default pickup location for items requested online.'
+				    },
+				    hide: {
+				        delay: 1000
+				    },
+				    style: {
+				        classes: 'qtip-rounded'
+				    }
+				})
+			},
+			error: function() {
+				$('#popupbox').html(failMsg);
+					setTimeout("hideLightbox();", 3000);
+				}
+		    });
 	    })
     </script>
     {/literal}
