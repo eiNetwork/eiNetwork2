@@ -206,6 +206,19 @@ $( document ).ready(function() {
 		});
 	});
 
+	$('#qtip-link-preferred-libs').live('click', function(e){
+		var hash = this.hash;
+		hash = hash.replace('#','');
+	    e.preventDefault();
+	    $("#dialog").html("");
+		$("#dialog").dialog("option", "title", "Loading...").dialog("open");
+		$("#dialog").load(this.href, function() {
+			$(this).dialog("option", "title", $(this).find("h1").text());
+			$(this).find("h1").remove();
+			document.getElementById(hash).scrollIntoView(true);
+		});
+	});
+
 	$('.qtip-retain-filters').qtip({ // Grab some elements to apply the tooltip to
 	    content: {
 	        text: 'Allows you to keep the same filters selected while performing another search.'

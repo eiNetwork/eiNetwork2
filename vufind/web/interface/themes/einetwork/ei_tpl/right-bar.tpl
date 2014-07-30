@@ -127,7 +127,7 @@
 				}
 				$('.qtip-preferred-libs').qtip({ // Grab some elements to apply the tooltip to
 				    content: {
-				        text: 'Specifying Preferred Libraries sets your default pickup location for items requested online.'
+				        text: 'Specifying Preferred Libraries sets your default pickup location for items requested online. <a id="qtip-link-preferred-libs" href="/Help/Home?topic=myaccount#PreferredLibraries">Read More...</a>'
 				    },
 				    hide: {
 				        delay: 1000
