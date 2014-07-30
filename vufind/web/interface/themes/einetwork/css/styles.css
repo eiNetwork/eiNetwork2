@@ -2696,7 +2696,7 @@ table.tablesorter thead tr .headerSortDown,table.tablesorter thead tr .headerSor
 
 .hold-buttons {
 	float: right;
-	width: 300px;
+	width: 400px;
 }
 
 .requested-items-button {
@@ -3075,4 +3075,78 @@ ul.new-alert-box li {
 
 .help-icon {
 	padding: 5px;
+}
+
+.qtip-preferred-libs {
+	position: absolute;
+	z-index: 100;
+}
+
+ol.help {
+    list-style-type: none;
+    list-style-type: decimal !ie; /*IE 7- hack*/
+     
+    margin: 0;
+    margin-left: 3em;
+    padding: 0;
+     
+    counter-reset: li-counter;
+}
+ol.help > li{
+    position: relative;
+    margin-bottom: 20px;
+    padding-left: 0.5em;
+    min-height: 3em;
+    border-left: 2px solid #CCCCCC;
+}
+ol.help > li:before {
+    position: absolute;
+    top: 0;
+    left: -1em;
+    width: 0.8em;
+     
+    font-size: 3em;
+    line-height: 1;
+    font-weight: bold;
+    text-align: right;
+    color: #464646;
+ 
+    content: counter(li-counter);
+    counter-increment: li-counter;
+}
+
+ol.helpcontent {
+    list-style-type: none;
+    list-style-type: decimal !ie; /*IE 7- hack*/
+     
+    margin: 30px 0 0 0;
+    margin-left: 3em;
+    padding: 0;
+     
+    counter-reset: li-counter;
+}
+ol.helpcontent > li{
+	float: left;
+	width: 250px;
+	min-height: 300px;
+    position: relative;
+    margin-bottom: 30px;
+    padding-left: 0.5em;
+    min-height: 3em;
+    border-left: 2px solid #CCCCCC;
+}
+ol.helpcontent > li:before {
+    position: absolute;
+    top: 0;
+    left: -1em;
+    width: 0.8em;
+     
+    font-size: 3em;
+    line-height: 1;
+    font-weight: bold;
+    text-align: right;
+    color: #464646;
+ 
+    content: counter(li-counter);
+    counter-increment: li-counter;
 }

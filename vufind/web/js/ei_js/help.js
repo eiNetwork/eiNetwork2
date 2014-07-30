@@ -7,7 +7,7 @@ $( document ).ready(function() {
 		height: 520,
 	});
 
-	$('#qtip-link-available_at').live('click', function(e){
+	$('#help-contents-link').click(function(e){
 	    e.preventDefault();
 		$("#dialog").html("");
 		$("#dialog").dialog("option", "title", "Loading...").dialog("open");
@@ -17,69 +17,198 @@ $( document ).ready(function() {
 		});
 	});
 
+	$('#help-back').live('click', function(e){
+	    e.preventDefault();
+		$("#dialog").html("");
+		$("#dialog").dialog("option", "title", "Loading...").dialog("open");
+		$("#dialog").load(this.href, function() {
+			$(this).dialog("option", "title", $(this).find("h1").text());
+			$(this).find("h1").remove();
+		});
+	});
+
+	$('.help-contents-hash').live('click', function(e){
+		var hash = this.hash;
+		hash = hash.replace('#','');
+		e.preventDefault();
+		$("#dialog").html("");
+		$("#dialog").dialog("option", "title", "Loading...").dialog("open");
+		$("#dialog").load(this.href, function() {
+			$(this).dialog("option", "title", $(this).find("h1").text());
+			$(this).find("h1").remove();
+			document.getElementById(hash).scrollIntoView(true);
+		});
+	});
+
+	$('.help-link').live('click', function(e){
+		e.preventDefault();
+		$("#dialog").html("");
+		$("#dialog").dialog("option", "title", "Loading...").dialog("open");
+		$("#dialog").load(this.href, function() {
+			$(this).dialog("option", "title", $(this).find("h1").text());
+			$(this).find("h1").remove();
+		});
+	});
+
+	$('#qtip-link-limit-avail').live('click', function(e){
+		var hash = this.hash;
+		hash = hash.replace('#','');
+	    e.preventDefault();
+		$("#dialog").html("");
+		$("#dialog").dialog("option", "title", "Loading...").dialog("open");
+		$("#dialog").load(this.href, function() {
+			$(this).dialog("option", "title", $(this).find("h1").text());
+			$(this).find("h1").remove();
+			document.getElementById(hash).scrollIntoView(true);
+		});
+	});
+
+	$('#qtip-link-available_at').live('click', function(e){
+		var hash = this.hash;
+		hash = hash.replace('#','');
+	    e.preventDefault();
+		$("#dialog").html("");
+		$("#dialog").dialog("option", "title", "Loading...").dialog("open");
+		$("#dialog").load(this.href, function() {
+			$(this).dialog("option", "title", $(this).find("h1").text());
+			$(this).find("h1").remove();
+			document.getElementById(hash).scrollIntoView(true);
+		});
+	});
+
 	$('#qtip-link-building').live('click', function(e){
+		var hash = this.hash;
+		hash = hash.replace('#','');
 	    e.preventDefault();
 	    $("#dialog").html("");
 		$("#dialog").dialog("option", "title", "Loading...").dialog("open");
 		$("#dialog").load(this.href, function() {
 			$(this).dialog("option", "title", $(this).find("h1").text());
 			$(this).find("h1").remove();
+			document.getElementById(hash).scrollIntoView(true);
+		});
+	});
+
+	$('#qtip-link-material').live('click', function(e){
+		var hash = this.hash;
+		hash = hash.replace('#','');
+	    e.preventDefault();
+	    $("#dialog").html("");
+		$("#dialog").dialog("option", "title", "Loading...").dialog("open");
+		$("#dialog").load(this.href, function() {
+			$(this).dialog("option", "title", $(this).find("h1").text());
+			$(this).find("h1").remove();
+			document.getElementById(hash).scrollIntoView(true);
 		});
 	});
 
 	$('#qtip-link-target_audience_full').live('click', function(e){
+		var hash = this.hash;
+		hash = hash.replace('#','');
 	    e.preventDefault();
 	    $("#dialog").html("");
 		$("#dialog").dialog("option", "title", "Loading...").dialog("open");
 		$("#dialog").load(this.href, function() {
 			$(this).dialog("option", "title", $(this).find("h1").text());
 			$(this).find("h1").remove();
+			document.getElementById(hash).scrollIntoView(true);
 		});
 	});
 
 	$('#qtip-link-literary_form_full').live('click', function(e){
+		var hash = this.hash;
+		hash = hash.replace('#','');
 	    e.preventDefault();
 	    $("#dialog").html("");
 		$("#dialog").dialog("option", "title", "Loading...").dialog("open");
 		$("#dialog").load(this.href, function() {
 			$(this).dialog("option", "title", $(this).find("h1").text());
 			$(this).find("h1").remove();
+			document.getElementById(hash).scrollIntoView(true);
 		});
 	});
 
 	$('#qtip-link-topic_facet').live('click', function(e){
+		var hash = this.hash;
+		hash = hash.replace('#','');
 	    e.preventDefault();
 	    $("#dialog").html("");
 		$("#dialog").dialog("option", "title", "Loading...").dialog("open");
 		$("#dialog").load(this.href, function() {
 			$(this).dialog("option", "title", $(this).find("h1").text());
 			$(this).find("h1").remove();
+			document.getElementById(hash).scrollIntoView(true);
 		});
 	});
 
 	$('#qtip-link-authorStr').live('click', function(e){
+		var hash = this.hash;
+		hash = hash.replace('#','');
 	    e.preventDefault();
 	    $("#dialog").html("");
 		$("#dialog").dialog("option", "title", "Loading...").dialog("open");
 		$("#dialog").load(this.href, function() {
 			$(this).dialog("option", "title", $(this).find("h1").text());
 			$(this).find("h1").remove();
+			document.getElementById(hash).scrollIntoView(true);
 		});
 	});
 	
 	$('#qtip-link-language').live('click', function(e){
+		var hash = this.hash;
+		hash = hash.replace('#','');
 	    e.preventDefault();
 	    $("#dialog").html("");
 		$("#dialog").dialog("option", "title", "Loading...").dialog("open");
 		$("#dialog").load(this.href, function() {
 			$(this).dialog("option", "title", $(this).find("h1").text());
 			$(this).find("h1").remove();
+			document.getElementById(hash).scrollIntoView(true);
+		});
+	});
+
+	$('#qtip-link-freeze').live('click', function(e){
+		var hash = this.hash;
+		hash = hash.replace('#','');
+	    e.preventDefault();
+	    $("#dialog").html("");
+		$("#dialog").dialog("option", "title", "Loading...").dialog("open");
+		$("#dialog").load(this.href, function() {
+			$(this).dialog("option", "title", $(this).find("h1").text());
+			$(this).find("h1").remove();
+			document.getElementById(hash).scrollIntoView(true);
+		});
+	});
+
+	$('#qtip-link-renew').live('click', function(e){
+		var hash = this.hash;
+		hash = hash.replace('#','');
+	    e.preventDefault();
+	    $("#dialog").html("");
+		$("#dialog").dialog("option", "title", "Loading...").dialog("open");
+		$("#dialog").load(this.href, function() {
+			$(this).dialog("option", "title", $(this).find("h1").text());
+			$(this).find("h1").remove();
+			document.getElementById(hash).scrollIntoView(true);
+		});
+	});
+
+	$('#qtip-link-bookcart').live('click', function(e){
+		var hash = this.hash;
+		hash = hash.replace('#','');
+	    e.preventDefault();
+	    $("#dialog").html("");
+		$("#dialog").dialog("option", "title", "Loading...").dialog("open");
+		$("#dialog").load(this.href, function() {
+			$(this).dialog("option", "title", $(this).find("h1").text());
+			$(this).find("h1").remove();
+			document.getElementById(hash).scrollIntoView(true);
 		});
 	});
 
 	$('.qtip-retain-filters').qtip({ // Grab some elements to apply the tooltip to
 	    content: {
-	        text: 'Need Copy'
+	        text: 'Allows you to keep the same filters selected while performing another search.'
 	    },
 	    hide: {
 	        delay: 1000
@@ -91,7 +220,7 @@ $( document ).ready(function() {
 
 	$('.qtip-limit-avail').qtip({ // Grab some elements to apply the tooltip to
 	    content: {
-	        text: 'Limits to items that were available at the time of the last nightly update.'
+	        text: 'Limits to items that were available at the time of the last nightly update. <a id="qtip-link-limit-avail" href="/Help/Home?topic=helppage#ItemAvailability">Read more...</a>'
 	    },
 	    hide: {
 	        delay: 1000
@@ -161,7 +290,7 @@ $( document ).ready(function() {
 	})
 	$('.qtip-book-cart').qtip({ // Grab some elements to apply the tooltip to
 	    content: {
-	        text: 'Adding items to your Book Cart allows you to save them for later and place multiple requests at one time. '
+	        text: 'Adding items to your Book Cart allows you to save them for later and place multiple requests at one time. <a id="qtip-link-bookcart" href="/Help/Home?topic=myaccount#BookCart">Read more...</a>'
 	    },
 	    hide: {
 	        delay: 1000
@@ -185,7 +314,7 @@ $( document ).ready(function() {
 
 	$('.qtip-format').qtip({ // Grab some elements to apply the tooltip to
 	    content: {
-	        text: 'To limit your search by <span class="bold">Material Type(s)</span>, click on those you wish to include.  For example, DVD and Book on CD.  Click "See All" to view all available material types.'
+	        text: 'To limit your search by <span class="bold">Material Type(s)</span>, click on those you wish to include.  For example, DVD and Book on CD.  Click "See All" to view all available material types. <a id="qtip-link-material" href="/Help/Home?topic=helppage#MaterialType">Read more...</a>'
 	    },
 	    hide: {
 	        delay: 1000
@@ -256,7 +385,7 @@ $( document ).ready(function() {
 	})
 	$('.qtip-checked-out').qtip({ // Grab some elements to apply the tooltip to
 	    content: {
-	        text: 'From your Checked Out Items page you can renew items and review due dates.  '
+	        text: 'From your Checked Out Items page you can renew items and review due dates. <a id="qtip-link-renew" href="/Help/Home?topic=myaccount#RenewItems">Read more...</a>'
 	    },
 	    hide: {
 	        delay: 1000
@@ -289,4 +418,29 @@ $( document ).ready(function() {
 	        classes: 'qtip-rounded'
 	    }
 	})
+
+	$('.qtip-freeze').qtip({ // Grab some elements to apply the tooltip to
+	    content: {
+	        text: 'Click here to freeze all your requests at once. To freeze just one request, select the Freeze checkbox and then click Update Selected. <a id="qtip-link-freeze" href="/Help/Home?topic=myaccount#FreezingRequests">Read more...</a>'
+	    },
+	    hide: {
+	        delay: 1000
+	    },
+	    style: {
+	        classes: 'qtip-rounded'
+	    }
+	})
+
+	$('.qtip-request-update').qtip({ // Grab some elements to apply the tooltip to
+	    content: {
+	        text: 'Clicking Update Selected updates your Requested Items page to reflect any changes you indicated by selecting the Freeze or Cancel checkboxes next to items in your list. <a href="">Read more...</a>'
+	    },
+	    hide: {
+	        delay: 1000
+	    },
+	    style: {
+	        classes: 'qtip-rounded'
+	    }
+	})
+
 });

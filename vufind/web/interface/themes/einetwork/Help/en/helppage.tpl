@@ -2,11 +2,14 @@
   <h1 class="help">Help - Filtering My Search Results</h1>
 
   <ul class="HelpMenu">
+    <li><a class="help-link" href="/Help/Home?topic=contents">Contents</a></li>
+    <hr />
     <li><a class="help" href="#UsingFilters">Using Filters</a></li>
     <li><a class="help" href="#CanFiltersCombine">Can Filters Be Combined?</a></li>
     <li><a class="help" href="#AvailableFilters">Available Filters</a>
       <ul>
         <li><a class="help" href="#Location">Location</a></li>
+        <li><a class="help" href="#MaterialType">Material Type</a></li>
         <li><a class="help" href="#AgeGroup">Age Group</a></li>
         <li><a class="help" href="#LiteraryForm">Literary Form</a></li>
         <li><a class="help" href="#Subject">Subject</a></li>
@@ -14,7 +17,7 @@
         <li><a class="help" href="#Language">Language</a></li>
       </ul>
     </li>
-    <li><a href="#OtherOptions">Other Options</a>
+    <li><a class="help" href="#OtherOptions">Other Options</a>
       <ul>
         <li><a class="help" href="#UsingSortFunction">Using the Sort Function</a></li>
         <li><a class="help" href="#ItemAvailability">Item Availability</a></li>
@@ -40,6 +43,12 @@
       <dt id="Location"><span class="bold">Location</span></dt>
         <dd>
           <p>The location filter will limit your search results to the library locations selected.  More than one location can be selected.</p>
+        </dd>
+
+      <dt id="MaterialType"><span class="bold">Material Type</span></dt>
+        <dd>
+          <p>Limits your search results to the Material Type selected. For example, DVD or Blu-Ray. You can select multiple material types or a group of material types to include in your search results. 
+To select an entire group of material types, click on the heading for that group. For example, clicking the Images heading will select both print and digital image material types.</p>
         </dd>
 
       <dt id="AgeGroup"><span class="bold">Age Group</span></dt>

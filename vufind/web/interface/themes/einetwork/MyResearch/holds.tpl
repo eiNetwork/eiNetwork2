@@ -94,9 +94,10 @@ while ($i < $bold_count){
 					{else}
 						<a class="unfreeze-all-btn button" href="#">Unfreeze All</a>
 					{/if}
+					<img class="qtip-freeze" src="/images/help_icon.png" />
 				</div>
 				<div class="requested-items-button">
-					<a class="update-selected-btn button" href="#">Update Selected</a>
+					<a class="update-selected-btn button" href="#">Update Selected</a><img class="qtip-request-update" src="/images/help_icon.png" />
 				</div>
 			</div>
 
@@ -378,9 +379,10 @@ while ($i < $bold_count){
 					{else}
 						<a class="unfreeze-all-btn button" href="#">Unfreeze All</a>
 					{/if}
+					<img class="qtip-freeze" src="/images/help_icon.png" />
 				</div>
 				<div class="requested-items-button">
-					<a class="update-selected-btn button" href="#">Update Selected</a>
+					<a class="update-selected-btn button" href="#">Update Selected</a><img class="qtip-request-update" src="/images/help_icon.png" />
 				</div>
 			</div>
 			

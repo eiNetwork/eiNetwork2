@@ -66,26 +66,30 @@ h2.help {
 	
 }
 
-a.help:link {
+a.help:link,
+a.help-link:link {
 	font-family: "Helvetica Neue Light", Helvetica, Sans-Serif;
 	color: #3366FF;
 	text-decoration:none;
 	font-weight:bold;
 }
 
-a.help:visited {
+a.help:visited,
+a.help-link:visited {
 	font-family: "Helvetica Neue Light", Helvetica, Sans-Serif;
 	color: #3366FF;
 	text-decoration:none;
 	font-weight:bold;
 }
-a.help:hover {
+a.help:hover,
+a.help-link:hover {
 	font-family: "Helvetica Neue Light", Helvetica, Sans-Serif;
 	color: #3366FF;
 	text-decoration:none;
 	font-weight:bold;	
 }
-a.help:active {
+a.help:active,
+a.help-link:active {
 	font-family: "Helvetica Neue Light", Helvetica, Sans-Serif;
 	color: #3366FF;
 	text-decoration:none;

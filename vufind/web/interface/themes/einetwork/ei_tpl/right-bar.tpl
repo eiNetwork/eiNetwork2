@@ -101,7 +101,7 @@
             <a href="/MyResearch/Latestupdates">Latest Website Updates</a>
         </div>
 	<div id="latest-updates">
-            <a href="/MyResearch/einhelp">Catalog Help</a>
+            <a id="help-contents-link" href="/Help/Home?topic=contents">Catalog Help</a>
         </div>
     </div>
 

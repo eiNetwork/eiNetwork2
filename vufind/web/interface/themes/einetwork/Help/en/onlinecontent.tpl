@@ -1,6 +1,8 @@
 <div class="help-content">
   <h1 class="help">Help - Online Content</h1>
   <ul class="HelpMenu">
+  <li><a class="help-link" href="/Help/Home?topic=contents">Contents</a></li>
+  <hr />
   <li><a class="help" href="#OnlineContent">Online Content</a>
         <ul>
           <li><a class="help" href="#OverDrive">OverDrive eBooks, Audiobooks, and online Videos</a></li>
@@ -14,7 +16,7 @@
      <dt id="OnlineContent"><span class="bold">Online Content</span></dt>
     <dd> 
     
-      <p class="help">Your library card enables you to access eBooks, Audiobooks, music downloads and many other types of eResources from various sources.  For more information, including access details, supported devices, and more, visit the <a class="help" href="http://eresources.einetwork.net/">Allegheny County Library Association’s eResources page</a>.</p>  
+      <p class="help">Your library card enables you to access eBooks, Audiobooks, music downloads and many other types of eResources from various sources.  For more information, including access details, supported devices, and more, visit the <a class="help" href="http://eresources.einetwork.net/" target="_blank">Allegheny County Library Association’s eResources page</a>.</p>  
       
     <p class="help">Some of these items, including OverDrive and OneClickdigital resources, can be discovered by searching the library catalog but require you to set up a free account on another site in order to access them.    See below for information on accessing these items through the online catalog.</p>
     
@@ -32,7 +34,7 @@
       </dt>
       
       <dd>
-        <p>Accessing OneClickdigital items requires setting up a free OneClickdigital account.  It is recommended that you do this before searching the catalog for OneClickdigital items.  To do this, <a class="help" href="http://carnegielbyofpittpa.oneclickdigital.com/Home/Featured.aspx"> click here </a> to go to the OneClickdigital site and click the <span class="bold">Create New Account</span> link in the upper right hand corner.  </p>
+        <p>Accessing OneClickdigital items requires setting up a free OneClickdigital account.  It is recommended that you do this before searching the catalog for OneClickdigital items.  To do this, <a class="help" href="http://carnegielbyofpittpa.oneclickdigital.com/Home/Featured.aspx" target="_blank"> click here </a> to go to the OneClickdigital site and click the <span class="bold">Create New Account</span> link in the upper right hand corner.  </p>
       <p>To access OneClickdigital items from the library catalog, click the <span class="bold">Access Online </span>button to the right of the item record on either the search results page or the item detail page.  This will take you to the OneClickdigital item information page.  From there click <span class="bold">Checkout Now!</span>  and you will be prompted to log in with your OneClickdigital credentials.</p>
       </dd>
       
