@@ -4,7 +4,11 @@
  <div id="holdingInfoPopup" style="height:auto;max-height:450px;width:auto;height:inherit;padding-left:12px;padding-right:12px">
   <div style="height:40px;padding-top:12px;border-bottom:1px solid rgb(238,238,238)" id="headhead">
     <span style="font-size:18px;">Item Call Numbers</span>
-    {if !$allAvailableItem}<span onclick="seeUnavailable()"  style="cursor: pointer;margin-left:10px;color:#9999ff;text-decoration:underline;" id="showAndHideUnavailable">(show unavailable items)</span>{/if}
+    {if !$allAvailableItem}
+
+        <input type="button" onclick="seeUnavailable()" class="button" id="showAndHideUnavailable"  style="background-color:rgb(244,213,56);" value="Hide Unavailable Items" />
+
+    {/if}
     <span onclick="hideLightbox()" style="float:right"><img class="close-button" src="/interface/themes/einetwork/images/closeHUDButton.png"></span>
   </div>
   <div style="overflow-y:auto;height:auto;max-height:400px;border-bottom:1px solid rgb(238,238,238);" id="callNumberBody">
@@ -12,36 +16,45 @@
  <table border="0" class="holdingsTable" style="width:510px;">
  <tbody>
 
+  <tr>
+      <td style="padding-bottom:5px;padding-left:50px;width:250px;font-weight:bold">Location</td>
+      <td></td>
+      <td></td>
+      <td style="font-weight:bold">Call Number</td>
+      <td style="font-weight:bold">Availability</td>
+      <td></td>
+  </tr>
+
  {foreach from=$holdings item=holding1}
  {foreach from=$holding1 item=holding}
   {if $lastSection != $holding.section}
     {assign var=lastSection value=$holding.section}
   {/if}
   <tr {if $holding.availability} class='itemAvailable' {else}class='itemUnavailable'{/if}>
-  	{* Location *}
-  	<td style = "padding-bottom:5px;padding-left:50px;width:250px;"><span><strong>
-  	{$holding.location|escape}
-  	</strong></span></td>
-  	
-  	{* Collection *}
-  	<td style = "padding-bottom:5px;">{$holding.collection|escape}</td>
-  	
-  	{* Copy *}
-  	<td style = "padding-bottom:5px;">{$holding.copy|escape}</td>
-  	
-  	{* Call# *}
-  	<td style = "padding-bottom:5px;width:120px">
-  	{$holding.callnumber|escape}
-  	{if $holding.link}
-  	  {foreach from=$holding.link item=link}
-  	    <a href='{$link.link}' target='_blank'>{$link.linkText}</a><br />
-  	  {/foreach}
-  	{/if}
-  	</td>
-  	
-  	{* Status *}
-  	<td style = "padding-bottom:5px;">
-  	  {if $holding.reserve == "Y"}
+    {* Location *}
+    <td style = "padding-bottom:5px;padding-left:50px;width:250px;"><span><strong>
+    {$holding.location|escape}
+    </strong></span></td>
+    
+    {* Collection *}
+    <td style = "padding-bottom:5px;">{$holding.collection|escape}</td>
+    
+    {* Copy *}
+    <td style = "padding-bottom:5px;">{$holding.copy|escape}</td>
+    
+    {* Call# *}
+    <td style = "padding-bottom:5px;width:120px">
+    {$holding.callnumber|escape}
+    {if $holding.link}
+      {foreach from=$holding.link item=link}
+        <a href='{$link.link}' target='_blank'>{$link.linkText}</a><br />
+      {/foreach}
+    {/if}
+    </td>
+    
+    {* Status *}
+    <td style = "padding-bottom:5px;">
+      {if $holding.reserve == "Y"}
         {$holding.statusfull}
       {else}
         {if $holding.availability}
@@ -54,7 +67,7 @@
     
     {* Due *}
     <td style = "padding-bottom:5px;">
-  	  {if $holding.duedate}{$holding.duedate}{/if}
+      {if $holding.duedate}{$holding.duedate}{/if}
     </td>
     
   </tr>
@@ -62,6 +75,7 @@
   {/foreach}
  </tbody>
  </table>
+ <br /><br />
   </div>
  </div>
   <div id="actionButton" style="height:60px;padding-top:10px;">
@@ -107,22 +121,22 @@
    <script type="text/javascript">
      $('#showHoldings-{$smarty.foreach.summaryLoop.iteration}').click(function(){literal} { {/literal}
        if (!$('#showHoldings-{$smarty.foreach.summaryLoop.iteration}').hasClass('expanded')){literal} { {/literal}
-			   $('#issue-summary-holdings-{$smarty.foreach.summaryLoop.iteration}').slideDown();
-			   $('#showHoldings-{$smarty.foreach.summaryLoop.iteration}').html('Hide Issues');
-			   $('#showHoldings-{$smarty.foreach.summaryLoop.iteration}').addClass('expanded');
-			 {literal} }else{ {/literal}
-		     $('#issue-summary-holdings-{$smarty.foreach.summaryLoop.iteration}').slideUp();
-		     $('#showHoldings-{$smarty.foreach.summaryLoop.iteration}').removeClass('expanded');
-		     $('#showHoldings-{$smarty.foreach.summaryLoop.iteration}').html('Show Issues');
-			 {literal} } {/literal}
-		 {literal} }); {/literal}
+         $('#issue-summary-holdings-{$smarty.foreach.summaryLoop.iteration}').slideDown();
+         $('#showHoldings-{$smarty.foreach.summaryLoop.iteration}').html('Hide Issues');
+         $('#showHoldings-{$smarty.foreach.summaryLoop.iteration}').addClass('expanded');
+       {literal} }else{ {/literal}
+         $('#issue-summary-holdings-{$smarty.foreach.summaryLoop.iteration}').slideUp();
+         $('#showHoldings-{$smarty.foreach.summaryLoop.iteration}').removeClass('expanded');
+         $('#showHoldings-{$smarty.foreach.summaryLoop.iteration}').html('Show Issues');
+       {literal} } {/literal}
+     {literal} }); {/literal}
    </script>
    {if $issueSummary.checkInGridId}
    {*}<span id='showCheckInGrid-{$smarty.foreach.summaryLoop.iteration}' class='showCheckinGrid'>Show Check-in Grid</span>{*}
    {/if}
    <script type="text/javascript">
      $('#showCheckInGrid-{$smarty.foreach.summaryLoop.iteration}').click(function(){literal} { {/literal}
-    	 getLightbox('Record', 'CheckInGrid', '.b26935041', '{$issueSummary.checkInGridId}', 'Check-in Grid', undefined, undefined, undefined, '5%', '90%', 50, '85%');
+       getLightbox('Record', 'CheckInGrid', '.b26935041', '{$issueSummary.checkInGridId}', 'Check-in Grid', undefined, undefined, undefined, '5%', '90%', 50, '85%');
      {literal} }); {/literal}
    </script>
    </div>
@@ -133,30 +147,30 @@
      {foreach from=$issueSummary.holdings item=holding}
      <tr class='holdingsLine'>
       <td style = "padding-bottom:5px;"><span><strong>
-	    {$holding.location|escape}
-	    
-	    </strong></span></td>
-	    <td style = "padding-bottom:5px;">
-	    {$holding.callnumber|escape}
-	    {if $holding.link}
-	      {foreach from=$holding.link item=link}
-	        <a href='{$link.link}' target='_blank'>{$link.linkText}</a><br/>
-	      {/foreach}
-	    {/if}
-	    </td>
-	    
-	    <td style = "padding-bottom:5px;">
-	      {if $holding.reserve == "Y"}
-	        {translate text="On Reserve - Ask at Circulation Desk"}
-	      {else}
-	        {if $holding.availability}
-	            <span class="available">{$holding.statusfull}{if $holding.holdable == 0 && $showHoldButton} <label class='notHoldable' title='{$holding.nonHoldableReason}'>(Not Holdable)</label>{/if}</span>
-	        {else}
-	            <span class="checkedout">{$holding.statusfull}{if $holding.holdable == 0 && $showHoldButton} <label class='notHoldable' title='{$holding.nonHoldableReason}'>(Not Holdable)</label>{/if}</span>
-	        {/if}
-	      {/if}
-	    </td>
-	    </tr>
+      {$holding.location|escape}
+      
+      </strong></span></td>
+      <td style = "padding-bottom:5px;">
+      {$holding.callnumber|escape}
+      {if $holding.link}
+        {foreach from=$holding.link item=link}
+          <a href='{$link.link}' target='_blank'>{$link.linkText}</a><br/>
+        {/foreach}
+      {/if}
+      </td>
+      
+      <td style = "padding-bottom:5px;">
+        {if $holding.reserve == "Y"}
+          {translate text="On Reserve - Ask at Circulation Desk"}
+        {else}
+          {if $holding.availability}
+              <span class="available">{$holding.statusfull}{if $holding.holdable == 0 && $showHoldButton} <label class='notHoldable' title='{$holding.nonHoldableReason}'>(Not Holdable)</label>{/if}</span>
+          {else}
+              <span class="checkedout">{$holding.statusfull}{if $holding.holdable == 0 && $showHoldButton} <label class='notHoldable' title='{$holding.nonHoldableReason}'>(Not Holdable)</label>{/if}</span>
+          {/if}
+        {/if}
+      </td>
+      </tr>
      {/foreach}
    </table>
    {/if}
@@ -174,11 +188,11 @@
 <div id="holdingInfoPopup" style="height:auto;max-height:450px;width:auto;height:inherit;padding-left:12px;padding-right:12px">
   <div style="height:125px;padding-top:12px;border-bottom:1px solid rgb(238,238,238)" id="headhead">
     <span style="font-size:18px;">No Copies Found</span> <span onclick="hideLightbox()" style="float:right"><img class="close-button" src="/interface/themes/einetwork/images/closeHUDButton.png"></span><br>
-  	Our apologies, no copies of this title are available at this time.
-  	  <div id="actionButton" style="height:60px;padding-top:10px;">
+    Our apologies, no copies of this title are available at this time.
+      <div id="actionButton" style="height:60px;padding-top:10px;">
 
-    	<input type="button" class="button" id="doneButton"  style="background-color:rgb(244,213,56);width:80px" value="OK" onclick="hideLightbox()"/>
-  		</div>
+      <input type="button" class="button" id="doneButton"  style="background-color:rgb(244,213,56);width:80px" value="OK" onclick="hideLightbox()"/>
+      </div>
   </div>
  </div>
 {/if}

@@ -746,6 +746,10 @@ function enableErrorHandler(){
 
 // Process any errors that are thrown
 function handlePEARError($error, $method = null){
+
+	// Send 500 error
+	header(' ', true, 500);
+	
 	global $errorHandlingEnabled;
 	if (isset($errorHandlingEnabled) && $errorHandlingEnabled == false){
 		return;
