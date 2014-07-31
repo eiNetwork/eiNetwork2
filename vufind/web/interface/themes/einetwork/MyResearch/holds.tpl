@@ -50,7 +50,7 @@ while ($i < $bold_count){
 	<div id="left-bar">
 		<div class="sort">
 			<div id="sortLabel">
-			{translate text='Sort by'}
+			{translate text='Sort by'}<span><img class="qtip-sort-by-request help-icon" style="vertical-align: middle" src="/images/help_icon.png" /></span>
 			</div>
 			<div class="sortOptions">
 				<select name="accountSort" id="sort{$sectionKey}" onchange="changeAccountSort($(this).val());">
@@ -83,7 +83,6 @@ while ($i < $bold_count){
 				<h2>{translate text='Requested Items'}</h2>
 				<ul class="new-alert-box">
 					<li>For items that you recently requested, it may take one minute for them to appear below.</li>
-					<li>We are receiving reports about some users not receiving email notices for upcoming due dates, hold pickups, or overdue items.  You may wish to check My Account or contact your local library for this information.   Please contact your email provider if you believe you are not receiving these notices.</li>
 				</ul>
 			</div>
 			
@@ -94,9 +93,10 @@ while ($i < $bold_count){
 					{else}
 						<a class="unfreeze-all-btn button" href="#">Unfreeze All</a>
 					{/if}
+					<img class="qtip-freeze" src="/images/help_icon.png" />
 				</div>
 				<div class="requested-items-button">
-					<a class="update-selected-btn button" href="#">Update Selected</a>
+					<a class="update-selected-btn button" href="#">Update Selected</a><img class="qtip-request-update" src="/images/help_icon.png" />
 				</div>
 			</div>
 
@@ -378,9 +378,10 @@ while ($i < $bold_count){
 					{else}
 						<a class="unfreeze-all-btn button" href="#">Unfreeze All</a>
 					{/if}
+					<img class="qtip-freeze" src="/images/help_icon.png" />
 				</div>
 				<div class="requested-items-button">
-					<a class="update-selected-btn button" href="#">Update Selected</a>
+					<a class="update-selected-btn button" href="#">Update Selected</a><img class="qtip-request-update" src="/images/help_icon.png" />
 				</div>
 			</div>
 			

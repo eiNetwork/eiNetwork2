@@ -1,3 +1,18 @@
+<!--{literal}
+<script type="text/javascript">
+
+$(document).ready(function() {
+
+	$('.selector').qtip({
+	    content: {
+	        text: 'My simple tooltip'
+	    },
+	    style: 'tooltip'
+	});
+
+});
+</script>
+{/literal}-->
 <script type="text/javascript" src="{$path}/services/EcontentRecord/ajax.js?v3.0"></script>
  <script type="text/javascript" src="/js/ei_js/search.js?v3.0"></script>
 {* Main Listing *}
@@ -37,7 +52,7 @@
 	<div class="resulthead" style="height:30px; ">
 		<div class="yui-u first" style="float:left; width:75%">
 		{if $recordCount}
-			{translate text='Sort by'}
+			{translate text='Sort by'}<span><img class="qtip-sort-by help-icon" style="float:left" src="/images/help_icon.png" /></span>
 			<select name="sort" onchange="document.location.href = this.options[this.selectedIndex].value;" id="sort-select">
 				{foreach from=$sortList item=sortData key=sortLabel}
 					<option value="{$sortData.sortUrl|escape}"{if $sortData.selected} selected="selected"{/if}>{translate text=$sortData.desc}</option>

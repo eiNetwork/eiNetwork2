@@ -18,13 +18,13 @@
       <link rel="stylesheet" href="/interface/themes/einetwork/css/ei_css/Record/record.css?v3.2" type="text/css" media="screen" />
       {/if}
       {if isset($isSearch)}
-f
+
       {else}
 	{css filename="search-results.css"}
 	{css filename="holdingsSummary.css"}
       {/if}
       {css filename="jqueryui.css"}
-      <link rel="stylesheet" href="/interface/themes/einetwork/css/styles.css?v4.0.1" type="text/css" media="screen" />
+      <link rel="stylesheet" href="/interface/themes/einetwork/css/styles.css?v2.1" type="text/css" media="screen" />
       {css filename="basicHtml.css"}
       {css filename="top-menu.css"}
       {css filename="ei_css/Record/record.css"}
@@ -45,6 +45,7 @@ f
       {css filename="suggestions.css"}
       {css filename="reports.css"}
       {css filename="dcl.css"}
+      {css filename="help.css"}
  
     {/if}
 	
@@ -91,9 +92,15 @@ f
     {if isset($theme_css)}
     <link rel="stylesheet" type="text/css" href="{$theme_css}" />
     {/if}
+    <script src="{$path}/js/jquery.qtip.min.js"></script>
+    <script src="{$path}/js/ei_js/help.js"></script>
+
+    {css filename="jquery.qtip.min.css"}
+
   </head>
   
   <body class="{$module} {$action}">
+    <div id="dialog"></div>
    {*google analytics*}
     <div>
         {literal}
@@ -144,7 +151,7 @@ f
 		</div>
 	    {else}
 		<div class="button yellow" style="margin-top:20px;height:38px;font-size:15px;padding:0px;" onclick='window.location.href="http://www.surveymonkey.com/s/NewLibraryCatalog"' >
-		    <p style="margin-top:8px;vertical-align:middle;text-align: center"><span style="vertical-align:middle">A Quick Survey</span></p>
+		    <p style="margin-top:10px;vertical-align:middle;text-align: center"><span style="vertical-align:middle">A Quick Survey</span></p>
 		</div>   
 	    {/if}
 	  </div>

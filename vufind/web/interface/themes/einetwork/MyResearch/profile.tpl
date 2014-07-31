@@ -77,13 +77,20 @@
 		{/if}
 		{if $user->cat_username}
 		<div><h2>Account Settings</h2></div>
-		<div class="new-alert-box-container"> 
+<!--		<div class="new-alert-box-container"> 
 			<ul class="new-alert-box">
-				<li>We are receiving reports about some users not receiving email notices for upcoming due dates, hold pickups, or overdue items.  You may wish to check My Account or contact your local library for this information.   Please contact your email provider if you believe you are not receiving these notices.</li>
+				<li></li>
 			</ul>
-		</div>
+		</div>-->
 		<form id="profileForm" action="" method="post" {if $edit == true}onsubmit="return checkWhenSubmit();"{/if}>
-		<h3 id="info">Information</h3>
+		{if $canUpdate}
+			{if $edit == true}
+			<input  type='submit' value='Update Profile' name='update'  class='button'/>
+			<input  type='button' value='Cancel' name='update' onclick='window.location.href="/MyResearch/Profile"' class='button'/>
+			{else}
+			<input type='submit' value='Edit Profile' name='edit' class='button'/>
+			{/if}
+		{/if}
 		<input class="button" type="button" onclick="ajaxLightbox('/MyResearch/AJAX?method=getPinUpdateForm',false,false,'400px',false,'250px');return false;" value="Modify PIN Number"/>
 			<div class="profile">
 			<div id="name_notification" class="profile_row">
@@ -142,7 +149,7 @@
 				<table>
 				<tr style="font-weight: bolder">
 					<td>{translate text='Phone Number'}</td>
-					<td>{translate text='Email'}</td>
+					<td>{translate text='Email'}<span><img class="qtip-email help-icon" style="margin-top:-10px" src="/images/help_icon.png" /></span></td>
 				</tr>
 				<tr>
 					<td>
@@ -176,7 +183,7 @@
 			<div id="preferred_alternative" class="profile_row">
 				<table>
 				<tr style="font-weight: bolder">
-					<td>{translate text='Preferred Library'}</td>
+					<td>{translate text='Preferred Library'}<span><img class="qtip-preferred-libraries help-icon" style="margin-top:-10px" src="/images/help_icon.png" /></span></td>
 					<td>{translate text='Alternative Library'}</td>
 				</tr>
 				<tr>
@@ -237,6 +244,7 @@
 			<input type='submit' value='Edit Profile' name='edit' class='button'/>
 			{/if}
 		{/if}
+		<input class="button" type="button" onclick="ajaxLightbox('/MyResearch/AJAX?method=getPinUpdateForm',false,false,'400px',false,'250px');return false;" value="Modify PIN Number"/>
 		</form>
 		{/if}
 	</div>

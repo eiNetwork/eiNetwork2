@@ -11,7 +11,7 @@
     <div id="left-bar">
 	<div class="sort">
 	    <div id="sortLabel">
-		{translate text='Sort by'}
+		{translate text='Sort by'} <span><img class="qtip-sort-by-checked" style="float:left" src="/images/help_icon.png" /></span>
 	    </div>
 	    <div class="sortOptions">
 		<select name="accountSort" id="sort" onchange="changeAccountSort($(this).val());">
@@ -29,10 +29,7 @@
     {if $user->cat_username}
 	{if $transList}
 	<div class="new-alert-box-container">
-		<h2>{translate text='Checked Out Items'}</h2>
-		<ul class="new-alert-box">
-			<li>We are receiving reports about some users not receiving email notices for upcoming due dates, hold pickups, or overdue items.  You may wish to check My Account or contact your local library for this information.   Please contact your email provider if you believe you are not receiving these notices.</li>
-		</ul>
+		<h2>{translate text='Renew Items'}</h2>
 	</div>
 	    
 	<form id="renewForm" action="{$path}/MyResearch/CheckedOut">
@@ -41,7 +38,7 @@
 		<h3>{translate text='Physical Checked Out Items'}</h3>
 		{if $patronCanRenew}
 			<div class="item_renew" style="text-align:right; padding-right:25px; padding-bottom:10px;" >
-			<a href="#" onclick="return renewSelectedTitles();" class="button"> Renew Selected Items</a>
+			<a href="#" onclick="return renewSelectedTitles();" class="button"> Renew Selected Items</a> <img class="qtip-checked-out" src="/images/help_icon.png" />
 			</div>
 		{else}
 		    <font color="red"><b>Our apologies, you cannot renew items because {$renewalBlockReason}.  Please visit your local library to ensure access to all online service.  </a></b></font>
@@ -355,7 +352,7 @@
 		<div class="item_renew">
 		{if $patronCanRenew}
 			<div class="item_renew" style="text-align:right; padding-right:5px; padding-top:15px;" >
-			<a href="#" onclick="return renewSelectedTitles();" class="button"> Renew Selected Items</a>
+			<a href="#" onclick="return renewSelectedTitles();" class="button"> Renew Selected Items</a> <img class="qtip-checked-out" src="/images/help_icon.png" />
 			</div>
 		{else}
 		    <font color="red"><b>Our apologies, you cannot renew items because {$renewalBlockReason}.  Please visit your local library to ensure access to all online service.  </a></b></font>
@@ -418,9 +415,9 @@
 					{if $record.expiresOn}
 					    Expires on&nbsp;{$record.expiresOn|date_format}
 					{/if}
-					<input class="button" type="button" value="Download" onclick="DownloadCheckedoutOverdrive({$record.recordId}{if $record.formatSelected},'{$record.selectedFormat.format}'{/if})"/>
+					<input class="button" type="button" value="Download" onclick="DownloadCheckedoutOverdrive({$record.recordId}{if $record.formatSelected},'{$record.selectedFormat.format}'{/if})"/><img class="qtip-od-download" src="/images/help_icon.png" />
 					{if $record.overdriveRead == true}
-					<input class="button" type="button" value="Read" onclick="downloadOverDriveItem('{$record.overDriveId}','ebook-overdrive','read')"/>
+					<input class="button" type="button" value="Read" onclick="downloadOverDriveItem('{$record.overDriveId}','ebook-overdrive','read')"/><img class="qtip-od-read" src="/images/help_icon.png" />
 					{/if}
 				</div>
 			</div>

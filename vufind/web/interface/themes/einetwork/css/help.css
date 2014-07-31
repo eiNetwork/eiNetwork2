@@ -1,4 +1,4 @@
-body {
+.help-content {
     font-family: Arial, Helvetica;
     font-size: 10pt;
 }
@@ -6,31 +6,33 @@ body {
 ul.HelpMenu {
     float: left;
     width: 150px;
-    background-color: #FFFFCC;
+    background-color: #F0F0F0;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-radius: 5px;
+   
 }
 
-	
-}
-
-dl.content {
+dl.help-content {
     border-left: solid 1px #999999;
     /*margin-left: 190px;*/
     padding-left: 10px;
     height: 430px;
     width: 390px;
     overflow: auto;
+   
 }
 
-dl dt {
+dl.help dt {
    font-weight: bold;
 }
 
-dl dd {
+dl.help dd {
     padding: 0px;
     margin: 2px 0px 2px 10px;
 }
 
-pre {
+pre.help {
     padding: 10px;
     margin: 10px;
     background-color: #EEEEEE;
@@ -55,4 +57,45 @@ pre {
     margin-left: 1em;
 }
 
+h2.help {
+	font-family: "Helvetica Neue Light", Helvetica, Sans-Serif;
+	text-transform: uppercase;
+	margin-bottom:10px;
+	margin-top: 10px;
+	font-size: 14px;
+	
+}
 
+a.help:link,
+a.help-link:link {
+	font-family: "Helvetica Neue Light", Helvetica, Sans-Serif;
+	color: #3366FF;
+	text-decoration:none;
+	font-weight:bold;
+}
+
+a.help:visited,
+a.help-link:visited {
+	font-family: "Helvetica Neue Light", Helvetica, Sans-Serif;
+	color: #3366FF;
+	text-decoration:none;
+	font-weight:bold;
+}
+a.help:hover,
+a.help-link:hover {
+	font-family: "Helvetica Neue Light", Helvetica, Sans-Serif;
+	color: #3366FF;
+	text-decoration:none;
+	font-weight:bold;	
+}
+a.help:active,
+a.help-link:active {
+	font-family: "Helvetica Neue Light", Helvetica, Sans-Serif;
+	color: #3366FF;
+	text-decoration:none;
+	font-weight:bold;
+}
+
+.bold {
+	font-weight: bold;
+}
