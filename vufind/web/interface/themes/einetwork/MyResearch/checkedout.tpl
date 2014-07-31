@@ -11,7 +11,7 @@
     <div id="left-bar">
 	<div class="sort">
 	    <div id="sortLabel">
-		{translate text='Sort by'}<span><img class="qtip-sort-by-checked" style="float:left" src="/images/help_icon.png" /></span>
+		{translate text='Sort by'} <span><img class="qtip-sort-by-checked" style="float:left" src="/images/help_icon.png" /></span>
 	    </div>
 	    <div class="sortOptions">
 		<select name="accountSort" id="sort" onchange="changeAccountSort($(this).val());">
@@ -41,7 +41,7 @@
 		<h3>{translate text='Physical Checked Out Items'}</h3>
 		{if $patronCanRenew}
 			<div class="item_renew" style="text-align:right; padding-right:25px; padding-bottom:10px;" >
-			<a href="#" onclick="return renewSelectedTitles();" class="button"> Renew Selected Items</a>
+			<a href="#" onclick="return renewSelectedTitles();" class="button"> Renew Selected Items</a> <img class="qtip-checked-out" src="/images/help_icon.png" />
 			</div>
 		{else}
 		    <font color="red"><b>Our apologies, you cannot renew items because {$renewalBlockReason}.  Please visit your local library to ensure access to all online service.  </a></b></font>
@@ -355,7 +355,7 @@
 		<div class="item_renew">
 		{if $patronCanRenew}
 			<div class="item_renew" style="text-align:right; padding-right:5px; padding-top:15px;" >
-			<a href="#" onclick="return renewSelectedTitles();" class="button"> Renew Selected Items</a>
+			<a href="#" onclick="return renewSelectedTitles();" class="button"> Renew Selected Items</a> <img class="qtip-checked-out" src="/images/help_icon.png" />
 			</div>
 		{else}
 		    <font color="red"><b>Our apologies, you cannot renew items because {$renewalBlockReason}.  Please visit your local library to ensure access to all online service.  </a></b></font>

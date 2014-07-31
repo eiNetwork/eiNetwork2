@@ -149,7 +149,7 @@
 				<table>
 				<tr style="font-weight: bolder">
 					<td>{translate text='Phone Number'}</td>
-					<td>{translate text='Email'}<span><img class="qtip-email help-icon" style="vertical-align:middle" src="/images/help_icon.png" /></span></td>
+					<td>{translate text='Email'}<span><img class="qtip-email help-icon" style="margin-top:-10px" src="/images/help_icon.png" /></span></td>
 				</tr>
 				<tr>
 					<td>

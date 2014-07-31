@@ -6,7 +6,7 @@
         <hr />
         <li><a class="help" href="#BookCart">Using the Book Cart</a></li>
         <li><a class="help" href="#PreferredLibraries">Preferred Libraries</a></li>
-        <li><a class="help" href="#RenewingItems">Renewing Items</a></li>
+        <li><a class="help" href="#RenewItems">Renewing Items</a></li>
         <li><a class="help" href="#FreezingRequests">Freezing Requests</a></li>
         <li><a class="help" href="#PayingFines">Paying Fines</a></li>
     </ul>
@@ -71,7 +71,10 @@
       
       <dd>
       
-        <p>Need Copy</p>
+        <p>If you owe more than $2.00, you can use a Visa, Master Card or Discover Card to pay fines and replacement fees online.</p>
+        <p>When you log in to My account, you will receive a pop-up notification in the upper right hand corner letting you know that you owe fines.  The notice includes a button labeled “Pay Fine”.  Clicking that button redirects you to the Classic Catalog (the old library catalog) where will be asked to log in again before you can make a payment.</p>
+        <p><a href= “https://catalog.einetwork.net/screens/helpfinepayment.html”> Click here </a> for instructions on how to pay fines in the Classic Catalog.</p>
+
 
         
       </dd>

@@ -51,7 +51,7 @@
             <ul>
                 <li><a class="help-contents-hash" href="/Help/Home?topic=myaccount#BookCart">Using the Book Cart</a></li>
                 <li><a class="help-contents-hash" href="/Help/Home?topic=myaccount#PreferredLibraries">Preferred Libraries</a></li>
-                <li><a class="help-contents-hash" href="/Help/Home?topic=myaccount#RenewingItems">Renewing Items</a></li>
+                <li><a class="help-contents-hash" href="/Help/Home?topic=myaccount#RenewItems">Renewing Items</a></li>
                 <li><a class="help-contents-hash" href="/Help/Home?topic=myaccount#FreezingRequests">Freezing Requests</a></li>
                 <li><a class="help-contents-hash" href="/Help/Home?topic=myaccount#PayingFines">Paying Fines</a></li>
             </ul>
