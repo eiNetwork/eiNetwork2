@@ -1,7 +1,7 @@
 <div class="help-content">
   <h1 class="help">Help - Online Content</h1>
   <ul class="HelpMenu">
-  <li><a class="help-link" href="/Help/Home?topic=contents">Contents</a></li>
+  <li><a class="help-link" href="/Help/Home?topic=contents"><< Back to Contents</a></li>
   <hr />
   <li><a class="help" href="#OnlineContent">Online Content</a>
         <ul>
@@ -26,7 +26,7 @@
       <p class="bold help">OverDrive eBooks, Audiobooks, and online Videos:</p> 
     </dt>
       <dd>
-        <p class="help">Click the <span class="bold">Checkout Now</span> button to the right of the item information on the search results or item detail page.  If you are not already logged in to My Account, you will be prompted to enter your library card number and PIN.  If your checkout has been successful, a pop-up will appear letting you know that the item has been checked out and available for download from your <span class="bold">Checked Out Items</span> page.  Click the link provided to navigate to this page immediately or, if you would prefer to continue browsing, you can go to this page at any time by clicking the <span class="bold">Checked Out Items</span> link in the right hand navigation panel. </p>
+        <p class="help">Click the <span class="bold">Checkout Now</span> button to the right of the item information on the search results or item detail page.  If you are not already logged in to My Account, you will be prompted to enter your library card number and PIN.  If your checkout has been successful, a pop-up will appear letting you know that the item has been checked out and available for download from your <span class="bold">Renew Items</span> page.  Click the link provided to navigate to this page immediately or, if you would prefer to continue browsing, you can go to this page at any time by clicking the <span class="bold">Renew Items</span> link in the right hand navigation panel. </p>
       </dd>
         
       <dt id="OneClick">

@@ -71,8 +71,8 @@
                 <li><a class="help-contents-hash" href="/Help/Home?topic=advsearch#SearchGroups">Search Groups</a></li>
             </ul>
         </li>
-        <li>
+        <!-- <li>
             <a class="help-link" href="/Help/Home?topic=faq">FAQ</a>
-        </li>
+        </li> -->
     </ol>
 </div>

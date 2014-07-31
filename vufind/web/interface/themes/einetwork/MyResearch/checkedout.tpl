@@ -29,10 +29,7 @@
     {if $user->cat_username}
 	{if $transList}
 	<div class="new-alert-box-container">
-		<h2>{translate text='Checked Out Items'}</h2>
-		<ul class="new-alert-box">
-			<li>We are receiving reports about some users not receiving email notices for upcoming due dates, hold pickups, or overdue items.  You may wish to check My Account or contact your local library for this information.   Please contact your email provider if you believe you are not receiving these notices.</li>
-		</ul>
+		<h2>{translate text='Renew Items'}</h2>
 	</div>
 	    
 	<form id="renewForm" action="{$path}/MyResearch/CheckedOut">
@@ -418,9 +415,9 @@
 					{if $record.expiresOn}
 					    Expires on&nbsp;{$record.expiresOn|date_format}
 					{/if}
-					<input class="button" type="button" value="Download" onclick="DownloadCheckedoutOverdrive({$record.recordId}{if $record.formatSelected},'{$record.selectedFormat.format}'{/if})"/>
+					<input class="button" type="button" value="Download" onclick="DownloadCheckedoutOverdrive({$record.recordId}{if $record.formatSelected},'{$record.selectedFormat.format}'{/if})"/><img class="qtip-od-download" src="/images/help_icon.png" />
 					{if $record.overdriveRead == true}
-					<input class="button" type="button" value="Read" onclick="downloadOverDriveItem('{$record.overDriveId}','ebook-overdrive','read')"/>
+					<input class="button" type="button" value="Read" onclick="downloadOverDriveItem('{$record.overDriveId}','ebook-overdrive','read')"/><img class="qtip-od-read" src="/images/help_icon.png" />
 					{/if}
 				</div>
 			</div>

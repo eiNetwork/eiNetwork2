@@ -2,7 +2,7 @@
     <h1>Help - Advanced Searching Tips</h1>
 
     <ul class="HelpMenu">
-        <li><a class="help-link" href="/Help/Home?topic=contents">Contents</a></li>
+        <li><a class="help-link" href="/Help/Home?topic=contents"><< Back to Contents</a></li>
         <hr />
         <li><a class="help" href="#SearchFields">Search Fields</a></li>
         <li><a class="help" href="#SearchGroups">Search Groups</a></li>

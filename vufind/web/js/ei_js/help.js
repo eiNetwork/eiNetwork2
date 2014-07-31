@@ -219,6 +219,19 @@ $( document ).ready(function() {
 		});
 	});
 
+	$('#qtip-link-od').live('click', function(e){
+		var hash = this.hash;
+		hash = hash.replace('#','');
+	    e.preventDefault();
+	    $("#dialog").html("");
+		$("#dialog").dialog("option", "title", "Loading...").dialog("open");
+		$("#dialog").load(this.href, function() {
+			$(this).dialog("option", "title", $(this).find("h1").text());
+			$(this).find("h1").remove();
+			document.getElementById(hash).scrollIntoView(true);
+		});
+	});
+
 	$('.qtip-retain-filters').qtip({ // Grab some elements to apply the tooltip to
 	    content: {
 	        text: 'Allows you to keep the same filters selected while performing another search.'
@@ -314,7 +327,7 @@ $( document ).ready(function() {
 	})
 	$('.qtip-preferred-libraries').qtip({ // Grab some elements to apply the tooltip to
 	    content: {
-	        text: 'Specifying Preferred Libraries sets your default pickup location for items requested online.<a id="qtip-link-building" href="/Help/Home?topic=myaccount#Preferred Libraries">Read More...</a>'
+	        text: 'Specifying Preferred Libraries sets your default pickup location for items requested online.<a id="qtip-link-building" href="/Help/Home?topic=myaccount#PreferredLibraries">Read More...</a>'
 	    },
 	    hide: {
 	        delay: 1000
@@ -445,6 +458,30 @@ $( document ).ready(function() {
 	$('.qtip-request-update').qtip({ // Grab some elements to apply the tooltip to
 	    content: {
 	        text: 'Clicking Update Selected updates your Requested Items page to reflect any changes you indicated by selecting the Freeze or Cancel checkboxes next to items in your list. <a href="">Read more...</a>'
+	    },
+	    hide: {
+	        delay: 1000
+	    },
+	    style: {
+	        classes: 'qtip-rounded'
+	    }
+	})
+
+	$('.qtip-od-download').qtip({ // Grab some elements to apply the tooltip to
+	    content: {
+	        text: 'Click Download to download your eContent checked out items. <a id="qtip-link-od" href="/Help/Home?topic=onlinecontent">Read more...</a>'
+	    },
+	    hide: {
+	        delay: 1000
+	    },
+	    style: {
+	        classes: 'qtip-rounded'
+	    }
+	})
+
+	$('.qtip-od-read').qtip({ // Grab some elements to apply the tooltip to
+	    content: {
+	        text: 'Click Read to read your eContent checked out items online. <a id="qtip-link-od" href="/Help/Home?topic=onlinecontent">Read more...</a>'
 	    },
 	    hide: {
 	        delay: 1000

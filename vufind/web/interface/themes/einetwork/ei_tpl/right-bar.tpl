@@ -94,9 +94,6 @@
         <div id="account-settings">
             <a onclick='getAccountSetting()'>Update Profile</a>
         </div>
-	<div id="first-time">
-            <a href="/MyResearch/Firsttime">First Time Using the Catalog?</a>
-        </div>
 	<div id="latest-updates">
             <a href="/MyResearch/Latestupdates">Latest Website Updates</a>
         </div>

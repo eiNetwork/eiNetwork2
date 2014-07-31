@@ -183,7 +183,7 @@
 			<div id="preferred_alternative" class="profile_row">
 				<table>
 				<tr style="font-weight: bolder">
-					<td>{translate text='Preferred Library'}</td>
+					<td>{translate text='Preferred Library'}<span><img class="qtip-preferred-libraries help-icon" style="margin-top:-10px" src="/images/help_icon.png" /></span></td>
 					<td>{translate text='Alternative Library'}</td>
 				</tr>
 				<tr>
