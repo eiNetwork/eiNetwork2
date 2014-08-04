@@ -131,7 +131,7 @@ Author:
     - author:
        - [and, 400]
 
-Contributor:
+Author/Artist/Contributor:
   QueryFields:
     - author:
        - [and, 400]
