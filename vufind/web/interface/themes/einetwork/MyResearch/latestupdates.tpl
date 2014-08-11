@@ -23,6 +23,7 @@
             <ol class="decimal">
                 <li>We've added a popup help section to help users with Searching, Filters and MyAccount funcitonality.</li>
                 <li>Site wide tool tips with links to new Help Section.</li>
+                <li>After user feeback, we have updated the right panel navigation to highlight MyAccount functionality, such as Renewing items.</li>
                 <li>Misc. bug fixes:
                     <ol class="alpha">
                         <li>Help Improve search performance.</li>
