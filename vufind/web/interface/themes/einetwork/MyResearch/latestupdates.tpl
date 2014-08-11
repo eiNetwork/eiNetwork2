@@ -20,9 +20,9 @@
             Release date 8/13/2014
             <ol class="decimal">
                 <li>Improving the user’s ability to find materials in the library.</li>
-                <li>We've added a popup help section to help users with Searching, Filters and MyAccount funcitonality.</li>
+                <li>We've added a popup help section, with documentation on searching, using filters and MyAccount functionality.</li>
                 <li>Site wide tool tips with links to new Help Section.</li>
-                <li>Improved the site wide language and user instructions. After user feeback, we have updated the right panel navigation to highlight MyAccount functionality, such as Renewing items.</li>
+                <li>Improved the site wide language and user instructions. After user feedback, we have updated the right panel navigation to highlight MyAccount functionality, such as Renewing items.</li>
                 <li>Misc. bug fixes:
                     <ol class="alpha">
                         <li>Help improve search performance.</li>
