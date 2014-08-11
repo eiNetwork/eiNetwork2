@@ -10,23 +10,22 @@
             <h2><span class="bold">Release version 4.x</span></h2>
             Our current development is focused on the following features and enhancements:
             <ol class="decimal">
-                <li>Improving the user’s ability to find materials in the library.</li>
                 <li>Improving user accessibility to enhanced content.</li>
                 <li>Enabling the ability for users to email search results.</li>
                 <li>Creating shortcuts to popular filters and lists.</li>
-                <li>Improving the site wide language and user instructions.</li>
             </ol>
         </div>
         <div class="releases">
             <h2><span class="bold">Current Release version 4.1</span></h2>
             Release date 8/13/2014
             <ol class="decimal">
+                <li>Improving the user’s ability to find materials in the library.</li>
                 <li>We've added a popup help section to help users with Searching, Filters and MyAccount funcitonality.</li>
                 <li>Site wide tool tips with links to new Help Section.</li>
-                <li>After user feeback, we have updated the right panel navigation to highlight MyAccount functionality, such as Renewing items.</li>
+                <li>Improved the site wide language and user instructions. After user feeback, we have updated the right panel navigation to highlight MyAccount functionality, such as Renewing items.</li>
                 <li>Misc. bug fixes:
                     <ol class="alpha">
-                        <li>Help Improve search performance.</li>
+                        <li>Help improve search performance.</li>
                     </ol>
                 </li>
             </ol>
