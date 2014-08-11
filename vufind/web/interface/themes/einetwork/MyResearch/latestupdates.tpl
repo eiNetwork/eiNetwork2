@@ -18,7 +18,22 @@
             </ol>
         </div>
         <div class="releases">
-            <h2><span class="bold">Current Release version 4.0</span></h2>
+            <h2><span class="bold">Current Release version 4.1</span></h2>
+            Release date 8/13/2014
+            <ol class="decimal">
+                <li>We've added a popup help section to help users with Searching, Filters and MyAccount funcitonality.</li>
+                <li>Site wide tool tips with links to new Help Section.</li>
+                <li>After user feeback, we have updated the right panel navigation to highlight MyAccount functionality, such as Renewing items.</li>
+                <li>Misc. bug fixes:
+                    <ol class="alpha">
+                        <li>Help Improve search performance.</li>
+                    </ol>
+                </li>
+            </ol>
+        </div>
+        <div class="releases">
+            <h2><span class="bold">Previous Releases</span></h2>
+            <h2><span class="bold">Release version 4.0</span></h2>
             Release date 5/30/2014
             <ol class="decimal">
                 <li>Improved the initial time for users to login to My Account.</li>
@@ -30,7 +45,6 @@
             </ol>
         </div>
         <div class="releases">
-            <h2><span class="bold">Previous Releases</span></h2>
             <h2><span class="bold">Release version 3.3</span></h2>
             Release date 4/30/2014
             <ol class="decimal">
