@@ -69,10 +69,10 @@
             <img src="/interface/themes/einetwork/images/shopping_cart.png"  alt="cart" style="vertical-align:middle;margin-left:2px"/>
             <span id="cart-description" style="vertical-align:middle"></span>
         </div>
-        <div id="blank">&nbsp;</div>
-        <input type="button" class="button" id="view_cart_button" onclick="getViewCart()" value="View Cart">
+
+        <input type="button" class="button" id="view_cart_button" onclick="getViewCart()" value="View Cart"><span><img class="qtip-book-cart help-icon" src="/images/help_icon.png" /></span>
     </div>
-    
+    <div id="blank">&nbsp;</div>  
     <div class="separator"><hr/></div>
     
     <div class="account-links">
@@ -80,25 +80,25 @@
             <a onclick='getWishList()'>My Lists</a>
         </div>
 	 <div id="my-item">
-            <a onclick='getCheckedOutItem()'>Checked Out Items <span id="my-item-PlaceHolder"></span></a>
+            <a onclick='getCheckedOutItem()'>Renew Items <span id="my-item-PlaceHolder"></span></a><span><img class="qtip-checked-out help-icon" style="vertical-align:middle" src="/images/help_icon.png" /></span>
         </div>
 	<div id="my-request">
-          <a onclick='getRequestedItem()' >Requested Items<span id="my-ruest-item-placeHolder"></span></a>
+          <a onclick='getRequestedItem()' >Update Requests<span id="my-ruest-item-placeHolder"></span></a>
 	</div>
 	<div id="reading-history">
             <a onclick='getReadingHistory()' >Reading History</a>
         </div>
         <div id="history">
-            <a href="/Search/History">Saved Searches</a>
+            <a href="/Search/History">Save Searches</a>
         </div>
         <div id="account-settings">
-            <a onclick='getAccountSetting()'>Account Settings</a>
-        </div>
-	<div id="first-time">
-            <a href="/MyResearch/Firsttime">First Time Using the Catalog?</a>
+            <a onclick='getAccountSetting()'>Update Profile</a>
         </div>
 	<div id="latest-updates">
             <a href="/MyResearch/Latestupdates">Latest Website Updates</a>
+        </div>
+	<div id="latest-updates">
+            <a id="help-contents-link" href="/Help/Home?topic=contents">Catalog Help</a>
         </div>
     </div>
 
@@ -114,21 +114,31 @@
     <script type="text/javascript">
 	$("#prefer-branch").ready(function(){
 	    $.ajax({
-		type: 'get',
-                url: "/MyResearch/AJAX?method=getLocations",
-		dataType:"html",
-		success: function(data) {
-		    $("#prefer-branch").html(data);
-			 if(data){
-				$("#topBar").css("display","block");
-			}
-		},
-		error: function() {
-			$('#popupbox').html(failMsg);
-			setTimeout("hideLightbox();", 3000);
-		}
-	    });
-	    
+			type: 'get',
+            url: "/MyResearch/AJAX?method=getLocations",
+			dataType:"html",
+			success: function(data) {
+			    $("#prefer-branch").html(data);
+				 if(data){
+					$("#topBar").css("display","block");
+				}
+				$('.qtip-preferred-libs').qtip({ // Grab some elements to apply the tooltip to
+				    content: {
+				        text: 'Specifying Preferred Libraries sets your default pickup location for items requested online. <a id="qtip-link-preferred-libs" href="/Help/Home?topic=myaccount#PreferredLibraries">Read More...</a>'
+				    },
+				    hide: {
+				        delay: 1000
+				    },
+				    style: {
+				        classes: 'qtip-rounded'
+				    }
+				})
+			},
+			error: function() {
+				$('#popupbox').html(failMsg);
+					setTimeout("hideLightbox();", 3000);
+				}
+		    });
 	    })
     </script>
     {/literal}
