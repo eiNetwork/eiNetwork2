@@ -97,6 +97,8 @@
 
     {css filename="jquery.qtip.min.css"}
 
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+
   </head>
   
   <body class="{$module} {$action}">

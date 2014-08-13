@@ -4,7 +4,13 @@ $( document ).ready(function() {
 			autoOpen: false,
 		modal: true,
 		width: 620,
-		height: 520,
+		height: 570,
+		buttons: [{
+			text: "Close",
+			click: function(){
+				$( this ).dialog( "close" );
+			}
+		}]
 	});
 
 	$('#help-contents-link').click(function(e){

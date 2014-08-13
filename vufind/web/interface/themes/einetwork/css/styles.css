@@ -3153,3 +3153,11 @@ ol.helpcontent > li:before {
     content: counter(li-counter);
     counter-increment: li-counter;
 }
+
+.accordion-title {
+	padding:4px;
+}
+
+#accordion {
+	width:660px;
+}
