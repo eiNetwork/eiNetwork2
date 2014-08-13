@@ -5,6 +5,24 @@
         <br>
         <h3>We’re listening to you.   The ongoing changes and planned enhancements are driven by the comments and feedback you submit when completing the new catalog survey.  We want to continue to hear from you and we appreciate your feedback.</h3>
         <br>
+        
+        <div class="releases">
+            <h2><span class="bold">Current Release version 4.1</span></h2>
+            Release date 8/13/2014
+            <ol class="decimal">
+                <li>Added a popup help section, with documentation on searching, using filters and My Account functions.</li>
+                <li>Added site wide tool tips with links to new Help Section.</li>
+                <li>Improved the site wide language and user instructions. Based on user feedback, we have updated the right panel navigation to highlight MyAccount functionality, such as Renewing items.</li>
+                <li>Miscellaneous bug fixes:
+                    <ol class="alpha">
+                        <li>Fixed bug with eContent items that were not displaying the full title.</li>
+                        <li>Restored location information to search results.</li>
+                        <li>Fixed a bug concerning online resources links that were not very descriptive.</li>
+                        <li>Fixed a bug with holdings information that was not getting updated correctly.</li>
+                    </ol>
+                </li>
+            </ol>
+        </div>
         <div class="releases">
             <h2><span class="bold">Upcoming Release</span></h2>
             <h2><span class="bold">Release version 4.x</span></h2>
@@ -15,21 +33,7 @@
                 <li>Creating shortcuts to popular filters and lists.</li>
             </ol>
         </div>
-        <div class="releases">
-            <h2><span class="bold">Current Release version 4.1</span></h2>
-            Release date 8/13/2014
-            <ol class="decimal">
-                <li>Improving the user’s ability to find materials in the library.</li>
-                <li>We've added a popup help section, with documentation on searching, using filters and MyAccount functionality.</li>
-                <li>Site wide tool tips with links to new Help Section.</li>
-                <li>Improved the site wide language and user instructions. After user feedback, we have updated the right panel navigation to highlight MyAccount functionality, such as Renewing items.</li>
-                <li>Misc. bug fixes:
-                    <ol class="alpha">
-                        <li>Help improve search performance.</li>
-                    </ol>
-                </li>
-            </ol>
-        </div>
+        
         <div class="releases">
             <h2><span class="bold">Previous Releases</span></h2>
             <h2><span class="bold">Release version 4.0</span></h2>
