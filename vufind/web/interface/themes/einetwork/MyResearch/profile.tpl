@@ -72,11 +72,6 @@
 
 
 	<div id="main-content">
-		<div class="site-message">
-			<ul>
-				<li><p class="message">We are currently experiencing issues with our Telephone Renewal System. You can login into MyAccount to renew your books, or alternatively call your local library.</p></li>
-			</ul>
-		</div>
 		{if $profileUpdateErrors}
 		<div class="error">{$profileUpdateErrors}</div>
 		{/if}

@@ -23,11 +23,6 @@
 	</div>
     </div>
     <div id="main-content">
-    	<div class="site-message">
-			<ul>
-				<li><p class="message">We are currently experiencing issues with our Telephone Renewal System. You can renew your items below, or alternatively call your local library.</p></li>
-			</ul>
-		</div>
     	<div class="site-message site-message-search">
 			<ul class="message">
 				<li>

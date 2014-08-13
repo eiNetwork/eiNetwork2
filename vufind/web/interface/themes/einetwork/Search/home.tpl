@@ -106,11 +106,6 @@
 	<div class="loginHome-left"></div>
 
 	<div class="loginHome-center">
-		<div class="site-message">
-			<ul>
-				<li><p class="message">We are currently experiencing issues with our Telephone Renewal System. You can login into MyAccount to renew your books, or alternatively call your local library.</p></li>
-			</ul>
-		</div>
 		<div class="startMessage">
 			Get started by entering your search above.
 		</div>
