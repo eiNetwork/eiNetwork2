@@ -34,8 +34,8 @@
                                     <input type="button" onclick="ajaxLightbox('/List/ListEdit?id=&amp;source=VuFind&amp;lightbox2',false,false,'400px',false,'200px'); return false;" class="button navmenu dd" value="Create New List" style="width:180px"/>
                             </dd>
                             <dd>
-                            	<input type="button" class="button yellow" onclick="window.location = '/List/Import';" class="button navmenu dd" value="Import List From Old Catalog" style="width:auto"/>
-                            </dd>
+<!--                            	<input type="button" class="button yellow" onclick="window.location = '/List/Import';" class="button navmenu dd" value="Import List From Old Catalog" style="width:auto"/>
+-->                            </dd>
                      </dl>
             </div>
 	{/if}
@@ -46,7 +46,7 @@
 	<input type="hidden" value="{$wishListID}" id="listId"/>
     <div id="searchInfo">
 	<div class="resulthead">
-            <div class="subPageTitle" style="height:40px;">You dont have any lists. <br> <p style="color:red">You can import your lists from the old catalog by clicking on the Import list from old catalog button in the left hand column.</p></div>
+            <div class="subPageTitle" style="height:40px;">You dont have any lists. <br> <!--<p style="color:red">You can import your lists from the old catalog by clicking on the Import list from old catalog button in the left hand column.</p>--></div>
             {* <div>Create a new List</div> *} 
             {*<div><a href="/List/Import">Import an existing list from your Classic Catalog account.</a></div>*}
 	</div>
