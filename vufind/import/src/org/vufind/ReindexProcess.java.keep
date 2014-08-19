@@ -19,7 +19,7 @@ import org.econtent.ExtractEContentFromMarc;
 import org.ini4j.Ini;
 import org.ini4j.InvalidFileFormatException;
 import org.ini4j.Profile.Section;
-//import org.strands.StrandsProcessor;  not  used BA+ 08/13/2014
+import org.strands.StrandsProcessor;
 
 
 /**
@@ -57,8 +57,6 @@ public class ReindexProcess {
 	private static boolean exportOPDSCatalog = true;
 	private static boolean updateAlphaBrowse = true;
 	private static String idsToProcess = null;
-	private static boolean DeleteERecordsinDBNotinMarcOrOD = false;
-
 	
 	//Database connections and prepared statements
 	private static Connection vufindConn = null;
@@ -66,8 +64,6 @@ public class ReindexProcess {
 	
 	private static PreparedStatement updateCronLogLastUpdatedStmt;
 	private static PreparedStatement addNoteToCronLogStmt;
-	
-	
 	
 	/**
 	 * Starts the reindexing process
@@ -112,16 +108,13 @@ public class ReindexProcess {
 				
 				//Process eContent records that have been saved to the database. 
 				processEContentRecords(recordProcessors);
-								
+				
 				//Do processing of resources as needed (for extraction of resources).
 				processResources(recordProcessors);
-				
-				
 				
 				for (IRecordProcessor processor : recordProcessors){
 					processor.finish();
 				}
-				
 			}
 		} catch (Error e) {
 			logger.error("Error processing reindex ", e);
@@ -233,17 +226,12 @@ public class ReindexProcess {
 			ExtractEContentFromMarc econtentExtractor = new ExtractEContentFromMarc();
 			if (econtentExtractor.init(configIni, serverName, reindexLogId, vufindConn, econtentConn, logger)){
 				supplementalProcessors.add(econtentExtractor);
-				if ( isDeleteERecordsinDBNotinMarcOrOD() ) {
-					int delRecs = econtentExtractor.deleteOverDriveTitlesInDb();
-					logger.debug("deleteOverDriveTitlesInDb  Not in Overdrive TEST - " + delRecs);
-				}
 			}else{
 				logger.error("Could not initialize econtentExtractor");
 				System.exit(1);
 			}
 		}
-		//Strands not used BA++ 8/13/2014
-		/*if (exportStrandsCatalog){
+		if (exportStrandsCatalog){
 			addNoteToCronLog("Initializing StrandsProcessor");
 			StrandsProcessor strandsProcessor = new StrandsProcessor();
 			if (strandsProcessor.init(configIni, serverName, reindexLogId, vufindConn, econtentConn, logger)){
@@ -252,7 +240,7 @@ public class ReindexProcess {
 				logger.error("Could not initialize strandsProcessor");
 				System.exit(1);
 			}
-		}*/
+		}
 		if (updateAlphaBrowse){
 			addNoteToCronLog("Initializing AlphaBrowseProcessor");
 			AlphaBrowseProcessor alphaBrowseProcessor = new AlphaBrowseProcessor();
@@ -265,7 +253,7 @@ public class ReindexProcess {
 		}
 		if (exportOPDSCatalog){
 			// 14) Generate OPDS catalog
-		}				
+		}
 		
 		return supplementalProcessors;
 	}
@@ -395,7 +383,7 @@ public class ReindexProcess {
 			logger.info("Processing exported marc records");
 			addNoteToCronLog("Processing exported marc records");
 			marcProcessor.processMarcFiles(marcProcessors, logger);
-			}
+		}
 	}
 
 	private static void runExportScript() {
@@ -546,11 +534,6 @@ public class ReindexProcess {
 		if (updateAlphaBrowseStr != null){
 			updateAlphaBrowse = Boolean.parseBoolean(updateAlphaBrowseStr);
 		}
-		String DeleteERecordsinDBNotinMarcOrODStr = configIni.get("Reindex", "DeleteERecordsinDBNotinMarcOrOD");
-		if (DeleteERecordsinDBNotinMarcOrODStr != null){
-			loadEContentFromMarc = Boolean.parseBoolean(DeleteERecordsinDBNotinMarcOrODStr);
-		}
-		
 		
 		logger.info("Setting up database connections");
 		//Setup connections to vufind and econtent databases
@@ -617,7 +600,7 @@ public class ReindexProcess {
 		}
 		long elapsedTime = endTime - startTime;
 		float elapsedMinutes = (float)elapsedTime / (float)(60000); 
-		logger.info("Time elapsed: " + elapsedMinutes + " minutes");
+		logger.info("Time elpased: " + elapsedMinutes + " minutes");
 		
 		try {
 			PreparedStatement finishedStatement = vufindConn.prepareStatement("UPDATE reindex_log SET endTime = ? WHERE id = ?");
@@ -676,12 +659,4 @@ public class ReindexProcess {
 		}
 		return ini;
 	}
-	public static Connection getEcontentConn(){
-		return econtentConn;
-	}
-
-	public static boolean isDeleteERecordsinDBNotinMarcOrOD() {
-		return DeleteERecordsinDBNotinMarcOrOD;
-	}
-	
 }

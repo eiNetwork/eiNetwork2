@@ -3610,4 +3610,9 @@ public class MarcRecordDetails {
 		String physicalDescription = getFirstFieldVal("300ab");
 		return physicalDescription;
 	}
+
+	public ArrayList<String> getAuthors() {
+		ArrayList author = null;
+		return author;
+	}
 }

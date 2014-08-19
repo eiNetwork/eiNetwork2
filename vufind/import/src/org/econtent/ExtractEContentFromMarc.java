@@ -72,6 +72,7 @@ public class ExtractEContentFromMarc implements IMarcRecordProcessor, IRecordPro
 	
 	private HashMap<String, EcontentRecordInfo> existingEcontentIlsIds = new HashMap<String, EcontentRecordInfo>();
 	private HashMap<String, EcontentRecordInfo> overDriveTitlesWithoutIlsId = new HashMap<String, EcontentRecordInfo>();
+	private HashMap<String, EcontentRecordInfo>overDriveIdsFromEContent = new HashMap<String, EcontentRecordInfo>();
 	
 	private PreparedStatement createEContentRecord;
 	private PreparedStatement updateEContentRecord;
@@ -99,6 +100,9 @@ public class ExtractEContentFromMarc implements IMarcRecordProcessor, IRecordPro
 	private PreparedStatement addOverDriveAvailability;
 	private PreparedStatement updateOverDriveAvailability;
 	
+	private PreparedStatement getOverdriveEContentRecordExId;
+	private PreparedStatement deleteEContentItemByExternalID;
+	
 	public ProcessorResults results;
 	
 	//Overdrive API information 
@@ -118,7 +122,7 @@ public class ExtractEContentFromMarc implements IMarcRecordProcessor, IRecordPro
 	private HashMap<String, ArrayList<String>> duplicateOverDriveRecordsInMillennium = new HashMap<String, ArrayList<String>>();
 	private HashMap<String, MarcRecordDetails> millenniumRecordsNotInOverDrive = new HashMap<String, MarcRecordDetails>();
 	private HashSet<String> recordsWithoutOverDriveId = new HashSet<String>(); 
-	
+
 	public boolean init(Ini configIni, String serverName, long reindexLogId, Connection vufindConn, Connection econtentConn, Logger logger) {
 		this.logger = logger;
 		//Import a marc record into the eContent core. 
@@ -226,6 +230,8 @@ public class ExtractEContentFromMarc implements IMarcRecordProcessor, IRecordPro
 			getItemsForEContentRecordStmt = econtentConn.prepareStatement("SELECT * FROM econtent_item WHERE recordId = ?", ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
 			getAvailabilityForEContentRecordStmt= econtentConn.prepareStatement("SELECT * FROM econtent_availability WHERE recordId = ?", ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
 			
+			deleteEContentItemByExternalID = econtentConn.prepareStatement("DELETE FROM econtent_item where externalid = ?");
+			
 			PreparedStatement existingEcontentIlsIdsStmt = econtentConn.prepareStatement("SELECT econtent_record.id, ilsId, status, count(econtent_item.id) as numItems from econtent_item RIGHT join econtent_record on econtent_record.id = recordId GROUP by ilsId", ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
 			ResultSet existingEcontentIlsIdsRS = existingEcontentIlsIdsStmt.executeQuery();
 			while (existingEcontentIlsIdsRS.next()){
@@ -256,6 +262,21 @@ public class ExtractEContentFromMarc implements IMarcRecordProcessor, IRecordPro
 				advantageCollectionToLibMap.put(advantageCollectionMapRS.getString(2), advantageCollectionMapRS.getLong(1));
 				libToOverDriveAPIKeyMap.put(advantageCollectionMapRS.getLong(1), advantageCollectionMapRS.getString(3));
 			}
+			
+			//BA++ getOverdriveEContentRecordExId
+			int ctr = 0;
+			PreparedStatement getOverdriveEContentRecordExId = econtentConn.prepareStatement("SELECT econtent_record.id, externalid FROM econtent_record WHERE externalid is not null", ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+			ResultSet OverdriveEContentRecordExId = getOverdriveEContentRecordExId.executeQuery();
+			while (OverdriveEContentRecordExId.next()){
+				EcontentRecordInfo recordInfo = new EcontentRecordInfo();
+				recordInfo.setRecordId(OverdriveEContentRecordExId.getLong(1));
+				recordInfo.setExternalId(OverdriveEContentRecordExId.getString(2));
+				overDriveIdsFromEContent.put(recordInfo.getExternalId(), recordInfo);
+				ctr++;
+			}
+			logger.debug("OverdriveEContentRecordExId "  +  ctr);					
+			
+			
 		} catch (Exception ex) {
 			// handle any errors
 			logger.error("Error initializing econtent extraction ", ex);
@@ -279,6 +300,7 @@ public class ExtractEContentFromMarc implements IMarcRecordProcessor, IRecordPro
 			try {
 				String libraryName = libraryInfo.getString("name");
 				String mainProductUrl = libraryInfo.getJSONObject("links").getJSONObject("products").getString("href");
+				//BA++ builds OverDrive array
 				loadProductsFromUrl(libraryName, mainProductUrl, false);
 				logger.info("loaded " + overDriveTitles.size() + " overdrive titles in shared collection");
 				//Get a list of advantage collections
@@ -307,7 +329,7 @@ public class ExtractEContentFromMarc implements IMarcRecordProcessor, IRecordPro
 			return true;
 		}
 	}
-
+	
 	private void loadProductsFromUrl(String libraryName, String mainProductUrl, boolean isAdvantage) throws JSONException {
 		JSONObject productInfo = callOverDriveURL(mainProductUrl);
 		// Lessa : Added this try/catch block
@@ -898,7 +920,7 @@ public class ExtractEContentFromMarc implements IMarcRecordProcessor, IRecordPro
 	}
 
 	private boolean updateEContentRecordInDb(MarcRecordDetails recordInfo, String cover, Logger logger, String source, String accessType, String ilsId, long eContentRecordId,
-			boolean recordAdded) throws SQLException, IOException {
+			boolean recordUpdated) throws SQLException, IOException {
 		logger.debug("Updating ilsId " + ilsId + " recordId " + eContentRecordId);
 		int curField = 1;
 		updateEContentRecord.setString(curField++, recordInfo.getId());
@@ -945,16 +967,20 @@ public class ExtractEContentFromMarc implements IMarcRecordProcessor, IRecordPro
 		updateEContentRecord.setInt(curField++, recordInfo.hasItemLevelOwnership());
 		updateEContentRecord.setInt(curField++, recordInfo.hasItemLevelOwnership());
 		updateEContentRecord.setString(curField++, Util.getCRSeparatedString(recordInfo.getMappedField("series")));
-		int rowsInserted = updateEContentRecord.executeUpdate();
-		if (rowsInserted != 1){
-			logger.error("Could not update record " + eContentRecordId + " for id " + ilsId + " in the database, number of rows updated was " + rowsInserted);
-			results.incErrors();
-			results.addNote("Error updating econtent record " + eContentRecordId + " for id " + ilsId + " number of rows updated was " + rowsInserted);
-		}else{
-			recordAdded = true;
-			results.incUpdated();
-		}
-		return recordAdded;
+			//BA++ 0 = successful update   else = failed
+			int rowUpdated = updateEContentRecord.executeUpdate();
+			if (rowUpdated == 0){
+				logger.error("Record updated " + eContentRecordId + " for id " + ilsId + " in the database.");
+				recordUpdated = true;
+				results.incUpdated();
+				results.addNote("Record updated " + eContentRecordId + " for id " + ilsId);
+			}else{
+				logger.error("Could not update record " + eContentRecordId + " for id " + ilsId);
+				recordUpdated = false;
+				results.incErrors();
+				results.addNote("Could not update record " + eContentRecordId + " for id " + ilsId);
+			}		
+		return recordUpdated;
 	}
 
 	private long addEContentRecordToDb(MarcRecordDetails recordInfo, String cover, Logger logger, String source, String accessType, String ilsId, long eContentRecordId)
@@ -1679,6 +1705,49 @@ public class ExtractEContentFromMarc implements IMarcRecordProcessor, IRecordPro
 		return eContentRecordId;
 	}
 
+	//BA++ delete from db where no OverDrive record
+	public int deleteOverDriveTitlesInDb(){
+		int ctr = 0;
+		results.addNote("Removing Non-OverDrive titles from econtent_record");
+		logger.debug("overDriveTitles " + overDriveTitles.size());
+		if ( overDriveTitles.size() > 0 )
+		{
+			//Check  overDriveTitles  if empty or small do not run  add if test
+			for (String overDriveId : overDriveIdsFromEContent.keySet()){
+				if ( ctr < 50 )
+				{
+					logger.debug("OverDriveId in deleteOverDriveTitlesInDb "  + overDriveId);				
+					try {
+						if ( ! overDriveTitles.containsKey(overDriveId) ){
+							logger.debug("Deleted econtent_record by external ID " + overDriveId);
+							//removeEContentRecordFromDb(overDriveId);						
+						}				
+					} catch (Exception e) {
+						logger.error("Error processing delete econtent record TEST" + overDriveId , e);
+						results.incErrors();
+						results.addNote("Error processing econtent record TEST" + overDriveId + " " + e.toString());
+					}
+				}
+				else {
+					 break;
+				}
+				ctr++;
+			}
+		}
+		return ctr;
+	}
+
+	private void removeEContentRecordFromDb(String overDriveId) throws SQLException, IOException {
+		try {
+			deleteEContentItemByExternalID.setString(1, overDriveId);
+			deleteEContentItem.executeUpdate();
+		} catch (SQLException e) {
+			logger.info("Failed to delete econtent_record by external ID " + overDriveId);
+			e.printStackTrace();
+		}					
+	}
+	
+	
 	@Override
 	public void finish() {
 		if (overDriveTitles.size() > 0){
@@ -1686,9 +1755,11 @@ public class ExtractEContentFromMarc implements IMarcRecordProcessor, IRecordPro
 			results.saveResults();
 			addOverDriveTitlesWithoutMarcToIndex();
 		}
-		
+	
 		//Make sure that the index is good and swap indexes
 		results.addNote("calling final commit on index");
+		logger.info("calling final commit on index");
+		
 		
 		try {
 			results.addNote("calling final commit on index");
@@ -1699,6 +1770,7 @@ public class ExtractEContentFromMarc implements IMarcRecordProcessor, IRecordPro
 			}
 
 			results.addNote("optimizing econtent2 index");
+			logger.info("optimizing econtent2 index");
 			try {
 				URLPostResponse optimizeResponse = Util.postToURL("http://localhost:" + solrPort + "/solr/econtent2/update/", "<optimize />", logger);
 				if (!optimizeResponse.isSuccess()){
@@ -1711,15 +1783,19 @@ public class ExtractEContentFromMarc implements IMarcRecordProcessor, IRecordPro
 			
 			if (checkMarcImport()){
 				results.addNote("index passed checks, swapping cores so new index is active.");
+				logger.info("index passed checks, swapping cores so new index is active.");
 				URLPostResponse postResponse = Util.getURL("http://localhost:" + solrPort + "/solr/admin/cores?action=SWAP&core=econtent2&other=econtent", logger);
 				if (!postResponse.isSuccess()){
 					results.addNote("Error swapping cores " + postResponse.getMessage());
+					logger.info("Error swapping cores " + postResponse.getMessage());					
 				}else{
 					results.addNote("Result of swapping cores " + postResponse.getMessage());
+					logger.info("Result of swapping cores " + postResponse.getMessage());					
 				}
 			}else{
 				results.incErrors();
 				results.addNote("index did not pass check, not swapping");
+				logger.info("index did not pass check, not swapping");
 			}
 			
 		} catch (Exception e) {
