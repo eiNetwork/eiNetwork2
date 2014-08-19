@@ -706,63 +706,38 @@ class EINetwork extends MillenniumDriver{
 		return $str;
 	}
 
-	public function getSierraCheckedOutItems($patron_id){
+	public function getMyMillCheckedOutItems($barcode){
 
-		$pg = new postgresConnection();
+		global $configArray;
 
-		$sql = "SELECT 
-			c.id, 
-			b.id as bib_record_id,
-			b.record_type_code || b.record_num as shortid, 
-			b.title,
-			c.item_record_id, 
-			c.due_gmt, 
-			c.checkout_gmt, 
-			c.renewal_count, 
-			c.overdue_count,
-			v.field_content as author
-			FROM sierra_view.patron_view AS p
-			JOIN sierra_view.checkout c 
-				ON c.patron_record_id = p.id
-			JOIN sierra_view.bib_record_item_record_link l 
-				ON l.item_record_id = c.item_record_id
-			JOIN sierra_view.bib_view b 
-				ON b.id = l.bib_record_id
-			LEFT JOIN sierra_view.varfield v 
-				ON b.id = v.record_id
-			WHERE p.record_num = $patron_id AND 
-				p.record_type_code = 'p' AND
-				v.varfield_type_code = 'a'
-		";
+		require_once 'sys/MyMillenniumConnect.php';
 		
-		$rs = $pg->pgquery($sql, $GLOBALS['sierra_db']);
+		// Location of WSDL file
+		$wsdl_url = $configArray['Site']['mymillennium'] . "/patroninfo.wsdl";
 
-		$checkedOutTitles = pg_fetch_all($rs[0]);
+		// Instantiate new SoapClient object in WSDL mode
+		$mymilconnect = new MyMillenniumConnect($wsdl_url);
 
-		$i = 0;
-		foreach($checkedOutTitles as $key => $value){
+		$patronInfoRequest = array("request" =>
+			array(
+				"index" => 'barcode',
+				"query" => $barcode,
+				"username" => $configArray['Site']['mymillennium_user'],
+				"password" => $configArray['Site']['mymillennium_user']
+			)
+		);
 
-			$checkout_gmt = strtotime($value['checkout_gmt']);
-			$title = $value['title'];
-
-			unset($checkedOutTitles[$i]);
-
-			$isbns = $this->getSierraISBNs($pg, $value['bib_record_id']);
-
-			$checkedOutTitles[$checkout_gmt . '-' . $title]['id'] = "." . $value['shortid'];
-			$checkedOutTitles[$checkout_gmt . '-' . $title]['duedate'] = $checkout_gmt;
-			$checkedOutTitles[$checkout_gmt . '-' . $title]['title'] = $title;
-			$checkedOutTitles[$checkout_gmt . '-' . $title]['renewCount'] = $value['renewal_count'];
-			$checkedOutTitles[$checkout_gmt . '-' . $title]['overdue'] = $value['overdue_count'];
-			$checkedOutTitles[$checkout_gmt . '-' . $title]['shortId'] = $value['shortid'];
-			$checkedOutTitles[$checkout_gmt . '-' . $title]['author'] = str_replace('|d', ' ', str_replace('|a','', $value['author']));
-			if (count($isbns) > 0){
-				$checkedOutTitles[$checkout_gmt . '-' . $title]['isbn'] = str_replace('|a', '', $isbns[0]['field_content']);
-			}
-
-			$i++;
-
+		try {
+			// Make SOAP request
+			$patronInfoResponse = $mymilconnect->patronInfo($patronInfoRequest); 
+		} catch(SoapFault $exception) {
+			// Catch any problems and display the error code
+			$errorMessage = $exception->getMessage();
 		}
+
+		echo "<pre>";
+		print_r($patronInfoResponse->response->holds[0]);
+		echo "</pre>";
 
 		$numTransactions = count($checkedOutTitles);
 
