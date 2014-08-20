@@ -710,6 +710,8 @@ class EINetwork extends MillenniumDriver{
 
 		global $configArray;
 
+		$barcode = 11812015810265;
+
 		require_once 'sys/MyMillenniumConnect.php';
 		
 		// Location of WSDL file
@@ -736,8 +738,29 @@ class EINetwork extends MillenniumDriver{
 		}
 
 		echo "<pre>";
-		print_r($patronInfoResponse->response->holds[0]);
+		print_r($patronInfoResponse);
 		echo "</pre>";
+
+		foreach($patronInfoResponse->response->checkedOutItems as $key => $value){
+
+			$now = date_format(time(), 'U');
+			$duedate = strtotime($value->dueDate);
+			$timetitle = $duedate  . '-' . $value->title;
+
+			$checkedOutTitles[$timetitle]['id'] = $value->itemRecordNum;
+			$checkedOutTitles[$timetitle]['duedate'] = $duedate;
+			$checkedOutTitles[$timetitle]['title'] = $value->title;
+			$checkedOutTitles[$timetitle]['renewCount'] = $value->renewals;
+			if ($duedate < $now){
+				$checkedOutTitles[$timetitle]['overdue'] = 1;
+			} else {
+				$checkedOutTitles[$timetitle]['overdue'] = 0;
+			}
+			$checkedOutTitles[$timetitle]['shortId'] = $value->itemRecordNum;
+			$checkedOutTitles[$timetitle]['author'] = "Need the fecking author!";
+			$checkedOutTitles[$timetitle]['isbn'] = "Need the fecking isbn!";
+
+		}
 
 		$numTransactions = count($checkedOutTitles);
 
