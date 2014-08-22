@@ -706,11 +706,11 @@ class EINetwork extends MillenniumDriver{
 		return $str;
 	}
 
-	public function getMyMillCheckedOutItems($barcode){
+	public function getMyMillItems($barcode, $type){
 
 		global $configArray;
 
-		$barcode = 11812015810265;
+		$barcode = 21111002178432;
 
 		require_once 'sys/MyMillenniumConnect.php';
 		
@@ -737,38 +737,52 @@ class EINetwork extends MillenniumDriver{
 			$errorMessage = $exception->getMessage();
 		}
 
-		echo "<pre>";
-		print_r($patronInfoResponse);
-		echo "</pre>";
+		if ($type == 'checkedout'){
+			
+			foreach($patronInfoResponse->response->checkedOutItems as $key => $value){
 
-		foreach($patronInfoResponse->response->checkedOutItems as $key => $value){
+				$now = time();
+				$duedate = strtotime($value->dueDate);
+				$timetitle = $duedate  . '-' . $value->title;
 
-			$now = date_format(time(), 'U');
-			$duedate = strtotime($value->dueDate);
-			$timetitle = $duedate  . '-' . $value->title;
+				$checkedOutTitles[$timetitle]['id'] = $value->itemRecordNum;
+				$checkedOutTitles[$timetitle]['duedate'] = $duedate;
+				$checkedOutTitles[$timetitle]['title'] = $value->titleProper;
+				$checkedOutTitles[$timetitle]['renewCount'] = $value->renewals;
+				if ($duedate < $now){
+					$checkedOutTitles[$timetitle]['overdue'] = 1;
+				} else {
+					$checkedOutTitles[$timetitle]['overdue'] = 0;
+				}
+				$checkedOutTitles[$timetitle]['shortId'] = $value->itemRecordNum;
+				$checkedOutTitles[$timetitle]['author'] = "Need the author!";
+				$checkedOutTitles[$timetitle]['isbn'] = "Need the isbn!";
 
-			$checkedOutTitles[$timetitle]['id'] = $value->itemRecordNum;
-			$checkedOutTitles[$timetitle]['duedate'] = $duedate;
-			$checkedOutTitles[$timetitle]['title'] = $value->title;
-			$checkedOutTitles[$timetitle]['renewCount'] = $value->renewals;
-			if ($duedate < $now){
-				$checkedOutTitles[$timetitle]['overdue'] = 1;
-			} else {
-				$checkedOutTitles[$timetitle]['overdue'] = 0;
 			}
-			$checkedOutTitles[$timetitle]['shortId'] = $value->itemRecordNum;
-			$checkedOutTitles[$timetitle]['author'] = "Need the fecking author!";
-			$checkedOutTitles[$timetitle]['isbn'] = "Need the fecking isbn!";
+
+			$numTransactions = count($checkedOutTitles);
+
+			return array(
+				"transactions" => $checkedOutTitles,
+				"numTransactions" => $numTransactions,
+				"stats" => 0
+			);
+
+		} elseif ($type == 'holds') {
+
+			echo "<pre>";
+			print_r($patronInfoResponse->response->holds);
+			echo "</pre>";
+
+			// foreach($patronInfoResponse->response->holds as $key => $value){
+
+			// 	$transactions['holds']['itemId'] = $value
+
+			// }
 
 		}
 
-		$numTransactions = count($checkedOutTitles);
-
-		return array(
-			"transactions" => $checkedOutTitles,
-			"numTransactions" => $numTransactions,
-			"stats" => $rs[1]
-		);
+		
 
 	}
 
@@ -792,4 +806,5 @@ class EINetwork extends MillenniumDriver{
 		
 
 	}
+
 }

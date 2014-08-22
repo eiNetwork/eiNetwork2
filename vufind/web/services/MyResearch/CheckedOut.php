@@ -141,10 +141,7 @@ class CheckedOut extends MyResearch{
 				}
 
 				//$result = $this->catalog->getMyTransactions($patron, $page, $recordsPerPage, $selectedSortOption);
-				$result = $this->catalog->getMyMillCheckedOutItems($patron['cat_username']);
-				echo "<pre>";
-				print_r($result);
-				echo "</pre>";
+				$result = $this->catalog->getMyMillItems($patron['cat_username'],'checkedout');
 				
 				$timer->logTime("Loaded transactions from catalog.");
 				if (!PEAR::isError($result)) {
