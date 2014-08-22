@@ -370,6 +370,8 @@ class OverDriveDriver2 {
 		global $timer;
 		global $logger;
 
+		$_REQUEST['reload'] = true;
+
 		$summary = false;
 		if ($summary == false || isset($_REQUEST['reload'])){
 			$summary = array();
@@ -425,50 +427,10 @@ class OverDriveDriver2 {
 			curl_close($ch);
 
 			$timer->logTime("Finished loading titles from overdrive summary");
-			//$memcache->set('overdrive_summary_' . $user->id, $summary, 0, $configArray['Caching']['overdrive_summary']);
+			$memcache->set('overdrive_summary_' . $user->id, $summary, 0, $configArray['Caching']['overdrive_summary']);
 		}
 
 		return $summary;
-	}
-
-	public function getLendingPeriods($user){
-		/** @var Memcache $memCache */
-		global $memcache;
-		global $configArray;
-		global $timer;
-		global $logger;
-
-		$lendingOptions = $memcache->get('overdrive_lending_periods_' . $user->id);
-		if ($lendingOptions == false || isset($_REQUEST['reload'])){
-			$ch = curl_init();
-
-			$overDriveInfo = $this->_loginToOverDrive($ch, $user);
-			//Navigate to the account page
-			//Load the My Holds page
-			//print_r("Account url: " . $overDriveInfo['accountUrl']);
-			curl_setopt($overDriveInfo['ch'], CURLOPT_URL, $overDriveInfo['accountUrl']);
-			$accountPage = curl_exec($overDriveInfo['ch']);
-
-			//Get lending options
-			if (preg_match('/<li id="myAccount4Tab">(.*?)<!-- myAccountContent -->/s', $accountPage, $matches)) {
-				$lendingOptionsSection = $matches[1];
-				$lendingOptions = $this->_parseLendingOptions($lendingOptionsSection);
-			}else{
-				$start = strpos($accountPage, '<li id="myAccount4Tab">') + strlen('<li id="myAccount4Tab">');
-				$end = strpos($accountPage, '<!-- myAccountContent -->');
-				$logger->log("Lending options from $start to $end", PEAR_LOG_DEBUG);
-
-				$lendingOptionsSection = substr($accountPage, $start, $end);
-				$lendingOptions = $this->_parseLendingOptions($lendingOptionsSection);
-			}
-
-			curl_close($ch);
-
-			$timer->logTime("Finished loading titles from overdrive summary");
-			$memcache->set('overdrive_lending_periods_' . $user->id, $lendingOptions, 0, $configArray['Caching']['overdrive_summary']);
-		}
-
-		return $lendingOptions;
 	}
 
 	/**
@@ -765,8 +727,31 @@ class OverDriveDriver2 {
 		$pageInfo = curl_getinfo($ch);
 
 		$urlWithSession = $pageInfo['url'];
-		//print_r($pageInfo);
 
+		if (isset($configArray['OverDrive']['uiLogin']) && isset($configArray['OverDrive']['uiPwd']) &&
+			strlen($configArray['OverDrive']['uiLogin']) > 0  && strlen($configArray['OverDrive']['uiPwd']) > 0){
+
+			$redirectUrl = $urlWithSession;
+			$redirectUrl = str_replace($overdriveUrl, '', $redirectUrl);
+			$testLoginUrl = str_replace('Default.htm', 'BANGAuthenticate.dll?Action=AuthTestMode',  $urlWithSession);
+			curl_setopt($ch, CURLOPT_URL, $testLoginUrl);
+			
+			$postParams = array(
+				'LoginID' => $configArray['OverDrive']['uiLogin'],
+				'Password' => $configArray['OverDrive']['uiPwd'],
+				'URL' => $redirectUrl
+			);
+			$post_items = array();
+			foreach ($postParams as $key => $value) {
+				$post_items[] = $key . '=' . urlencode($value);
+			}
+			$post_string = implode ('&', $post_items);
+			curl_setopt($ch, CURLOPT_POSTFIELDS, $post_string);
+
+			$loginContent = curl_exec($ch);
+			$pageInfo = curl_getinfo($ch);
+
+		}
 
 		//Go to the login form
 		$loginUrl = str_replace('Default.htm', 'BANGAuthenticate.dll?Action=AuthCheck&URL=MyAccount.htm&ForceLoginFlag=0',  $urlWithSession);
@@ -801,8 +786,8 @@ class OverDriveDriver2 {
 		}
 		$post_string = implode ('&', $post_items);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $post_string);
-		//$loginUrl = str_replace('SignIn.htm?URL=MyAccount%2ehtm', 'BANGAuthenticate.dll',  $loginFormUrl);
-		$loginUrl = str_replace('lib.overdrive.com', 'libraryreserve.com', $overdriveUrl . '/10/50/en/BANGAuthenticate.dll');
+		$loginUrl = str_replace('SignIn.htm?URL=MyAccount%2ehtm', 'BANGAuthenticate.dll',  $loginFormUrl);
+		//$loginUrl = str_replace('lib.overdrive.com', 'libraryreserve.com', $overdriveUrl . '/10/50/en/BANGAuthenticate.dll');
 		$loginUrl = str_replace('http://', 'https://', $loginUrl);
 		curl_setopt($ch, CURLOPT_URL, $loginUrl);
 		$myAccountMenuContent = curl_exec($ch);
