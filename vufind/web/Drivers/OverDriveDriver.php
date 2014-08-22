@@ -943,12 +943,9 @@ class OverDriveDriver {
 	private function _loginToOverDrive($ch, $user){
 		global $configArray;
 		global $logger;
+		
 		$overdriveUrl = $configArray['OverDrive']['url'];
-
-		echo "<pre>";
-		print_r($overdriveUrl);
-		echo "</pre>";
-
+	
 		curl_setopt_array($ch, array(
 			CURLOPT_FOLLOWLOCATION => true,
 			CURLOPT_HTTPGET => true,
@@ -963,32 +960,80 @@ class OverDriveDriver {
 		$pageInfo = curl_getinfo($ch);
 
 		$urlWithSession = $pageInfo['url'];
-		//$logger->log("Session URL ".$urlWithSession, PEAR_LOG_INFO);
-		$urlWithSessionSSL = str_replace('http://', 'https://pittsburgh.libraryreserve.com', $urlWithSession);
-		//$logger->log("Session URL SSL ".$urlWithSessionSSL, PEAR_LOG_INFO);
+		$logger->log("june overdrive url with session $urlWithSession", PEAR_LOG_DEBUG);
+		$urlWithSessionSSL = $urlWithSession;
+		
+		if (strpos($urlWithSession,'acla.lib.overdrive.com') > 0) {
+		// this is the secure test site
+			$urlWithSessionSSL = str_replace('http://', 'https://secure23.libraryreserve.com/', $urlWithSession);
+		} else {
+		// this is the secure test site	
+			$urlWithSessionSSL = str_replace('http://', 'https://secure10.libraryreserve.com/', $urlWithSession);
+		}
+		
+		$logger->log("june overdrive url with session SSL $urlWithSessionSSL", PEAR_LOG_DEBUG);
+		
+                //check for test site login credentials in the config array and log on to Overdrive test site
+		if (isset($configArray['OverDrive']['uiLogin']) && isset($configArray['OverDrive']['uiPwd']) &&
+			strlen($configArray['OverDrive']['uiLogin']) > 0  && strlen($configArray['OverDrive']['uiPwd']) > 0){
+
+			$redirectUrl = $urlWithSession;
+			$redirectUrl = str_replace($overdriveUrl, '', $redirectUrl);
+			$testLoginUrl = str_replace('Default.htm', 'BANGAuthenticate.dll?Action=AuthTestMode',  $urlWithSession);
+			curl_setopt($ch, CURLOPT_URL, $testLoginUrl);
+			
+			$postParams = array(
+				'LoginID' => $configArray['OverDrive']['uiLogin'],
+				'Password' => $configArray['OverDrive']['uiPwd'],
+				'URL' => $redirectUrl
+			);
+			$post_items = array();
+			foreach ($postParams as $key => $value) {
+				$post_items[] = $key . '=' . urlencode($value);
+			}
+			$post_string = implode ('&', $post_items);
+			curl_setopt($ch, CURLOPT_POSTFIELDS, $post_string);
+
+			$logger->log("june overdrive calling login to test server $testLoginUrl", PEAR_LOG_DEBUG);
+			$logger->log(print_r($postParams, true), PEAR_LOG_DEBUG);
+			$loginContent = curl_exec($ch);
+			$pageInfo = curl_getinfo($ch);
+			//$logger->log("june overdrive logged in to test server: \r\n" . $loginContent, PEAR_LOG_DEBUG);
+			$logger->log("june overdrive logged in to test server url: \r\n". $pageInfo['url'] , PEAR_LOG_DEBUG);
+
+			//return $overDriveInfo;
+		}
 		
 		//Go to the login form
+
 		$loginUrl = str_replace('Default.htm', 'SignIn.htm?URL=MyAccount.htm%3fPerPage%3d80',  $urlWithSessionSSL);
-						
 		curl_setopt($ch, CURLOPT_URL, $loginUrl);
+
 		$loginPageContent = curl_exec($ch);
 		$loginPageInfo = curl_getinfo($ch);
 		$loginFormUrl = $loginPageInfo['url'];
-		//$logger->log("Login Form URL ".$loginFormUrl, PEAR_LOG_INFO);
-
-		echo "<pre>";
-		print_r($loginPageInfo);
-		echo "</pre>";
+		$logger->log("june overdrive login Form URL ".$loginFormUrl, PEAR_LOG_INFO);
 
 		//Post to the login form
 		curl_setopt($ch, CURLOPT_POST, true);
+
+		$loginUrl = str_replace('SignIn.htm?URL=MyAccount.htm%3fPerPage%3d80', 'BANGAuthenticate.dll',  $loginFormUrl);
+		curl_setopt($ch, CURLOPT_URL, $loginUrl);
+		$logger->log("june overdrive login post to login form url ".$loginUrl, PEAR_LOG_INFO);
+		
 		$barcodeProperty = isset($configArray['Catalog']['barcodeProperty']) ? $configArray['Catalog']['barcodeProperty'] : 'cat_username';
 		$barcode = $user->$barcodeProperty;
 		if (strlen($barcode) == 5){
 			$user->cat_password = '41000000' . $barcode;
 		}else if (strlen($barcode) == 6){
 			$user->cat_password = '4100000' . $barcode;
-		}
+		}		
+
+		//test site accepts 10 digit barcodes
+			if (isset($configArray['OverDrive']['maxCardLength'])){
+			$barcode = substr($barcode, -$configArray['OverDrive']['maxCardLength']);
+		}		
+
 		$postParams = array(
 			'LibraryCardNumber' => $barcode,
 			'URL' => 'MyAccount.htm',
@@ -996,30 +1041,29 @@ class OverDriveDriver {
 		if (isset($configArray['OverDrive']['LibraryCardILS']) && strlen($configArray['OverDrive']['LibraryCardILS']) > 0){
 			$postParams['LibraryCardILS'] = $configArray['OverDrive']['LibraryCardILS'];
 		}
+		$post_items = array();
 		foreach ($postParams as $key => $value) {
 			$post_items[] = $key . '=' . urlencode($value);
 		}
 		$post_string = implode ('&', $post_items);
-		//$logger->log("Post Items ".$post_string, PEAR_LOG_INFO);
-		
+		$logger->log("june overdrive login post items ".$post_string, PEAR_LOG_INFO);
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $post_string);
-		$loginUrl = str_replace('SignIn.htm?URL=MyAccount.htm%3fPerPage%3d80', 'BANGAuthenticate.dll',  $loginFormUrl);
-		curl_setopt($ch, CURLOPT_URL, $loginUrl);
+
 		$myAccountMenuContent = curl_exec($ch);
 		$accountPageInfo = curl_getinfo($ch);
-		$logger->log("My Account Info URL ".$accountPageInfo['url'], PEAR_LOG_INFO);
+		$logger->log("june overdrive My Account Info URL ".$accountPageInfo['url'], PEAR_LOG_INFO);
 		
 		$matchAccount = strpos($myAccountMenuContent, 'Checkouts remaining:');
 		$matchSignOut = strpos($myAccountMenuContent, 'URL=SignOutConfirm.htm');
 		if (($matchAccount > 0) && ($matchSignOut > 0)){
-			//$logger->log("Logging in to OverDrive ($matchAccount, $matchCart), page results: \r\n" . $myAccountMenuContent, PEAR_LOG_INFO);
+			$logger->log("june overdrive logged in to OverDrive, page results: \r\n" . $myAccountMenuContent. "overdrive end page results", PEAR_LOG_INFO);
 			$overDriveInfo = array(
 				'accountUrl' => str_replace('BANGAuthenticate.dll', 'MyAccount.htm?PerPage=80', $loginUrl),
 				'holdsUrl' => str_replace('Default.htm', 'MyAccount.htm?PerPage=80#myAccount2',  $urlWithSessionSSL),
 				'bookshelfUrl' => str_replace('Default.htm', 'MyAccount.htm?PerPage=80&ForceLoginFlag=0',  $urlWithSessionSSL),
 				'placeHoldUrl' => str_replace('Default.htm', 'BANGAuthenticate.dll?Action=AuthCheck&amp;ForceLoginFlag=0&amp;URL=WaitingListForm.htm',  $urlWithSessionSSL),
 				'baseLoginUrl' => str_replace('Default.htm', 'BANGAuthenticate.dll',  $urlWithSessionSSL),
-				'baseUrl' => str_replace('BANGAuthenticate.dll', '', $loginUrl),
+				'editLendingOptionsUrl' => str_replace('BANGAuthenticate.dll', '', $loginUrl),
 				'downloadUrl' => str_replace('Default.htm', '',  $urlWithSessionSSL),
 				'waitingListUrl' => str_replace('Default.htm', 'BANGAuthenticate.dll?Action=AuthCheck&ForceLoginFlag=0&URL=WaitingListForm.htm',  $urlWithSession),
 				'contentInfoPage' => str_replace('Default.htm', 'ContentDetails.htm',  $urlWithSessionSSL),
@@ -1029,14 +1073,12 @@ class OverDriveDriver {
 			);
 		}else{
 			//global $logger;
-			//$logger->log("Could not login to OverDrive($matchAccount), page results: \r\n" . $myAccountMenuContent, PEAR_LOG_INFO);
-			$logger->log("Could not login to OverDrive($matchAccount)", PEAR_LOG_INFO);
+			$logger->log("june overdrive Could not login to OverDrive($matchAccount), page results: \r\n" . $myAccountMenuContent, PEAR_LOG_INFO);
 			$overDriveInfo = null;
 		}
 
 		return $overDriveInfo;
 	}
-
 	public function getOverdriveHoldings($overDriveId, $overdriveUrl){
 		require_once('sys/eContent/OverdriveItem.php');
 		//get the url for the page in overdrive
