@@ -141,7 +141,8 @@ class CheckedOut extends MyResearch{
 				}
 
 				//$result = $this->catalog->getMyTransactions($patron, $page, $recordsPerPage, $selectedSortOption);
-				$result = $this->catalog->getMyMillItems($patron['cat_username'],'checkedout');
+				$result = $this->catalog->getCheckedOutItems($patron, $page, $recordsPerPage, $selectedSortOption);
+				//$result = null;
 				
 				$timer->logTime("Loaded transactions from catalog.");
 				if (!PEAR::isError($result)) {
@@ -508,7 +509,7 @@ class CheckedOut extends MyResearch{
 		// Rename sheet
 		$objPHPExcel->getActiveSheet()->setTitle('Checked Out');
 
-		// Redirect output to a client’s web browser (Excel5)
+		// Redirect output to a clientâ€™s web browser (Excel5)
 		header('Content-Type: application/vnd.ms-excel');
 		header('Content-Disposition: attachment;filename="CheckedOutItems.xls"');
 		header('Cache-Control: max-age=0');

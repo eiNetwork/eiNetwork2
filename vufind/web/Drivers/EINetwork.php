@@ -45,7 +45,6 @@ class EINetwork extends MillenniumDriver{
 	public function patronLogin($barcode, $pin)
 	{
 		global $configArray;
-		global $memcache;
 		global $timer;
 		
 		if (isset($_REQUEST['password2']) && strlen($_REQUEST['password2']) > 0){
@@ -195,7 +194,6 @@ class EINetwork extends MillenniumDriver{
 	public function patronPinreset()
 	{
 		global $configArray;
-		global $memcache;
 		global $timer;
 		
 		if (isset($_REQUEST['barcode']) && strlen($_REQUEST['barcode']) > 0){
@@ -706,46 +704,72 @@ class EINetwork extends MillenniumDriver{
 		return $str;
 	}
 
-	public function getMyMillItems($barcode, $type){
+	public function getMyMillItems($barcode, $forceReload = true){
 
 		global $configArray;
+		global $memcache;
 
-		$barcode = 21111002178432;
+		$mymill_items = $memcache->get("mymill_items_$barcode");
 
-		require_once 'sys/MyMillenniumConnect.php';
+		if (!$mymill_items || $forceReload){
+
+			require_once 'sys/MyMillenniumConnect.php';
+			
+			// Location of WSDL file
+			$wsdl_url = $configArray['Site']['mymillennium'] . "/patroninfo.wsdl";
+
+			// Instantiate new SoapClient object in WSDL mode
+			$mymilconnect = new MyMillenniumConnect($wsdl_url);
+
+			$patronInfoRequest = array("request" =>
+				array(
+					"index" => 'barcode',
+					"query" => $barcode,
+					"username" => $configArray['Site']['mymillennium_user'],
+					"password" => $configArray['Site']['mymillennium_user']
+				)
+			);
+
+			try {
+				// Make SOAP request
+				$patronInfoResponse = $mymilconnect->patronInfo($patronInfoRequest); 
+			} catch(SoapFault $exception) {
+				// Catch any problems and display the error code
+				$errorMessage = $exception->getMessage();
+			}
+
+			$mymill_items = $patronInfoResponse;
+
+			$memcache->set("mymill_items_$barcode", $mymill_items, 0, $configArray['Caching']['mymill_items']);
 		
-		// Location of WSDL file
-		$wsdl_url = $configArray['Site']['mymillennium'] . "/patroninfo.wsdl";
-
-		// Instantiate new SoapClient object in WSDL mode
-		$mymilconnect = new MyMillenniumConnect($wsdl_url);
-
-		$patronInfoRequest = array("request" =>
-			array(
-				"index" => 'barcode',
-				"query" => $barcode,
-				"username" => $configArray['Site']['mymillennium_user'],
-				"password" => $configArray['Site']['mymillennium_user']
-			)
-		);
-
-		try {
-			// Make SOAP request
-			$patronInfoResponse = $mymilconnect->patronInfo($patronInfoRequest); 
-		} catch(SoapFault $exception) {
-			// Catch any problems and display the error code
-			$errorMessage = $exception->getMessage();
 		}
 
-		if ($type == 'checkedout'){
-			
-			foreach($patronInfoResponse->response->checkedOutItems as $key => $value){
+		echo "<pre>";
+		print_r($mymill_items);
+		echo "</pre>";
+
+		return $mymill_items;
+
+	}
+
+	public function getCheckedOutItems($patron, $page = 1, $recordsPerPage = -1, $sortOption = 'dueDate'){
+
+		$mymill_items = $this->getMyMillItems($patron['cat_username']);
+
+		$scount = 0;
+		$numTransactions = 0;
+
+		$checkedOutTitles = array();
+
+		if (isset($mymill_items->response->checkedOutItems)){
+			require_once 'services/MyResearch/lib/Resource.php';
+
+			foreach($mymill_items->response->checkedOutItems as $key => $value){
 
 				$now = time();
 				$duedate = strtotime($value->dueDate);
-				$timetitle = $duedate  . '-' . $value->title;
+				$timetitle = $duedate  . '-' . $value->titleProper;
 
-				$checkedOutTitles[$timetitle]['id'] = $value->itemRecordNum;
 				$checkedOutTitles[$timetitle]['duedate'] = $duedate;
 				$checkedOutTitles[$timetitle]['title'] = $value->titleProper;
 				$checkedOutTitles[$timetitle]['renewCount'] = $value->renewals;
@@ -754,57 +778,130 @@ class EINetwork extends MillenniumDriver{
 				} else {
 					$checkedOutTitles[$timetitle]['overdue'] = 0;
 				}
-				$checkedOutTitles[$timetitle]['shortId'] = $value->itemRecordNum;
-				$checkedOutTitles[$timetitle]['author'] = "Need the author!";
-				$checkedOutTitles[$timetitle]['isbn'] = "Need the isbn!";
+
+				$item_id = str_replace('i', '', $value->itemRecordNum);
+
+				$sierra_api_request = $this->sierra_api_request($this->sierra_api_connect(), $item_id);
+
+				if (isset($sierra_api_request->entries)){
+
+					$checkedOutTitles[$timetitle]['shortId'] = (isset($sierra_api_request->entries[0]->id)) ? "b" . $sierra_api_request->entries[0]->id : null;
+
+					$resource = new Resource();
+					$resource->shortId = $checkedOutTitles[$timetitle]['shortId'];
+					$resource->find();
+					if ($resource->N > 0){
+						$resource->fetch();
+						$checkedOutTitles[$timetitle]['isbn'] = $resource->isbn;
+						$checkedOutTitles[$timetitle]['id'] = $resource->record_id;
+					}
+
+					$checkedOutTitles[$timetitle]['author'] = (isset($sierra_api_request->entries[0]->id)) ? $sierra_api_request->entries[0]->author : null;
+					$checkedOutTitles[$timetitle]['itemid'] = $value->itemRecordNum;
+					$checkedOutTitles[$timetitle]['renewIndicator'] = $value->itemRecordNum . "|" . ($scount + 1);
+
+				}
+				
+				$scount++;
 
 			}
 
+			ksort($checkedOutTitles);
+
 			$numTransactions = count($checkedOutTitles);
-
-			return array(
-				"transactions" => $checkedOutTitles,
-				"numTransactions" => $numTransactions,
-				"stats" => 0
-			);
-
-		} elseif ($type == 'holds') {
-
-			echo "<pre>";
-			print_r($patronInfoResponse->response->holds);
-			echo "</pre>";
-
-			// foreach($patronInfoResponse->response->holds as $key => $value){
-
-			// 	$transactions['holds']['itemId'] = $value
-
-			// }
-
+			//Process pagination
+			if ($recordsPerPage != -1){
+				$startRecord = ($page - 1) * $recordsPerPage;
+				if ($startRecord > $numTransactions){
+					$page = 0;
+					$startRecord = 0;
+				}
+				$checkedOutTitles = array_slice($checkedOutTitles, $startRecord, $recordsPerPage);
+			}
 		}
 
-		
+		return array(
+			'transactions' => $checkedOutTitles,
+			'numTransactions' => $numTransactions
+		);
 
 	}
 
-	/**
-	 * 	Get ISBN numbers from var_fields table
-	 * 	Marc 020 field
-	 */
-	private function getSierraISBNs($pg, $record_id){
+	private function sierra_api_connect($forceReload = true){
 
+		global $configArray;
+		global $memcache;
 
-		$sql = "SELECT field_content FROM sierra_view.varfield WHERE marc_tag = '020' AND record_id = $record_id";
+		$sierra_api_connect = $memcache->get("sierra_api_connect");
 
-		$rs = $pg->pgquery($sql, $GLOBALS['sierra_db']);
+		if (!$sierra_api_connect || $forceReload){
 
-		if (isset($rs[0])){
-			return pg_fetch_all($rs[0]);
-		} else {
-			return null;
+			$ch = curl_init("https://sierra-testapp.einetwork.net/iii/sierra-api/v1/token");
+			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
+			curl_setopt($ch, CURLOPT_USERAGENT,"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+			curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded;charset=UTF-8'));
+			curl_setopt($ch, CURLOPT_USERPWD, "qXLIFRZ/wW1h9Av+BISnOqXPCaPi:goldcrest");
+			curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+			curl_setopt($ch, CURLOPT_POST, 1);
+			curl_setopt($ch, CURLOPT_POSTFIELDS, "grant_type=client_credentials");
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+			$response = json_decode(curl_exec($ch));
+
+			$sierra_api_connect['access_token'] = $response->access_token;
+			$sierra_api_connect['token_type'] = $response->token_type;
+			$sierra_api_connect['expires_in'] = $response->expires_in;
+
+			$memcache->set("sierra_api_connect", $sierra_api_connect, 0, $sierra_api_connect['expires_in']);
+
 		}
 
-		
+		return $sierra_api_connect;
 
 	}
+
+	private function sierra_api_request($sierra_api_connect, $item_id){
+
+		$header = array();
+		$header[] = 'Content-length: 0';
+		$header[] = 'Content-type: application/json';
+		$header[] = 'Accept: application/marc-in-json';
+		$header[] = "Authorization: " . $sierra_api_connect['token_type'] . " " . $sierra_api_connect['access_token'];
+
+		$ch = curl_init("https://sierra-testapp.einetwork.net/iii/sierra-api/v1/items?id=" . $item_id);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
+		curl_setopt($ch, CURLOPT_USERAGENT,"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+
+		$response = json_decode(curl_exec($ch));
+
+		if (isset($response->entries)){
+			$header = array();
+			$header[] = 'Content-length: 0';
+			$header[] = 'Content-type: application/json';
+			$header[] = 'Accept: application/marc-in-json';
+			$header[] = "Authorization: " . $sierra_api_connect['token_type'] . " " . $sierra_api_connect['access_token'];
+
+			$ch = curl_init("https://sierra-testapp.einetwork.net/iii/sierra-api/v1/bibs?id=" . $response->entries[0]->bibIds[0]);
+			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
+			curl_setopt($ch, CURLOPT_USERAGENT,"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+			curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+			curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+
+			return json_decode(curl_exec($ch));
+
+		}
+
+	}
+
 
 }
+
+?>
