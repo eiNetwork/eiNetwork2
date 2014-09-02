@@ -2994,7 +2994,7 @@ class MillenniumDriver implements DriverInterface
 		UsageTracking::logTrackingData($hold_result['Renewed']);
 
 		// an attempt was made to place a renewal. Clear the patron info cache for this user.
-		$memcache->delete("patron_info_dump_1_" . $this->_getBarcode());
+		$memcache->delete("patron_info_dump_items_" . $this->_getBarcode());
 
 		return $hold_result;
 	}
@@ -3060,7 +3060,7 @@ class MillenniumDriver implements DriverInterface
 		$parse_result = $this->parseRenewals($html);
 
 		// an attempt was made to place a renewal. Clear the patron info cache for this user.
-		$memcache->delete("patron_info_dump_1_" . $this->_getBarcode());
+		$memcache->delete("patron_info_dump_items_" . $this->_getBarcode());
 
 		curl_close($curl_connection);
 		unlink($cookieJar);
