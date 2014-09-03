@@ -732,7 +732,7 @@ class EINetwork extends MillenniumDriver{
 
 			try {
 				// Make SOAP request
-				$patronInfoResponse = $mymilconnect->patronInfo($patronInfoRequest); 
+				$patronInfoResponse = $mymilconnect->patronInfo($patronInfoRequest);
 			} catch(SoapFault $exception) {
 				// Catch any problems and display the error code
 				$errorMessage = $exception->getMessage();

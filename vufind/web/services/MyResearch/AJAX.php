@@ -455,31 +455,11 @@ class AJAX extends Action {
 		global $user;
 		$catalog = new CatalogConnection($configArray['Catalog']['driver']);
 		if ($user !== false){
-			$interface->assign('user', $user);
-			// Get My Profile
-			if ($catalog->status) {
-				if ($user->cat_username) {
-					$patron = $catalog->patronLogin($user->cat_username, $user->cat_password);
-					if (PEAR::isError($patron)){
-						PEAR::raiseError($patron);
-					}
-					$profile = $catalog->getMyProfile($patron);
-					//$logger = new Logger();
-					//$logger->log("Patron profile phone number in MyResearch = " . $profile['phone'], PEAR_LOG_INFO);
-					if (!PEAR::isError($profile)) {
-						$interface->assign('profile', $profile);
-					}
-				}
-			}
-			$sum;
-			$sumOfCheckoutItems = $profile["numEContentCheckedOut"] + $profile["numCheckedOut"];
-			$sumOfRequestItems = $profile["numHoldsAvailable"]+$profile["numHoldsRequested"]+$profile["numEContentUnavailableHolds"]+$profile["numEContentWishList"];
-			require_once 'Drivers/OverDriveDriverFactory.php';
-			$overDriveDriver = OverDriveDriverFactory::getDriver();
-			$summary = $overDriveDriver->getOverDriveSummary($user);
-			$sumOfCheckoutItems += $summary["numCheckedOut"];
-			//$sumOfRequestItems = $sumOfRequestItems + $summary["numEContentWishList"] + $summary["numUnavailableHolds"];
-			$sumOfRequestItems += $summary["numAvailableHolds"] + $summary["numUnavailableHolds"];
+			$myMillItems = $catalog->getMyMillItems($user->cat_username);
+
+			$sumOfCheckoutItems = count($myMillItems->response->checkedOutItems);
+			$sumOfRequestItems = count($myMillItems->response->holds);
+
 			$sum["SumOfCheckoutItems"] = $sumOfCheckoutItems;
 			$sum["SumOfRequestItems"] = $sumOfRequestItems;
 			return json_encode($sum);
