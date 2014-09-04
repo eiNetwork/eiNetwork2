@@ -744,10 +744,6 @@ class EINetwork extends MillenniumDriver{
 		
 		}
 
-		echo "<pre>";
-		print_r($mymill_items);
-		echo "</pre>";
-
 		return $mymill_items;
 
 	}
