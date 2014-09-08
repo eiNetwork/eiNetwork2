@@ -1,3 +1,64 @@
+$(document).ready(function() {
+    if (loggedIn){
+	    $('#show_overdrive_lending_periods').click(function(){
+			showProcessingIndicator("Please wait while we grab your OverDrive E-Content Lending Options.");
+			var url = "/MyResearch/AJAX?method=overdrive_load_periods";
+			$.ajax({
+				url: url,
+				success: function(data){
+
+					var tbl_body = "";
+					var tbl_row = "";
+					var cell_count = 0;
+
+					tbl_body += '<table><tr style="font-weight: bolder"><td colspan="2">OverDrive E-Content Lending Options</td></tr>';
+
+					$.each(data.lendingOptions, function(k, v){
+
+						if (cell_count == 0){
+							tbl_row += '<tr><td text-align="left">';
+						} else {
+							tbl_row += '<td text-align="left">';
+						}
+
+						tbl_row += '<div style="font-weight: bolder">' + v.name + '</div>';
+
+						$.each(v.options, function(k, v){
+							if (v.selected == true){
+								tbl_row += '<div>' + v.name + '</div>';
+							}
+						});
+
+						cell_count++;
+
+						if (cell_count > 1){
+							cell_count = 0;
+							tbl_row += '</td></tr>';
+						} else {
+							tbl_row += '</td>';
+						}
+					});
+
+					tbl_body = tbl_body + tbl_row;
+
+					tbl_body += '</table>';
+
+					$("#overdrivetab").html(tbl_body);
+
+					hideLightbox();
+				},
+				dataType: 'json', 
+				error: function(){	
+					setTimeout(function() {alert("An error occurred processing your request in OverDrive.  Please try again in a few minutes.");},1250);
+					hideLightbox();
+				}
+			});
+	    })
+	} else {
+		
+	}
+});
+
 function checkoutOverDriveItem(elemId, page){
 	if (loggedIn){
 		showProcessingIndicator("Checking out the title for you in OverDrive.  This may take a minute.");

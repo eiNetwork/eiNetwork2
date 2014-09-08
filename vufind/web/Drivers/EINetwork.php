@@ -764,7 +764,7 @@ class EINetwork extends MillenniumDriver{
 
 				$now = time();
 				$duedate = strtotime($value->dueDate);
-				$timetitle = $duedate  . '-' . $value->titleProper;
+				$timetitle = $duedate  . '-' . $scount . '-' . $value->titleProper;
 
 				$checkedOutTitles[$timetitle]['duedate'] = $duedate;
 				$checkedOutTitles[$timetitle]['title'] = $value->titleProper;
@@ -777,28 +777,27 @@ class EINetwork extends MillenniumDriver{
 
 				$item_id = str_replace('i', '', $value->itemRecordNum);
 
-				$sierra_api_request = $this->sierra_api_request($this->sierra_api_connect(), $item_id);
+				//$sierra_api_bibid = $this->sierra_api_request($this->sierra_api_connect(), $item_id);
 
-				if (isset($sierra_api_request->entries)){
+				// if (isset($sierra_api_bibid)){
 
-					$checkedOutTitles[$timetitle]['shortId'] = (isset($sierra_api_request->entries[0]->id)) ? "b" . $sierra_api_request->entries[0]->id : null;
+				// 	$checkedOutTitles[$timetitle]['shortId'] = (isset($sierra_api_bibid)) ? "b" . $sierra_api_bibid : null;
 
-					$resource = new Resource();
-					$resource->shortId = $checkedOutTitles[$timetitle]['shortId'];
-					$resource->find();
-					if ($resource->N > 0){
-						$resource->fetch();
-						$checkedOutTitles[$timetitle]['isbn'] = $resource->isbn;
-						$checkedOutTitles[$timetitle]['id'] = $resource->record_id;
-					}
+				// 	$resource = new Resource();
+				// 	$resource->shortId = $checkedOutTitles[$timetitle]['shortId'];
+				// 	$resource->find();
+				// 	if ($resource->N > 0){
+				// 		$resource->fetch();
+				// 		$checkedOutTitles[$timetitle]['isbn'] = $resource->isbn;
+				// 		$checkedOutTitles[$timetitle]['id'] = $resource->record_id;
+				// 		$checkedOutTitles[$timetitle]['author'] = $resource->author;
+				// 	}
+				// 	$checkedOutTitles[$timetitle]['itemid'] = $value->itemRecordNum;
+				// 	$checkedOutTitles[$timetitle]['renewIndicator'] = $value->itemRecordNum . "|" . ($scount + 1);
 
-					$checkedOutTitles[$timetitle]['author'] = (isset($sierra_api_request->entries[0]->id)) ? $sierra_api_request->entries[0]->author : null;
-					$checkedOutTitles[$timetitle]['itemid'] = $value->itemRecordNum;
-					$checkedOutTitles[$timetitle]['renewIndicator'] = $value->itemRecordNum . "|" . ($scount + 1);
-
-				}
+				// }
 				
-				$scount++;
+				// $scount++;
 
 			}
 
@@ -876,24 +875,26 @@ class EINetwork extends MillenniumDriver{
 
 		$response = json_decode(curl_exec($ch));
 
-		if (isset($response->entries)){
-			$header = array();
-			$header[] = 'Content-length: 0';
-			$header[] = 'Content-type: application/json';
-			$header[] = 'Accept: application/marc-in-json';
-			$header[] = "Authorization: " . $sierra_api_connect['token_type'] . " " . $sierra_api_connect['access_token'];
+		return $response->entries[0]->bibIds[0];
 
-			$ch = curl_init("https://sierra-testapp.einetwork.net/iii/sierra-api/v1/bibs?id=" . $response->entries[0]->bibIds[0]);
-			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
-			curl_setopt($ch, CURLOPT_USERAGENT,"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
-			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-			curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-			curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+		// if (isset($response->entries)){
+		// 	$header = array();
+		// 	$header[] = 'Content-length: 0';
+		// 	$header[] = 'Content-type: application/json';
+		// 	$header[] = 'Accept: application/marc-in-json';
+		// 	$header[] = "Authorization: " . $sierra_api_connect['token_type'] . " " . $sierra_api_connect['access_token'];
 
-			return json_decode(curl_exec($ch));
+		// 	$ch = curl_init("https://sierra-testapp.einetwork.net/iii/sierra-api/v1/bibs?id=" . $response->entries[0]->bibIds[0]);
+		// 	curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
+		// 	curl_setopt($ch, CURLOPT_USERAGENT,"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
+		// 	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+		// 	curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+		// 	curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+		// 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 
-		}
+		// 	return json_decode(curl_exec($ch));
+
+		// }
 
 	}
 

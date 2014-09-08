@@ -29,7 +29,7 @@ require_once("PHPExcel.php");
 
 
 //BEGIN for Overdrive Checkout Items
-require_once 'Drivers/OverDriveDriverFactory.php';
+//require_once 'Drivers/OverDriveDriverFactory.php';
 require_once 'sys/eContent/EContentRecord.php';
 //END for Overdrive Checkout Items
 
@@ -374,37 +374,37 @@ class CheckedOut extends MyResearch{
 		
 		/**BEGIN for Overdrive Checkout Items**/
 		//$overDriveDriver = new OverDriveDriver();
-		$overDriveDriver = OverDriveDriverFactory::getDriver();
-		$overDriveCheckedOutItems = $overDriveDriver->getOverDriveCheckedOutItems($user);
-		//Load the full record for each item in the wishlist
-		foreach ($overDriveCheckedOutItems['items'] as $key => $item){
+		// $overDriveDriver = OverDriveDriverFactory::getDriver();
+		// $overDriveCheckedOutItems = $overDriveDriver->getOverDriveCheckedOutItems($user);
+		// //Load the full record for each item in the wishlist
+		// foreach ($overDriveCheckedOutItems['items'] as $key => $item){
 
-			if ($item['recordId'] != -1){
-				$econtentRecord = new EContentRecord();
-				$econtentRecord->id = $item['recordId'];
-				$econtentRecord->find(true);
-				$item['record'] = clone($econtentRecord);
-			} else{
-				$item['record'] = null;
-			}
-			$overDriveCheckedOutItems['items'][$key] = $item;
-		}
+		// 	if ($item['recordId'] != -1){
+		// 		$econtentRecord = new EContentRecord();
+		// 		$econtentRecord->id = $item['recordId'];
+		// 		$econtentRecord->find(true);
+		// 		$item['record'] = clone($econtentRecord);
+		// 	} else{
+		// 		$item['record'] = null;
+		// 	}
+		// 	$overDriveCheckedOutItems['items'][$key] = $item;
+		// }
 		
-		$sortOptions = array(
-				'title'   => 'Title',
-				'author'  => 'Author',
-				'format'  => 'Format',
-				);
-		$interface->assign('sortOptions', $sortOptions);
+		// $sortOptions = array(
+		// 		'title'   => 'Title',
+		// 		'author'  => 'Author',
+		// 		'format'  => 'Format',
+		// 		);
+		// $interface->assign('sortOptions', $sortOptions);
 
-		// echo "<pre>";
-		// print_r($overDriveCheckedOutItems['items']);
-		// echo "</pre>";
+		// // echo "<pre>";
+		// // print_r($overDriveCheckedOutItems['items']);
+		// // echo "</pre>";
 		
-		$interface->assign('overDriveCheckedOutItems', $overDriveCheckedOutItems['items']);
-		$interface->assign('ButtonBack',true);
-		$interface->assign('ButtonHome',true);
-		$interface->assign('MobileTitle','OverDrive Checked Out Items');
+		// $interface->assign('overDriveCheckedOutItems', $overDriveCheckedOutItems['items']);
+		// $interface->assign('ButtonBack',true);
+		// $interface->assign('ButtonHome',true);
+		// $interface->assign('MobileTitle','OverDrive Checked Out Items');
 		
 		/**END for Overdrive Checkout Items**/
 		

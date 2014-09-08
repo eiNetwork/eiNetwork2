@@ -37,7 +37,7 @@ class AJAX extends Action {
 	function launch()
 	{
 		$method = $_GET['method'];
-		if (in_array($method, array('GetSuggestions', 'GetListTitles', 'getOverDriveSummary',"getAllItems", 'AddList','updatePreferredBranches', 'editEmailPrompt', 'getUnavailableHoldingInfo','saveNotificationPopupState'))){
+		if (in_array($method, array('GetSuggestions', 'GetListTitles', 'getOverDriveSummary',"getAllItems", 'AddList','updatePreferredBranches', 'editEmailPrompt', 'getUnavailableHoldingInfo','saveNotificationPopupState','overdrive_load_periods'))){
 			header('Content-type: text/plain');
 			header('Cache-Control: no-cache, must-revalidate'); // HTTP/1.1
 			header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
@@ -551,6 +551,22 @@ class AJAX extends Action {
 
 		// if true keep notification window closed on page load
 		$_SESSION['notification_popupstate'] = 1;
+
+	}
+
+	function overdrive_load_periods(){
+
+		global $user;
+
+		if ($user !== false){
+
+			require_once 'Drivers/OverDriveDriver2.php';
+			$overDriveDriver = new OverDriveDriver2();
+			$overDriveSummary = $overDriveDriver->getAccountDetails($user);
+
+			return json_encode($overDriveSummary);
+
+		}
 
 	}
 }
