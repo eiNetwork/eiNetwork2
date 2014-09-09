@@ -188,8 +188,8 @@ public class ProcessorResults {
 				updateResultsStmt.setString(9, getNotesHtml());
 				updateResultsStmt.setLong(10, resultsId);
 				updateResultsStmt.executeUpdate();
-			}
-			logger.info("Saved results for process " + getProcessorName());
+			}//BA++  cut down logging
+			//logger.info("Saved results for process " + getProcessorName());
 		} catch (Exception e) {
 			logger.error("Unable to save results of process to database", e);
 		}

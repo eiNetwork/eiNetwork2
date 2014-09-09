@@ -8,6 +8,8 @@ public class OverDriveRecordInfo {
 	private String id;
 	private String mediaType;
 	private String title;
+	//BA+++ add sortTitle;
+	private String sortTitle;
 	private String series;
 	private String author;
 	private HashSet<String> formats = new HashSet<String>();
@@ -139,6 +141,12 @@ public class OverDriveRecordInfo {
 	}
 	public void setAvailabilityInfo(HashMap<Long, OverDriveAvailabilityInfo> availabilityInfo) {
 		this.availabilityInfo = availabilityInfo;
+	}
+	public void setSortTitle(String sortTitle) {
+		this.sortTitle = sortTitle;
+	}
+	public String getSortTitle() {
+		return sortTitle;
 	}
 	
 }

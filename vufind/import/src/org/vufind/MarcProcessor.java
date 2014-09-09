@@ -89,8 +89,12 @@ public class MarcProcessor {
 	protected int								maxRecordsToProcess	= -1;
 	private PreparedStatement				    insertMarcInfoStmt;
 	private PreparedStatement					updateMarcInfoStmt;
+	
+	//BA++ Prepared Statement to delete records from db not in Marc
+	private PreparedStatement   				getIlsIdsFromEContent;
+	private PreparedStatement					deleteEContentRecordnotinMarc;
 
-	private Set<String>							existingEContentIds	= Collections.synchronizedSet(new HashSet<String>());
+private Set<String>							existingEContentIds	= Collections.synchronizedSet(new HashSet<String>());
 	private Map<String, Float>					printRatings				= Collections.synchronizedMap(new HashMap<String, Float>());
 	private Map<Long, Float>					econtentRatings			= Collections.synchronizedMap(new HashMap<Long, Float>());
 	private Map<String, Long>					librarySystemFacets	= Collections.synchronizedMap(new HashMap<String, Long>());
@@ -741,6 +745,7 @@ public class MarcProcessor {
 						String marcRecordId = marcInfo.getId();
 						//BA++ add to set for processing econtent deletion  marcIds
 						marcIds.add(marcRecordId);
+						
 						if (marcIndexInfo.containsKey(marcInfo.getId())) {
 							marcIndexedInfo = marcIndexInfo.get(marcInfo.getId());
 							if (marcInfo.getChecksum() != marcIndexedInfo.getChecksum()){
@@ -952,47 +957,48 @@ public class MarcProcessor {
 	}
 	
 	//BA++ delete from db where no Marc record
+	//Method won't run if config file DeleteERecordsinDBNotinMarcOrOD not set to true
 	public int deleteMarcRecordInDb(){
 		Connection econtentConn = null;
+		Connection vufindConn = null;
 		int ctr = 0;
 		int arraySize = 0;
-		int twentyGoodIds = 0;
 		String ilsId = null;
-		logger.info("begin deleteMarcRecordInDb marcFile IDs"  + marcIds.size());
+		int id = 0;
+		ResultSet rs;
+		
 		try {
 			econtentConn = ReindexProcess.getEcontentConn();
+			vufindConn = ReindexProcess.getVufindConn();
+			
+			getIlsIdsFromEContent = econtentConn.prepareStatement("SELECT ilsid FROM econtent_record where ilsid is not null", ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+			deleteEContentRecordnotinMarc = econtentConn.prepareStatement("DELETE from econtent_record where ilsid = ?");
+
 		} catch (Exception e) {
-			logger.error("Could not connect to econtent database", e);
+			logger.error("Could not connect to databases", e);
 			System.exit(1);
 		}
-		try {
-			PreparedStatement getIlsIdsFromEContent = econtentConn.prepareStatement("SELECT ilsid FROM econtent_record where ilsid is not null", ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
-			ResultSet ilsIds = getIlsIdsFromEContent.executeQuery();
+		
+		logger.info("begin deleteMarcRecordInDb marcFile IDs "  + marcIds.size());
+		try {			
+				ResultSet ilsIds = getIlsIdsFromEContent.executeQuery();
 				while (ilsIds.next()) {
 					ilsId = ilsIds.getString(1);
-					int index = 0;
 					if ( ! marcIds.contains(ilsId)){
-						logger.info("econtent_record IlsId not in Marc File "  + ilsId);
+						logger.info("Begin Marc db record delete ilsid " + ilsId);						
+						deleteEContentRecordnotinMarc.setString(1, ilsId);
+						deleteEContentRecordnotinMarc.executeUpdate();
+						logger.info("End Marc db record delete ilsid " + ilsId);
 						ctr++;
-					}
-					else
-					{
-						if ( twentyGoodIds < 20 )
-						{
-							logger.info("First twenty econtent_record IlsId in Marc File for test "  + ilsId);
-						}
-						twentyGoodIds++;
 					}
 					arraySize++;
 				}
-				logger.info("marcIds not in Marc file " + ctr );
-				logger.info("ilsIds in econtent_record " + twentyGoodIds );
-				logger.info("ilsIds in Marc file " + arraySize );
-		} catch (Exception e) {
-			logger.error("Unable to load ilsIds from econtent_record", e);
-			ReindexProcess.addNoteToCronLog("Unable to load ilsIds from econtent_record " + e.toString());
-			return ctr;
-		}		
+			} catch (SQLException e) {
+				logger.error("Unable to delete record - deleteMarcRecordInDb", e);
+			}				
+		logger.info("marcIds deleted from db - not in Marc file " + ctr );
+		logger.info("ilsIds in Marc file " + arraySize );
+			
 		return ctr;
 	}
 	

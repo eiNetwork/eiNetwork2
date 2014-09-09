@@ -53,18 +53,18 @@ import bsh.Primitive;
 import bsh.UtilEvalError;
 
 public class MarcRecordDetails {
-	private MarcProcessor										marcProcessor;
-	private Logger													logger;
+	private MarcProcessor 					marcProcessor;
+	private Logger		  					logger;
 
-	private Record													record;
-	private HashMap<String, Object>					mappedFields		= new HashMap<String, Object>();
+	private Record							record;
+	private HashMap<String, Object>			mappedFields		= new HashMap<String, Object>();
 
 	private ArrayList<LibrarySpecificLink>	sourceUrls			= new ArrayList<LibrarySpecificLink>();
-	private String													purchaseUrl;
-	private boolean													urlsLoaded;
-	private long														checksum				= -1;
+	private String							purchaseUrl;
+	private boolean							urlsLoaded;
+	private long							checksum			= -1;
 
-	private boolean													allFieldsMapped	= false;
+	private boolean							allFieldsMapped		= false;
 	
 	/**
 	 * Does basic mapping of fields to determine if the record has changed or not
@@ -219,7 +219,7 @@ public class MarcRecordDetails {
 			if (eightFiftySixDataField.getSubfield('3') != null) {
 				notesField = eightFiftySixDataField.getSubfield('3').getData();
 			}
-			
+			//BA+++digital collection
 			char indicator2 = eightFiftySixDataField.getIndicator2();
 			if (indicator2 == '0' || indicator2 == '1' ){
 				//Resource or version of resource
@@ -2025,6 +2025,7 @@ public class MarcRecordDetails {
 
 	private Set<String>	locationCodes;
 	private static Pattern locationExtractionPattern = null;
+	//BA++++ getLocationCodes
 	public Set<String> getLocationCodes(String locationSpecifier, String locationSpecifier2) {
 		if (locationCodes != null) {
 			return locationCodes;
@@ -2073,6 +2074,12 @@ public class MarcRecordDetails {
 				}
 			}
 		}
+		//BA+++++ Digital Collection
+		/*boolean add = addDigitalCatalog();
+		if (add)
+		{
+			addLocationCode("Digital Collection", locationCodes);
+		}*/
 		return locationCodes;
 	}
 
@@ -2739,7 +2746,7 @@ public class MarcRecordDetails {
 	}
 
 	public String getDateAdded(String dateFieldSpec, String dateFormat) {
-		// Get the date the record was added from the 907d tag (should only be one).
+		// Get the date the record was added from the 907c tag (should only be one).
 		Set<String> input = getFieldList(record, dateFieldSpec);
 		Iterator<String> iter = input.iterator();
 		while (iter.hasNext()) {
@@ -2770,15 +2777,14 @@ public class MarcRecordDetails {
 			Date curDate = formatter2.parse(curDateStr);
 			return getTimeSinceAddedForDate(curDate);
 		} catch (ParseException e) {
-			logger.error("Error parsing date " + curDateStr + " in getRelativeTimeAdded");
+			logger.error("Error parsing date " + curDateStr + " in getRelativeTimeAdded - MarcRecordDetails");
 		}
-
 		return null;
 	}
 
 	public String getTimeSinceAddedForDate(Date curDate) {
 		long timeDifferenceDays = (new Date().getTime() - curDate.getTime()) / (1000 * 60 * 60 * 24);
-		// System.out.println("Time Difference Days: " + timeDifferenceDays);
+		//logger.info("Time Difference Days: " + timeDifferenceDays);
 		if (timeDifferenceDays <= 1) {
 			return "Day";
 		}
@@ -2799,6 +2805,10 @@ public class MarcRecordDetails {
 		}
 		if (timeDifferenceDays <= 365) {
 			return "Year";
+		}
+		if (timeDifferenceDays > 365) {
+			int years = (int)(timeDifferenceDays/365);
+			return (years + " Years" );
 		}
 		return null;
 	}
@@ -3151,7 +3161,7 @@ public class MarcRecordDetails {
 		return result;
 	}
 
-	private Boolean												isEContent								= null;
+	private Boolean	isEContent	= null;
 	private HashMap<String, DetectionSettings>	eContentDetectionSettings	= new HashMap<String, DetectionSettings>();
 
 	/*
@@ -3161,8 +3171,9 @@ public class MarcRecordDetails {
 		if (isEContent == null) {
 			//logger.debug("Checking if record is eContent");
 			isEContent = false;
+			//BA++ 037 not used
 			// Check the 037 field first
-			@SuppressWarnings("unchecked")
+			/*@SuppressWarnings("unchecked")
 			List<DataField> oh37Fields = (List<DataField>)record.getVariableFields("037");
 			for (DataField oh37 : oh37Fields){
 				Subfield subFieldB = oh37.getSubfield('b');
@@ -3197,8 +3208,22 @@ public class MarcRecordDetails {
 						return isEContent;
 					}
 				}
-			}
+			}*/
 			
+			//BA++ check 945s
+			/*@SuppressWarnings("unchecked")
+			List<DataField> nine45Fields = (List<DataField>)record.getVariableFields("945");
+			for (DataField nine45 : nine45Fields){
+				Subfield subFieldS = nine45.getSubfield('s');
+				if (subFieldS != null){
+					String subfieldSVal = subFieldS.getData().trim();
+					if (! subfieldSVal.matches("(?s)v")){
+						isEContent = false;
+					}
+				}
+			}*/
+			
+			//BA++++
 			// Treat the record as eContent if the records is:
 			// 1) It is already in the eContent database
 			// 2) It matches criteria in EContentRecordDetectionSettings
@@ -3506,6 +3531,7 @@ public class MarcRecordDetails {
 			}
 			//TODO: determine if acs and single use titles are actually available
 			if (libraryId == -1L){
+				logger.debug("Add Digital Collection " + econtentRecordId);
 				itemAvailability.add("Digital Collection");
 				itemAvailability = addSharedAvailability(source, itemAvailability);
 				//logger.debug("Available at " + itemAvailability.size() + " locations");
@@ -3615,4 +3641,25 @@ public class MarcRecordDetails {
 		ArrayList author = null;
 		return author;
 	}
+	
+	//BA++++++ ADD Digital Collection
+	public boolean addDigitalCatalog() {
+		boolean ret = false;
+		@SuppressWarnings("unchecked")
+		List<VariableField> itemRecords = record.getVariableFields("945");
+		@SuppressWarnings("unchecked")
+		List<VariableField> eightFiftySixFields = record.getVariableFields("856");
+		for (VariableField eightFiftySixField : eightFiftySixFields) {
+			DataField eightFiftySixDataField = (DataField) eightFiftySixField;
+			char indicator2 = eightFiftySixDataField.getIndicator2();
+			if (indicator2 == '0' || indicator2 == '1' ){
+				ret = true;
+			}
+			else if ( itemRecords == null  && eightFiftySixDataField.getSubfield('u') == null ) {
+				ret = true;			
+			}
+		}
+		return ret;
+	}
+
 }
