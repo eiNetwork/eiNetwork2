@@ -2028,6 +2028,12 @@ public class MarcRecordDetails {
 	//BA++++ getLocationCodes
 	public Set<String> getLocationCodes(String locationSpecifier, String locationSpecifier2) {
 		if (locationCodes != null) {
+			//BA+++++ Digital Collection
+			boolean add = addDigitalCatalog();
+			if (add)
+			{
+				addLocationCode("dc", locationCodes);
+			}
 			return locationCodes;
 		}
 
@@ -2074,13 +2080,15 @@ public class MarcRecordDetails {
 				}
 			}
 		}
+		
 		//BA+++++ Digital Collection
-		/*boolean add = addDigitalCatalog();
+		boolean add = addDigitalCatalog();
 		if (add)
 		{
-			addLocationCode("Digital Collection", locationCodes);
-		}*/
+			addLocationCode("dc", locationCodes);
+		}
 		return locationCodes;
+		
 	}
 
 	static Pattern steamboatJuvenileCodes = Pattern.compile("^(ssbj[aejlnpuvkbrm]|ssbyl|ssc.*|sst.*)$");
@@ -3095,6 +3103,12 @@ public class MarcRecordDetails {
 		String availableStatus = "-";
 		Set<String> result = new LinkedHashSet<String>();
 		if (isEContent()){
+			//BA+++++ Digital Collection
+			boolean add = addDigitalCatalog();
+			if (add)
+			{
+				result.add("Digital Collection");
+			}
 			return result;
 		}
 		@SuppressWarnings("unchecked")
@@ -3121,13 +3135,19 @@ public class MarcRecordDetails {
 						if (dueDate.length() < 5){
 							String locationFacet = getLocationFacetForLocation(location);
 							result.add(locationFacet);
-							//logger.debug("adding available at location " + locationFacet  );
+							logger.debug("adding available at location " + locationFacet  );
 						}
 					}
 				//}else{
 					//logger.warn("No status field for " + this.getId() + " indicator " + statusSubFieldChar  );
 				}
 			}
+		}
+		//BA+++++ Digital Collection
+		boolean add = addDigitalCatalog();
+		if (add)
+		{
+			result.add("Digital Collection");
 		}
 		return result;
 	}
@@ -3326,6 +3346,7 @@ public class MarcRecordDetails {
 		}else{
 			//logger.debug("Found locationId " + locationId + " for location " + locationCode + " " + locationFacet);
 		}
+		logger.info("Location - " + locationId);
 		return locationId;
 	}
 	
@@ -3531,7 +3552,7 @@ public class MarcRecordDetails {
 			}
 			//TODO: determine if acs and single use titles are actually available
 			if (libraryId == -1L){
-				logger.debug("Add Digital Collection " + econtentRecordId);
+				//logger.debug("Add Digital Collection " + econtentRecordId);
 				itemAvailability.add("Digital Collection");
 				itemAvailability = addSharedAvailability(source, itemAvailability);
 				//logger.debug("Available at " + itemAvailability.size() + " locations");
@@ -3582,6 +3603,8 @@ public class MarcRecordDetails {
 			addFields(mappedFields, "institution", null, buildings);
 			addFields(mappedFields, "building", null, buildings);
 		}
+
+		
 		addFields(mappedFields, "format", "format_map", formats);
 		if (formats.size() > 0){
 			String firstFormat = formats.iterator().next();
@@ -3644,6 +3667,7 @@ public class MarcRecordDetails {
 	
 	//BA++++++ ADD Digital Collection
 	public boolean addDigitalCatalog() {
+		
 		boolean ret = false;
 		@SuppressWarnings("unchecked")
 		List<VariableField> itemRecords = record.getVariableFields("945");
@@ -3655,7 +3679,7 @@ public class MarcRecordDetails {
 			if (indicator2 == '0' || indicator2 == '1' ){
 				ret = true;
 			}
-			else if ( itemRecords == null  && eightFiftySixDataField.getSubfield('u') == null ) {
+			else if ( itemRecords == null  && eightFiftySixDataField.getSubfield('u') != null ) {
 				ret = true;			
 			}
 		}
