@@ -748,7 +748,7 @@ class EINetwork extends MillenniumDriver{
 
 	}
 
-	public function getCheckedOutItems($patron, $page = 1, $recordsPerPage = -1, $sortOption = 'dueDate'){
+	public function getCheckedOutItems($patron, $page = 1, $recordsPerPage = -1, $sortOption = 'dueDate', $expand_physical_items){
 
 		$mymill_items = $this->getMyMillItems($patron['cat_username']);
 
@@ -758,6 +758,7 @@ class EINetwork extends MillenniumDriver{
 		$checkedOutTitles = array();
 
 		if (isset($mymill_items->response->checkedOutItems)){
+
 			require_once 'services/MyResearch/lib/Resource.php';
 
 			foreach($mymill_items->response->checkedOutItems as $key => $value){
@@ -777,27 +778,32 @@ class EINetwork extends MillenniumDriver{
 
 				$item_id = str_replace('i', '', $value->itemRecordNum);
 
-				//$sierra_api_bibid = $this->sierra_api_request($this->sierra_api_connect(), $item_id);
+				if ($expand_physical_items > 0){
+					$sierra_api_bibid = $this->sierra_api_request($this->sierra_api_connect(), $item_id);
+				} else {
+					$sierra_api_bibid = null;
+				}
 
-				// if (isset($sierra_api_bibid)){
+				if (isset($sierra_api_bibid)){
 
-				// 	$checkedOutTitles[$timetitle]['shortId'] = (isset($sierra_api_bibid)) ? "b" . $sierra_api_bibid : null;
+					$checkedOutTitles[$timetitle]['shortId'] = (isset($sierra_api_bibid)) ? "b" . $sierra_api_bibid : null;
 
-				// 	$resource = new Resource();
-				// 	$resource->shortId = $checkedOutTitles[$timetitle]['shortId'];
-				// 	$resource->find();
-				// 	if ($resource->N > 0){
-				// 		$resource->fetch();
-				// 		$checkedOutTitles[$timetitle]['isbn'] = $resource->isbn;
-				// 		$checkedOutTitles[$timetitle]['id'] = $resource->record_id;
-				// 		$checkedOutTitles[$timetitle]['author'] = $resource->author;
-				// 	}
-				// 	$checkedOutTitles[$timetitle]['itemid'] = $value->itemRecordNum;
-				// 	$checkedOutTitles[$timetitle]['renewIndicator'] = $value->itemRecordNum . "|" . ($scount + 1);
+					$resource = new Resource();
+					$resource->shortId = $checkedOutTitles[$timetitle]['shortId'];
+					$resource->find();
+					if ($resource->N > 0){
+						$resource->fetch();
+						$checkedOutTitles[$timetitle]['isbn'] = $resource->isbn;
+						$checkedOutTitles[$timetitle]['id'] = $resource->record_id;
+						$checkedOutTitles[$timetitle]['author'] = $resource->author;
+					}
 
-				// }
+				}
+
+				$checkedOutTitles[$timetitle]['itemid'] = $value->itemRecordNum;
+				$checkedOutTitles[$timetitle]['renewIndicator'] = $value->itemRecordNum . "|" . ($scount + 1);
 				
-				// $scount++;
+				$scount++;
 
 			}
 
@@ -877,27 +883,7 @@ class EINetwork extends MillenniumDriver{
 
 		return $response->entries[0]->bibIds[0];
 
-		// if (isset($response->entries)){
-		// 	$header = array();
-		// 	$header[] = 'Content-length: 0';
-		// 	$header[] = 'Content-type: application/json';
-		// 	$header[] = 'Accept: application/marc-in-json';
-		// 	$header[] = "Authorization: " . $sierra_api_connect['token_type'] . " " . $sierra_api_connect['access_token'];
-
-		// 	$ch = curl_init("https://sierra-testapp.einetwork.net/iii/sierra-api/v1/bibs?id=" . $response->entries[0]->bibIds[0]);
-		// 	curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
-		// 	curl_setopt($ch, CURLOPT_USERAGENT,"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
-		// 	curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-		// 	curl_setopt($ch, CURLOPT_TIMEOUT, 30);
-		// 	curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
-		// 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
-
-		// 	return json_decode(curl_exec($ch));
-
-		// }
-
 	}
-
 
 }
 

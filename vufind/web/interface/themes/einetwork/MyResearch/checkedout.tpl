@@ -36,6 +36,11 @@
 	    {*******BEGIN checked out item list*****}
 	    <div class="item_renew">
 		<h3>{translate text='Physical Checked Out Items'}</h3>
+		{if $expand_physical_items == 1}
+			<p><a id="expand_physical_items" href="/MyResearch/CheckedOut" class="button"> Collapse Physical Items and Hide E-Content</a></p>
+		{else}
+			<p><a id="expand_physical_items" href="/MyResearch/CheckedOut/?expand_physical_items=1" class="button"> Expand Physical Items and Show E-Content</a></p>
+		{/if}
 		{if $patronCanRenew}
 			<div class="item_renew" style="text-align:right; padding-right:25px; padding-bottom:10px;" >
 			<a href="#" onclick="return renewSelectedTitles();" class="button"> Renew Selected Items</a> <img class="qtip-checked-out" src="/images/help_icon.png" />
@@ -48,8 +53,8 @@
 	    </div>
 	    <div class="checkout">
 		{foreach from=$transList item=record name="recordLoop" }
-		<div id="record{$record.id|escape}" class="item_list {if ($smarty.foreach.recordLoop.iteration % 2) == 0}alt{/if} {if ($smarty.foreach.recordLoop.iteration % 16) == 0}newpage{/if} record{$smarty.foreach.recordLoop.iteration}">
-		    <div class="item_image">
+		<div id="record{$record.id|escape}" class="item_list {if $expand_physical_items != 1}item_list_collapsed{/if} {if ($smarty.foreach.recordLoop.iteration % 2) == 0}alt{/if} {if ($smarty.foreach.recordLoop.iteration % 16) == 0}newpage{/if} record{$smarty.foreach.recordLoop.iteration}">
+		    <div class="item_image {if $expand_physical_items != 1}item_image_collapsed{/if}">
 			{if $user->disableCoverArt != 1}
 			    {if $record.id}
 				<a href="{$url}/Record/{$record.id|escape:"url"}" id="descriptionTrigger{$record.id|escape:"url"}">
@@ -59,7 +64,7 @@
 			{/if}
 		    </div>
 		    
-		    <div class="item_detail">
+		    <div class="item_detail {if $expand_physical_items != 1}item_detail_collapsed{/if}">
 			<div class="item_subject">
 			    {if $record.id}
 				<a href="{$url}/Record/{$record.id|escape:"url"}" class="title">
@@ -330,6 +335,11 @@
 			
 			{if $patronCanRenew}
 			<div class="item_renew">
+				{if $record.renewMessage}
+				<div class='{if $record.renewResult == true}renewPassed{else}renewFailed{/if}'">
+				{$record.renewMessage|escape}
+			      </div>
+			    {/if}
 			    {assign var=id value=$record.id scope="global"}
 			    {assign var=shortId value=$record.shortId scope="global"}
 			    {* disable renewals if the item is overdue *}  
@@ -337,11 +347,6 @@
 <!--				<input type="checkbox" disabled="disabled" name="selected[{$record.renewIndicator}]" class="titleSelect" id="selected{$record.itemid}" />&nbsp;&nbsp;Renew&nbsp;			    
 -->			    {else}
 				<input type="checkbox" name="selected[{$record.renewIndicator}]" class="titleSelect" id="selected{$record.itemid}" />&nbsp;&nbsp;Renew&nbsp;
-			    {/if}
-			    {if $record.renewMessage}
-				<div class='{if $record.renewResult == true}renewPassed{else}renewFailed{/if}' style="margin-top:10px">
-				{$record.renewMessage|escape}
-			      </div>
 			    {/if}
 			</div>
 			{/if}
@@ -357,6 +362,7 @@
 		{else}
 		    <font color="red"><b>Our apologies, you cannot renew items because {$renewalBlockReason}.  Please visit your local library to ensure access to all online service.  </a></b></font>
 		{/if}
+
 	    </div>
 	    </div>
 	    {*******END checked out item list*****}
@@ -367,6 +373,11 @@
 	    <div>
 		<h3>{translate text='eContent Checked Out Items'}</h3>
 	    </div>
+	    {if $expand_physical_items == 1}
+			<p><a id="expand_physical_items" href="/MyResearch/CheckedOut" class="item_renew button"> Collapse Physical Items and Hide E-Content</a></p>
+		{else}
+			<p><a id="expand_physical_items" href="/MyResearch/CheckedOut/?expand_physical_items=1" class="item_renew button"> Expand Physical Items and Show E-Content</a></p>
+		{/if}
 	    {if $user}
 	    {if count($overDriveCheckedOutItems) > 0}
 		<div class="checkout">
@@ -424,7 +435,9 @@
 			{/foreach}
 		</div>
 	    {else}
-		<div class='noItems' style="margin-left: 15px;">You do not have any titles from OverDrive checked out</div>
+	    {if $expand_physical_items == 1}
+			<div class='noItems' style="margin-left: 15px;">You do not have any titles from OverDrive checked out</div>
+		{/if}
 	    {/if}
 	    {/if}
 	    {*******END Overdrive items*********}
@@ -448,13 +461,13 @@
 				</div>
 				<div class="item_detail">
 					<div class="item_subject">
-					    {if $record.recordId != -1}
-						<a href="{$path}/EcontentRecord/{$record.recordId}/Home" class="title">
-					    {/if}
-					    {$record.title}
-					    {if $record.recordId != -1}
-						    </a>
-					    {/if}
+
+						{if $record.recordId != -1}
+							<a href="{$path}/EcontentRecord/{$record.recordId}/Home" class="title">{$record.title}</a>
+						{else}
+							{$record.title}
+						{/if}
+
 					    {if $record.record->subTitle}<br/>{$record.record->subTitle}{/if}
 					</div>
 					<div class="item_author">

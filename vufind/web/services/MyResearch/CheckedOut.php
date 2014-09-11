@@ -27,12 +27,6 @@ require_once 'CatalogConnection.php';
 require_once("PHPExcel.php");
 //END for holds
 
-
-//BEGIN for Overdrive Checkout Items
-//require_once 'Drivers/OverDriveDriverFactory.php';
-require_once 'sys/eContent/EContentRecord.php';
-//END for Overdrive Checkout Items
-
 class CheckedOut extends MyResearch{
 	function launch(){
 		
@@ -140,9 +134,9 @@ class CheckedOut extends MyResearch{
 					$page = 1;
 				}
 
-				//$result = $this->catalog->getMyTransactions($patron, $page, $recordsPerPage, $selectedSortOption);
-				$result = $this->catalog->getCheckedOutItems($patron, $page, $recordsPerPage, $selectedSortOption);
-				//$result = null;
+				$expand_physical_items = isset($_REQUEST['expand_physical_items']) ? $_REQUEST['expand_physical_items'] : null;
+
+				$result = $this->catalog->getCheckedOutItems($patron, $page, $recordsPerPage, $selectedSortOption, $expand_physical_items);
 				
 				$timer->logTime("Loaded transactions from catalog.");
 				if (!PEAR::isError($result)) {
@@ -291,120 +285,46 @@ class CheckedOut extends MyResearch{
 		$showPosition = ($ils == 'Horizon');
 		$interface->assign('showPosition', $showPosition);
 		
-		// // Get My Transactions
-		// if ($this->catalog->status) {
-
-		// 	if ($user->cat_username) {
-		// 		$patron = $this->catalog->patronLogin($user->cat_username, $user->cat_password);
-		// 		$patronResult = $this->catalog->getMyProfile($patron);
-		// 		if (!PEAR::isError($patronResult)) {
-		// 			$interface->assign('profile', $patronResult);
-		// 		}
-
-		// 		$interface->assign('sortOptions', $sortOptions);
-		// 		$selectedSortOption = isset($_REQUEST['accountSort']) ? $_REQUEST['accountSort'] : 'dueDate';
-		// 		$interface->assign('defaultSortOption', $selectedSortOption);
-		// 		$page = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;
-		// 		$patronResult = $this->catalog->getMyProfile($patron);
-		// 		$recordsPerPage = isset($_REQUEST['pagesize']) && (is_numeric($_REQUEST['pagesize'])) ? $_REQUEST['pagesize'] : 25;
-		// 		$interface->assign('recordsPerPage', $recordsPerPage);
-		// 		if (isset($_GET['exportToExcel'])) {
-		// 			$recordsPerPage = -1;
-		// 			$page = 1;
-		// 		}
-				
-		// 		$result = $this->catalog->getMyHolds($patron, $page, $recordsPerPage, $selectedSortOption);
-		// 		if (!PEAR::isError($result)) {
-		// 			if (count($result) > 0 ) {
-		// 				$location = new Location();
-		// 				$pickupBranches = $location->getPickupBranches($patronResult, null);
-		// 				$locationList = array();
-		// 				foreach ($pickupBranches as $curLocation) {
-		// 					$locationList[$curLocation->locationId] = $curLocation->displayName;
-		// 				}
-		// 				$interface->assign('pickupLocations', $locationList);
-
-		// 				$xnum = -01;
-		// 				foreach ($result['holds'] as $sectionKey => $sectionData) {
-		// 					if ($sectionKey == 'unavailable'){
-		// 						$link = $_SERVER['REQUEST_URI'];
-		// 						if (preg_match('/[&?]page=/', $link)){
-		// 							$link = preg_replace("/page=\\d+/", "page=%d", $link);
-		// 						}else if (strpos($link, "?") > 0){
-		// 							$link .= "&page=%d";
-		// 						}else{
-		// 							$link .= "?page=%d";
-		// 						}
-		// 						if ($recordsPerPage != '-1'){
-		// 							$options = array('totalItems' => $result['numUnavailableHolds'],
-		// 						                 'fileName'   => $link,
-		// 						                 'perPage'    => $recordsPerPage,
-		// 						                 'append'    => false,
-		// 							);
-		// 							$pager = new VuFindPager($options);
-		// 							$interface->assign('pageLinks', $pager->getLinks());
-		// 						}
-		// 					}
-							
-		// 					//Processing of freeze messages?
-		// 					$timer->logTime("Got recordList of holds to display");
-		// 				}
-		// 				//Make sure available holds come before unavailable
-		// 				$interface->assign('recordList', $result['holds']);
-
-		// 				//make call to export function
-		// 				if ((isset($_GET['exportToExcelAvailable'])) || (isset($_GET['exportToExcelUnavailable']))){
-		// 					if (isset($_GET['exportToExcelAvailable'])) {
-		// 						$exportType = "available";
-		// 					}
-		// 					else {
-		// 						$exportType = "unavailable";
-		// 					}
-		// 					$this->exportToExcel($result['holds'], $exportType, $showDateWhenSuspending);
-		// 				}
-
-		// 			} else {
-		// 				$interface->assign('recordList', 'You do not have any holds');
-		// 			}
-		// 		}
-		// 	}
-		// }
-		
-		
-		
 		/**BEGIN for Overdrive Checkout Items**/
-		//$overDriveDriver = new OverDriveDriver();
-		// $overDriveDriver = OverDriveDriverFactory::getDriver();
-		// $overDriveCheckedOutItems = $overDriveDriver->getOverDriveCheckedOutItems($user);
-		// //Load the full record for each item in the wishlist
-		// foreach ($overDriveCheckedOutItems['items'] as $key => $item){
 
-		// 	if ($item['recordId'] != -1){
-		// 		$econtentRecord = new EContentRecord();
-		// 		$econtentRecord->id = $item['recordId'];
-		// 		$econtentRecord->find(true);
-		// 		$item['record'] = clone($econtentRecord);
-		// 	} else{
-		// 		$item['record'] = null;
-		// 	}
-		// 	$overDriveCheckedOutItems['items'][$key] = $item;
-		// }
-		
-		// $sortOptions = array(
-		// 		'title'   => 'Title',
-		// 		'author'  => 'Author',
-		// 		'format'  => 'Format',
-		// 		);
-		// $interface->assign('sortOptions', $sortOptions);
+		if (isset($expand_physical_items)){
 
-		// // echo "<pre>";
-		// // print_r($overDriveCheckedOutItems['items']);
-		// // echo "</pre>";
+			$interface->assign('expand_physical_items', $expand_physical_items);
+
+			require_once 'Drivers/OverDriveDriverFactory.php';
+			require_once 'sys/eContent/EContentRecord.php';
+
+			$overDriveDriver = OverDriveDriverFactory::getDriver();
+			$overDriveCheckedOutItems = $overDriveDriver->getOverDriveCheckedOutItems($user);
+			//Load the full record for each item in the wishlist
+			foreach ($overDriveCheckedOutItems['items'] as $key => $item){
+
+				if ($item['recordId'] != -1){
+					$econtentRecord = new EContentRecord();
+					$econtentRecord->id = $item['recordId'];
+					$econtentRecord->find(true);
+					$item['record'] = clone($econtentRecord);
+				} else{
+					$item['record'] = null;
+				}
+				$overDriveCheckedOutItems['items'][$key] = $item;
+			}
+
+			$interface->assign('overDriveCheckedOutItems', $overDriveCheckedOutItems['items']);
+			$interface->assign('ButtonBack',true);
+			$interface->assign('ButtonHome',true);
+			$interface->assign('MobileTitle','OverDrive Checked Out Items');
+
+		}
+
 		
-		// $interface->assign('overDriveCheckedOutItems', $overDriveCheckedOutItems['items']);
-		// $interface->assign('ButtonBack',true);
-		// $interface->assign('ButtonHome',true);
-		// $interface->assign('MobileTitle','OverDrive Checked Out Items');
+		
+		$sortOptions = array(
+				'title'   => 'Title',
+				'author'  => 'Author',
+				'format'  => 'Format',
+				);
+		$interface->assign('sortOptions', $sortOptions);
 		
 		/**END for Overdrive Checkout Items**/
 		

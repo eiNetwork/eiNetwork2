@@ -37,7 +37,7 @@
       {css filename="/ei_css/footer.css"}
       {css filename="/ei_css/login.css"}
       {css filename="/ei_css/get-card.css"}
-      {css filename="my-account.css"}
+      <link rel="stylesheet" href="/interface/themes/einetwork/css/my-account.css?v4.2" type="text/css" media="screen" />
       {css filename="ratings.css"}
       {css filename="book-bag.css"}
       {css filename="jquery.tooltip.css"}
