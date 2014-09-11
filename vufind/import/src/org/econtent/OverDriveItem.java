@@ -12,6 +12,8 @@ public class OverDriveItem {
 	public String sampleUrl_1;
 	public String sampleName_2;
 	public String sampleUrl_2;
+	//BA++ add Author;
+	private String author;
 	
 	public String getFormatId() {
 		return formatId;
@@ -78,6 +80,12 @@ public class OverDriveItem {
 	}
 	public void setSampleUrl_2(String sampleUrl_2) {
 		this.sampleUrl_2 = sampleUrl_2;
+	}
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+	public String getAuthor() {
+		return author;
 	}
 	
 	

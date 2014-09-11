@@ -730,4 +730,10 @@ public class AlphaBrowseProcessor implements IMarcRecordProcessor, IEContentProc
 		return results;
 	}
 
+	@Override
+	public boolean processEContentRecord(ResultSet eContentRecord) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

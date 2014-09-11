@@ -625,9 +625,16 @@ public class UpdateResourceInformation implements IMarcRecordProcessor, IEConten
 				boolean updateResource = false;
 				long resourceUpdateTime = existingResource.getLong("date_updated");
 				long econtentUpdateTime = allEContent.getLong("date_updated");
-				if (econtentUpdateTime > resourceUpdateTime){
+				//BA++ always update until we can find a way to see if updated by marc record
+				/*if (econtentUpdateTime > resourceUpdateTime){
 					updateResource = true;
 				}
+				String ilsId = allEContent.getString("ilsId");
+				String marcRecord = allEContent.getString("marcRecord");
+				if (updateUnchangedResources  || ilsId == null){
+					updateResource = true;
+				}*/
+				updateResource = true;
 				if (updateResource){
 					logger.debug("Updating Resource for eContentRecord " + econtentId);
 					updateResourceStmt.setString(1, econtentId);
@@ -657,7 +664,7 @@ public class UpdateResourceInformation implements IMarcRecordProcessor, IEConten
 				}
 			}else{
 				//Insert a new resource
-				//System.out.println("Adding resource for eContentRecord " + econtentId);
+				
 				addResourceStmt.setString(1, econtentId);
 				addResourceStmt.setString(2, Util.trimTo(255, title));
 				addResourceStmt.setString(3, "eContent");
@@ -675,6 +682,8 @@ public class UpdateResourceInformation implements IMarcRecordProcessor, IEConten
 					results.incErrors();
 					results.addNote("Resource not added for econtent record");
 				}else{
+					//BA+ added
+					System.out.println("Adding resource for eContentRecord " + econtentId);
 					results.incAdded();
 				}
 			}
@@ -689,5 +698,11 @@ public class UpdateResourceInformation implements IMarcRecordProcessor, IEConten
 				results.saveResults();
 			}
 		}
+	}
+
+	@Override
+	public boolean processEContentRecord(ResultSet eContentRecord) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }
