@@ -2091,6 +2091,7 @@ public class MarcRecordDetails {
 		
 	}
 
+
 	static Pattern steamboatJuvenileCodes = Pattern.compile("^(ssbj[aejlnpuvkbrm]|ssbyl|ssc.*|sst.*)$");
 	static Pattern evldJuvenileCodes = Pattern.compile("^(evabd|evaj|evajs|evebd|evej|evejs|evgbd|evgj|evgjs|evj|evajn|evejn|evgjn)$");
 	static Pattern mcpldJuvenileCodes = Pattern.compile("^(mpbj|mpcj|mpdj|mpfj|mpgj|mpmj|mpmja|mpmjm|mpmjn|mpoj|mppj|mpcja|mpfja|mppja|mpbja|mpdja|mpoja|mpgja)$");
@@ -2177,14 +2178,53 @@ public class MarcRecordDetails {
 	}
 
 	public Set<String> getFormatFromCollectionOrStd(String collectionFieldSpec, String returnFirst) {
+		Set<String> result = new LinkedHashSet<String>();
 		String collection = getFirstFieldVal(collectionFieldSpec);
 		if (collection != null) {
-			Set<String> result = new LinkedHashSet<String>();
-			result.add(collection);
-			return result;
-		} else {
-			return getFormat(returnFirst);
+			result.add(collection);			
+			//return result;
+		} /*else {
+			result = getFormat(returnFirst);
+		}*/
+		//BA++++   Retrieve Item Type information
+		//logger.info("START iType fields " );
+		@SuppressWarnings("unchecked")
+		List<DataField> fields = record.getVariableFields("945");
+		Iterator<DataField> fieldsIter = fields.iterator();
+		if (fields != null) {
+			DataField iType;
+			while (fieldsIter.hasNext()) {
+				//logger.info("iType fields " );
+				iType = (DataField) fieldsIter.next();
+				@SuppressWarnings("unchecked")
+				List<Subfield> subfields = iType.getSubfields('t');
+				Iterator<Subfield> subfieldsIter = subfields.iterator();
+				if (subfields != null) {
+					String iTypes = null;
+					while (subfieldsIter.hasNext()) {
+						Subfield curSubfield = subfieldsIter.next();
+						iTypes = curSubfield.getData();
+						if ( iTypes.equals("50") || 
+							 iTypes.equals("51") || 
+							 iTypes.equals("52") || 
+							 iTypes.equals("69") || 
+							 iTypes.equals("151") || 
+							 iTypes.equals("181") ) {
+								result.add(iTypes);							
+						}
+					}
+				}
+			}
 		}
+		//BA+++ Internet Link added for Digital Collection items to ensure it has a eResource format.
+		if (addDigitalCatalog() && !result.contains("69")) {
+			result.add("52");
+		}			
+		if ( result.isEmpty()) {
+			result = getFormat(returnFirst);
+		}			
+		//logger.info("iTypes " + result );
+		return result;
 	}
 
 	/**
@@ -3135,7 +3175,7 @@ public class MarcRecordDetails {
 						if (dueDate.length() < 5){
 							String locationFacet = getLocationFacetForLocation(location);
 							result.add(locationFacet);
-							logger.debug("adding available at location " + locationFacet  );
+							//logger.debug("adding available at location " + locationFacet  );
 						}
 					}
 				//}else{
@@ -3666,8 +3706,7 @@ public class MarcRecordDetails {
 	}
 	
 	//BA++++++ ADD Digital Collection
-	public boolean addDigitalCatalog() {
-		
+	public boolean addDigitalCatalog() {		
 		boolean ret = false;
 		@SuppressWarnings("unchecked")
 		List<VariableField> itemRecords = record.getVariableFields("945");
@@ -3683,6 +3722,27 @@ public class MarcRecordDetails {
 				ret = true;			
 			}
 		}
+		return ret;
+	}
+	
+	//BA++  Placeholder for Author for Films
+	
+	public String getAuthorFromTitleRes() {
+		String ret = null;		
+		Set<String> input = getFieldList(record, "245c");
+		Iterator<String> iter = input.iterator();
+		while (iter.hasNext()) {
+			String titleRes = iter.next();
+			try {
+				if ( titleRes.contains("Woody Allen"))
+					ret = "Allen, Woody";				
+				return ret;
+			} catch (Exception ex) {
+				// Syntax error in the regular expression
+				logger.error("getAuthorFromTitleRes " + ex );
+			}
+		}					
+		//logger.info("iTypes " + result );
 		return ret;
 	}
 

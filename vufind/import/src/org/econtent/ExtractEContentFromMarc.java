@@ -355,10 +355,10 @@ public class ExtractEContentFromMarc implements IMarcRecordProcessor, IRecordPro
 			Long libraryId = getLibraryIdForOverDriveAccount(libraryName);
 			for (int i = 0; i < numProducts; i += batchSize){
 				logger.debug("Processing " + libraryName + " batch from " + i + " to " + (i + batchSize));
-				String batchUrl = mainProductUrl + "?offset=" + i + "&limit=" + batchSize;
+				String batchUrl = mainProductUrl + "?offset=" + i + "&limit=" + batchSize + "&sort=dateadded:asc";
 				JSONObject productBatchInfo = callOverDriveURL(batchUrl);
 				JSONArray products = productBatchInfo.getJSONArray("products");
-				for(int j = 0; j <products.length(); j++ ){
+				for(int j = 0; j < products.length(); j++ ){
 					JSONObject curProduct = products.getJSONObject(j);
 					OverDriveRecordInfo curRecord = loadOverDriveRecordFromJSON(libraryName, curProduct);
 					if (libraryId == -1){
@@ -390,7 +390,7 @@ public class ExtractEContentFromMarc implements IMarcRecordProcessor, IRecordPro
 	private OverDriveRecordInfo loadOverDriveRecordFromJSON(String libraryName, JSONObject curProduct) throws JSONException {
 		OverDriveRecordInfo curRecord = new OverDriveRecordInfo();
 		curRecord.setId(curProduct.getString("id"));
-		//logger.debug("Processing overdrive title " + curRecord.getId());
+		logger.debug("Processing overdrive title " + curRecord.getId());
 		//BA+++  sortTitle
 		curRecord.setTitle(curProduct.getString("title"));
 		curRecord.setSortTitle(curProduct.getString("sortTitle"));
@@ -398,7 +398,7 @@ public class ExtractEContentFromMarc implements IMarcRecordProcessor, IRecordPro
 		if (curProduct.has("series")){
 			curRecord.setSeries(curProduct.getString("series"));
 		}
-		//BA+++Author ok for Marc?
+		//BA+++Author ok for Marc  being updated to FileAs (lastname, firstname)?
 		if (curProduct.has("primaryCreator")){
 			curRecord.setAuthor(curProduct.getJSONObject("primaryCreator").getString("name"));
 		}
@@ -950,7 +950,6 @@ public class ExtractEContentFromMarc implements IMarcRecordProcessor, IRecordPro
 		boolean itemsAdded = true;
 		if (source.toLowerCase().startsWith("gutenberg")){
 			attachGutenbergItems(recordInfo, eContentRecordId, logger);
-			//BA+++++  Overdrive
 		}else if (source.toLowerCase().startsWith("overdrive")){
 			itemsAdded = setupOverDriveItems(recordInfo, eContentRecordId, detectionSettings, logger);
 		}else if (detectionSettings.isAdd856FieldsAsExternalLinks()){
@@ -967,7 +966,7 @@ public class ExtractEContentFromMarc implements IMarcRecordProcessor, IRecordPro
 			boolean recordUpdated) throws SQLException, IOException {
 		logger.debug("Updating ilsId " + ilsId + " recordId " + eContentRecordId);
 		int curField = 1;
-		//BA+++ Author from primary Creator
+		//BA+++ Author from primary Creator update not done now.  retrieved from fileAs and updated later.
 		updateEContentRecord.setString(curField++, recordInfo.getId());
 		updateEContentRecord.setString(curField++, cover);
 		updateEContentRecord.setString(curField++, source);
@@ -1496,7 +1495,7 @@ public class ExtractEContentFromMarc implements IMarcRecordProcessor, IRecordPro
 		
 		return true;		
 	}	
-	//BA++++ Setting --- TAKE OUT COUNTER for test with OD on and marc sample file so only 200 records added for - 
+	//BA++++ Setting --- TAKE OUT COUNTER for test with OD on and marc sample file so only 200 records added - 
 	private void addOverDriveTitlesWithoutMarcToIndex(){
 		results.addNote("Adding OverDrive titles without marc records to index");
 		//int ctr = 0;
