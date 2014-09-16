@@ -704,7 +704,7 @@ class EINetwork extends MillenniumDriver{
 		return $str;
 	}
 
-	public function getMyMillItems($barcode, $forceReload = true){
+	public function getMyMillItems($barcode, $forceReload = false){
 
 		global $configArray;
 		global $memcache;
@@ -750,11 +750,15 @@ class EINetwork extends MillenniumDriver{
 
 	public function getCheckedOutItems($patron, $page = 1, $recordsPerPage = -1, $sortOption = 'dueDate', $expand_physical_items){
 
+		global $memcache, $configArray;
+
 		$mymill_items = $this->getMyMillItems($patron['cat_username']);
 
 		$scount = 0;
 		$numTransactions = 0;
+		$update_cache = 0;
 
+		$curTitle = array();
 		$checkedOutTitles = array();
 
 		if (isset($mymill_items->response->checkedOutItems)){
@@ -765,46 +769,83 @@ class EINetwork extends MillenniumDriver{
 
 				$now = time();
 				$duedate = strtotime($value->dueDate);
-				$timetitle = $duedate  . '-' . $scount . '-' . $value->titleProper;
 
-				$checkedOutTitles[$timetitle]['duedate'] = $duedate;
-				$checkedOutTitles[$timetitle]['title'] = $value->titleProper;
-				$checkedOutTitles[$timetitle]['renewCount'] = $value->renewals;
+				if ($duedate != null){
+					$daysUntilDue = ceil(($duedate - time()) / (24 * 60 * 60));
+					$overdue = $daysUntilDue < 0;
+					$curTitle['duedate'] = $duedate;
+					$curTitle['overdue'] = $overdue;
+					$curTitle['daysUntilDue'] = $daysUntilDue;
+				}
+				$curTitle['title'] = $value->titleProper;
+				$curTitle['renewCount'] = $value->renewals;
 				if ($duedate < $now){
-					$checkedOutTitles[$timetitle]['overdue'] = 1;
+					$curTitle['overdue'] = 1;
 				} else {
-					$checkedOutTitles[$timetitle]['overdue'] = 0;
+					$curTitle['overdue'] = 0;
 				}
 
 				$item_id = str_replace('i', '', $value->itemRecordNum);
 
-				if ($expand_physical_items > 0){
-					$sierra_api_bibid = $this->sierra_api_request($this->sierra_api_connect(), $item_id);
-				} else {
-					$sierra_api_bibid = null;
+				$bibRecordNum = isset($value->bibRecordNum) ? $value->bibRecordNum : null;
+
+				if (!isset($bibRecordNum) && $expand_physical_items > 0){
+					$bibRecordNum = $this->sierra_api_request($this->sierra_api_connect(), $item_id);
+					$mymill_items->response->checkedOutItems[$scount]->bibRecordNum = $bibRecordNum;
+					$update_cache = 1;
 				}
 
-				if (isset($sierra_api_bibid)){
-
-					$checkedOutTitles[$timetitle]['shortId'] = (isset($sierra_api_bibid)) ? "b" . $sierra_api_bibid : null;
+				if (!empty($bibRecordNum)){
+					
+					$curTitle['shortId'] = (isset($bibRecordNum)) ? "b" . $bibRecordNum : null;
 
 					$resource = new Resource();
 					$resource->shortId = $checkedOutTitles[$timetitle]['shortId'];
 					$resource->find();
 					if ($resource->N > 0){
 						$resource->fetch();
-						$checkedOutTitles[$timetitle]['isbn'] = $resource->isbn;
-						$checkedOutTitles[$timetitle]['id'] = $resource->record_id;
-						$checkedOutTitles[$timetitle]['author'] = $resource->author;
+						$curTitle['isbn'] = $resource->isbn;
+						$curTitle['id'] = $resource->record_id;
+						$curTitle['author'] = $resource->author;
+						$curTitle['format'] = $resource->format;
 					}
 
 				}
 
-				$checkedOutTitles[$timetitle]['itemid'] = $value->itemRecordNum;
-				$checkedOutTitles[$timetitle]['renewIndicator'] = $value->itemRecordNum . "|" . ($scount + 1);
+				$curTitle['itemid'] = $value->itemRecordNum;
+				$curTitle['renewIndicator'] = $value->itemRecordNum . "|" . ($scount + 1);
+
+				if ($sortOption == 'title'){
+					$sortKey =  $curTitle['title'];
+				} elseif ($sortOption == 'author'){
+					$sortKey = $curTitle['author'];
+				} elseif ($sortOption == 'format'){
+					$sortKey = $curTitle['format'];
+				} else {
+					$sortKey = $duedate;
+				}
+
+				$checkedOutTitles[$sortKey]['duedate'] = $curTitle['duedate'];
+				$checkedOutTitles[$sortKey]['overdue'] = $curTitle['overdue'];
+				$checkedOutTitles[$sortKey]['daysUntilDue'] = $curTitle['daysUntilDue'];
+				$checkedOutTitles[$sortKey]['title'] = $curTitle['title'];
+				$checkedOutTitles[$sortKey]['renewCount'] = $curTitle['renewCount'];
+				$checkedOutTitles[$sortKey]['overdue'] = $curTitle['overdue'];
+				$checkedOutTitles[$sortKey]['shortId'] = isset($curTitle['shortId']) ? $curTitle['shortId'] : null;
+				$checkedOutTitles[$sortKey]['isbn'] = isset($curTitle['isbn']) ? $curTitle['isbn'] : null;
+				$checkedOutTitles[$sortKey]['id'] = isset($curTitle['id']) ? $curTitle['id'] : null;
+				$checkedOutTitles[$sortKey]['author'] = isset($curTitle['author']) ? $curTitle['author'] : null;
+				$checkedOutTitles[$sortKey]['format'] = isset($curTitle['format']) ? $curTitle['format'] : null;
+				$checkedOutTitles[$sortKey]['itemid'] = $curTitle['itemid'];
+				$checkedOutTitles[$sortKey]['renewIndicator'] = $curTitle['renewIndicator'];
 				
 				$scount++;
 
+			}
+
+			if ($update_cache){
+				$barcode = $patron['cat_username'];
+				$memcache->set("mymill_items_$barcode", $mymill_items, 0, $configArray['Caching']['mymill_items']);
 			}
 
 			ksort($checkedOutTitles);
@@ -837,14 +878,14 @@ class EINetwork extends MillenniumDriver{
 
 		if (!$sierra_api_connect || $forceReload){
 
-			$ch = curl_init("https://sierra-testapp.einetwork.net/iii/sierra-api/v1/token");
+			$ch = curl_init("https://iiisy1.einetwork.net/iii/sierra-api/v1/token");
 			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
 			curl_setopt($ch, CURLOPT_USERAGENT,"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
 			curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded;charset=UTF-8'));
-			curl_setopt($ch, CURLOPT_USERPWD, "qXLIFRZ/wW1h9Av+BISnOqXPCaPi:goldcrest");
+			curl_setopt($ch, CURLOPT_USERPWD, "J18khCmzE4cRf3tlGH+pDh5RfI+w:Qu3hepru");
 			curl_setopt($ch, CURLOPT_TIMEOUT, 30);
 			curl_setopt($ch, CURLOPT_POST, 1);
 			curl_setopt($ch, CURLOPT_POSTFIELDS, "grant_type=client_credentials");
@@ -871,7 +912,7 @@ class EINetwork extends MillenniumDriver{
 		$header[] = 'Accept: application/marc-in-json';
 		$header[] = "Authorization: " . $sierra_api_connect['token_type'] . " " . $sierra_api_connect['access_token'];
 
-		$ch = curl_init("https://sierra-testapp.einetwork.net/iii/sierra-api/v1/items?id=" . $item_id);
+		$ch = curl_init("https://iiisy1.einetwork.net/iii/sierra-api/v1/items?id=" . $item_id);
 		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
 		curl_setopt($ch, CURLOPT_USERAGENT,"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
@@ -882,6 +923,20 @@ class EINetwork extends MillenniumDriver{
 		$response = json_decode(curl_exec($ch));
 
 		return $response->entries[0]->bibIds[0];
+
+		// $ch = curl_init("https://iiisy1.einetwork.net/iii/sierra-api/v1/bibs?id=" . $bib_id);
+		// curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
+		// curl_setopt($ch, CURLOPT_USERAGENT,"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
+		// curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+		// curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+		// curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+		// curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+
+		// $response = json_decode(curl_exec($ch));
+
+		// echo "<pre>";
+		// print_r($response);
+		// echo "</pre>";
 
 	}
 

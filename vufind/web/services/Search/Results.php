@@ -323,6 +323,9 @@ class Results extends Action {
 					$temp[] = array_slice($flat, ($i*10), 10, 1);
 				}
 				$interface->assign('tree', $temp);
+				echo "<pre>";
+				print_r($temp);
+				echo "</pre>";
 				$tree_html = $interface->fetch('Search/facet_popup.tpl');
 				$interface->assign('tree_html', $tree_html);
 			}

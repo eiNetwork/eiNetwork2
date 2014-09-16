@@ -346,5 +346,45 @@
 	display: inline-block;
 	margin:20px 0 10px 0;
 	height: 14px !important;
+	width:240px;
 	background: rgb(242,213,56);
+}
+
+table.checkouts {
+	margin:0 0 0 -20px;
+	width: 100%;
+}
+
+table.checkouts td {
+	padding:4px;
+}
+
+table.checkouts .bookcover {
+	padding:3px;
+	border:solid #c0c0c0 1px;
+	width:75px;
+	height:108px;
+}
+
+table.checkouts .title {
+	padding-top:10px;
+	font-size:10pt;
+	font-weight: bold;
+}
+
+table.checkouts .spacer {
+	padding:0 0 10px 0;
+	border-bottom:1px #c0c0c0 solid;
+}
+
+table.checkouts .renew_pass {
+	background-color: #009966;
+	color: #fff;
+	font-weight: bold;
+}
+
+table.checkouts .renew_fail {
+	background-color: #f00;
+	color: #fff;
+	font-weight: bold;
 }

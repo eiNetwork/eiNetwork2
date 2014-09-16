@@ -3001,12 +3001,12 @@ class MillenniumDriver implements DriverInterface
 	}
 
 	public function renewItem($patronId, $data){
-		global $logger;
-		global $configArray;
+		global $logger, $configArray, $memcache;
 
 		//Setup the call to Millennium
 		$id2= $patronId;
-		$patronDump = $this->_getPatronDump($this->_getBarcode());
+		$barcode = $this->_getBarcode();
+		$patronDump = $this->_getPatronDump($barcode);
 
 		$post_values['currentsortorder'] = 'current_checkout';
 		$post_values['renewsome'] = 'YES';
@@ -3063,6 +3063,8 @@ class MillenniumDriver implements DriverInterface
 		
 		curl_close($curl_connection);
 		unlink($cookieJar);
+
+		$memcache->delete("mymill_items_$barcode");
 
 		/*
 		if ($success){
