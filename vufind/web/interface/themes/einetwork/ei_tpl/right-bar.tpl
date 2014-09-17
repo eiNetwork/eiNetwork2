@@ -189,6 +189,19 @@
     {/php}    
     <div class="recommendations">
 	
+	<!-- What's New Queries display here -->
+	<div id="newdvd">
+            <a href="{$url}/Search/Results?lookfor=&type=Keyword&basicType=Keyword&filter[]=time_since_added%3A%22Week%22&Keyword&filter[]=time_since_added%3A%22Month%22&filter[]=format%3A%22DVD%22&sort=year&view=list&searchSource=local">New DVDs</a>
+        </div>
+	
+	<div id="newblu">
+            <a href="{$url}/Search/Results?lookfor=&type=Keyword&basicType=Keyword&filter[]=time_since_added%3A%22Week%22&filter[]=time_since_added%3A%22Month%22&filter[]=format%3A%22Blu-Ray%22&sort=year&view=list&searchSource=local">New Blu-Rays</a>
+        </div>
+	
+	<div id="newebooks">
+            <a href="{$url}/Search/Results?lookfor=&type=Keyword&basicType=Keyword&filter[]=time_since_added%3A%22Week%22&filter[]=time_since_added%3A%22Month%22&filter[]=format%3A%22Ebook+Download%22&filter[]=format%3A%22Adobe+EPUB%20eBook%22&filter[]=format%3A%22Kindle+Book%22&filter[]=format%3A%22Adobe+PDF%20eBook%22&filter[]=format%3A%22OverDrive+Read%22&sort=year&view=list&searchSource=local">New eBooks</a>
+        </div>
+	
 	<!-- featured lists display here -->
         <div id="title1">
             <a href="{$url}/MyResearch/MyList/1">{$Title1}</a>
@@ -196,7 +209,7 @@
         <div id="title2">
             <a href="{$url}/MyResearch/MyList/2">{$Title2}</a>
         </div>
-	<div id="title3">
+<!--	<div id="title3">
             <a href="{$url}/MyResearch/MyList/5924">{$Title3}</a>
         </div>
         <div id="title4">
@@ -205,7 +218,7 @@
         <div id="title5">
             <a href="{$url}/MyResearch/MyList/3">{$Title5}</a>
         </div>
-	<!-- end of featured lists -->
+-->	<!-- end of featured lists -->
 	
         <div id="articles">
             <a href="http://articles.einetwork.net">Databases and Articles</a>

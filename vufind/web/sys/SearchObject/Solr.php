@@ -1528,6 +1528,7 @@ class SearchObject_Solr extends SearchObject_Base
 			$doInstitutionProcessing = false;
 			$foundBranch = false;
 			$doBranchProcessing = false;
+                        $doTimeProcessing = false;
 
 			//Marmot specific processing to do custom resorting of facets.
 			if ($field == 'institution' && isset($currentLibrary) && !is_null($currentLibrary)){
@@ -1537,6 +1538,8 @@ class SearchObject_Solr extends SearchObject_Base
 				$doBranchProcessing = true;
 			}elseif($field == 'available_at'){
 				$doBranchProcessing = true;
+			}elseif($field == 'time_since_added'){
+				$doTimeProcessing = true;                        
 			}
 			// Should we translate values for the current facet?
 			$translate = in_array($field, $this->translatedFacets);
@@ -1617,6 +1620,26 @@ class SearchObject_Solr extends SearchObject_Base
 							$numValidRelatedLocations++;
 						}
 					}
+				}else if ($doTimeProcessing){
+					if (strlen($facet[0]) > 0){
+						if ($facet[0] == 'Week'){
+							$valueKey = '1' . $valueKey;
+						}elseif ($facet[0] == 'Month'){
+                                                        $valueKey = '2' . $valueKey;
+						}elseif ($facet[0] == '2 Months'){
+                                                        $valueKey = '3' . $valueKey;
+                                                }elseif ($facet[0] == 'Quarter'){
+                                                        $valueKey = '4' . $valueKey;
+                                                }elseif ($facet[0] == 'Six Months'){
+                                                        $valueKey = '5' . $valueKey;
+                                                }elseif ($facet[0] == 'Year'){
+                                                        $valueKey = '6' . $valueKey;
+                                                }elseif (preg_match('/^[1-9] Years/', $facet[0]) == 1){
+                                                        $valueKey = '7' . $valueKey;
+						}else{
+							$valueKey = '8' . $valueKey;
+						}
+					}
 				}
 
 
@@ -1660,7 +1683,7 @@ class SearchObject_Solr extends SearchObject_Base
 
 			//Sort the facet alphabetically?
 			//Sort the system and location alphabetically unless we are in the global scope
-			if (in_array($field, array('institution', 'building', 'available_at', 'authorStr'))){
+			if (in_array($field, array('institution', 'building', 'available_at', 'authorStr', 'time_since_added'))){
 				$list[$field]['showAlphabetically'] = true;
 			}else{
 				$list[$field]['showAlphabetically'] = false;
