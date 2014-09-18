@@ -304,6 +304,7 @@ class Results extends Action {
 			$interface->assign('recordEnd',   $summary['endRecord']);
 
 			$facetSet = $searchObject->getFacetList();
+
 			$interface->assign('facetSet',       $facetSet);
 			if(isset($facetSet['format'])){
 				//$facetSet['format']['list'] = $this->sortFromMap('format_category_map.properties', $facetSet['format']['list'], 'All Books');
@@ -319,13 +320,10 @@ class Results extends Action {
 				$this->flatten_array($x, $flat, $i, $j, 0, 0);
 				//divide into columns
 				$temp = array();
-				for($i = 0; $i < ceil($j/10); $i++){
+				for($i = 0; $i < ceil($j/9); $i++){
 					$temp[] = array_slice($flat, ($i*10), 10, 1);
 				}
 				$interface->assign('tree', $temp);
-				echo "<pre>";
-				print_r($temp);
-				echo "</pre>";
 				$tree_html = $interface->fetch('Search/facet_popup.tpl');
 				$interface->assign('tree_html', $tree_html);
 			}

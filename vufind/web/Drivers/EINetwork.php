@@ -795,12 +795,12 @@ class EINetwork extends MillenniumDriver{
 					$update_cache = 1;
 				}
 
-				if (!empty($bibRecordNum)){
+				if (isset($bibRecordNum)){
 					
-					$curTitle['shortId'] = (isset($bibRecordNum)) ? "b" . $bibRecordNum : null;
+					$curTitle['shortId'] = "b" . $bibRecordNum;
 
 					$resource = new Resource();
-					$resource->shortId = $checkedOutTitles[$timetitle]['shortId'];
+					$resource->shortId = $curTitle['shortId'];
 					$resource->find();
 					if ($resource->N > 0){
 						$resource->fetch();
@@ -816,13 +816,13 @@ class EINetwork extends MillenniumDriver{
 				$curTitle['renewIndicator'] = $value->itemRecordNum . "|" . ($scount + 1);
 
 				if ($sortOption == 'title'){
-					$sortKey =  $curTitle['title'];
+					$sortKey =  $curTitle['title'] . '-' . $scount;
 				} elseif ($sortOption == 'author'){
-					$sortKey = $curTitle['author'];
+					$sortKey = $curTitle['author'] . '-' . $scount;
 				} elseif ($sortOption == 'format'){
-					$sortKey = $curTitle['format'];
+					$sortKey = $curTitle['format'] . '-' . $scount;
 				} else {
-					$sortKey = $duedate;
+					$sortKey = $duedate . '-' . $scount;
 				}
 
 				$checkedOutTitles[$sortKey]['duedate'] = $curTitle['duedate'];
