@@ -199,7 +199,7 @@
         </div>
 	
 	<div id="newebooks">
-            <a href="{$url}/Search/Results?lookfor=&type=Keyword&basicType=Keyword&filter[]=time_since_added%3A%22Week%22&filter[]=time_since_added%3A%22Month%22&filter[]=format%3A%22Ebook+Download%22&filter[]=format%3A%22Adobe+EPUB%20eBook%22&filter[]=format%3A%22Kindle+Book%22&filter[]=format%3A%22Adobe+PDF%20eBook%22&filter[]=format%3A%22OverDrive+Read%22&sort=year&view=list&searchSource=local">New eBooks</a>
+            <a href="{$url}/Search/Results?lookfor=&type=Keyword&basicType=Keyword&filter[]=time_since_added%3A%22Week%22&filter[]=time_since_added%3A%22Month%22&filter[]=format%3A%22Ebook+Download%22&filter[]=format%3A%22Adobe+EPUB%20eBook%22&filter[]=format%3A%22Kindle+Book%22&filter[]=format%3A%22Adobe+PDF%20eBook%22&filter[]=format%3A%22OverDrive+Read%22&sort=year&view=list&searchSource=0">New eBooks</a>
         </div>
 	
 	<!-- featured lists display here -->

@@ -1622,22 +1622,25 @@ class SearchObject_Solr extends SearchObject_Base
 					}
 				}else if ($doTimeProcessing){
 					if (strlen($facet[0]) > 0){
-						if ($facet[0] == 'Week'){
+						if ($facet[0] == 'Day'){
 							$valueKey = '1' . $valueKey;
-						}elseif ($facet[0] == 'Month'){
+						}elseif ($facet[0] == 'Week'){
                                                         $valueKey = '2' . $valueKey;
-						}elseif ($facet[0] == '2 Months'){
+						}elseif ($facet[0] == 'Month'){
                                                         $valueKey = '3' . $valueKey;
-                                                }elseif ($facet[0] == 'Quarter'){
+						}elseif ($facet[0] == '2 Months'){
                                                         $valueKey = '4' . $valueKey;
-                                                }elseif ($facet[0] == 'Six Months'){
+                                                }elseif ($facet[0] == 'Quarter'){
                                                         $valueKey = '5' . $valueKey;
-                                                }elseif ($facet[0] == 'Year'){
+                                                }elseif ($facet[0] == 'Six Months'){
                                                         $valueKey = '6' . $valueKey;
-                                                }elseif (preg_match('/^[1-9] Years/', $facet[0]) == 1){
+                                                }elseif ($facet[0] == 'Year'){
                                                         $valueKey = '7' . $valueKey;
+                                                }elseif (preg_match('/^[1-9] Years/', $facet[0]) == 1){
+                                                        $valueKey = '8' . $valueKey;
 						}else{
-							$valueKey = '8' . $valueKey;
+							$valueKey = '9' . $valueKey;
+                                                        unset($facet);
 						}
 					}
 				}
