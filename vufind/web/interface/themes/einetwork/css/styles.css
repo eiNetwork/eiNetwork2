@@ -2367,11 +2367,17 @@ ul.hold_items li {
 
 /* Renewal information */
 .renewPassed {
+	position: absolute;
+	margin:0px 0 0 -413px;
+	width:400px;
 	font-weight: bold;
 	color: green;
 }
 
 .renewFailed {
+	position: absolute;
+	margin:0px 0 0 -413px;
+	width:400px;
 	font-weight: bold;
 	color: red;
 }

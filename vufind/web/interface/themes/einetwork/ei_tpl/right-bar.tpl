@@ -101,6 +101,48 @@
             <a id="help-contents-link" href="/Help/Home?topic=contents">Catalog Help</a>
         </div>
     </div>
+    {literal}
+    <br>
+    <br>
+    <br>
+    <br>
+	<script type="text/javascript">
+	    $("#my-item-PlaceHolder").ready(function(){
+		$.getJSON(path + '/MyResearch/AJAX?method=getAllItems', function (data){
+		    if (data.error){
+		    }else{
+			if(data.SumOfCheckoutItems != 0){
+			    $("#my-item-PlaceHolder").text("("+data.SumOfCheckoutItems+")");
+			}
+			if(data.SumOfRequestItems != 0){
+			    $("#my-ruest-item-placeHolder").text(" ("+data.SumOfRequestItems+")");
+			}
+			setInterval("getRequestAndCheckout()",20000);
+		    }
+		}
+		)
+	    }
+	);
+	</script>
+    {/literal}
+    {literal}
+	<script type="text/javascript">
+	    function getRequestAndCheckout(){
+	    $.getJSON(path + '/MyResearch/AJAX?method=getAllItems', function (data){
+		if (data.error){
+		}else{
+		    if(data.SumOfCheckoutItems != 0){
+			$("#my-item-PlaceHolder").text("("+data.SumOfCheckoutItems+")");
+		    }
+		    if(data.SumOfRequestItems != 0){
+			$("#my-ruest-item-placeHolder").text(" ("+data.SumOfRequestItems+")");
+		    }
+		}
+	    }
+	    )
+	    }
+        </script>
+    {/literal}
 
     <p class="libraries-strong"><a href="http://www.pewinternet.org/quiz/library-typology/group/3200132" target="_blank" title="Library User Quiz"><img src="/images/new_survey1.png" alt="Library User Quiz" width="200" height="67" border="0" /></a></p>
     

@@ -19,6 +19,9 @@
  */
 require_once 'Drivers/Millennium.php';
 
+// for connection to sierra.
+require_once 'sys/postgresConnection.php';
+
 /**
  * VuFind Connector for Marmot's Innovative catalog (millenium)
  *
@@ -42,7 +45,6 @@ class EINetwork extends MillenniumDriver{
 	public function patronLogin($barcode, $pin)
 	{
 		global $configArray;
-		global $memcache;
 		global $timer;
 		
 		if (isset($_REQUEST['password2']) && strlen($_REQUEST['password2']) > 0){
@@ -192,7 +194,6 @@ class EINetwork extends MillenniumDriver{
 	public function patronPinreset()
 	{
 		global $configArray;
-		global $memcache;
 		global $timer;
 		
 		if (isset($_REQUEST['barcode']) && strlen($_REQUEST['barcode']) > 0){
@@ -692,13 +693,253 @@ class EINetwork extends MillenniumDriver{
 		}
 		return $return;
 	}
+
 	private function hrefRows($elements){
-			$str = array();
-			foreach ($elements as $element){
-				if($element->hasChildNodes()){
-					$str[] = $element->getAttribute('href');
-				}
+		$str = array();
+		foreach ($elements as $element){
+			if($element->hasChildNodes()){
+				$str[] = $element->getAttribute('href');
 			}
-			return $str;
 		}
+		return $str;
+	}
+
+	public function getMyMillItems($barcode, $forceReload = false){
+
+		global $configArray;
+		global $memcache;
+
+		$mymill_items = $memcache->get("mymill_items_$barcode");
+
+		if (!$mymill_items || $forceReload){
+
+			require_once 'sys/MyMillenniumConnect.php';
+			
+			// Location of WSDL file
+			$wsdl_url = $configArray['Site']['mymillennium'] . "/patroninfo.wsdl";
+
+			// Instantiate new SoapClient object in WSDL mode
+			$mymilconnect = new MyMillenniumConnect($wsdl_url);
+
+			$patronInfoRequest = array("request" =>
+				array(
+					"index" => 'barcode',
+					"query" => $barcode,
+					"username" => $configArray['Site']['mymillennium_user'],
+					"password" => $configArray['Site']['mymillennium_user']
+				)
+			);
+
+			try {
+				// Make SOAP request
+				$patronInfoResponse = $mymilconnect->patronInfo($patronInfoRequest);
+			} catch(SoapFault $exception) {
+				// Catch any problems and display the error code
+				$errorMessage = $exception->getMessage();
+			}
+
+			$mymill_items = $patronInfoResponse;
+
+			$memcache->set("mymill_items_$barcode", $mymill_items, 0, $configArray['Caching']['mymill_items']);
+		
+		}
+
+		return $mymill_items;
+
+	}
+
+	public function getCheckedOutItems($patron, $page = 1, $recordsPerPage = -1, $sortOption = 'dueDate', $expand_physical_items){
+
+		global $memcache, $configArray;
+
+		$mymill_items = $this->getMyMillItems($patron['cat_username']);
+
+		$scount = 0;
+		$numTransactions = 0;
+		$update_cache = 0;
+
+		$curTitle = array();
+		$checkedOutTitles = array();
+
+		if (isset($mymill_items->response->checkedOutItems)){
+
+			require_once 'services/MyResearch/lib/Resource.php';
+
+			foreach($mymill_items->response->checkedOutItems as $key => $value){
+
+				$now = time();
+				$duedate = strtotime($value->dueDate);
+
+				if ($duedate != null){
+					$daysUntilDue = ceil(($duedate - time()) / (24 * 60 * 60));
+					$overdue = $daysUntilDue < 0;
+					$curTitle['duedate'] = $duedate;
+					$curTitle['overdue'] = $overdue;
+					$curTitle['daysUntilDue'] = $daysUntilDue;
+				}
+				$curTitle['title'] = $value->titleProper;
+				$curTitle['renewCount'] = $value->renewals;
+				if ($duedate < $now){
+					$curTitle['overdue'] = 1;
+				} else {
+					$curTitle['overdue'] = 0;
+				}
+
+				$item_id = str_replace('i', '', $value->itemRecordNum);
+
+				$bibRecordNum = isset($value->bibRecordNum) ? $value->bibRecordNum : null;
+
+				if (!isset($bibRecordNum) && $expand_physical_items > 0){
+					$bibRecordNum = $this->sierra_api_request($this->sierra_api_connect(), $item_id);
+					$mymill_items->response->checkedOutItems[$scount]->bibRecordNum = $bibRecordNum;
+					$update_cache = 1;
+				}
+
+				if (isset($bibRecordNum)){
+					
+					$curTitle['shortId'] = "b" . $bibRecordNum;
+
+					$resource = new Resource();
+					$resource->shortId = $curTitle['shortId'];
+					$resource->find();
+					if ($resource->N > 0){
+						$resource->fetch();
+						$curTitle['isbn'] = $resource->isbn;
+						$curTitle['id'] = $resource->record_id;
+						$curTitle['author'] = $resource->author;
+						$curTitle['format'] = $resource->format;
+					}
+
+				}
+
+				$curTitle['itemid'] = $value->itemRecordNum;
+				$curTitle['renewIndicator'] = $value->itemRecordNum . "|" . ($scount + 1);
+
+				if ($sortOption == 'title'){
+					$sortKey =  $curTitle['title'] . '-' . $scount;
+				} elseif ($sortOption == 'author'){
+					$sortKey = $curTitle['author'] . '-' . $scount;
+				} elseif ($sortOption == 'format'){
+					$sortKey = $curTitle['format'] . '-' . $scount;
+				} else {
+					$sortKey = $duedate . '-' . $scount;
+				}
+
+				$checkedOutTitles[$sortKey]['duedate'] = $curTitle['duedate'];
+				$checkedOutTitles[$sortKey]['overdue'] = $curTitle['overdue'];
+				$checkedOutTitles[$sortKey]['daysUntilDue'] = $curTitle['daysUntilDue'];
+				$checkedOutTitles[$sortKey]['title'] = $curTitle['title'];
+				$checkedOutTitles[$sortKey]['renewCount'] = $curTitle['renewCount'];
+				$checkedOutTitles[$sortKey]['overdue'] = $curTitle['overdue'];
+				$checkedOutTitles[$sortKey]['shortId'] = isset($curTitle['shortId']) ? $curTitle['shortId'] : null;
+				$checkedOutTitles[$sortKey]['isbn'] = isset($curTitle['isbn']) ? $curTitle['isbn'] : null;
+				$checkedOutTitles[$sortKey]['id'] = isset($curTitle['id']) ? $curTitle['id'] : null;
+				$checkedOutTitles[$sortKey]['author'] = isset($curTitle['author']) ? $curTitle['author'] : null;
+				$checkedOutTitles[$sortKey]['format'] = isset($curTitle['format']) ? $curTitle['format'] : null;
+				$checkedOutTitles[$sortKey]['itemid'] = $curTitle['itemid'];
+				$checkedOutTitles[$sortKey]['renewIndicator'] = $curTitle['renewIndicator'];
+				
+				$scount++;
+
+			}
+
+			if ($update_cache){
+				$barcode = $patron['cat_username'];
+				$memcache->set("mymill_items_$barcode", $mymill_items, 0, $configArray['Caching']['mymill_items']);
+			}
+
+			ksort($checkedOutTitles);
+
+			$numTransactions = count($checkedOutTitles);
+			//Process pagination
+			if ($recordsPerPage != -1){
+				$startRecord = ($page - 1) * $recordsPerPage;
+				if ($startRecord > $numTransactions){
+					$page = 0;
+					$startRecord = 0;
+				}
+				$checkedOutTitles = array_slice($checkedOutTitles, $startRecord, $recordsPerPage);
+			}
+		}
+
+		return array(
+			'transactions' => $checkedOutTitles,
+			'numTransactions' => $numTransactions
+		);
+
+	}
+
+	private function sierra_api_connect($forceReload = true){
+
+		global $configArray;
+		global $memcache;
+
+		$sierra_api_connect = $memcache->get("sierra_api_connect");
+
+		if (!$sierra_api_connect || $forceReload){
+
+			$ch = curl_init("https://iiisy1.einetwork.net/iii/sierra-api/v1/token");
+			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
+			curl_setopt($ch, CURLOPT_USERAGENT,"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+			curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded;charset=UTF-8'));
+			curl_setopt($ch, CURLOPT_USERPWD, "J18khCmzE4cRf3tlGH+pDh5RfI+w:Qu3hepru");
+			curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+			curl_setopt($ch, CURLOPT_POST, 1);
+			curl_setopt($ch, CURLOPT_POSTFIELDS, "grant_type=client_credentials");
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+			$response = json_decode(curl_exec($ch));
+
+			$sierra_api_connect['access_token'] = $response->access_token;
+			$sierra_api_connect['token_type'] = $response->token_type;
+			$sierra_api_connect['expires_in'] = $response->expires_in;
+
+			$memcache->set("sierra_api_connect", $sierra_api_connect, 0, $sierra_api_connect['expires_in']);
+
+		}
+
+		return $sierra_api_connect;
+
+	}
+
+	private function sierra_api_request($sierra_api_connect, $item_id){
+
+		$header = array();
+		$header[] = 'Content-length: 0';
+		$header[] = 'Content-type: application/json';
+		$header[] = 'Accept: application/marc-in-json';
+		$header[] = "Authorization: " . $sierra_api_connect['token_type'] . " " . $sierra_api_connect['access_token'];
+
+		$ch = curl_init("https://iiisy1.einetwork.net/iii/sierra-api/v1/items?id=" . $item_id);
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
+		curl_setopt($ch, CURLOPT_USERAGENT,"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+
+		$response = json_decode(curl_exec($ch));
+
+		return $response->entries[0]->bibIds[0];
+
+		// $ch = curl_init("https://iiisy1.einetwork.net/iii/sierra-api/v1/bibs?id=" . $bib_id);
+		// curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
+		// curl_setopt($ch, CURLOPT_USERAGENT,"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
+		// curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+		// curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+		// curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+		// curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+
+		// $response = json_decode(curl_exec($ch));
+
+		// echo "<pre>";
+		// print_r($response);
+		// echo "</pre>";
+
+	}
+
 }
+
+?>

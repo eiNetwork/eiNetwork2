@@ -37,7 +37,7 @@ class AJAX extends Action {
 	function launch()
 	{
 		$method = $_GET['method'];
-		if (in_array($method, array('GetSuggestions', 'GetListTitles', 'getOverDriveSummary',"getAllItems", 'AddList','updatePreferredBranches', 'editEmailPrompt', 'getUnavailableHoldingInfo','saveNotificationPopupState'))){
+		if (in_array($method, array('GetSuggestions', 'GetListTitles', 'getOverDriveSummary',"getAllItems", 'AddList','updatePreferredBranches', 'editEmailPrompt', 'getUnavailableHoldingInfo','saveNotificationPopupState','overdrive_load_periods'))){
 			header('Content-type: text/plain');
 			header('Cache-Control: no-cache, must-revalidate'); // HTTP/1.1
 			header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
@@ -455,31 +455,11 @@ class AJAX extends Action {
 		global $user;
 		$catalog = new CatalogConnection($configArray['Catalog']['driver']);
 		if ($user !== false){
-			$interface->assign('user', $user);
-			// Get My Profile
-			if ($catalog->status) {
-				if ($user->cat_username) {
-					$patron = $catalog->patronLogin($user->cat_username, $user->cat_password);
-					if (PEAR::isError($patron)){
-						PEAR::raiseError($patron);
-					}
-					$profile = $catalog->getMyProfile($patron);
-					//$logger = new Logger();
-					//$logger->log("Patron profile phone number in MyResearch = " . $profile['phone'], PEAR_LOG_INFO);
-					if (!PEAR::isError($profile)) {
-						$interface->assign('profile', $profile);
-					}
-				}
-			}
-			$sum;
-			$sumOfCheckoutItems = $profile["numEContentCheckedOut"] + $profile["numCheckedOut"];
-			$sumOfRequestItems = $profile["numHoldsAvailable"]+$profile["numHoldsRequested"]+$profile["numEContentUnavailableHolds"]+$profile["numEContentWishList"];
-			require_once 'Drivers/OverDriveDriverFactory.php';
-			$overDriveDriver = OverDriveDriverFactory::getDriver();
-			$summary = $overDriveDriver->getOverDriveSummary($user);
-			$sumOfCheckoutItems += $summary["numCheckedOut"];
-			//$sumOfRequestItems = $sumOfRequestItems + $summary["numEContentWishList"] + $summary["numUnavailableHolds"];
-			$sumOfRequestItems += $summary["numAvailableHolds"] + $summary["numUnavailableHolds"];
+			$myMillItems = $catalog->getMyMillItems($user->cat_username);
+
+			$sumOfCheckoutItems = count($myMillItems->response->checkedOutItems);
+			$sumOfRequestItems = count($myMillItems->response->holds);
+
 			$sum["SumOfCheckoutItems"] = $sumOfCheckoutItems;
 			$sum["SumOfRequestItems"] = $sumOfRequestItems;
 			return json_encode($sum);
@@ -571,6 +551,22 @@ class AJAX extends Action {
 
 		// if true keep notification window closed on page load
 		$_SESSION['notification_popupstate'] = 1;
+
+	}
+
+	function overdrive_load_periods(){
+
+		global $user;
+
+		if ($user !== false){
+
+			require_once 'Drivers/OverDriveDriver2.php';
+			$overDriveDriver = new OverDriveDriver2();
+			$overDriveSummary = $overDriveDriver->getAccountDetails($user);
+
+			return json_encode($overDriveSummary);
+
+		}
 
 	}
 }

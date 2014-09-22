@@ -37,7 +37,7 @@
       {css filename="/ei_css/footer.css"}
       {css filename="/ei_css/login.css"}
       {css filename="/ei_css/get-card.css"}
-      {css filename="my-account.css"}
+      <link rel="stylesheet" href="/interface/themes/einetwork/css/my-account.css?v4.2" type="text/css" media="screen" />
       {css filename="ratings.css"}
       {css filename="book-bag.css"}
       {css filename="jquery.tooltip.css"}
@@ -81,7 +81,7 @@
       <script type="text/javascript" src="{$path}/services/Search/ajax.js?v3.0"></script>
       <script type="text/javascript" src="{$path}/services/Record/ajax.js?v3.0"></script>
       <script type="text/javascript" src="{$path}/js/ei_js/bookcart.js?v3.0"></script>  
-      <script type="text/javascript" src="{$path}/js/overdrive.js?v3.3.3"></script>
+      <script type="text/javascript" src="{$path}/js/overdrive.js?v3.3.4"></script>
     {/if}
     
     {* Files that should not be combined *}

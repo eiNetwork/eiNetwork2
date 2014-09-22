@@ -233,6 +233,8 @@
 						{if $smarty.foreach.lending.iteration is even}</tr>{/if}
 					{/foreach}
 				</table>
+			{else}
+				<input id="show_overdrive_lending_periods" class='button' type='button' value="Show OverDrive E-Content Lending Options" />
 			{/if}				
 		</div>
 
