@@ -1513,6 +1513,22 @@ class SearchObject_Solr extends SearchObject_Base
 		}
 
 		$allFacets = array_merge($this->indexResult['facet_counts']['facet_fields'], $this->indexResult['facet_counts']['facet_dates']);
+
+
+		$i = 0;
+		foreach($allFacets['time_since_added'] as $field => $data){
+
+			if ($data[0] == 'Week' || $data[0] == 'Month' || $data[0] == '2 Months'){
+				$time_since_added_options[$i][0] = $data[0];
+				$time_since_added_options[$i][1] = $data[1];
+			}
+
+			$i++;
+
+		}
+
+		$allFacets['time_since_added'] = $time_since_added_options;
+
 		foreach ($allFacets as $field => $data) {
 			// Skip filtered fields and empty arrays:
 			if (!in_array($field, $validFields) || count($data) < 1) {
