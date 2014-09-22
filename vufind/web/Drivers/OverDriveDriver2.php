@@ -295,7 +295,7 @@ class OverDriveDriver2 {
 	private function _parseLendingOptions($lendingPeriods){
 		$lendingOptions = array();
 		//print_r($lendingPeriods);
-		if (preg_match('/<script>.*?var hazVariableLending.*?<\/script>.*?<noscript>(.*?)<\/noscript>/si', $lendingPeriods, $matches)){
+		if (preg_match('/<noscript>(.*?)<\/noscript>/si', $lendingPeriods, $matches)){
 			preg_match_all('/<li>\\s?\\d+\\s-\\s(.*?)<select name="(.*?)">(.*?)<\/select><\/li>/si', $matches[1], $lendingPeriodInfo, PREG_SET_ORDER);
 			for ($i = 0; $i < count($lendingPeriodInfo); $i++){
 				$lendingOption = array();
@@ -409,7 +409,7 @@ class OverDriveDriver2 {
 
 			//Get lending options
 			if (preg_match('/<li id="myAccount4Tab">(.*?)<!-- myAccountContent -->/s', $accountPage, $matches)) {
-				$lendingOptionsSection = $matches[1];
+				$lendingOptionsSection = $matches[0];
 				$lendingOptions = $this->_parseLendingOptions($lendingOptionsSection);
 				$summary['lendingOptions'] = $lendingOptions;
 			}else{

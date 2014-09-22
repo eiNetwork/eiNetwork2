@@ -1590,7 +1590,7 @@ class MillenniumDriver implements DriverInterface
 					}
 
 					if (stripos($skeys[$i],"STATUS") > -1) {
-						// $sret[$scount-2]['duedate'] = strip_tags($scols[$i]);
+								
 						$due = trim(str_replace("DUE", "", strip_tags($scols[$i])));
 						$renewCount = 0;
 						if (preg_match('/FINE\(up to now\) (\$\d+\.\d+)/i', $due, $matches)){
@@ -2993,16 +2993,14 @@ class MillenniumDriver implements DriverInterface
 		}
 		UsageTracking::logTrackingData($hold_result['Renewed']);
 
-		// clear cached data
-		$memcache->delete("patron_info_dump_items_{$this->_getBarcode()}");
-		usleep(250);
+		// an attempt was made to place a renewal. Clear the patron info cache for this user.
+		$memcache->delete("patron_info_dump_items_" . $this->_getBarcode());
 
 		return $hold_result;
 	}
 
 	public function renewItem($patronId, $data){
-		global $logger;
-		global $configArray;
+		global $logger, $configArray, $memcache;
 
 		//Setup the call to Millennium
 		$id2= $patronId;
@@ -3060,14 +3058,12 @@ class MillenniumDriver implements DriverInterface
 		$html = curl_exec($curl_connection);
 
 		$parse_result = $this->parseRenewals($html);
-		
+
+		// an attempt was made to place a renewal. Clear the patron info cache for this user.
+		$memcache->delete("patron_info_dump_items_" . $this->_getBarcode());
+
 		curl_close($curl_connection);
 		unlink($cookieJar);
-
-		/*
-		if ($success){
-			UsageTracking::logTrackingData('numRenewals');
-		}*/
 
 		return $parse_result;
 	}

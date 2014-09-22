@@ -51,8 +51,8 @@ $(document).ready(function() {
 					<input type="button" onclick="ajaxLightbox('/List/ListEdit?id=&amp;source=VuFind&amp;lightbox',false,false,'450px',false,'200px'); return false;" class="button navmenu dd" value="Create New List" style="width:180px"/>
 				</dd>
 				<dd>
-					<input type="button" class="button yellow" onclick="window.location = '/List/Import';" class="button navmenu dd" value="Import List From Old Catalog" style="width:auto"/>
-				</dd>
+<!--					<input type="button" class="button yellow" onclick="window.location = '/List/Import';" class="button navmenu dd" value="Import List From Old Catalog" style="width:auto"/>
+-->				</dd>
 			 </dl>
 		{/if}
 		</div>
