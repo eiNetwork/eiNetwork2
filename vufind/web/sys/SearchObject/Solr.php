@@ -1513,6 +1513,22 @@ class SearchObject_Solr extends SearchObject_Base
 		}
 
 		$allFacets = array_merge($this->indexResult['facet_counts']['facet_fields'], $this->indexResult['facet_counts']['facet_dates']);
+
+
+		$i = 0;
+		foreach($allFacets['time_since_added'] as $field => $data){
+
+			if ($data[0] == 'Week' || $data[0] == 'Month' || $data[0] == '2 Months'){
+				$time_since_added_options[$i][0] = $data[0];
+				$time_since_added_options[$i][1] = $data[1];
+			}
+
+			$i++;
+
+		}
+
+		$allFacets['time_since_added'] = $time_since_added_options;
+
 		foreach ($allFacets as $field => $data) {
 			// Skip filtered fields and empty arrays:
 			if (!in_array($field, $validFields) || count($data) < 1) {
@@ -1528,6 +1544,7 @@ class SearchObject_Solr extends SearchObject_Base
 			$doInstitutionProcessing = false;
 			$foundBranch = false;
 			$doBranchProcessing = false;
+                        $doTimeProcessing = false;
 
 			//Marmot specific processing to do custom resorting of facets.
 			if ($field == 'institution' && isset($currentLibrary) && !is_null($currentLibrary)){
@@ -1537,6 +1554,8 @@ class SearchObject_Solr extends SearchObject_Base
 				$doBranchProcessing = true;
 			}elseif($field == 'available_at'){
 				$doBranchProcessing = true;
+			}elseif($field == 'time_since_added'){
+				$doTimeProcessing = true;                        
 			}
 			// Should we translate values for the current facet?
 			$translate = in_array($field, $this->translatedFacets);
@@ -1617,6 +1636,29 @@ class SearchObject_Solr extends SearchObject_Base
 							$numValidRelatedLocations++;
 						}
 					}
+				}else if ($doTimeProcessing){
+					if (strlen($facet[0]) > 0){
+						if ($facet[0] == 'Day'){
+							$valueKey = '1' . $valueKey;
+						}elseif ($facet[0] == 'Week'){
+                                                        $valueKey = '2' . $valueKey;
+						}elseif ($facet[0] == 'Month'){
+                                                        $valueKey = '3' . $valueKey;
+						}elseif ($facet[0] == '2 Months'){
+                                                        $valueKey = '4' . $valueKey;
+                                                }elseif ($facet[0] == 'Quarter'){
+                                                        $valueKey = '5' . $valueKey;
+                                                }elseif ($facet[0] == 'Six Months'){
+                                                        $valueKey = '6' . $valueKey;
+                                                }elseif ($facet[0] == 'Year'){
+                                                        $valueKey = '7' . $valueKey;
+                                                }elseif (preg_match('/^[1-9] Years/', $facet[0]) == 1){
+                                                        $valueKey = '8' . $valueKey;
+						}else{
+							$valueKey = '9' . $valueKey;
+                                                        unset($facet);
+						}
+					}
 				}
 
 
@@ -1660,7 +1702,7 @@ class SearchObject_Solr extends SearchObject_Base
 
 			//Sort the facet alphabetically?
 			//Sort the system and location alphabetically unless we are in the global scope
-			if (in_array($field, array('institution', 'building', 'available_at', 'authorStr'))){
+			if (in_array($field, array('institution', 'building', 'available_at', 'authorStr', 'time_since_added'))){
 				$list[$field]['showAlphabetically'] = true;
 			}else{
 				$list[$field]['showAlphabetically'] = false;
