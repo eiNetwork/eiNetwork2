@@ -2317,6 +2317,7 @@ class MillenniumDriver implements DriverInterface
 		}
 
 		$memcache->delete("patron_info_dump_holds_{$this->_getBarcode()}");
+		$memcache->delete("mymill_items_{$this->_getBarcode()}");
 		usleep(250);
 
 		//Cancel a hold

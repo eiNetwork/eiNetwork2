@@ -136,7 +136,8 @@ class CheckedOut extends MyResearch{
 
 				$expand_physical_items = isset($_REQUEST['expand_physical_items']) ? $_REQUEST['expand_physical_items'] : null;
 
-				$result = $this->catalog->getCheckedOutItems($patron, $page, $recordsPerPage, $selectedSortOption, $expand_physical_items);
+				//$result = $this->catalog->getCheckedOutItems($patron, $page, $recordsPerPage, $selectedSortOption, $expand_physical_items);
+				$result = $this->catalog->getMyTransactions($patron, $page, $recordsPerPage, $selectedSortOption);
 				
 				$timer->logTime("Loaded transactions from catalog.");
 				if (!PEAR::isError($result)) {
@@ -287,7 +288,7 @@ class CheckedOut extends MyResearch{
 		
 		/**BEGIN for Overdrive Checkout Items**/
 
-		if (isset($expand_physical_items)){
+		//if (isset($expand_physical_items)){
 
 			$interface->assign('expand_physical_items', $expand_physical_items);
 
@@ -315,7 +316,7 @@ class CheckedOut extends MyResearch{
 			$interface->assign('ButtonHome',true);
 			$interface->assign('MobileTitle','OverDrive Checked Out Items');
 
-		}
+		//}
 
 		
 		
