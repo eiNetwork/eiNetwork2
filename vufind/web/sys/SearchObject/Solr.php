@@ -572,7 +572,12 @@ class SearchObject_Solr extends SearchObject_Base
 		$html = array();
 		for ($x = 0; $x < count($this->indexResult['response']['docs']); $x++) {
 			$current = & $this->indexResult['response']['docs'][$x];
-			$external_link = $this->indexResult['response']['docs'][$x]['url'];
+			$external_link = isset($this->indexResult['response']['docs'][$x]['url']) ? $this->indexResult['response']['docs'][$x]['url'] : null;
+
+			if (count($external_link) > 1){
+				$interface->assign('external_link_multi', 1);
+			}
+
 			$interface->assign('recordIndex', $x + 1);
 			$interface->assign('resultIndex', $x + 1 + (($this->page - 1) * $this->limit));
 			$interface->assign('external_link', $external_link[0]);

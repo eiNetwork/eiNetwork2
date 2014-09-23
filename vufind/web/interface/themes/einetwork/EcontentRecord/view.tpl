@@ -98,7 +98,7 @@ function redrawSaveStatus() {literal}{{/literal}
 		  {else}
 		  	{if $eContentRecord->sourceUrl  }
 			
-			      <div class="round-rectangle-button" id="access-online" onclick="window.location.href='{$eContentRecord->sourceUrl}'" style="border-bottom-width:0px;border-bottom-left-radius:0px;border-bottom-right-radius:0px">
+			      <div class="round-rectangle-button" id="access-online" onclick="window.open('{$eContentRecord->sourceUrl}')" style="border-bottom-width:0px;border-bottom-left-radius:0px;border-bottom-right-radius:0px">
 			      <span class="action-img-span"><img id="find-in-library-img" alt="access online" class="action-img" src="/interface/themes/einetwork/images/Art/ActionIcons/MoreLikeThis.png" alt="Access Online"/></span>
 			      <span class="action-lable-span">Access Online</span>
 			</div>
@@ -112,7 +112,7 @@ function redrawSaveStatus() {literal}{{/literal}
 		  {/if}	
 	    {else}
 		  {if $eContentRecord->sourceUrl && $eContentRecord->sourceUrl != "" }
-		  <div class="round-rectangle-button" id="access-online" onclick="window.location.href='{$eContentRecord->sourceUrl}'" style="border-bottom-width:0px;border-bottom-left-radius:0px;border-bottom-right-radius:0px">
+		  <div class="round-rectangle-button" id="access-online" onclick="window.open('{$eContentRecord->sourceUrl}')" style="border-bottom-width:0px;border-bottom-left-radius:0px;border-bottom-right-radius:0px">
 			<span class="action-img-span"><img id="find-in-library-img" alt="access online" class="action-img" src="/interface/themes/einetwork/images/Art/ActionIcons/MoreLikeThis.png" alt="Access Online"/></span>
 			<span class="action-lable-span">Access Online</span>
 		  </div>
