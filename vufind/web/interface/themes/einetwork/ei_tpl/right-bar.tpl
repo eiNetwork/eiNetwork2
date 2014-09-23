@@ -95,7 +95,7 @@
             <a onclick='getAccountSetting()'>Update Profile</a>
         </div>
 	<div id="latest-updates">
-            <a href="/MyResearch/Latestupdates">Latest Website Updates</a>
+            <a class="new_updates" href="/MyResearch/Latestupdates">Latest Website Updates</a>
         </div>
 	<div id="latest-updates">
             <a id="help-contents-link" href="/Help/Home?topic=contents">Catalog Help</a>

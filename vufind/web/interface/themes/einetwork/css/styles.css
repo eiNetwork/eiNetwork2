@@ -3167,3 +3167,14 @@ ol.helpcontent > li:before {
 #accordion {
 	width:660px;
 }
+
+a.link_blue {
+	color: #336699!important;
+	text-decoration: underline;
+}
+a.link_blue:hover {
+	font-weight: bold;
+}
+.new_updates {
+	color: #ff8c00;
+}
