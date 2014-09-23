@@ -572,8 +572,10 @@ class SearchObject_Solr extends SearchObject_Base
 		$html = array();
 		for ($x = 0; $x < count($this->indexResult['response']['docs']); $x++) {
 			$current = & $this->indexResult['response']['docs'][$x];
+			$external_link = $this->indexResult['response']['docs'][$x]['url'];
 			$interface->assign('recordIndex', $x + 1);
 			$interface->assign('resultIndex', $x + 1 + (($this->page - 1) * $this->limit));
+			$interface->assign('external_link', $external_link[0]);
 			$record = RecordDriverFactory::initRecordDriver($current);
 			$html[] = $interface->fetch($record->getSearchResult());
 		}
@@ -1515,19 +1517,22 @@ class SearchObject_Solr extends SearchObject_Base
 		$allFacets = array_merge($this->indexResult['facet_counts']['facet_fields'], $this->indexResult['facet_counts']['facet_dates']);
 
 
-		$i = 0;
-		foreach($allFacets['time_since_added'] as $field => $data){
+		if (isset($allFacets['time_since_added'])){
+			$i = 0;
+			$time_since_added_options = array();
+			foreach($allFacets['time_since_added'] as $field => $data){
 
-			if ($data[0] == 'Week' || $data[0] == 'Month' || $data[0] == '2 Months'){
-				$time_since_added_options[$i][0] = $data[0];
-				$time_since_added_options[$i][1] = $data[1];
+				if ($data[0] == 'Week' || $data[0] == 'Month' || $data[0] == '2 Months'){
+					$time_since_added_options[$i][0] = $data[0];
+					$time_since_added_options[$i][1] = $data[1];
+				}
+
+				$i++;
+
 			}
 
-			$i++;
-
+			$allFacets['time_since_added'] = $time_since_added_options;
 		}
-
-		$allFacets['time_since_added'] = $time_since_added_options;
 
 		foreach ($allFacets as $field => $data) {
 			// Skip filtered fields and empty arrays:
