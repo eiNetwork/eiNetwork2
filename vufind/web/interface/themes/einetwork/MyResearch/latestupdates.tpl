@@ -21,7 +21,7 @@ $(function() {
         <div id="accordion">
             <h2 class="accordion-title">&nbsp;&nbsp;&nbsp;&nbsp;<span class="bold">Current Release version 4.2</span></h2>
             <div>
-                Release date 9/29/2014
+                Release date 10/6/2014
                 <ol class="decimal">
                     <li>Author Search now includes group names such as musical groups. <a class="link_blue" href="{$url}/Union/Search?basicType=Author&lookfor=beatles">Check it Out</a></li>
                     <li>My Account login times have been improved.</li>
