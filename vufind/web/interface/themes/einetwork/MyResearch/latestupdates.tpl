@@ -26,9 +26,8 @@ $(function() {
                     <li>Author Search now includes group names such as musical groups. <a class="link_blue" href="{$url}/Union/Search?basicType=Author&lookfor=beatles">Check it Out</a></li>
                     <li>My Account login times have been improved.</li>
                     <li>Counts of Checked Out and Requested items have been added to the right panel.</li>
-                    <li>My Account login times have been improved.</li>
                     <li>Shortcut links are now available for popular searches:  New DVDs, New Blu-Ray, and New eBooks.   These searches represent titles that were added to The New Catalog in the past month.</li>
-                    <li>New "Added in the Last" filter narrows the search to items added to The New Catalog in the past week, month, or 2 months./li>
+                    <li>New "Added in the Last" filter narrows the search to items added to The New Catalog in the past week, month, or 2 months.</li>
                     <li>Previously, search results had buttons to access either physical items available at a local library, or eresources available online.   Now, if a record has both physical items and an eresources link, both the Access Online and Find in Library buttons will be available.</li>
                     <li>We have added the following fixes affecting some titles available through OverDrive</li>
                     <ol class="alpha">
