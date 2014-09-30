@@ -80,7 +80,7 @@
             <a onclick='getWishList()'>My Lists</a>
         </div>
 	 <div id="my-item">
-            <a onclick='getCheckedOutItem()'>Renew Items <span id="my-item-PlaceHolder"></span></a><span><img class="qtip-checked-out help-icon" style="vertical-align:middle" src="/images/help_icon.png" /></span>
+            <a onclick='getCheckedOutItem()'>View &amp; Renew Items <span id="my-item-PlaceHolder"></span></a><span><img class="qtip-checked-out help-icon" style="vertical-align:middle" src="/images/help_icon.png" /></span>
         </div>
 	<div id="my-request">
           <a onclick='getRequestedItem()' >Update Requests<span id="my-ruest-item-placeHolder"></span></a>
