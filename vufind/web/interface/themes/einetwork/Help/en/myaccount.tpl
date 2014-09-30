@@ -46,7 +46,7 @@
       
       <dd>
       
-        <p>During the loan period for an item you can renew up to two times. You cannot renew items within 3 days of its due date.</p>
+        <p>The number of renewals permitted for an item varies by library.  If you can’t renew your item online, there may be several reasons why.  Your books may be overdue, you may have an outstanding fine, someone else may have requested the item, or you've already reached the maximum number of renewals. Please call your local library to find out how to resolve your problem.</p>
 
         
       </dd>
