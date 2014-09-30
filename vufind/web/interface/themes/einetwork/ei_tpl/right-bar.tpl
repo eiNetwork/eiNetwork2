@@ -83,7 +83,7 @@
             <a onclick='getCheckedOutItem()'>View &amp; Renew Items <span id="my-item-PlaceHolder"></span></a><span><img class="qtip-checked-out help-icon" style="vertical-align:middle" src="/images/help_icon.png" /></span>
         </div>
 	<div id="my-request">
-          <a onclick='getRequestedItem()' >Update Requests<span id="my-ruest-item-placeHolder"></span></a>
+          <a onclick='getRequestedItem()' >View &amp; Update Requests<span id="my-ruest-item-placeHolder"></span></a>
 	</div>
 	<div id="reading-history">
             <a onclick='getReadingHistory()' >Reading History</a>
