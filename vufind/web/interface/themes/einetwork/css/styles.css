@@ -2367,11 +2367,17 @@ ul.hold_items li {
 
 /* Renewal information */
 .renewPassed {
+	position: absolute;
+	margin:0px 0 0 -413px;
+	width:400px;
 	font-weight: bold;
 	color: green;
 }
 
 .renewFailed {
+	position: absolute;
+	margin:0px 0 0 -413px;
+	width:400px;
 	font-weight: bold;
 	color: red;
 }
@@ -2846,7 +2852,7 @@ span.red {
 
 p.libraries-strong {
 	width:200px;
-	margin:75px 0 10px 16px;
+	margin:0 0 10px 16px;
 	border:solid 1px #c0c0c0;
 	padding:0 4px 0 4px;
 }
@@ -3160,4 +3166,15 @@ ol.helpcontent > li:before {
 
 #accordion {
 	width:660px;
+}
+
+a.link_blue {
+	color: #336699!important;
+	text-decoration: underline;
+}
+a.link_blue:hover {
+	font-weight: bold;
+}
+.new_updates {
+	color: #FF6600;
 }

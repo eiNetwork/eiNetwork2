@@ -91,6 +91,16 @@ class Record extends Action
 		$timer->logTime('Initialized the Record Driver');
 		
 		$interface->assign('coreMetadata', $this->recordDriver->getCoreMetadata());
+
+		// grab access online links.
+
+		$external_link = isset($record['url']) ? $record['url'] : null;
+
+		if (count($external_link) > 1){
+			$interface->assign('external_link_multi', 1);
+		}
+
+		$interface->assign('external_link', $external_link[0]);
 		
 		// Process MARC Data
 		require_once 'sys/MarcLoader.php';

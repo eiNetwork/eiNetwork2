@@ -32,6 +32,8 @@
     <span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/LP.png"/ alt="Music LP/Cassette"></span>
     {elseif $format eq "Magazine"}
     <span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/Magazine.png"/ alt="Magazine"></span>
+    {elseif $format eq "Print Magazine/Newspaper"}
+    <span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/Magazine.png"/ alt="Magazine"></span>
     {elseif $format eq "Online Periodical"}
     <span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/Magazine_online.png"/ alt="Online Periodical"></span>
     {elseif $format eq "Music CD"}

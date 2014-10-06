@@ -47,15 +47,14 @@ class Profile extends MyResearch
 			header("Location: " . $configArray['Site']['url'] . '/MyResearch/Profile');
 			exit();
 		}else if (isset($_POST['edit'])){
+			require_once 'Drivers/OverDriveDriver2.php';
+			$overDriveDriver = new OverDriveDriver2();
+			$overDriveSummary = $overDriveDriver->getAccountDetails($user);
+			$interface->assign('overDriveLendingOptions', $overDriveSummary['lendingOptions']);
 			$interface->assign('edit', true);
 		}else{
 			$interface->assign('edit', false);
 		}
-		
-		require_once 'Drivers/OverDriveDriver2.php';
-		$overDriveDriver = new OverDriveDriver2();
-		$overDriveSummary = $overDriveDriver->getAccountDetails($user);
-		$interface->assign('overDriveLendingOptions', $overDriveSummary['lendingOptions']);
 		
 		if (isset($_SESSION['profileUpdateErrors'])){
 			$interface->assign('profileUpdateErrors', $_SESSION['profileUpdateErrors']);

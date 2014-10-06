@@ -160,6 +160,7 @@ class Holds extends MyResearch
 				}
 				
 				$result = $this->catalog->getMyHolds($patron, $page, $recordsPerPage, $selectedSortOption);
+				//$result = $this->catalog->getMyMillItems($patron['cat_username'], 'holds');
 				
 				$result_count = count($result['holds']['unavailable']);
 				

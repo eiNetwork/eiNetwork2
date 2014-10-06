@@ -2317,6 +2317,7 @@ class MillenniumDriver implements DriverInterface
 		}
 
 		$memcache->delete("patron_info_dump_holds_{$this->_getBarcode()}");
+		$memcache->delete("mymill_items_{$this->_getBarcode()}");
 		usleep(250);
 
 		//Cancel a hold
@@ -3004,7 +3005,8 @@ class MillenniumDriver implements DriverInterface
 
 		//Setup the call to Millennium
 		$id2= $patronId;
-		$patronDump = $this->_getPatronDump($this->_getBarcode());
+		$barcode = $this->_getBarcode();
+		$patronDump = $this->_getPatronDump($barcode);
 
 		$post_values['currentsortorder'] = 'current_checkout';
 		$post_values['renewsome'] = 'YES';
@@ -3064,6 +3066,13 @@ class MillenniumDriver implements DriverInterface
 
 		curl_close($curl_connection);
 		unlink($cookieJar);
+
+		$memcache->delete("mymill_items_$barcode");
+
+		/*
+		if ($success){
+			UsageTracking::logTrackingData('numRenewals');
+		}*/
 
 		return $parse_result;
 	}

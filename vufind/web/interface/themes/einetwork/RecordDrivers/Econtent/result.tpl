@@ -117,7 +117,7 @@
 	    <span class="resultAction_span" id="RequestWord{$summId|escape:"url"}" >Access Online</span>
 	</div>
 	{else}
-	<div class="round-rectangle-button"  style="border-radius:0px;border-bottom-width:0px" name="selected[{if $summShortId}{$summShortId}{else}{$summId|escape}{/if}]" id="selected{if $summShortId}{$summShortId}{else}{$summId|escape}{/if}" onclick="window.location.href='{$sourceUrl}'">
+	<div class="round-rectangle-button"  style="border-radius:0px;border-bottom-width:0px" name="selected[{if $summShortId}{$summShortId}{else}{$summId|escape}{/if}]" id="selected{if $summShortId}{$summShortId}{else}{$summId|escape}{/if}" onclick="window.open('{$sourceUrl}')">
 	    <span class="resultAction_img_span"><img alt="add_to_cart" src="/interface/themes/einetwork/images/Art/ActionIcons/AddToCart.png" class="resultAction_img"></span>
 	    <span class="resultAction_span" id="RequestWord{$summId|escape:"url"}" >Access Online</span>
 	</div>	
@@ -153,7 +153,7 @@
 	    <span class="resultAction_span">View Details</span>
 	</div>
 	{if $sourceUrl}
-	<div class="round-rectangle-button"  style="border-top-right-radius:0px;border-top-left-radius:0px" name="selected[{if $summShortId}{$summShortId}{else}{$summId|escape}{/if}]" id="selected{if $summShortId}{$summShortId}{else}{$summId|escape}{/if}" onclick="window.location.href='{$sourceUrl}'">
+	<div class="round-rectangle-button"  style="border-top-right-radius:0px;border-top-left-radius:0px" name="selected[{if $summShortId}{$summShortId}{else}{$summId|escape}{/if}]" id="selected{if $summShortId}{$summShortId}{else}{$summId|escape}{/if}" onclick="window.open('{$sourceUrl}')">
 	    <span class="resultAction_img_span"><img alt="add_to_cart" src="/interface/themes/einetwork/images/Art/ActionIcons/AddToCart.png" class="resultAction_img"></span>
 	    <span class="resultAction_span" id="RequestWord{$summId|escape:"url"}">Access Online</span>
 	</div>

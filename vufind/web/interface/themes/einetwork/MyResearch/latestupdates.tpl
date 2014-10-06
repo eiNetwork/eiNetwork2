@@ -19,6 +19,36 @@ $(function() {
         <h3>We’re listening to you. The ongoing changes and planned enhancements are driven by the comments and feedback you submit when completing the new catalog survey.  We want to continue to hear from you and we appreciate your feedback.</h3>
         <br>
         <div id="accordion">
+            <h2 class="accordion-title">&nbsp;&nbsp;&nbsp;&nbsp;<span class="bold">Current Release version 4.2</span></h2>
+            <div>
+                Release date 10/6/2014
+                <ol class="decimal">
+                    <li>Author Search now includes group names such as musical groups. <a class="link_blue" href="{$url}/Union/Search?basicType=Author&lookfor=beatles">Check it Out</a></li>
+                    <li>My Account login times have been improved.</li>
+                    <li>Counts of Checked Out and Requested items have been added to the right panel.</li>
+                    <li>Shortcut links are now available for popular searches:  New DVDs, New Blu-Ray, and New eBooks.   These searches represent titles that were added to The New Catalog in the past month.</li>
+                    <li>New "Added in the Last" filter narrows the search to items added to The New Catalog in the past week, month, or 2 months.</li>
+                    <li>Previously, search results had buttons to access either physical items available at a local library, or eresources available online.   Now, if a record has both physical items and an eresources link, both the Access Online and Find in Library buttons will be available.</li>
+                    <li>We have added the following fixes affecting some titles available through OverDrive</li>
+                    <ol class="alpha">
+                        <li>All author names are now in last name, first name format, so the author's name will appear in the Author filter in the correct alphabetical order.   You can still enter your search terms with the names in either order. <a class="link_blue" href="{$url}/Union/Search?basicType=Author&lookfor=janet+evanovich">Check it Out</a></li>
+                        <li>A sortable title field is now included for all records, so all titles that begin with words like "the" and "and" will be alphabetized correctly.  <a class="link_blue" href="{$url}/Search/Results?lookfor=%22catcher+in+the+rye%22&type=Title&basicType=Title&sort=title&view=list&searchSource=local">Check it Out</a></li>
+                        <li>The published year is now int the same format for all titles, so sorting by date is now correct.  <a class="link_blue" href="{$url}/Search/Results?lookfor=janet+evanovich&type=Author&basicType=Author&filter[]=authorStr%3A%22Evanovich%2C+Janet%22&filter[]=authorStr%3A%22Evanovich%2C+Janet%2C%22&sort=year&view=list&searchSource=local">Check it Out</a></li>
+                        <li>Some OverDrive titles in our collection were missing from The Catalog.</li>
+                    </ol>
+                
+
+                </ol>
+            </div>
+            <h2 class="accordion-title">&nbsp;&nbsp;&nbsp;&nbsp;<span class="bold">Upcoming Release</span></h2>
+            <div>
+                <h2><span class="bold">Release version 4.x</span></h2>
+                Our current development is focused on the following features and enhancements:
+                <ol class="decimal">
+                    <li>Improving user accessibility to enhanced content.</li>
+                    <li>Enabling the ability for users to email search results.</li>
+                </ol>
+            </div>
             <h2 class="accordion-title">&nbsp;&nbsp;&nbsp;&nbsp;<span class="bold">Current Release version 4.1</span></h2>
             <div>
                 Release date 8/13/2014
@@ -34,16 +64,6 @@ $(function() {
                             <li>Fixed a bug with holdings information that was not getting updated correctly.</li>
                         </ol>
                     </li>
-                </ol>
-            </div>
-            <h2 class="accordion-title">&nbsp;&nbsp;&nbsp;&nbsp;<span class="bold">Upcoming Release</span></h2>
-            <div>
-                <h2><span class="bold">Release version 4.x</span></h2>
-                Our current development is focused on the following features and enhancements:
-                <ol class="decimal">
-                    <li>Improving user accessibility to enhanced content.</li>
-                    <li>Enabling the ability for users to email search results.</li>
-                    <li>Creating shortcuts to popular filters and lists.</li>
                 </ol>
             </div>
             <h2 class="accordion-title">&nbsp;&nbsp;&nbsp;&nbsp;<span class="bold">Release version 4.0</span></h2>

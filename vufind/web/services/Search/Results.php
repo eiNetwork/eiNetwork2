@@ -304,6 +304,7 @@ class Results extends Action {
 			$interface->assign('recordEnd',   $summary['endRecord']);
 
 			$facetSet = $searchObject->getFacetList();
+
 			$interface->assign('facetSet',       $facetSet);
 			if(isset($facetSet['format'])){
 				//$facetSet['format']['list'] = $this->sortFromMap('format_category_map.properties', $facetSet['format']['list'], 'All Books');
@@ -317,9 +318,26 @@ class Results extends Action {
 				$i = 0;
 				$flat = array();
 				$this->flatten_array($x, $flat, $i, $j, 0, 0);
+
+
+				// @MD TODO Need to fix tree flatten_array.
+				$n = 0;
+				foreach($flat as $key => $value){
+
+					if ($n > 27){
+						$flat[$n+2] = $value;
+					}
+
+					$n++;
+
+				}
+
+				$flat[29] = array('display'=>'Next', 'value'=>ceil(29 / 30), 'parent'=> -1);
+				$flat[30] = array('display'=>'Previous', 'value'=>(ceil(30 / 30)+1), 'parent'=> -1);
+
 				//divide into columns
 				$temp = array();
-				for($i = 0; $i < ceil($j/10); $i++){
+				for($i = 0; $i < ceil($j/9); $i++){
 					$temp[] = array_slice($flat, ($i*10), 10, 1);
 				}
 				$interface->assign('tree', $temp);
@@ -502,21 +520,12 @@ class Results extends Action {
   		}
 	}
 	private function flatten_array(&$arr, &$dst, &$i, $j, $parent, $indent) {
-		if($i % 30 == 29 && $i < $j+1){
-			$dst[] = array('display'=>'Next', 'value'=>ceil($i / 30), 'parent'=> -1);
-			$i++;
-		}
-		if($i % 30 == 0 && $i != 0){
-			$dst[] = array('display'=>'Previous', 'value'=>(ceil($i / 30)+1), 'parent'=> -1);
-			$i++;
-		}
 		if(!isset($dst) || !is_array($dst)) {
 			$dst = array();
 		}
 		if(!is_array($arr)) {
 			$dst[] = $arr;
 		}elseif(isset($arr['value'])){
-			$i++;
 			$arr['id'] = $i;
 			$arr['indent'] = $indent;
 			$arr['parent'] = $parent;
@@ -531,17 +540,19 @@ class Results extends Action {
 								$count += count($s);
 							}	
 						}
-						if($count != 0){
+						if($count > 0){
 							$i++;
 							$dst[] = array('display'=>$key, 'id'=>$i, 'parent'=>$parent, 'indent'=>$indent);
 							$this->flatten_array($subject, $dst, $i, $j, $i, $indent+1);
 						}
 					}else{
+						$i++;
 						$this->flatten_array($subject, $dst, $i, $j, $parent, $indent);
 					}
 					
 				}
 			}
 		}
+
 	}
 }
