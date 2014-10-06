@@ -24,3 +24,23 @@ solr-data  - contains solr index data for each library.  Will not be checked int
 startup    - contains startup scripts to start vufind customized by library domain.
 vufind     - contains all vufind code (website, cron, and load tester).  Checked in to version control.
   
+Changes 10/6/2014
+
+The following lines need added to NGC production config file.
+
+Underneath -> [Site]
+
+mymillennium   = https://iiisy1.einetwork.net/iii/wspatroninfo/
+mymillennium_user = xxxxx
+mymillennium_password = xxxxx
+
+Underneath -> [Caching]
+
+mymill_items                 = 60
+
+
+/import/reindexer.exe
+/site/vufindplus.einetwork.net/translation_maps/System_map.properties
+/site/vufindplus.einetwork.net/translation_maps/Location_map.properties
+/site/vufindplus.einetwork.net/translation_maps/Format_map.properties
+/site/vufindplus.einetwork.net/translation_maps/Format_category_map.properties
