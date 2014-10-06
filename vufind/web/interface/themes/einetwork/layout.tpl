@@ -11,17 +11,17 @@
     {else}
      <!-- szheng: judge if it is search result page.-->
       {if isset($pageType)}
-	{if $pageType eq "record"}
+  {if $pageType eq "record"}
 
-	{/if}
-	{else}
+  {/if}
+  {else}
       <link rel="stylesheet" href="/interface/themes/einetwork/css/ei_css/Record/record.css?v3.2" type="text/css" media="screen" />
       {/if}
       {if isset($isSearch)}
 
       {else}
-	{css filename="search-results.css"}
-	{css filename="holdingsSummary.css"}
+  {css filename="search-results.css"}
+  {css filename="holdingsSummary.css"}
       {/if}
       {css filename="jqueryui.css"}
       <link rel="stylesheet" href="/interface/themes/einetwork/css/styles.css?v2.1" type="text/css" media="screen" />
@@ -48,7 +48,7 @@
       {css filename="help.css"}
  
     {/if}
-	
+  
       {css media="print" filename="print.css"}
     <link rel="stylesheet" href="/interface/themes/einetwork/css/SliderThemes/default/default.css" type="text/css" media="screen" />
     <link rel="stylesheet" href="/interface/themes/einetwork/css/SliderThemes/light/light.css" type="text/css" media="screen" />
@@ -139,30 +139,30 @@
     <div id="pageBody">  
     {*<div class="searchheader">*}
     <div class="header">
-	  <div class="left-header">
-	    {*<a href="{if $homeLink}{$homeLink}{else}{$url}{/if}">
-	      <img src="{$path}{$smallLogo}" alt="VuFind"  width="160px" height="60px"/>
-	    </a>*}
-	    {if isset($lastsearch) and isset($pageType) and ($pageType eq "record" or $pageType eq "EcontentRecord")}
-		<div class="button" style="margin-top:20px;height:38px;font-size:15px;padding:0px;"  onclick='window.location.href="{$lastsearch|escape}#record{$id|escape:"url"}"' >
-		  <p style="margin-top:10px;margin-left:10px;vertical-align:middle"><span><img alt="BackArrow" src="/interface/themes/einetwork/images/Art/BackArrow.png" style="vertical-align:middle"/></span><span style="margin-left:8px;vertical-align:middle">{translate text="Back to Search Results"}</span></p>
-		</div>
-	    {elseif $searchType == 'advanced'&&$pageType!='advanced'}
-		<div class="button" style="margin-top:20px;height:38px;font-size:15px;padding:0px;"  onclick='window.location.href="{$path}/Search/Advanced?edit={$searchId}"' >
-		    <p style="margin-top:10px;margin-left:10px;vertical-align:middle"><span><img alt="BackArrow" src="/interface/themes/einetwork/images/Art/BackArrow.png" style="vertical-align:middle"/></span><span style="margin-left:8px;vertical-align:middle">{translate text="Back to Advanced Search"}</span></p>
-		</div>
-	    {else}
-		<div class="button yellow" style="margin-top:20px;height:38px;font-size:15px;padding:0px;" onclick='window.location.href="https://www.surveymonkey.com/s/56S3RKL"' >
-		    <p style="margin-top:10px;vertical-align:middle;text-align: center"><span style="vertical-align:middle">Staff Survey</span></p>
-		</div>   
-	    {/if}
-	  </div>
-	  <div class ="center-header">
-	    {include file="ei_tpl/center-header.tpl"}
-	  </div>
-	  <div class="right-header">
-	    {include file="ei_tpl/right-header.tpl"}
-	  </div>
+    <div class="left-header">
+      {*<a href="{if $homeLink}{$homeLink}{else}{$url}{/if}">
+        <img src="{$path}{$smallLogo}" alt="VuFind"  width="160px" height="60px"/>
+      </a>*}
+      {if isset($lastsearch) and isset($pageType) and ($pageType eq "record" or $pageType eq "EcontentRecord")}
+    <div class="button" style="margin-top:20px;height:38px;font-size:15px;padding:0px;"  onclick='window.location.href="{$lastsearch|escape}#record{$id|escape:"url"}"' >
+      <p style="margin-top:10px;margin-left:10px;vertical-align:middle"><span><img alt="BackArrow" src="/interface/themes/einetwork/images/Art/BackArrow.png" style="vertical-align:middle"/></span><span style="margin-left:8px;vertical-align:middle">{translate text="Back to Search Results"}</span></p>
+    </div>
+      {elseif $searchType == 'advanced'&&$pageType!='advanced'}
+    <div class="button" style="margin-top:20px;height:38px;font-size:15px;padding:0px;"  onclick='window.location.href="{$path}/Search/Advanced?edit={$searchId}"' >
+        <p style="margin-top:10px;margin-left:10px;vertical-align:middle"><span><img alt="BackArrow" src="/interface/themes/einetwork/images/Art/BackArrow.png" style="vertical-align:middle"/></span><span style="margin-left:8px;vertical-align:middle">{translate text="Back to Advanced Search"}</span></p>
+    </div>
+      {else}
+    <div class="button yellow" style="margin-top:20px;height:38px;font-size:15px;padding:0px;" onclick='window.location.href="http://www.surveymonkey.com/s/NewLibraryCatalog"' >
+        <p style="margin-top:10px;vertical-align:middle;text-align: center"><span style="vertical-align:middle">A Quick Survey</span></p>
+    </div>   
+      {/if}
+    </div>
+    <div class ="center-header">
+      {include file="ei_tpl/center-header.tpl"}
+    </div>
+    <div class="right-header">
+      {include file="ei_tpl/right-header.tpl"}
+    </div>
     </div>
   
 
@@ -171,18 +171,18 @@
         <ul>
           {if $useSolr}
           <li{if $module != "WorldCat" && $module != "Summon"} class="active"{/if}>
-	    <a href="{$url}/Search/Results?lookfor={$lookfor|escape:"url"}">{translate text="University Library"}</a>
-	  </li>
+      <a href="{$url}/Search/Results?lookfor={$lookfor|escape:"url"}">{translate text="University Library"}</a>
+    </li>
           {/if}
           {if $useWorldcat}
           <li{if $module == "WorldCat"} class="active"{/if}>
-	    <a href="{$url}/WorldCat/Search?lookfor={$lookfor|escape:"url"}">{translate text="Other Libraries"}</a>
-	  </li>
+      <a href="{$url}/WorldCat/Search?lookfor={$lookfor|escape:"url"}">{translate text="Other Libraries"}</a>
+    </li>
           {/if}
           {if $useSummon}
           <li{if $module == "Summon"} class="active"{/if}>
-	    <a href="{$url}/Summon/Search?lookfor={$lookfor|escape:"url"}">{translate text="Journal Articles"}</a>
-	  </li>
+      <a href="{$url}/Summon/Search?lookfor={$lookfor|escape:"url"}">{translate text="Journal Articles"}</a>
+    </li>
           {/if}
         </ul>
       </div>
@@ -209,25 +209,25 @@
       
     </div> {* End page body *}
     {* add analytics tracking code*}
-	{if $productionServer}
+  {if $productionServer}
 
-	{/if}  
+  {/if}  
   
   {* Strands tracking *}
   {if $user && $user->disableRecommendations == 0 && $strandsAPID}
-	  {literal}
-	  <script type="text/javascript">
-	
-	  //This code can actually be used anytime to achieve an "Ajax" submission whenever called
-	  if (typeof StrandsTrack=="undefined"){StrandsTrack=[];}
-	    
-	  StrandsTrack.push({
-	     event:"userlogged",
-	     user: "{/literal}{$user->id}{literal}"
-	  });
-	    
-	  </script>
-	  {/literal}
+    {literal}
+    <script type="text/javascript">
+  
+    //This code can actually be used anytime to achieve an "Ajax" submission whenever called
+    if (typeof StrandsTrack=="undefined"){StrandsTrack=[];}
+      
+    StrandsTrack.push({
+       event:"userlogged",
+       user: "{/literal}{$user->id}{literal}"
+    });
+      
+    </script>
+    {/literal}
   {/if}
   {if $strandsAPID}
   {literal}
