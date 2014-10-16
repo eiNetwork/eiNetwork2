@@ -704,7 +704,7 @@ class EINetwork extends MillenniumDriver{
 		return $str;
 	}
 
-	public function getMyMillItems($barcode, $forceReload = false){
+	public function getMyMillItems($barcode, $forceReload = true){
 
 		global $configArray;
 		global $memcache;
@@ -785,19 +785,20 @@ class EINetwork extends MillenniumDriver{
 					$curTitle['overdue'] = 0;
 				}
 
-				$item_id = str_replace('i', '', $value->itemRecordNum);
+				$item_id = $value->itemRecordNum; //TODO. NOT GETTING THE CHECK DIGIT FROM MYMILLAPI. WE WILL REMOVE THAT DURING REINDEX.
 
 				$bibRecordNum = isset($value->bibRecordNum) ? $value->bibRecordNum : null;
 
-				if (!isset($bibRecordNum) && $expand_physical_items > 0){
-					$bibRecordNum = $this->sierra_api_request($this->sierra_api_connect(), $item_id);
+				if (!isset($bibRecordNum)){
+					//$bibRecordNum = $this->sierra_api_request($this->sierra_api_connect(), $item_id);
+					$bibRecordNum = substr($this->get_bib_id($item_id),1,-1);
 					$mymill_items->response->checkedOutItems[$scount]->bibRecordNum = $bibRecordNum;
 					$update_cache = 1;
 				}
 
 				if (isset($bibRecordNum)){
 					
-					$curTitle['shortId'] = "b" . $bibRecordNum;
+					$curTitle['shortId'] = $bibRecordNum;
 
 					$resource = new Resource();
 					$resource->shortId = $curTitle['shortId'];
@@ -937,6 +938,27 @@ class EINetwork extends MillenniumDriver{
 		// echo "<pre>";
 		// print_r($response);
 		// echo "</pre>";
+
+	}
+
+	function get_bib_id($item_id){
+
+		$header = array();
+		$header[] = 'Content-length: 0';
+		$header[] = 'Content-type: application/json';
+		$header[] = 'Accept: application/json';
+
+		$ch = curl_init("http://vufinddev.einetwork.net:8080/solr/biblio/select/?q=items:" . $item_id . "&fl=id&wt=json");
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
+		curl_setopt($ch, CURLOPT_USERAGENT,"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+
+		$response = json_decode(curl_exec($ch));
+
+		return $response->response->docs[0]->id;
 
 	}
 
