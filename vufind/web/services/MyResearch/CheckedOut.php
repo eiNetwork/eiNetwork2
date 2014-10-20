@@ -136,8 +136,8 @@ class CheckedOut extends MyResearch{
 
 				$expand_physical_items = isset($_REQUEST['expand_physical_items']) ? $_REQUEST['expand_physical_items'] : null;
 
-				//$result = $this->catalog->getCheckedOutItems($patron, $page, $recordsPerPage, $selectedSortOption, $expand_physical_items);
-				$result = $this->catalog->getMyTransactions($patron, $page, $recordsPerPage, $selectedSortOption);
+				$result = $this->catalog->getCheckedOutItems($patron, $page, $recordsPerPage, $selectedSortOption, $expand_physical_items);
+				//$result = $this->catalog->getMyTransactions($patron, $page, $recordsPerPage, $selectedSortOption);
 				
 				$timer->logTime("Loaded transactions from catalog.");
 				if (!PEAR::isError($result)) {

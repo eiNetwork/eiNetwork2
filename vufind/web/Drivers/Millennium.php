@@ -1466,7 +1466,7 @@ class MillenniumDriver implements DriverInterface
 		global $configArray;
 		global $memcache;
 
-		$forceReload = false;
+		$forceReload = true;
 
 		$barcode = $patronInfo['P_BARCODE'];
 

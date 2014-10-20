@@ -76,13 +76,13 @@ class Home extends MyResearch
 				$patron = $catalog->patronLogin($user->cat_username, $user->cat_password);
 				//We commented the line below so the login will go stright to the my account page and will not go to CheckedOut items page or Holds page
 				$profile = $catalog->getMyProfile($patron);
-				// if ($profile['numCheckedOut'] > 0){
-				// 	$action ='CheckedOut';
-				// }elseif ($profile['numHolds'] > 0){
+				if ($profile['numCheckedOut'] > 0){
+					$action ='CheckedOut';
+				//}elseif ($profile['numHolds'] > 0){
 				// 	$action ='Holds';
 				// }else{
-					$action ='Profile ';
-				//}
+					//$action ='Profile ';
+				}
 				header("Location: /MyResearch/$action");
 			}else{
 				//Go to the login page which is the home page
