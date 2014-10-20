@@ -59,10 +59,10 @@ class SideFacets implements RecommendationInterface
 					//Check to see if we have an active library
 					global $librarySingleton;
 					$searchLibrary = $librarySingleton->getSearchLibrary();
-					if ($searchLibrary != null){
-						unset ($this->mainFacets[$name]);
-						$this->mainFacets['local_time_since_added_' . $searchLibrary->subdomain] = $desc;
-					}
+					//if ($searchLibrary != null){
+					//	unset ($this->mainFacets[$name]);
+					//	$this->mainFacets['local_time_since_added_' . $searchLibrary->subdomain] = $desc;
+					//}
 				}
 			}
 		}else{

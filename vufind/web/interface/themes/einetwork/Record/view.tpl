@@ -85,6 +85,19 @@ function redrawSaveStatus() {literal}{{/literal}
 						<span class="action-img-span"><img id="add-to-wish-list-img" alt="add to list" class="action-img" src="/interface/themes/einetwork/images/Art/ActionIcons/AddToWishList.png" /></span>
 						<span class="action-lable-span">Add To List</span>
 					</div>
+					{if $external_link}
+				      {if $external_link_multi}
+				          <div class="round-rectangle-button" style="border-top-width:0px;border-top-right-radius:0px;border-top-left-radius:0px;border-bottom-right-radius:0px;border-bottom-left-radius:0px" onclick="window.location.href='#links'">
+				            <span class="resultAction_img_span"><img alt="add_to_cart" src="/interface/themes/einetwork/images/Art/ActionIcons/AddToCart.png" class="resultAction_img"></span>
+				            <span class="resultAction_span" >Access Online</span>
+				          </div>
+				      {else}
+				        <div class="round-rectangle-button" style="border-top-width:0px;border-top-right-radius:0px;border-top-left-radius:0px;border-bottom-right-radius:0px;border-bottom-left-radius:0px" onclick="window.open('{$external_link}')">
+				            <span class="resultAction_img_span"><img alt="add_to_cart" src="/interface/themes/einetwork/images/Art/ActionIcons/AddToCart.png" class="resultAction_img"></span>
+				            <span class="resultAction_span" >Access Online</span>
+				        </div>
+				      {/if}
+				    {/if}
 					<div class="round-rectangle-button" id="find-in-library" onclick="findInLibrary('{$id|escape:"url"}',false,'150px','570px','auto')">
 						<span class="action-img-span"><img id="find-in-library-img" alt="find in library" class="action-img" src="/interface/themes/einetwork/images/Art/ActionIcons/MoreLikeThis.png" /></span>
 						<span class="action-lable-span">Find in Library</span>
@@ -484,11 +497,11 @@ function redrawSaveStatus() {literal}{{/literal}
 							<td class="details_lable">{translate text="Links"}</td>
 							<td><table>
 								{foreach from=$internetLinks item=internetLink}
-									<tr><td>
+									<tr><td id="links">
 									{if $proxy}
-										<a href="{$proxy}/login?url={$internetLink.link|escape:"url"}">{$internetLink.linkText|escape}</a>
+										<a href="{$proxy}/login?url={$internetLink.link|escape:"url"}" target="_blank">{$internetLink.linkText|escape}</a>
 									{else}
-										<a href="{$internetLink.link|escape}">{$internetLink.linkText|escape}</a>
+										<a href="{$internetLink.link|escape}" target="_blank">{$internetLink.linkText|escape}</a>
 									{/if}
 									</td></tr>
 								{/foreach}
@@ -502,9 +515,9 @@ function redrawSaveStatus() {literal}{{/literal}
 								{foreach from=$supLinks item=internetLink}
 									<tr><td>
 									{if $proxy}
-										<a href="{$proxy}/login?url={$internetLink.link|escape:"url"}">{$internetLink.linkText|escape}</a>
+										<a href="{$proxy}/login?url={$internetLink.link|escape:"url"}" target="_blank">{$internetLink.linkText|escape}</a>
 									{else}
-										<a href="{$internetLink.link|escape}">{$internetLink.linkText|escape}</a>
+										<a href="{$internetLink.link|escape}" target="_blank">{$internetLink.linkText|escape}</a>
 									{/if}
 									</td></tr>
 								{/foreach}

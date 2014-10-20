@@ -119,6 +119,19 @@
 	    <span class="resultAction_img_span"><img alt="add_to_cart" src="/interface/themes/einetwork/images/Art/ActionIcons/AddToCart.png" class="resultAction_img"></span>
 	    <span class="resultAction_span" >Add to Cart</span>
 	</div>
+    {if $external_link}
+      {if $external_link_multi}
+          <div class="round-rectangle-button" style="border-top-width:0px;border-top-right-radius:0px;border-top-left-radius:0px;border-bottom-right-radius:0px;border-bottom-left-radius:0px" onclick="window.location.href='{$url}/Record/{$summId|escape:'url'}/Home?searchId={$searchId}&amp;recordIndex={$recordIndex}&amp;page={$page}#links'">
+            <span class="resultAction_img_span"><img alt="add_to_cart" src="/interface/themes/einetwork/images/Art/ActionIcons/AddToCart.png" class="resultAction_img"></span>
+            <span class="resultAction_span" >Access Online</span>
+          </div>
+      {else}
+        <div class="round-rectangle-button" style="border-top-width:0px;border-top-right-radius:0px;border-top-left-radius:0px;border-bottom-right-radius:0px;border-bottom-left-radius:0px" onclick="window.open('{$external_link}')">
+            <span class="resultAction_img_span"><img alt="add_to_cart" src="/interface/themes/einetwork/images/Art/ActionIcons/AddToCart.png" class="resultAction_img"></span>
+            <span class="resultAction_span" >Access Online</span>
+        </div>
+      {/if}
+    {/if}
     <div class="round-rectangle-button" id="find-in-library" onclick="findInLibrary('{$summId|escape:"url"}',false,'150px','570px','auto')">
                         <span class="action-img-span"><img id="find-in-library-img" alt="find in library" class="action-img" src="/interface/themes/einetwork/images/Art/ActionIcons/MoreLikeThis.png" /></span>
                         <span class="action-lable-span">Find in Library</span>
