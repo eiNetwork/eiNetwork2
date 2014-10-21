@@ -838,6 +838,7 @@ class EINetwork extends MillenniumDriver{
 
 				$curTitle['itemid'] = $value->itemRecordNum;
 				$curTitle['renewIndicator'] = $value->itemRecordNum . "|" . ($scount + 1);
+				$curTitle['renewCount'] = $value->renewals;
 
 				if ($sortOption == 'title'){
 					$sortKey =  $curTitle['title'] . '-' . $scount;
