@@ -1589,12 +1589,14 @@ class MillenniumDriver implements DriverInterface
 						$curTitle['title'] = $title;
 					}
 
-					if (stripos($skeys[$i],"STATUS") > -1) {
-								
+					if (stripos($skeys[$i],"STATUS") > -1) {		
 						$due = trim(str_replace("DUE", "", strip_tags($scols[$i])));
 						$renewCount = 0;
-						if (preg_match('/FINE\(up to now\) (\$\d+\.\d+)/i', $due, $matches)){
-							$curTitle['fine'] = trim($matches[1]);
+						$re1 ='.*?';
+						$re2 ='(\\$[0-9]+(?:\\.[0-9][0-9])?)(?![\\d])';
+						if ($c=preg_match_all ("/" . $re1 . $re2 . "/is", $due, $matches)){
+							$fine = $matches[1][0];
+							$curTitle['fine'] = $fine;
 						}
 						if (preg_match('/(.*)Renewed (\d+) time(?:s)?/i', $due, $matches)){
 							$due = trim($matches[1]);
