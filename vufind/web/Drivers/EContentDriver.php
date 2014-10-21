@@ -156,9 +156,6 @@ class EContentDriver implements DriverInterface{
 			if (strcasecmp($eContentRecord->source, 'OverDrive') == 0){
 				//Add links as needed
 				$availability = $eContentRecord->getAvailability();
-				echo "<pre>";
-				print_r($availability);
-				echo "</pre>";
 				$addCheckoutLink = false;
 				$addPlaceHoldLink = false;
 				foreach($availability as $availableFrom){
