@@ -221,7 +221,7 @@ class OverDriveDriver3 {
 					"Host: " . str_replace('http://', '', $configArray['OverDrive']['patronApiUrl'])
 				);
 			}else{
-				print_r($tokenData);
+				//print_r($tokenData);
 			}
 
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

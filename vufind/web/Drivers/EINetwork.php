@@ -748,6 +748,13 @@ class EINetwork extends MillenniumDriver{
 
 	}
 
+	public function objectToArray($object){
+	    if(!is_object($object) && !is_array($object)){
+	        return $object;
+	    }
+	    return array_map(array($this, 'objectToArray'), (array) $object);
+	}
+
 	public function getCheckedOutItems($patron, $page = 1, $recordsPerPage = -1, $sortOption = 'dueDate', $expand_physical_items){
 
 		global $memcache, $configArray;
@@ -764,6 +771,22 @@ class EINetwork extends MillenniumDriver{
 		if (isset($mymill_items->response->checkedOutItems)){
 
 			require_once 'services/MyResearch/lib/Resource.php';
+
+			// The MyMillennium API does not return an array of objects when there is only one checked out item. The following code, mimics an array of object
+			// so upstream it doesnt break anything. This doest not effect patrons with zero checked out items.
+			if (!is_array($mymill_items->response->checkedOutItems)){
+				$mymill_items->response->checkedOutItems = $this->objectToArray($mymill_items->response->checkedOutItems);
+				
+				$checked_out_item = new stdClass();
+
+				foreach ($mymill_items->response->checkedOutItems as $key => $value){
+					$checked_out_item->$key = $value;
+				}
+
+				unset($mymill_items->response->checkedOutItems);
+
+				$mymill_items->response->checkedOutItems[0] = $checked_out_item;
+			}
 
 			foreach($mymill_items->response->checkedOutItems as $key => $value){
 
@@ -948,7 +971,7 @@ class EINetwork extends MillenniumDriver{
 		$header[] = 'Content-type: application/json';
 		$header[] = 'Accept: application/json';
 
-		$ch = curl_init("http://vufinddev.einetwork.net:8080/solr/biblio/select/?q=items:" . $item_id . "&fl=id&wt=json");
+		$ch = curl_init("http://vufindplus.einetwork.net:8080/solr/biblio/select/?q=items:" . $item_id . "&fl=id&wt=json");
 		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
 		curl_setopt($ch, CURLOPT_USERAGENT,"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
@@ -958,7 +981,9 @@ class EINetwork extends MillenniumDriver{
 
 		$response = json_decode(curl_exec($ch));
 
-		return $response->response->docs[0]->id;
+		if (isset($response->response->docs[0])){
+			return $response->response->docs[0]->id;
+		}
 
 	}
 
