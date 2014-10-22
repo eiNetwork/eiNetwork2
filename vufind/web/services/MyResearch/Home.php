@@ -78,8 +78,8 @@ class Home extends MyResearch
 				$profile = $catalog->getMyProfile($patron);
 				if ($profile['numCheckedOut'] > 0){
 					$action ='CheckedOut';
-				//}elseif ($profile['numHolds'] > 0){
-				// 	$action ='Holds';
+				}elseif ($profile['numHolds'] > 0){
+				 	$action ='Holds';
 				}else{
 					$action ='Profile ';
 				}
