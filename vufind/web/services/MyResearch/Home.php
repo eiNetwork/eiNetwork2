@@ -80,8 +80,8 @@ class Home extends MyResearch
 					$action ='CheckedOut';
 				//}elseif ($profile['numHolds'] > 0){
 				// 	$action ='Holds';
-				// }else{
-					//$action ='Profile ';
+				}else{
+					$action ='Profile ';
 				}
 				header("Location: /MyResearch/$action");
 			}else{
