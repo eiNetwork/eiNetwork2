@@ -841,7 +841,7 @@ class EINetwork extends MillenniumDriver{
 				$curTitle['renewCount'] = $value->renewals;
 
 				if ($sortOption == 'title'){
-					$sortKey =  $curTitle['title'] . '-' . $scount;
+					$sortKey =  $this->get_title_sort($curTitle['itemid']) . '-' . $scount;
 				} elseif ($sortOption == 'author'){
 					$sortKey = $curTitle['author'] . '-' . $scount;
 				} elseif ($sortOption == 'format'){
@@ -972,7 +972,7 @@ class EINetwork extends MillenniumDriver{
 		$header[] = 'Content-type: application/json';
 		$header[] = 'Accept: application/json';
 
-		$ch = curl_init("http://vufindplus.einetwork.net:8080/solr/biblio/select/?q=items:" . $item_id . "&fl=id&wt=json");
+		$ch = curl_init("http://vufindplus.einetwork.net:8080/solr/biblio/select/?q=items:" . $item_id . "&fl=id,title_sort&wt=json");
 		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
 		curl_setopt($ch, CURLOPT_USERAGENT,"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
@@ -984,6 +984,29 @@ class EINetwork extends MillenniumDriver{
 
 		if (isset($response->response->docs[0])){
 			return $response->response->docs[0]->id;
+		}
+
+	}
+
+	function get_title_sort($item_id){
+
+		$header = array();
+		$header[] = 'Content-length: 0';
+		$header[] = 'Content-type: application/json';
+		$header[] = 'Accept: application/json';
+
+		$ch = curl_init("http://vufindplus.einetwork.net:8080/solr/biblio/select/?q=items:" . $item_id . "&fl=title_sort&wt=json");
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
+		curl_setopt($ch, CURLOPT_USERAGENT,"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+
+		$response = json_decode(curl_exec($ch));
+
+		if (isset($response->response->docs[0])){
+			return $response->response->docs[0]->title_sort;
 		}
 
 	}
