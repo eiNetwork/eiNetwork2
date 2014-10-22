@@ -704,7 +704,7 @@ class EINetwork extends MillenniumDriver{
 		return $str;
 	}
 
-	public function getMyMillItems($barcode, $forceReload = true){
+	public function getMyMillItems($barcode, $forceReload = false){
 
 		global $configArray;
 		global $memcache;
@@ -793,7 +793,7 @@ class EINetwork extends MillenniumDriver{
 				$now = time();
 				$duedate = strtotime($value->dueDate);
 
-				if ($duedate != null){
+				if ($duedate != ''){
 					$daysUntilDue = ceil(($duedate - time()) / (24 * 60 * 60));
 					$overdue = $daysUntilDue < 0;
 					$curTitle['duedate'] = $duedate;
