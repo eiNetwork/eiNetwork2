@@ -842,7 +842,7 @@ class EINetwork extends MillenniumDriver{
 
 				if ($sortOption == 'title'){
 					$sort_title = $this->get_title_sort($curTitle['itemid']);
-					$sort_title = isset($sort_title) ? $sort_title : $curTitle['title'];
+					$sort_title = isset($sort_title) ? $sort_title : strtolower($curTitle['title']);
 					$sortKey =  $sort_title . '-' . $scount;
 				} elseif ($sortOption == 'author'){
 					$sortKey = $curTitle['author'] . '-' . $scount;
