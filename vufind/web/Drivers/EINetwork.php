@@ -761,6 +761,10 @@ class EINetwork extends MillenniumDriver{
 
 		$mymill_items = $this->getMyMillItems($patron['cat_username']);
 
+		//echo "<pre>";
+		//print_r($mymill_items);
+		//echo "</pre>";
+		
 		$scount = 0;
 		$numTransactions = 0;
 		$update_cache = 0;
@@ -894,6 +898,152 @@ class EINetwork extends MillenniumDriver{
 
 	}
 
+	public function getHoldItems($patron, $page = 1, $recordsPerPage = -1, $sortOption = 'title', $expand_physical_items){
+
+		global $memcache, $configArray;
+
+		$mymill_items = $this->getMyMillItems($patron['cat_username']);
+
+		//echo "<pre>";
+		//print_r($mymill_items);
+		//echo "</pre>";		
+
+		$scount = 0;
+		$numTransactions = 0;
+		$update_cache = 0;
+
+		$curTitle = array();
+		$holdTitles = array();
+
+		if (isset($mymill_items->response->holdItems)){
+
+			require_once 'services/MyResearch/lib/Resource.php';
+
+			// The MyMillennium API does not return an array of objects when there is only one checked out item. The following code, mimics an array of object
+			// so upstream it doesnt break anything. This doest not effect patrons with zero checked out items.
+			if (!is_array($mymill_items->response->holdItems)){
+				$mymill_items->response->holdItems = $this->objectToArray($mymill_items->response->holdItems);
+				
+				$checked_out_item = new stdClass();
+
+				foreach ($mymill_items->response->holdItems as $key => $value){
+					$hold_item->$key = $value;
+				}
+
+				unset($mymill_items->response->holdItems);
+
+				$mymill_items->response->holdItems[0] = $hold_item;
+			}
+
+			foreach($mymill_items->response->holdItems as $key => $value){
+
+				//$now = time();
+				//$duedate = strtotime($value->dueDate);
+
+				//if ($duedate != null){
+				//	$daysUntilDue = ceil(($duedate - time()) / (24 * 60 * 60));
+				//	$overdue = $daysUntilDue < 0;
+				//	$curTitle['duedate'] = $duedate;
+				//	$curTitle['overdue'] = $overdue;
+				//	$curTitle['daysUntilDue'] = $daysUntilDue;
+				//}
+				$curTitle['title'] = $value->titleProper;
+				//$curTitle['renewCount'] = $value->renewals;
+				//if ($duedate < $now){
+				//	$curTitle['overdue'] = 1;
+				//} else {
+				//	$curTitle['overdue'] = 0;
+				//}
+
+				$item_id = $value->itemRecordNum; //TODO. NOT GETTING THE CHECK DIGIT FROM MYMILLAPI. WE WILL REMOVE THAT DURING REINDEX.
+
+				$bibRecordNum = isset($value->bibRecordNum) ? $value->bibRecordNum : null;
+
+				if (!isset($bibRecordNum)){
+					//$bibRecordNum = $this->sierra_api_request($this->sierra_api_connect(), $item_id);
+					$bibRecordNum = substr($this->get_bib_id($item_id),1,-1);
+					$mymill_items->response->holdItems[$scount]->bibRecordNum = $bibRecordNum;
+					$update_cache = 1;
+				}
+
+				if (isset($bibRecordNum)){
+					
+					$curTitle['shortId'] = $bibRecordNum;
+
+					$resource = new Resource();
+					$resource->shortId = $curTitle['shortId'];
+					$resource->find();
+					if ($resource->N > 0){
+						$resource->fetch();
+						$curTitle['isbn'] = $resource->isbn;
+						$curTitle['id'] = $resource->record_id;
+						$curTitle['author'] = $resource->author;
+						$curTitle['format'] = $resource->format;
+					}
+
+				}
+
+				$curTitle['itemid'] = $value->itemRecordNum;
+				$curTitle['renewIndicator'] = $value->itemRecordNum . "|" . ($scount + 1);
+				$curTitle['renewCount'] = $value->renewals;
+
+				if ($sortOption == 'title'){
+					$sortKey =  $this->get_title_sort($curTitle['itemid']) . '-' . $scount;
+				} elseif ($sortOption == 'author'){
+					$sortKey = $curTitle['author'] . '-' . $scount;
+				} elseif ($sortOption == 'format'){
+					$sortKey = $curTitle['format'] . '-' . $scount;
+				} else {
+					$sortKey = $duedate . '-' . $scount;
+				}
+
+				//$checkedOutTitles[$sortKey]['duedate'] = $curTitle['duedate'];
+				//$checkedOutTitles[$sortKey]['overdue'] = $curTitle['overdue'];
+				//$checkedOutTitles[$sortKey]['daysUntilDue'] = $curTitle['daysUntilDue'];
+				$holdTitles[$sortKey]['title'] = $curTitle['title'];
+				//$checkedOutTitles[$sortKey]['renewCount'] = $curTitle['renewCount'];
+				//$checkedOutTitles[$sortKey]['overdue'] = $curTitle['overdue'];
+				$holdTitles[$sortKey]['shortId'] = isset($curTitle['shortId']) ? $curTitle['shortId'] : null;
+				$holdTitles[$sortKey]['isbn'] = isset($curTitle['isbn']) ? $curTitle['isbn'] : null;
+				$holdTitles[$sortKey]['id'] = isset($curTitle['id']) ? $curTitle['id'] : null;
+				$holdTitles[$sortKey]['author'] = isset($curTitle['author']) ? $curTitle['author'] : null;
+				$holdTitles[$sortKey]['format'] = isset($curTitle['format']) ? $curTitle['format'] : null;
+				$holdTitles[$sortKey]['itemid'] = $curTitle['itemid'];
+				$holdTitles[$sortKey]['renewIndicator'] = $curTitle['renewIndicator'];
+				
+				$scount++;
+
+			}
+
+			if ($update_cache){
+				$barcode = $patron['cat_username'];
+				$memcache->set("mymill_items_$barcode", $mymill_items, 0, $configArray['Caching']['mymill_items']);
+			}
+
+			ksort($holdTitles);
+			$numTransactions = count($holdTitles);
+			//Process pagination
+			if ($recordsPerPage != -1){
+				$startRecord = ($page - 1) * $recordsPerPage;
+				if ($startRecord > $numTransactions){
+					$page = 0;
+					$startRecord = 0;
+				}
+				$holdTitles = array_slice($checkedOutTitles, $startRecord, $recordsPerPage);
+			}		
+
+		}
+		echo "<pre>holdtitles";
+		print_r($holdTitles);
+		echo "</pre>";
+
+		return array(
+			'transactions' => $holdTitles,
+			'numTransactions' => $numTransactions
+		);
+
+	}
+	
 	private function sierra_api_connect($forceReload = true){
 
 		global $configArray;

@@ -159,8 +159,15 @@ class Holds extends MyResearch
 					$page = 1;
 				}
 				
-				$result = $this->catalog->getMyHolds($patron, $page, $recordsPerPage, $selectedSortOption);
-				//$result = $this->catalog->getMyMillItems($patron['cat_username'], 'holds');
+				$expand_physical_items = isset($_REQUEST['expand_physical_items']) ? $_REQUEST['expand_physical_items'] : null;
+				
+				//getMyHolds is the screen scraping method, getHoldItems uses the API
+				//$result = $this->catalog->getMyHolds($patron, $page, $recordsPerPage, $selectedSortOption);
+				$result = $this->catalog->getHoldItems($patron, $page, $recordsPerPage, $selectedSortOption, $expand_physical_items);
+				
+				echo "<pre>get holds result";
+				print_r($result);
+				echo "</pre>";
 				
 				$result_count = count($result['holds']['unavailable']);
 				
