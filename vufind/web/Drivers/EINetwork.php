@@ -841,7 +841,9 @@ class EINetwork extends MillenniumDriver{
 				$curTitle['renewCount'] = $value->renewals;
 
 				if ($sortOption == 'title'){
-					$sortKey =  $this->get_title_sort($curTitle['itemid']) . '-' . $scount;
+					$sort_title = $this->get_title_sort($curTitle['itemid']);
+					$sort_title = isset($sort_title) ? $sort_title : strtolower($curTitle['title']);
+					$sortKey =  $sort_title . '-' . $scount;
 				} elseif ($sortOption == 'author'){
 					$sortKey = $curTitle['author'] . '-' . $scount;
 				} elseif ($sortOption == 'format'){
@@ -873,7 +875,7 @@ class EINetwork extends MillenniumDriver{
 				$memcache->set("mymill_items_$barcode", $mymill_items, 0, $configArray['Caching']['mymill_items']);
 			}
 
-			ksort($checkedOutTitles);
+			ksort($checkedOutTitles); //TODO Bug with sort
 
 			$numTransactions = count($checkedOutTitles);
 			//Process pagination
