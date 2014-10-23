@@ -169,7 +169,11 @@ class Holds extends MyResearch
 				print_r($result);
 				echo "</pre>";
 				
-				$result_count = count($result['holds']['unavailable']);
+				$result_count = count($result['holdTitle']['unavailable']);
+				
+				echo "<pre>count";
+				print_r($result_count);
+				echo "</pre>";
 				
 				global $memcache;
 				
