@@ -903,17 +903,21 @@ class EINetwork extends MillenniumDriver{
 		global $memcache, $configArray;
 
 		$mymill_items = $this->getMyMillItems($patron['cat_username']);
+		
 
-		echo "<pre>";
-		print_r($mymill_items);
-		echo "</pre>";		
+		//echo "<pre>";
+		//print_r($mymill_items);
+		//echo "</pre>";
+		
 
 		$scount = 0;
 		$numHolds = 0;
+		$numUnavailable =0;
 		$update_cache = 0;
 
 		$curTitle = array();
 		$holds = array();
+		$unavailable = array();
 
 		if (isset($mymill_items->response->holds)){
 
@@ -970,6 +974,7 @@ class EINetwork extends MillenniumDriver{
 				}
 				
 				$curTitle['itemid'] = $value->itemRecordNum;
+				
 
 				if ($sortOption == 'title'){
 					$sortKey =  $this->get_title_sort($curTitle['itemid']) . '-' . $scount;
@@ -978,14 +983,58 @@ class EINetwork extends MillenniumDriver{
 				} else{
 					$sortKey = $curTitle['format'] . '-' . $scount;
 				} 
-
-				$holds[$sortKey]['title'] = $curTitle['title'];
-				$holds[$sortKey]['shortId'] = isset($curTitle['shortId']) ? $curTitle['shortId'] : null;
-				$holds[$sortKey]['isbn'] = isset($curTitle['isbn']) ? $curTitle['isbn'] : null;
-				$holds[$sortKey]['id'] = isset($curTitle['id']) ? $curTitle['id'] : null;
-				$holds[$sortKey]['author'] = isset($curTitle['author']) ? $curTitle['author'] : null;
-				$holds[$sortKey]['format'] = isset($curTitle['format']) ? $curTitle['format'] : null;
 				
+				
+				
+				//$holds[$sortKey]['holdStatus'] = $value->holdStatus;
+				//$holds[$sortKey]['titleProper'] =  $value->titleProper;
+				
+				//if($value->holdStatus == 98 || $value->holdStatus == 105){
+				
+					$holds[$sortKey]['holdStatus'] = $value->holdStatus;
+					$holds[$sortKey]['titleProper'] =  $value->titleProper;
+					$holds[$sortKey]['timeHoldPlaced'] = $value->timeHoldPlaced;
+					$holds[$sortKey]['notWantedBefore'] =  $value->notWantedBefore;
+					$holds[$sortKey]['notWantedAfter'] = $value->notWantedAfter;
+					$holds[$sortKey]['pickupLocationCode'] =  $value->pickupLocationCode;
+					$holds[$sortKey]['pickupLocationMeaning'] = $value->pickupLocationMeaning;
+					$holds[$sortKey]['itemRecordNum'] =  $value->itemRecordNum;
+					$holds[$sortKey]['bibRecordNum'] = $value->bibRecordNum;
+					$holds[$sortKey]['predictableURL'] =  $value->predictableURL;
+					$holds[$sortKey]['requestType'] = $value->requestType;
+					
+					$holds[$sortKey]['title'] = $curTitle['title'];
+					
+					$holds[$sortKey]['itemid'] = isset($curTitle['itemid']) ? $curTitle['itemid'] : null;				
+					$holds[$sortKey]['shortId'] = isset($curTitle['shortId']) ? $curTitle['shortId'] : null;
+					$holds[$sortKey]['isbn'] = isset($curTitle['isbn']) ? $curTitle['isbn'] : null;
+					$holds[$sortKey]['id'] = isset($curTitle['id']) ? $curTitle['id'] : null;
+					$holds[$sortKey]['author'] = isset($curTitle['author']) ? $curTitle['author'] : null;
+					$holds[$sortKey]['format'] = isset($curTitle['format']) ? $curTitle['format'] : null;
+				/*
+				}
+				else{
+					$unavailable[$sortKey]['holdStatus'] = $value->holdStatus;
+					$unavailable[$sortKey]['titleProper'] =  $value->titleProper;
+					$unavailable[$sortKey]['timeHoldPlaced'] = $value->timeHoldPlaced;
+					$unavailable[$sortKey]['notWantedBefore'] =  $value->notWantedBefore;
+					$unavailable[$sortKey]['notWantedAfter'] = $value->notWantedAfter;
+					$unavailable[$sortKey]['pickupLocationCode'] =  $value->pickupLocationCode;
+					$unavailable[$sortKey]['pickupLocationMeaning'] = $value->pickupLocationMeaning;
+					$unavailable[$sortKey]['itemRecordNum'] =  $value->itemRecordNum;
+					$unavailable[$sortKey]['bibRecordNum'] = $value->bibRecordNum;
+					$unavailable[$sortKey]['predictableURL'] =  $value->predictableURL;
+					$unavailable[$sortKey]['requestType'] = $value->requestType;
+					
+					$unavailable[$sortKey]['title'] = $curTitle['title'];
+					
+					$unavailable[$sortKey]['itemid'] = isset($curTitle['itemid']) ? $curTitle['itemid'] : null;				
+					$unavailable[$sortKey]['shortId'] = isset($curTitle['shortId']) ? $curTitle['shortId'] : null;
+					$unavailable[$sortKey]['isbn'] = isset($curTitle['isbn']) ? $curTitle['isbn'] : null;
+					$unavailable[$sortKey]['id'] = isset($curTitle['id']) ? $curTitle['id'] : null;
+					$unavailable[$sortKey]['author'] = isset($curTitle['author']) ? $curTitle['author'] : null;
+					$unavailable[$sortKey]['format'] = isset($curTitle['format']) ? $curTitle['format'] : null;
+				}*/
 				//$holds[$sortKey]['freeze'] = isset($curTitle['freeze']) ? $curTitle['freeze'] : null;
 				//$holds[$sortKey]['itemid'] = $curTitle['itemid'];
 				
@@ -999,7 +1048,9 @@ class EINetwork extends MillenniumDriver{
 			}
 
 			ksort($holds);
+			//ksort($unavailable);
 			$numHolds= count($holds);
+			//$numUnavailable = count($unavailable);
 			//Process pagination
 			if ($recordsPerPage != -1){
 				$startRecord = ($page - 1) * $recordsPerPage;
@@ -1008,7 +1059,17 @@ class EINetwork extends MillenniumDriver{
 					$startRecord = 0;
 				}
 				$holds = array_slice($checkedOutTitles, $startRecord, $recordsPerPage);
-			}		
+			}
+			//Process pagination
+			/*
+			if ($recordsPerPage != -1){
+				$startRecord = ($page - 1) * $recordsPerPage;
+				if ($startRecord > $numUnavilable){
+					$page = 0;
+					$startRecord = 0;
+				}
+				$unavailable = array_slice($checkedOutTitles, $startRecord, $recordsPerPage);
+			}*/
 
 		}
 		//echo "<pre>holdtitles";
@@ -1016,8 +1077,11 @@ class EINetwork extends MillenniumDriver{
 		//echo "</pre>";
 
 		return array(
-			'holdTitle' => $holds,
-			'numHolds' => $numHolds
+			'holds' => $holds,
+			//'unavailable' => $unavailable,
+			'numHolds' => $numHolds,
+			//'numUnavilable'=> $numUnavailable
+			
 		);
 
 	}
