@@ -1037,8 +1037,6 @@ class EINetwork extends MillenniumDriver{
 			$sortKeys = array();
 			$i = 0;
 			foreach ($section as $key => $hold){
-				
-				
 				$sortTitle = isset($hold['sortTitle']) ? $hold['sortTitle'] : (isset($hold['title']) ? $hold['title'] : "Unknown");
 				if ($sectionName == 'available'){
 					$sortKeys[$key] = $sortTitle;
@@ -1046,26 +1044,30 @@ class EINetwork extends MillenniumDriver{
 					if ($sortOption == 'title'){
 						$sortKeys[$key] = $sortTitle;
 					}elseif ($sortOption == 'author'){
-						$sortKeys[$key] = (isset($hold['author']) ? $hold['author'] : "Unknown") ;
+						$sortKeys[$key] = (isset($hold['author']) ? $hold['author'] : "Unknown") . '-' . $sortTitle;
+					}elseif ($sortOption == 'placed'){
+						$sortKeys[$key] = $hold['createTime'] . '-' . $sortTitle;
 					}elseif ($sortOption == 'format'){
-						$sortKeys[$key] = (isset($hold['format']) ? $hold['format'] : "Unknown") ;
+						$sortKeys[$key] = (isset($hold['format']) ? $hold['format'] : "Unknown") . '-' . $sortTitle;
 					}elseif ($sortOption == 'location'){
-						$sortKeys[$key] = (isset($hold['location']) ? $hold['location'] : "Unknown") ;
+						$sortKeys[$key] = (isset($hold['location']) ? $hold['location'] : "Unknown") . '-' . $sortTitle;
+					}elseif ($sortOption == 'holdQueueLength'){
+						$sortKeys[$key] = (isset($hold['holdQueueLength']) ? $hold['holdQueueLength'] : 0) . '-' . $sortTitle;
+					}elseif ($sortOption == 'position'){
+						$sortKeys[$key] = str_pad((isset($hold['position']) ? $hold['position'] : 1), 3, "0", STR_PAD_LEFT) . '-' . $sortTitle;
 					}elseif ($sortOption == 'status'){
-						$sortKeys[$key] = (isset($hold['status']) ? $hold['status'] : "Unknown");
+						$sortKeys[$key] = (isset($hold['status']) ? $hold['status'] : "Unknown") . '-' . (isset($hold['reactivateTime']) ? $hold['reactivateTime'] : "0") . '-' . $sortTitle;
 					}else{
 						$sortKeys[$key] = $sortTitle;
 					}
 					//echo ("<br/>\r\nSort Key for $key = {$sortKeys[$key]}");
 				}
 
-				$sortKeys[$key] = strtolower($sortKeys[$key]);
-				//echo ("<br/>\r\nSort Key for $key = {$sortKeys[$key]}");
+				$sortKeys[$key] = strtolower($sortKeys[$key] . '-' . $i++);
 			}
 			array_multisort($sortKeys, $section);
 			$holds[$sectionName] = $section;
 		}
-
 		
 		//Limit to a specific number of records
 		if (isset($holds['unavailable'])){
@@ -1083,11 +1085,13 @@ class EINetwork extends MillenniumDriver{
 		if (!isset($holds['unavailable'])){
 			$holds['unavailable'] = array();
 		}
-	
+		
+		
 		if ($update_cache){
 			$barcode = $patron['cat_username'];
 			$memcache->set("mymill_items_$barcode", $mymill_items, 0, $configArray['Caching']['mymill_items']);
 		}
+		
 		
 		ksort($holds);
 		$numHolds= count($holds);
