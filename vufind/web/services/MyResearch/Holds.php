@@ -165,15 +165,15 @@ class Holds extends MyResearch
 				//$result = $this->catalog->getMyHolds($patron, $page, $recordsPerPage, $selectedSortOption);
 				$result = $this->catalog->getHoldItems($patron, $page, $recordsPerPage, $selectedSortOption, $expand_physical_items);
 				
-				echo "<pre>get holds result";
-				print_r($result);
-				echo "</pre>";
+				//echo "<pre>get holds result";
+				//print_r($result);
+				//echo "</pre>";
 				
-				$result_count = count($result['holds']);//['unavailable']);
+				$result_count = count($result['holds']['unavailable']);
 				
-				echo "<pre>count";
-				print_r($result_count);
-				echo "</pre>";
+				//echo "<pre>count";
+				//print_r($result_count);
+				//echo "</pre>";
 				
 				global $memcache;
 				

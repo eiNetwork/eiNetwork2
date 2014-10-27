@@ -1939,6 +1939,8 @@ class MillenniumDriver implements DriverInterface
 		$timer->logTime("Got holds page from Millennium");
 
 		$holds = $this->parseHoldsPage($sresult);
+		
+		
 
 		$timer->logTime("Parsed Holds page");
 
@@ -1959,6 +1961,7 @@ class MillenniumDriver implements DriverInterface
 			$resourceSql = "SELECT * FROM resource where source = 'VuFind' AND shortId in ({$recordIdString})";
 			$resourceInfo->query($resourceSql);
 
+				
 			$timer->logTime('Got records for all titles');
 
 			//Load title author, etc. information
@@ -1983,7 +1986,7 @@ class MillenniumDriver implements DriverInterface
 				}
 			}
 		}
-
+		
 		//Process sorting
 		//echo ("<br/>\r\nSorting by $sortOption");
 		foreach ($holds as $sectionName => $section){

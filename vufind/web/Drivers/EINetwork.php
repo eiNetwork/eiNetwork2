@@ -905,19 +905,19 @@ class EINetwork extends MillenniumDriver{
 		$mymill_items = $this->getMyMillItems($patron['cat_username']);
 		
 
-		//echo "<pre>";
+		//echo "<pre> mill items";
 		//print_r($mymill_items);
 		//echo "</pre>";
-		
 
 		$scount = 0;
 		$numHolds = 0;
 		$numUnavailable =0;
 		$update_cache = 0;
+		$availabeCount = 0;
+		$unavailableCount = 0;
 
 		$curTitle = array();
 		$holds = array();
-		$unavailable = array();
 
 		if (isset($mymill_items->response->holds)){
 
@@ -938,12 +938,8 @@ class EINetwork extends MillenniumDriver{
 
 				$mymill_items->response->holds[0] = $hold_item;
 			}
-
+			
 			foreach($mymill_items->response->holds as $key => $value){
-
-				
-
-				$item_id = $value->itemRecordNum; //TODO. NOT GETTING THE CHECK DIGIT FROM MYMILLAPI. WE WILL REMOVE THAT DURING REINDEX.
 
 				$bibRecordNum = isset($value->bibRecordNum) ? $value->bibRecordNum : null;
 
@@ -968,122 +964,141 @@ class EINetwork extends MillenniumDriver{
 						$curTitle['id'] = $resource->record_id;
 						$curTitle['author'] = $resource->author;
 						$curTitle['format'] = $resource->format;
-						
+						$curTitle['recordId'] = $resource->record_id;
+						$curTitle['sortTitle'] = $resource->title_sort;
+						$curTitle['upc'] = $resource->upc;	
 					}
-
 				}
 				
 				$curTitle['itemid'] = $value->itemRecordNum;
 				
-
-				if ($sortOption == 'title'){
-					$sortKey =  $this->get_title_sort($curTitle['itemid']) . '-' . $scount;
-				} elseif ($sortOption == 'author'){
-					$sortKey = $curTitle['author'] . '-' . $scount;
-				} else{
-					$sortKey = $curTitle['format'] . '-' . $scount;
-				} 
-				
-				
-				
-				//$holds[$sortKey]['holdStatus'] = $value->holdStatus;
-				//$holds[$sortKey]['titleProper'] =  $value->titleProper;
-				
-				//if($value->holdStatus == 98 || $value->holdStatus == 105){
-				
-					$holds[$sortKey]['holdStatus'] = $value->holdStatus;
-					$holds[$sortKey]['titleProper'] =  $value->titleProper;
-					$holds[$sortKey]['timeHoldPlaced'] = $value->timeHoldPlaced;
-					$holds[$sortKey]['notWantedBefore'] =  $value->notWantedBefore;
-					$holds[$sortKey]['notWantedAfter'] = $value->notWantedAfter;
-					$holds[$sortKey]['pickupLocationCode'] =  $value->pickupLocationCode;
-					$holds[$sortKey]['pickupLocationMeaning'] = $value->pickupLocationMeaning;
-					$holds[$sortKey]['itemRecordNum'] =  $value->itemRecordNum;
-					$holds[$sortKey]['bibRecordNum'] = $value->bibRecordNum;
-					$holds[$sortKey]['predictableURL'] =  $value->predictableURL;
-					$holds[$sortKey]['requestType'] = $value->requestType;
-					
-					$holds[$sortKey]['title'] = $curTitle['title'];
-					
-					$holds[$sortKey]['itemid'] = isset($curTitle['itemid']) ? $curTitle['itemid'] : null;				
-					$holds[$sortKey]['shortId'] = isset($curTitle['shortId']) ? $curTitle['shortId'] : null;
-					$holds[$sortKey]['isbn'] = isset($curTitle['isbn']) ? $curTitle['isbn'] : null;
-					$holds[$sortKey]['id'] = isset($curTitle['id']) ? $curTitle['id'] : null;
-					$holds[$sortKey]['author'] = isset($curTitle['author']) ? $curTitle['author'] : null;
-					$holds[$sortKey]['format'] = isset($curTitle['format']) ? $curTitle['format'] : null;
-				/*
+				if($value->holdStatus == 98 || $value->holdStatus == 105){
+					$availability = 'available';
+					$index = $availabeCount++;
+				}else{ 
+					$availability = 'unavailable';
+					$index = $unavailableCount++;
 				}
-				else{
-					$unavailable[$sortKey]['holdStatus'] = $value->holdStatus;
-					$unavailable[$sortKey]['titleProper'] =  $value->titleProper;
-					$unavailable[$sortKey]['timeHoldPlaced'] = $value->timeHoldPlaced;
-					$unavailable[$sortKey]['notWantedBefore'] =  $value->notWantedBefore;
-					$unavailable[$sortKey]['notWantedAfter'] = $value->notWantedAfter;
-					$unavailable[$sortKey]['pickupLocationCode'] =  $value->pickupLocationCode;
-					$unavailable[$sortKey]['pickupLocationMeaning'] = $value->pickupLocationMeaning;
-					$unavailable[$sortKey]['itemRecordNum'] =  $value->itemRecordNum;
-					$unavailable[$sortKey]['bibRecordNum'] = $value->bibRecordNum;
-					$unavailable[$sortKey]['predictableURL'] =  $value->predictableURL;
-					$unavailable[$sortKey]['requestType'] = $value->requestType;
-					
-					$unavailable[$sortKey]['title'] = $curTitle['title'];
-					
-					$unavailable[$sortKey]['itemid'] = isset($curTitle['itemid']) ? $curTitle['itemid'] : null;				
-					$unavailable[$sortKey]['shortId'] = isset($curTitle['shortId']) ? $curTitle['shortId'] : null;
-					$unavailable[$sortKey]['isbn'] = isset($curTitle['isbn']) ? $curTitle['isbn'] : null;
-					$unavailable[$sortKey]['id'] = isset($curTitle['id']) ? $curTitle['id'] : null;
-					$unavailable[$sortKey]['author'] = isset($curTitle['author']) ? $curTitle['author'] : null;
-					$unavailable[$sortKey]['format'] = isset($curTitle['format']) ? $curTitle['format'] : null;
-				}*/
-				//$holds[$sortKey]['freeze'] = isset($curTitle['freeze']) ? $curTitle['freeze'] : null;
-				//$holds[$sortKey]['itemid'] = $curTitle['itemid'];
 				
+				//populate holds array
+				$holds[$availability][$index]['create'] = NULL;
+				$holds[$availability][$index]['reqnum'] = NULL;
+				$holds[$availability][$index]['renew'] = NULL;
+				
+				$holds[$availability][$index]['cancelable'] = ($value->holdStatus == 0) ? 1 : 0;
+				$holds[$availability][$index]['itemId'] = isset($value->itemRecordNum) ? $value->itemRecordNum : $value->bibRecordNum;
+				$holds[$availability][$index]['xnum'] = NULL;
+				$holds[$availability][$index]['cancelId'] = NULL;
+				$holds[$availability][$index]['id'] = isset($value->itemRecordNum) ? $value->itemRecordNum : $value->bibRecordNum;
+				$holds[$availability][$index]['shortId'] = isset($value->itemRecordNum) ? $value->itemRecordNum : $value->bibRecordNum;
+				$holds[$availability][$index]['title'] = $curTitle['title'];
+				
+				//convert date value to time format and divde by sec, min, and hours to covert to days
+				$datediff = ( strtotime($value->notWantedBefore) - strtotime($value->timeHoldPlaced) )/ (60*60*24);
+				if($value->holdStatus == 0){
+					if(isset($value->itemRecordNum)){
+						$holds[$availability][$index]['status'] = 'Available';
+					}
+					else if( $datediff == 255 )
+					{
+						$holds[$availability][$index]['status'] = 'Frozen';
+					}
+					else{
+						$holds[$availability][$index]['status'] = 'Pending';
+					}
+				}
+				if($value->holdStatus == 98 || $value->holdStatus == 105){
+					$holds[$availability][$index]['status'] = 'Ready to Pickup';
+				}else if($value->holdStatus == 116){
+					$holds[$availability][$index]['status'] = 'In Transit';
+				}
+				
+				$holds[$availability][$index]['renewError'] =NULL;
+				$holds[$availability][$index]['location'] = $value->pickupLocationMeaning;
+				$holds[$availability][$index]['currentPickupName'] =$value->pickupLocationMeaning;
+				$holds[$availability][$index]['locationUpdateable'] = ($value->holdStatus == 0) ? 1 : 0;
+				$holds[$availability][$index]['frozen'] =( ($value->notWantedAfter -$value->notWantedBefore) >= 255 )? 1 : 0;
+				$holds[$availability][$index]['freezeable'] = isset($value->itemRecordNum) ? 1 : 0;
+				$holds[$availability][$index]['recordId'] = isset($curTitle['recordId']) ? $curTitle['recordId'] : null;;
+				$holds[$availability][$index]['sortTitle'] = isset($curTitle['sortTitle']) ? $curTitle['sortTitle'] : null;;
+				$holds[$availability][$index]['author'] = isset($curTitle['author']) ? $curTitle['author'] : null;
+				$holds[$availability][$index]['format'] = isset($curTitle['format']) ? $curTitle['format'] : null;
+				$holds[$availability][$index]['isbn'] = isset($curTitle['isbn']) ? $curTitle['isbn'] : null;;
+				$holds[$availability][$index]['upc'] = isset($curTitle['upc']) ? $curTitle['upc'] : null; ;
+				$holds[$availability][$index]['format_category'] = isset($curTitle['format']) ? $curTitle['format'] : null ;
+	
 				$scount++;
-
 			}
-
-			if ($update_cache){
-				$barcode = $patron['cat_username'];
-				$memcache->set("mymill_items_$barcode", $mymill_items, 0, $configArray['Caching']['mymill_items']);
-			}
-
-			ksort($holds);
-			//ksort($unavailable);
-			$numHolds= count($holds);
-			//$numUnavailable = count($unavailable);
-			//Process pagination
-			if ($recordsPerPage != -1){
-				$startRecord = ($page - 1) * $recordsPerPage;
-				if ($startRecord > $numHolds){
-					$page = 0;
-					$startRecord = 0;
-				}
-				$holds = array_slice($checkedOutTitles, $startRecord, $recordsPerPage);
-			}
-			//Process pagination
-			/*
-			if ($recordsPerPage != -1){
-				$startRecord = ($page - 1) * $recordsPerPage;
-				if ($startRecord > $numUnavilable){
-					$page = 0;
-					$startRecord = 0;
-				}
-				$unavailable = array_slice($checkedOutTitles, $startRecord, $recordsPerPage);
-			}*/
-
 		}
-		//echo "<pre>holdtitles";
-		//print_r($holdTitles);
-		//echo "</pre>";
+		
+		//Process sorting
+		//echo ("<br/>\r\nSorting by $sortOption");
+		foreach ($holds as $sectionName => $section){
+			$sortKeys = array();
+			$i = 0;
+			foreach ($section as $key => $hold){
+				
+				
+				$sortTitle = isset($hold['sortTitle']) ? $hold['sortTitle'] : (isset($hold['title']) ? $hold['title'] : "Unknown");
+				if ($sectionName == 'available'){
+					$sortKeys[$key] = $sortTitle;
+				}else{
+					if ($sortOption == 'title'){
+						$sortKeys[$key] = $sortTitle;
+					}elseif ($sortOption == 'author'){
+						$sortKeys[$key] = (isset($hold['author']) ? $hold['author'] : "Unknown") ;
+					}elseif ($sortOption == 'format'){
+						$sortKeys[$key] = (isset($hold['format']) ? $hold['format'] : "Unknown") ;
+					}elseif ($sortOption == 'location'){
+						$sortKeys[$key] = (isset($hold['location']) ? $hold['location'] : "Unknown") ;
+					}elseif ($sortOption == 'status'){
+						$sortKeys[$key] = (isset($hold['status']) ? $hold['status'] : "Unknown");
+					}else{
+						$sortKeys[$key] = $sortTitle;
+					}
+					//echo ("<br/>\r\nSort Key for $key = {$sortKeys[$key]}");
+				}
 
+				$sortKeys[$key] = strtolower($sortKeys[$key]);
+				//echo ("<br/>\r\nSort Key for $key = {$sortKeys[$key]}");
+			}
+			array_multisort($sortKeys, $section);
+			$holds[$sectionName] = $section;
+		}
+
+		
+		//Limit to a specific number of records
+		if (isset($holds['unavailable'])){
+			$numUnavailableHolds = count($holds['unavailable']);
+			if ($recordsPerPage != -1){
+				$startRecord = ($page - 1) * $recordsPerPage;
+				$holds['unavailable'] = array_slice($holds['unavailable'], $startRecord, $recordsPerPage);
+			}
+		}else{
+			$numUnavailableHolds = 0;
+		}
+		if (!isset($holds['available'])){
+			$holds['available'] = array();
+		}
+		if (!isset($holds['unavailable'])){
+			$holds['unavailable'] = array();
+		}
+	
+		if ($update_cache){
+			$barcode = $patron['cat_username'];
+			$memcache->set("mymill_items_$barcode", $mymill_items, 0, $configArray['Caching']['mymill_items']);
+		}
+		
+		ksort($holds);
+		$numHolds= count($holds);
+		
+		$this->holds[$patron['id']] = $holds;
+		
 		return array(
 			'holds' => $holds,
-			//'unavailable' => $unavailable,
-			'numHolds' => $numHolds,
-			//'numUnavilable'=> $numUnavailable
-			
+			'numUnavailableHolds' => $numUnavailableHolds,
 		);
-
+	
 	}
 	
 	
