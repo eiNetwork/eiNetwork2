@@ -171,10 +171,6 @@ class Holds extends MyResearch
 				
 				$result_count = count($result['holds']['unavailable']);
 				
-				//echo "<pre>count";
-				//print_r($result_count);
-				//echo "</pre>";
-				
 				global $memcache;
 				
 				$numUnavailableHolds = $memcache->get("numUnavailableHolds");

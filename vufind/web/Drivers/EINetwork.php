@@ -904,11 +904,9 @@ class EINetwork extends MillenniumDriver{
 
 		$mymill_items = $this->getMyMillItems($patron['cat_username']);
 		
-
-		//echo "<pre> mill items";
-		//print_r($mymill_items);
-		//echo "</pre>";
-
+		//echo "<pre> myMill Items"; print_r($mymill_items); echo "</pre>";
+		
+		$xnum = 0;	//incrementing number to create cancelId
 		$scount = 0;
 		$numHolds = 0;
 		$numUnavailable =0;
@@ -918,10 +916,13 @@ class EINetwork extends MillenniumDriver{
 
 		$curTitle = array();
 		$holds = array();
+		
+		
 
 		if (isset($mymill_items->response->holds)){
 
 			require_once 'services/MyResearch/lib/Resource.php';
+			
 
 			// The MyMillennium API does not return an array of objects when there is only one checked out item. The following code, mimics an array of object
 			// so upstream it doesnt break anything. This doest not effect patrons with zero checked out items.
@@ -966,7 +967,7 @@ class EINetwork extends MillenniumDriver{
 						$curTitle['format'] = $resource->format;
 						$curTitle['recordId'] = $resource->record_id;
 						$curTitle['sortTitle'] = $resource->title_sort;
-						$curTitle['upc'] = $resource->upc;	
+						$curTitle['upc'] = $resource->upc;
 					}
 				}
 				
@@ -987,10 +988,10 @@ class EINetwork extends MillenniumDriver{
 				
 				$holds[$availability][$index]['cancelable'] = ($value->holdStatus == 0) ? 1 : 0;
 				$holds[$availability][$index]['itemId'] = isset($value->itemRecordNum) ? $value->itemRecordNum : $value->bibRecordNum;
-				$holds[$availability][$index]['xnum'] = NULL;
-				$holds[$availability][$index]['cancelId'] = NULL;
-				$holds[$availability][$index]['id'] = isset($value->itemRecordNum) ? $value->itemRecordNum : $value->bibRecordNum;
-				$holds[$availability][$index]['shortId'] = isset($value->itemRecordNum) ? $value->itemRecordNum : $value->bibRecordNum;
+				$holds[$availability][$index]['xnum'] = ($xnum<10)?'0'.$xnum++:$xnum++;
+				$holds[$availability][$index]['cancelId'] =$holds[$availability][$index]['itemId'].'x'.$holds[$availability][$index]['xnum'];
+				$holds[$availability][$index]['id'] = isset($curTitle['recordId']) ? $curTitle['recordId'] : null;;
+				$holds[$availability][$index]['shortId'] = $value->bibRecordNum;
 				$holds[$availability][$index]['title'] = $curTitle['title'];
 				
 				//convert date value to time format and divde by sec, min, and hours to covert to days
@@ -1008,7 +1009,7 @@ class EINetwork extends MillenniumDriver{
 					}
 				}
 				if($value->holdStatus == 98 || $value->holdStatus == 105){
-					$holds[$availability][$index]['status'] = 'Ready to Pickup';
+					$holds[$availability][$index]['status'] = 'Ready';
 				}else if($value->holdStatus == 116){
 					$holds[$availability][$index]['status'] = 'In Transit';
 				}
@@ -1016,9 +1017,9 @@ class EINetwork extends MillenniumDriver{
 				$holds[$availability][$index]['renewError'] =NULL;
 				$holds[$availability][$index]['location'] = $value->pickupLocationMeaning;
 				$holds[$availability][$index]['currentPickupName'] =$value->pickupLocationMeaning;
-				$holds[$availability][$index]['locationUpdateable'] = ($value->holdStatus == 0) ? 1 : 0;
-				$holds[$availability][$index]['frozen'] =( ($value->notWantedAfter -$value->notWantedBefore) >= 255 )? 1 : 0;
-				$holds[$availability][$index]['freezeable'] = isset($value->itemRecordNum) ? 1 : 0;
+				$holds[$availability][$index]['locationUpdateable'] = ($value->holdStatus != 0) ? 0 : 1;
+				$holds[$availability][$index]['frozen'] =( $datediff == 255 )? 1 : 0;
+				$holds[$availability][$index]['freezeable'] = isset($value->itemRecordNum) ? null : 1;
 				$holds[$availability][$index]['recordId'] = isset($curTitle['recordId']) ? $curTitle['recordId'] : null;;
 				$holds[$availability][$index]['sortTitle'] = isset($curTitle['sortTitle']) ? $curTitle['sortTitle'] : null;;
 				$holds[$availability][$index]['author'] = isset($curTitle['author']) ? $curTitle['author'] : null;
@@ -1026,8 +1027,9 @@ class EINetwork extends MillenniumDriver{
 				$holds[$availability][$index]['isbn'] = isset($curTitle['isbn']) ? $curTitle['isbn'] : null;;
 				$holds[$availability][$index]['upc'] = isset($curTitle['upc']) ? $curTitle['upc'] : null; ;
 				$holds[$availability][$index]['format_category'] = isset($curTitle['format']) ? $curTitle['format'] : null ;
-	
+				
 				$scount++;
+				
 			}
 		}
 		
@@ -1069,6 +1071,8 @@ class EINetwork extends MillenniumDriver{
 			$holds[$sectionName] = $section;
 		}
 		
+		
+		
 		//Limit to a specific number of records
 		if (isset($holds['unavailable'])){
 			$numUnavailableHolds = count($holds['unavailable']);
@@ -1097,6 +1101,7 @@ class EINetwork extends MillenniumDriver{
 		$numHolds= count($holds);
 		
 		$this->holds[$patron['id']] = $holds;
+
 		
 		return array(
 			'holds' => $holds,

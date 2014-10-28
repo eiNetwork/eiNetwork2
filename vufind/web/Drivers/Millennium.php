@@ -1963,7 +1963,6 @@ class MillenniumDriver implements DriverInterface
 
 				
 			$timer->logTime('Got records for all titles');
-
 			//Load title author, etc. information
 			while ($resourceInfo->fetch()){
 				foreach($holds as $section => $holdSections){
@@ -1986,6 +1985,8 @@ class MillenniumDriver implements DriverInterface
 				}
 			}
 		}
+		
+		//echo "<pre> mill before sort"; print_r($holds); echo "</pre>";
 		
 		//Process sorting
 		//echo ("<br/>\r\nSorting by $sortOption");
@@ -2049,6 +2050,11 @@ class MillenniumDriver implements DriverInterface
 
 		$this->holds[$patron['id']] = $holds;
 		$timer->logTime("Processed hold pagination and sorting");
+		
+		//echo "<pre>";
+		//print_r($holds);
+		//echo "</pre>";
+		
 		return array(
 			'holds' => $holds,
 			'numUnavailableHolds' => $numUnavailableHolds,
