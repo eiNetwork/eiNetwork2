@@ -2013,7 +2013,7 @@ class MillenniumDriver implements DriverInterface
 					}elseif ($sortOption == 'position'){
 						$sortKeys[$key] = str_pad((isset($hold['position']) ? $hold['position'] : 1), 3, "0", STR_PAD_LEFT) . '-' . $sortTitle;
 					}elseif ($sortOption == 'status'){
-						$sortKeys[$key] = (isset($hold['status']) ? $hold['status'] : "Unknown") . '-' . (isset($hold['reactivateTime']) ? $hold['reactivateTime'] : "0") . '-' . $sortTitle;
+						$sortKeys[$key] = (isset($hold['status']) ? $hold['status'] : "Unknown") . '-' . (isset($hold['reactivateTime']) ? $hold['reactivateTime'] : "0") . '-' . $sortTitle;				
 					}else{
 						$sortKeys[$key] = $sortTitle;
 					}
@@ -2092,9 +2092,9 @@ class MillenniumDriver implements DriverInterface
 		$skeys = array_pad(array(),10,"");
 		foreach ($srows as $srow) {
 			$scols = preg_split("/<t(h|d)([^>]*)>/",$srow);
-			// echo "<pre>";
-			// print_r($scols);
-			// echo "</pre>";
+			 //echo "<pre>";
+			 //print_r($scols);
+			 //echo "</pre>";
 			$curHold= array();
 			$curHold['create'] = null;
 			$curHold['reqnum'] = null;

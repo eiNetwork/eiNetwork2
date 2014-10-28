@@ -898,6 +898,7 @@ class EINetwork extends MillenniumDriver{
 
 	}
 
+
 	public function getHoldItems($patron, $page = 1, $recordsPerPage = -1, $sortOption = 'title', $expand_physical_items){
 
 		global $memcache, $configArray;
@@ -968,6 +969,17 @@ class EINetwork extends MillenniumDriver{
 						$curTitle['recordId'] = $resource->record_id;
 						$curTitle['sortTitle'] = $resource->title_sort;
 						$curTitle['upc'] = $resource->upc;
+						
+					}
+					
+					$curPickupBranch = new Location();
+					$curPickupBranch->whereAdd("code = '{$value->pickupLocationCode}'");
+					$curPickupBranch->find(1);
+					if ($curPickupBranch->N > 0){
+						$curPickupBranch->fetch();
+						$curHold['currentPickupId'] = $curPickupBranch->locationId;
+						$curHold['currentPickupName'] = $curPickupBranch->displayName;
+						$curHold['location'] = $curPickupBranch->displayName;
 					}
 				}
 				
@@ -985,7 +997,9 @@ class EINetwork extends MillenniumDriver{
 				$holds[$availability][$index]['create'] = NULL;
 				$holds[$availability][$index]['reqnum'] = NULL;
 				$holds[$availability][$index]['renew'] = NULL;
-				
+				$exipirationDate = null;
+				$expireDate = DateTime::createFromFormat('m-d-y', $exipirationDate);
+				$holds[$availability][$index]['expire'] = $expireDate;//$expireDate->getTimestamp();
 				$holds[$availability][$index]['cancelable'] = ($value->holdStatus == 0) ? 1 : 0;
 				$holds[$availability][$index]['itemId'] = isset($value->itemRecordNum) ? $value->itemRecordNum : $value->bibRecordNum;
 				$holds[$availability][$index]['xnum'] = ($xnum<10)?'0'.$xnum++:$xnum++;
@@ -1015,6 +1029,7 @@ class EINetwork extends MillenniumDriver{
 				}
 				
 				$holds[$availability][$index]['renewError'] =NULL;
+				$holds[$availability][$index]['currentPickupId'] = isset($curHold['currentPickupId'])?$curHold['currentPickupId']:null;
 				$holds[$availability][$index]['location'] = $value->pickupLocationMeaning;
 				$holds[$availability][$index]['currentPickupName'] =$value->pickupLocationMeaning;
 				$holds[$availability][$index]['locationUpdateable'] = ($value->holdStatus != 0) ? 0 : 1;
