@@ -1530,7 +1530,7 @@ class MillenniumDriver implements DriverInterface
 
 		//Load the information from millenium using CURL
 		$sresult = $this->_fetchPatronInfoPage($patronDump, 'items');
-
+		
 		$sresult = preg_replace("/<[^<]+?>\W<[^<]+?>\W\d* ITEM.? CHECKED OUT<[^<]+?>\W<[^<]+?>/", "", $sresult);
 
 		$s = substr($sresult, stripos($sresult, 'patFunc'));
@@ -1927,6 +1927,28 @@ class MillenniumDriver implements DriverInterface
 		unlink($cookieJar);
 	}
 
+	
+	public function getScreenItems($patron)
+	{
+		$id2= $patron['id'];
+		$patronDump = $this->_getPatronDump($this->_getBarcode());
+
+		//Load the information from millenium using CURL
+		$ssresult = $this->_fetchPatronInfoPage($patronDump, 'holds');
+		
+		$holds = $this->parseHoldsPage($ssresult);
+		
+		$expireDate = array();
+		foreach($holds as $section => $holdSections){
+			foreach($holdSections as $hold){
+				if( isset($hold['expire']) ){
+					$expireDate[$hold['itemId']] = $hold['expire'];
+				}
+			}
+		}
+		return $expireDate;
+	}
+	
 	public function getMyHolds($patron, $page = 1, $recordsPerPage = -1, $sortOption = 'title')
 	{
 		global $timer;
@@ -1939,8 +1961,6 @@ class MillenniumDriver implements DriverInterface
 		$timer->logTime("Got holds page from Millennium");
 
 		$holds = $this->parseHoldsPage($sresult);
-		
-		
 
 		$timer->logTime("Parsed Holds page");
 

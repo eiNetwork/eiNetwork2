@@ -17,6 +17,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  */
+
 require_once 'Drivers/Millennium.php';
 
 // for connection to sierra.
@@ -897,12 +898,13 @@ class EINetwork extends MillenniumDriver{
 		);
 
 	}
-
+	
 
 	public function getHoldItems($patron, $page = 1, $recordsPerPage = -1, $sortOption = 'title', $expand_physical_items){
-
 		global $memcache, $configArray;
-
+		
+		$pickupExpireDate = $this->getScreenItems($patron);	
+		
 		$mymill_items = $this->getMyMillItems($patron['cat_username']);
 		
 		//echo "<pre> myMill Items"; print_r($mymill_items); echo "</pre>";
@@ -969,7 +971,7 @@ class EINetwork extends MillenniumDriver{
 						$curTitle['recordId'] = $resource->record_id;
 						$curTitle['sortTitle'] = $resource->title_sort;
 						$curTitle['upc'] = $resource->upc;
-						
+						$curTitle['date_updated'] = $resource->date_updated;
 					}
 					
 					$curPickupBranch = new Location();
@@ -994,19 +996,6 @@ class EINetwork extends MillenniumDriver{
 				}
 				
 				//populate holds array
-				$holds[$availability][$index]['create'] = NULL;
-				$holds[$availability][$index]['reqnum'] = NULL;
-				$holds[$availability][$index]['renew'] = NULL;
-				$exipirationDate = null;
-				$expireDate = DateTime::createFromFormat('m-d-y', $exipirationDate);
-				$holds[$availability][$index]['expire'] = $expireDate;//$expireDate->getTimestamp();
-				$holds[$availability][$index]['cancelable'] = ($value->holdStatus == 0) ? 1 : 0;
-				$holds[$availability][$index]['itemId'] = isset($value->itemRecordNum) ? $value->itemRecordNum : $value->bibRecordNum;
-				$holds[$availability][$index]['xnum'] = ($xnum<10)?'0'.$xnum++:$xnum++;
-				$holds[$availability][$index]['cancelId'] =$holds[$availability][$index]['itemId'].'x'.$holds[$availability][$index]['xnum'];
-				$holds[$availability][$index]['id'] = isset($curTitle['recordId']) ? $curTitle['recordId'] : null;;
-				$holds[$availability][$index]['shortId'] = $value->bibRecordNum;
-				$holds[$availability][$index]['title'] = $curTitle['title'];
 				
 				//convert date value to time format and divde by sec, min, and hours to covert to days
 				$datediff = ( strtotime($value->notWantedBefore) - strtotime($value->timeHoldPlaced) )/ (60*60*24);
@@ -1028,6 +1017,18 @@ class EINetwork extends MillenniumDriver{
 					$holds[$availability][$index]['status'] = 'In Transit';
 				}
 				
+				$holds[$availability][$index]['create'] = NULL;
+				$holds[$availability][$index]['reqnum'] = NULL;
+				$holds[$availability][$index]['renew'] = NULL;
+				//$exipirationDate =intval($curTitle['date_updated']) +(12*60*60*24); //adding 12days from the date last updated
+				$holds[$availability][$index]['expire'] = ( $holds[$availability][$index]['status'] == 'Ready')?$pickupExpireDate[$value->itemRecordNum]:null;
+				$holds[$availability][$index]['cancelable'] = ($value->holdStatus == 0) ? 1 : 0;
+				$holds[$availability][$index]['itemId'] = isset($value->itemRecordNum) ? $value->itemRecordNum : $value->bibRecordNum;
+				$holds[$availability][$index]['xnum'] = ($xnum<10)?'0'.$xnum++:$xnum++;
+				$holds[$availability][$index]['cancelId'] =$holds[$availability][$index]['itemId'].'x'.$holds[$availability][$index]['xnum'];
+				$holds[$availability][$index]['id'] = isset($curTitle['recordId']) ? $curTitle['recordId'] : null;;
+				$holds[$availability][$index]['shortId'] = $value->bibRecordNum;
+				$holds[$availability][$index]['title'] = $curTitle['title'];
 				$holds[$availability][$index]['renewError'] =NULL;
 				$holds[$availability][$index]['currentPickupId'] = isset($curHold['currentPickupId'])?$curHold['currentPickupId']:null;
 				$holds[$availability][$index]['location'] = $value->pickupLocationMeaning;

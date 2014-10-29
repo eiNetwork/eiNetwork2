@@ -161,8 +161,10 @@ class Holds extends MyResearch
 				
 				$expand_physical_items = isset($_REQUEST['expand_physical_items']) ? $_REQUEST['expand_physical_items'] : null;
 				
-				//getMyHolds is the screen scraping method, getHoldItems uses the API
+				//getMyHolds is the screen scraping method
 				//$result = $this->catalog->getMyHolds($patron, $page, $recordsPerPage, $selectedSortOption);
+		
+				//Call EINetwork 	
 				$result = $this->catalog->getHoldItems($patron, $page, $recordsPerPage, $selectedSortOption, $expand_physical_items);
 				
 				//echo "<pre>get holds result";
