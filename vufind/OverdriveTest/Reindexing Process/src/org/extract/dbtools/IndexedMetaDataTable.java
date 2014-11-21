@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 import org.json.JSONException;
 import org.json.JSONObject;
 /**
- * Populate indexedMetaDataTable
+ * Populate indexedMetaDataTable, 
  * 
  *
  */
@@ -26,7 +26,9 @@ public class IndexedMetaDataTable {
 	public void setConnection(Connection conn){
 		this.conn = conn;
 	}
-	
+	/**
+	 * populate indexedMetaData table
+	 */
 	public void setIndexMetaDataTable(){
 		DatabaseQueries dbQueries = new DatabaseQueries(conn);
 		HashSet<String> columns = new HashSet<String>();
@@ -53,6 +55,11 @@ public class IndexedMetaDataTable {
 						contentMap.put("title_full", metaDataJSON.getString("title").replace("\"", "\\\""));
 						contentMap.put("title_auth", metaDataJSON.getString("title").replace("\"", "\\\""));
 						contentMap.put("author", metaDataJSON.getJSONArray("creators").getJSONObject(0).getString("fileAs").replace("\"", "\\\"") );
+						contentMap.put("language", metaDataJSON.getJSONArray("languages").toString().replace("\"", "\\\""));
+						contentMap.put("publisher", metaDataJSON.getString("publisher").replace("\"", "\\\""));
+						
+						contentMap.put("publishDate", metaDataJSON.getString("publishDateText").replace("\"", "\\\""));
+						
 						/*
 						contentMap.put("author2", metaDataJSON.getJSONArray("creators").getJSONObject(1).getString("fileAs"));
 						contentMap.put("author2_role", "");
@@ -63,9 +70,8 @@ public class IndexedMetaDataTable {
 						contentMap.put("description", "");
 						contentMap.put("contents", "");
 						contentMap.put("subject", "");
-						contentMap.put("language", "");
-						contentMap.put("publisher", "");
-						contentMap.put("edition", "");
+						contentMap.put("edition", metaDataJSON.getString("edition").replace("\"", "\\\""));
+						
 						contentMap.put("isbn", "");
 						contentMap.put("issn", "");
 						contentMap.put("upc", "");
@@ -75,7 +81,7 @@ public class IndexedMetaDataTable {
 						contentMap.put("series2", "");
 						contentMap.put("target_audience", "");
 						contentMap.put("mpaa_rating", "");
-						contentMap.put("publishDate", "");
+						
 						contentMap.put("publishLocation", "");
 						contentMap.put("topic", "");
 						contentMap.put("genre", "");

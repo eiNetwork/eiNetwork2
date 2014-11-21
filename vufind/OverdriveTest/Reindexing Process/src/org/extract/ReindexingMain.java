@@ -129,26 +129,31 @@ public class ReindexingMain {
 		if(!extractType.contains("non")){
 		
 			HashSet<Object> updatedExternalDataIds = new HashSet<Object>();
+			logEntry = new OverDriveExtractLogEntry(mySqlconn, logger);
+			
 			//extracting from overdrive
 			logger.debug("Calling Overdrive Extract");
 			ExtractOverDriveInfo extractor = new ExtractOverDriveInfo();
 			//object for log table
-			logEntry = new OverDriveExtractLogEntry(mySqlconn, logger);
+			
 			logger.debug("Starting " + extractType + " extract from overdrive ");
 			updatedExternalDataIds = extractor.extractOverDriveInfo(configIni, mySqlconn, logEntry, extractType);
-		
-			//populate externalFormats table
-			logger.debug("Starting externalFormat update");
-			new ExternalFormatTable().setTable(mySqlconn, updatedExternalDataIds);
-		
-			//populateExternalFormatsTable
-			logger.debug("Starting indexedMetaData update");
-			new IndexedMetaDataTable(mySqlconn).setIndexMetaDataTable();
 		
 			currentTime = new Date();
 			logEntry.setEndTime(currentTime.getTime());
 			logEntry.updateLog();
-			logger.info("OverDrive Extraction and database updata DONE....");
+			logger.info("OverDrive Extraction DONE....");
+			
+			//populate externalFormats table
+			logger.debug("Starting externalFormat update");
+			new ExternalFormatTable().setTable(mySqlconn, updatedExternalDataIds);
+			
+			//populateExternalFormatsTable
+			logger.debug("Starting indexedMetaData update");
+			new IndexedMetaDataTable(mySqlconn).setIndexMetaDataTable();
+			
+			logger.info("Database updata DONE....");
+			
 		}
 		try {
 			mySqlconn.close();
