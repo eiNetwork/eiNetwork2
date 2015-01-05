@@ -19,7 +19,22 @@ $(function() {
         <h3>We’re listening to you. The ongoing changes and planned enhancements are driven by the comments and feedback you submit when completing the new catalog survey.  We want to continue to hear from you and we appreciate your feedback.</h3>
         <br>
         <div id="accordion">
-            <h2 class="accordion-title">&nbsp;&nbsp;&nbsp;&nbsp;<span class="bold">Current Release version 4.2</span></h2>
+        <h2 class="accordion-title">&nbsp;&nbsp;&nbsp;&nbsp;<span class="bold">Current Release version 4.3</span></h2>
+            <div>
+                Release date 1/5/2014
+                <ol class="decimal">
+                    <li>Users will now go directly to their Checked Out Items page when logging in to My Account.  Previously, users were directed to their Account Settings page upon login.  </li>
+                    <li>The Checked Out Items list is now sorted by Due Date by default.  The previous default sort was by Title.  </li>
+                    <li>The following changes were made to address bugs with the Title sort on the Checked Out Items page:</li>
+                    <ol class="alpha">
+                        <li>Leading articles were not being omitted from the Title sort for physical items resulting in inconsistent sort behavior.  Articles are now omitted to provide an accurate alphabetical sort by title.</li>
+                        <li>A case sensitivity issue resulted in items being sorted differently depending on whether their titles contained upper or lower case letters.  Items are now sorted alphabetically by title, regardless of letter case.</li>
+                    </ol>
+                
+
+                </ol>
+            </div>
+            <h2 class="accordion-title">&nbsp;&nbsp;&nbsp;&nbsp;<span class="bold">Release version 4.2</span></h2>
             <div>
                 Release date 10/6/2014
                 <ol class="decimal">
