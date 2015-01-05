@@ -115,12 +115,10 @@ class CheckedOut extends MyResearch{
 
 				// Define sorting options
 				$sortOptions = array(
+						'dueDate' => 'Due Date',
 						'title'   => 'Title',
 						'author'  => 'Author',
-						'dueDate' => 'Due Date',
-						'format'  => 'Format',
-				                'renewed'  => 'Times Renewed',
-				                'holdQueueLength'  => 'Wish List',
+						'format'  => 'Format'
 				);
 				$interface->assign('sortOptions', $sortOptions);
 				$selectedSortOption = isset($_REQUEST['accountSort']) ? $_REQUEST['accountSort'] : 'dueDate';
@@ -136,8 +134,8 @@ class CheckedOut extends MyResearch{
 
 				$expand_physical_items = isset($_REQUEST['expand_physical_items']) ? $_REQUEST['expand_physical_items'] : null;
 
-				//$result = $this->catalog->getCheckedOutItems($patron, $page, $recordsPerPage, $selectedSortOption, $expand_physical_items);
-				$result = $this->catalog->getMyTransactions($patron, $page, $recordsPerPage, $selectedSortOption);
+				$result = $this->catalog->getCheckedOutItems($patron, $page, $recordsPerPage, $selectedSortOption, $expand_physical_items);
+				//$result = $this->catalog->getMyTransactions($patron, $page, $recordsPerPage, $selectedSortOption);
 				
 				$timer->logTime("Loaded transactions from catalog.");
 				if (!PEAR::isError($result)) {
@@ -263,12 +261,13 @@ class CheckedOut extends MyResearch{
 
 		// Define sorting options
 		$sortOptions = array(
+				'dueDate' => 'Due Date',
 				'title' => 'Title',
 				'author' => 'Author',
-				'format' => 'Format',
+				'format' => 'Format'
 				);
 		$interface->assign('sortOptions', $sortOptions);
-		$selectedSortOption = isset($_REQUEST['accountSort']) ? $_REQUEST['accountSort'] : 'title';
+		$selectedSortOption = isset($_REQUEST['accountSort']) ? $_REQUEST['accountSort'] : 'dueDate';
 		$interface->assign('defaultSortOption', $selectedSortOption);
 
 		$profile = $this->catalog->getMyProfile($user);
@@ -321,12 +320,12 @@ class CheckedOut extends MyResearch{
 		
 		
 		$sortOptions = array(
+				'dueDate' => 'Due Date',
 				'title'   => 'Title',
 				'author'  => 'Author',
-				'format'  => 'Format',
+				'format'  => 'Format'
 				);
 		$interface->assign('sortOptions', $sortOptions);
-		
 		/**END for Overdrive Checkout Items**/
 		
 		$interface->assign('patron',$patron);

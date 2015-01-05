@@ -110,9 +110,6 @@ class AJAX extends Action {
 		$interface->assign('overDriveId', $overDriveId);
 		
 		$holdings = $driver->getHolding($id);
-		echo "<pre>";
-		print_r($holdings);
-		echo "</pre>";
 		$showEContentNotes = false;
 		$showSize = false;
 		foreach ($holdings as $holding){

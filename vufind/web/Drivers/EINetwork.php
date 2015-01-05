@@ -748,6 +748,13 @@ class EINetwork extends MillenniumDriver{
 
 	}
 
+	public function objectToArray($object){
+	    if(!is_object($object) && !is_array($object)){
+	        return $object;
+	    }
+	    return array_map(array($this, 'objectToArray'), (array) $object);
+	}
+
 	public function getCheckedOutItems($patron, $page = 1, $recordsPerPage = -1, $sortOption = 'dueDate', $expand_physical_items){
 
 		global $memcache, $configArray;
@@ -765,12 +772,28 @@ class EINetwork extends MillenniumDriver{
 
 			require_once 'services/MyResearch/lib/Resource.php';
 
+			// The MyMillennium API does not return an array of objects when there is only one checked out item. The following code, mimics an array of object
+			// so upstream it doesnt break anything. This doest not effect patrons with zero checked out items.
+			if (!is_array($mymill_items->response->checkedOutItems)){
+				$mymill_items->response->checkedOutItems = $this->objectToArray($mymill_items->response->checkedOutItems);
+				
+				$checked_out_item = new stdClass();
+
+				foreach ($mymill_items->response->checkedOutItems as $key => $value){
+					$checked_out_item->$key = $value;
+				}
+
+				unset($mymill_items->response->checkedOutItems);
+
+				$mymill_items->response->checkedOutItems[0] = $checked_out_item;
+			}
+
 			foreach($mymill_items->response->checkedOutItems as $key => $value){
 
 				$now = time();
 				$duedate = strtotime($value->dueDate);
 
-				if ($duedate != null){
+				if ($duedate != ''){
 					$daysUntilDue = ceil(($duedate - time()) / (24 * 60 * 60));
 					$overdue = $daysUntilDue < 0;
 					$curTitle['duedate'] = $duedate;
@@ -785,19 +808,20 @@ class EINetwork extends MillenniumDriver{
 					$curTitle['overdue'] = 0;
 				}
 
-				$item_id = str_replace('i', '', $value->itemRecordNum);
+				$item_id = $value->itemRecordNum; //TODO. NOT GETTING THE CHECK DIGIT FROM MYMILLAPI. WE WILL REMOVE THAT DURING REINDEX.
 
 				$bibRecordNum = isset($value->bibRecordNum) ? $value->bibRecordNum : null;
 
-				if (!isset($bibRecordNum) && $expand_physical_items > 0){
-					$bibRecordNum = $this->sierra_api_request($this->sierra_api_connect(), $item_id);
+				if (!isset($bibRecordNum)){
+					//$bibRecordNum = $this->sierra_api_request($this->sierra_api_connect(), $item_id);
+					$bibRecordNum = substr($this->get_bib_id($item_id),1,-1);
 					$mymill_items->response->checkedOutItems[$scount]->bibRecordNum = $bibRecordNum;
 					$update_cache = 1;
 				}
 
 				if (isset($bibRecordNum)){
 					
-					$curTitle['shortId'] = "b" . $bibRecordNum;
+					$curTitle['shortId'] = $bibRecordNum;
 
 					$resource = new Resource();
 					$resource->shortId = $curTitle['shortId'];
@@ -814,9 +838,12 @@ class EINetwork extends MillenniumDriver{
 
 				$curTitle['itemid'] = $value->itemRecordNum;
 				$curTitle['renewIndicator'] = $value->itemRecordNum . "|" . ($scount + 1);
+				$curTitle['renewCount'] = $value->renewals;
 
 				if ($sortOption == 'title'){
-					$sortKey =  $curTitle['title'] . '-' . $scount;
+					$sort_title = $this->get_title_sort($curTitle['itemid']);
+					$sort_title = isset($sort_title) ? $sort_title : strtolower($curTitle['title']);
+					$sortKey =  $sort_title . '-' . $scount;
 				} elseif ($sortOption == 'author'){
 					$sortKey = $curTitle['author'] . '-' . $scount;
 				} elseif ($sortOption == 'format'){
@@ -848,7 +875,7 @@ class EINetwork extends MillenniumDriver{
 				$memcache->set("mymill_items_$barcode", $mymill_items, 0, $configArray['Caching']['mymill_items']);
 			}
 
-			ksort($checkedOutTitles);
+			ksort($checkedOutTitles); //TODO Bug with sort
 
 			$numTransactions = count($checkedOutTitles);
 			//Process pagination
@@ -937,6 +964,52 @@ class EINetwork extends MillenniumDriver{
 		// echo "<pre>";
 		// print_r($response);
 		// echo "</pre>";
+
+	}
+
+	function get_bib_id($item_id){
+
+		$header = array();
+		$header[] = 'Content-length: 0';
+		$header[] = 'Content-type: application/json';
+		$header[] = 'Accept: application/json';
+
+		$ch = curl_init("http://vufindplus.einetwork.net:8080/solr/biblio/select/?q=items:" . $item_id . "&fl=id,title_sort&wt=json");
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
+		curl_setopt($ch, CURLOPT_USERAGENT,"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+
+		$response = json_decode(curl_exec($ch));
+
+		if (isset($response->response->docs[0])){
+			return $response->response->docs[0]->id;
+		}
+
+	}
+
+	function get_title_sort($item_id){
+
+		$header = array();
+		$header[] = 'Content-length: 0';
+		$header[] = 'Content-type: application/json';
+		$header[] = 'Accept: application/json';
+
+		$ch = curl_init("http://vufindplus.einetwork.net:8080/solr/biblio/select/?q=items:" . $item_id . "&fl=title_sort&wt=json");
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
+		curl_setopt($ch, CURLOPT_USERAGENT,"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+
+		$response = json_decode(curl_exec($ch));
+
+		if (isset($response->response->docs[0])){
+			return $response->response->docs[0]->title_sort;
+		}
 
 	}
 
