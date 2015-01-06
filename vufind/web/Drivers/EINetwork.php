@@ -802,7 +802,7 @@ class EINetwork extends MillenniumDriver{
 				}
 				$curTitle['title'] = $value->titleProper;
 				$curTitle['renewCount'] = $value->renewals;
-				if ($duedate < $now){
+				if ($daysUntilDue < 0){
 					$curTitle['overdue'] = 1;
 				} else {
 					$curTitle['overdue'] = 0;
@@ -888,6 +888,10 @@ class EINetwork extends MillenniumDriver{
 				$checkedOutTitles = array_slice($checkedOutTitles, $startRecord, $recordsPerPage);
 			}
 		}
+		
+		//echo "<pre> Checked Out Titles";
+		//print_r($checkedOutTitles);
+		//echo "</pre>";		
 
 		return array(
 			'transactions' => $checkedOutTitles,
