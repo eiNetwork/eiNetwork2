@@ -978,7 +978,7 @@ class EINetwork extends MillenniumDriver{
 		$header[] = 'Content-type: application/json';
 		$header[] = 'Accept: application/json';
 
-		$ch = curl_init("http://vufindplus.einetwork.net:8080/solr/biblio/select/?q=items:" . $item_id . "&fl=id,title_sort&wt=json");
+		$ch = curl_init("http://localhost:8080/solr/biblio/select/?q=items:" . $item_id . "&fl=id,title_sort&wt=json");
 		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 15);
 		curl_setopt($ch, CURLOPT_USERAGENT,"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
