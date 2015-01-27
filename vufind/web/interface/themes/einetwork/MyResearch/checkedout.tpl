@@ -55,6 +55,8 @@
 				<a href="{$url}/Record/{$record.id|escape:"url"}" id="descriptionTrigger{$record.id|escape:"url"}">
 				    <img src="{$coverUrl}/bookcover.php?id={$record.id}&amp;isn={$record.isbn|@formatISBN}&amp;size=small&amp;upc={$record.upc}&amp;category={$record.format_category.0|escape:"url"}" class="listResultImage" alt="{translate text='Cover Image'}"/>
 				</a>
+			    {else}
+				<img src="{$coverUrl}/interface/themes/einetwork/images/noCover2.png"}" class="listResultImage" alt="{translate text='Cover Image'}"/>
 			    {/if}
 			{/if}
 		    </div>
@@ -63,10 +65,14 @@
 			<div class="item_subject">
 			    {if $record.id}
 				<a href="{$url}/Record/{$record.id|escape:"url"}" class="title">
+			    {else}
+				<span class="title">
 			    {/if}
 			    {if !$record.title|regex_replace:"/(\/|:)$/":""}{translate text='Title not available'}{else}{$record.title|regex_replace:"/(\/|:)$/":""|truncate:180:"..."|highlight:$lookfor}{/if}
 			    {if $record.id}
 				</a>
+			    {else}
+				</span>
 			    {/if}
 			    {if $record.title2}
 				<div class="searchResultSectionInfo">

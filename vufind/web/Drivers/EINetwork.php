@@ -818,11 +818,10 @@ class EINetwork extends MillenniumDriver{
 					$mymill_items->response->checkedOutItems[$scount]->bibRecordNum = $bibRecordNum;
 					$update_cache = 1;
 				}
-
-				if (isset($bibRecordNum)){
+				// change this from isseet to handle ILL items as checked out items
+				if (!empty($bibRecordNum)){
 					
 					$curTitle['shortId'] = $bibRecordNum;
-
 					$resource = new Resource();
 					$resource->shortId = $curTitle['shortId'];
 					$resource->find();
@@ -832,9 +831,17 @@ class EINetwork extends MillenniumDriver{
 						$curTitle['id'] = $resource->record_id;
 						$curTitle['author'] = $resource->author;
 						$curTitle['format'] = $resource->format;
-					}
-
+					}				
+                                // for ILL items not in index
+				} else {
+					$curTitle['shortId'] = null;
+					$curTitle['title'] = $curTitle['title'].' '.$mymill_items->response->checkedOutItems[$scount]->callNumber;
+					$curTitle['isbn'] = null;
+					$curTitle['id'] = null;
+					$curTitle['author'] = null;
+					$curTitle['format'] = null;
 				}
+				
 
 				$curTitle['itemid'] = $value->itemRecordNum;
 				$curTitle['renewIndicator'] = $value->itemRecordNum . "|" . ($scount + 1);
@@ -987,11 +994,10 @@ class EINetwork extends MillenniumDriver{
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
 
 		$response = json_decode(curl_exec($ch));
-
+		
 		if (isset($response->response->docs[0])){
 			return $response->response->docs[0]->id;
 		}
-
 	}
 
 	function get_title_sort($item_id){
