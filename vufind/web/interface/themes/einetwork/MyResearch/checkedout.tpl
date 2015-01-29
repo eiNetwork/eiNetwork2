@@ -430,7 +430,7 @@
 					<input class="button" type="button" value="Read" onclick="downloadOverDriveItem('{$record.overDriveId}','ebook-overdrive','read')"/><img class="qtip-od-read" src="/images/help_icon.png" />
 					{/if}
 					{if $record.streamingVideo == true}
-					<input class="button" type="button" value="Watch" onclick="downloadOverDriveItem('{$record.overDriveId}','video-streaming','read')"/><img class="qtip-od-read" src="/images/help_icon.png" />
+					<input class="button" type="button" value="Watch" onclick="downloadOverDriveItem('{$record.overDriveId}','video-streaming','read')"/><img class="qtip-od-stream" src="/images/help_icon.png" />
 					{/if}
 				</div>
 			</div>
