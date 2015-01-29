@@ -199,6 +199,8 @@
 				    <span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/AudioBookDownload.png"/ alt="Ebook Download"></span>
 				    {elseif $format eq "OverDrive Video"}
 				    <span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/VideoDownload.png"/ alt="Ebook Download"></span>
+				    {elseif $format eq "Streaming Video"}
+				    <span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/VideoDownload.png"/ alt="Ebook Download"></span>
 				    {/if}
 				    <span class="iconlabel" >{translate text=$format}</span>&nbsp;
 				{/foreach}
@@ -304,6 +306,8 @@
 				{elseif $format eq "OverDrive WMA Audiobook"}
 				<span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/AudioBookDownload.png"/ alt="Ebook Download"></span>
 				{elseif $format eq "OverDrive Video"}
+				<span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/VideoDownload.png"/ alt="Ebook Download"></span>
+				{elseif $format eq "Streaming Video"}
 				<span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/VideoDownload.png"/ alt="Ebook Download"></span>
 				{elseif $format eq "OverDrive Read"}
 				<span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/EbookDownload.png"/ alt="Ebook Download"></span>

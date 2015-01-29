@@ -51,6 +51,8 @@
 		<span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/AudioBookDownload.png"/ alt="Ebook Download"></span>
 		{elseif $displayFormat eq "OverDrive Video"}
 		<span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/VideoDownload.png"/ alt="Ebook Download"></span>
+		{elseif $displayFormat eq "Streaming Video"}
+		<span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/VideoDownload.png"/ alt="Ebook Download"></span>
 		{elseif $format eq "OverDrive Read"}
 		<span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/EbookDownload.png"/ alt="Ebook Download"></span>
 		{/if}
@@ -106,6 +108,8 @@
 		{elseif $eContentRecord->format eq "OverDrive WMA Audiobook"}
 		<span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/AudioBookDownload.png"/ alt="Ebook Download"></span>
 		{elseif $eContentRecord->format eq "OverDrive Video"}
+		<span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/VideoDownload.png"/ alt="Ebook Download"></span>
+		{elseif $eContentRecord->format eq "Streaming Video"}
 		<span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/VideoDownload.png"/ alt="Ebook Download"></span>
 		{elseif $format eq "OverDrive Read"}
 		<span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/EbookDownload.png"/ alt="Ebook Download"></span>
