@@ -465,6 +465,9 @@ class OverDriveDriver3 {
 							$bookshelfItem['formats'][] = $curFormat;
 						}
 					}
+					//echo "<pre>bookshelfitem ";
+					//print_r($bookshelfItem);
+					//echo "</pre>";
 				}
 				if (isset($curTitle->actions->format) && !$bookshelfItem['formatSelected']){
 					//Get the options for the format which includes the valid formats
@@ -848,7 +851,10 @@ class OverDriveDriver3 {
 		if ($format == 'ebook-overdrive'){
 			$url .= '&odreadauthurl=' . urlencode($configArray['Site']['url'] . '/Help/OverDriveReadError');
 		}
-
+		if ($format == 'video-streaming'){
+			$url .= '&streamingauthurl=' . urlencode($configArray['Site']['url'] . '/Help/OverDriveReadError');
+		}
+		
 		$response = $this->_callPatronUrl($user->cat_username, $user->cat_password, $url);
 
 		$result = array();
