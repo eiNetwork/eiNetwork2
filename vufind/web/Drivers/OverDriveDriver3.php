@@ -41,7 +41,8 @@ class OverDriveDriver3 {
 		'audiobook-streaming' => 'Streaming Audiobook',
 		'music-wma' => 'OverDrive Music',
 		'video-wmv' => 'OverDrive Video',
-		'video-wmv-mobile' => 'OverDrive Video (mobile)'
+		'video-wmv-mobile' => 'OverDrive Video (mobile)',
+		'video-streaming' => 'Streaming Video'
 	);
 
 	/**
@@ -419,10 +420,16 @@ class OverDriveDriver3 {
 		global $configArray;
 		$url = $configArray['OverDrive']['patronApiUrl'] . '/v1/patrons/me/checkouts';
 		$response = $this->_callPatronUrl($user->cat_username, $user->cat_password, $url);
+		//echo "<pre>patronUrl response ";
 		//print_r($response);
+		//echo "</pre>";
 		$checkedOutTitles = array();
 		if (isset($response->checkouts)){
 			foreach ($response->checkouts as $curTitle){
+				//echo "<pre>curtitle ";
+				//print_r($curTitle);
+				//echo "</pre>";
+				
 				$bookshelfItem = array();
 				//Load data from api
 				$bookshelfItem['overDriveId'] = $curTitle->reserveId;
