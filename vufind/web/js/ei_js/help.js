@@ -497,4 +497,15 @@ $( document ).ready(function() {
 	    }
 	})
 
+	$('.qtip-od-stream').qtip({ // Grab some elements to apply the tooltip to
+	    content: {
+	        text: 'Click Watch to watch your eContent checked out streaming video online. <a id="qtip-link-od" href="/Help/Home?topic=onlinecontent">Read more...</a>'
+	    },
+	    hide: {
+	        delay: 1000
+	    },
+	    style: {
+	        classes: 'qtip-rounded'
+	    }
+	})
 });

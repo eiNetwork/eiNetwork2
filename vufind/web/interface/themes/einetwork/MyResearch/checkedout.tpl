@@ -55,8 +55,6 @@
 				<a href="{$url}/Record/{$record.id|escape:"url"}" id="descriptionTrigger{$record.id|escape:"url"}">
 				    <img src="{$coverUrl}/bookcover.php?id={$record.id}&amp;isn={$record.isbn|@formatISBN}&amp;size=small&amp;upc={$record.upc}&amp;category={$record.format_category.0|escape:"url"}" class="listResultImage" alt="{translate text='Cover Image'}"/>
 				</a>
-			    {else}
-				<img src="{$coverUrl}/interface/themes/einetwork/images/noCover2.png"}" class="listResultImage" alt="{translate text='Cover Image'}"/>
 			    {/if}
 			{/if}
 		    </div>
@@ -65,14 +63,10 @@
 			<div class="item_subject">
 			    {if $record.id}
 				<a href="{$url}/Record/{$record.id|escape:"url"}" class="title">
-			    {else}
-				<span class="title">
 			    {/if}
 			    {if !$record.title|regex_replace:"/(\/|:)$/":""}{translate text='Title not available'}{else}{$record.title|regex_replace:"/(\/|:)$/":""|truncate:180:"..."|highlight:$lookfor}{/if}
 			    {if $record.id}
 				</a>
-			    {else}
-				</span>
 			    {/if}
 			    {if $record.title2}
 				<div class="searchResultSectionInfo">
@@ -199,6 +193,8 @@
 				    <span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/AudioBookDownload.png"/ alt="Ebook Download"></span>
 				    {elseif $format eq "OverDrive Video"}
 				    <span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/VideoDownload.png"/ alt="Ebook Download"></span>
+				    {elseif $format eq "Streaming Video"}
+				    <span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/VideoDownload.png"/ alt="Ebook Download"></span>
 				    {/if}
 				    <span class="iconlabel" >{translate text=$format}</span>&nbsp;
 				{/foreach}
@@ -304,6 +300,8 @@
 				{elseif $format eq "OverDrive WMA Audiobook"}
 				<span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/AudioBookDownload.png"/ alt="Ebook Download"></span>
 				{elseif $format eq "OverDrive Video"}
+				<span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/VideoDownload.png"/ alt="Ebook Download"></span>
+				{elseif $format eq "Streaming Video"}
 				<span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/VideoDownload.png"/ alt="Ebook Download"></span>
 				{elseif $format eq "OverDrive Read"}
 				<span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/EbookDownload.png"/ alt="Ebook Download"></span>
@@ -425,6 +423,9 @@
 					{if $record.overdriveRead == true}
 					<input class="button" type="button" value="Read" onclick="downloadOverDriveItem('{$record.overDriveId}','ebook-overdrive','read')"/><img class="qtip-od-read" src="/images/help_icon.png" />
 					{/if}
+					{if $record.streamingVideo == true}
+					<input class="button" type="button" value="Watch" onclick="downloadOverDriveItem('{$record.overDriveId}','video-streaming','read')"/><img class="qtip-od-stream" src="/images/help_icon.png" />
+					{/if}
 				</div>
 			</div>
 			{/foreach}
@@ -487,9 +488,15 @@
 					</div>
 				</div>
 				<div class="item_status">
+					{if $record.expiresOn}
+					    Expires on&nbsp;{$record.expiresOn|date_format}
+					{/if}				    
 					<input class="button" type="button" value="Download" onclick="DownloadCheckedoutOverdrive({$record.recordId}{if $record.formatSelected},'{$record.selectedFormat.format}'{/if})"/>
 					{if $record.overdriveRead == true}
-					<input class="button" type="button" value="Read" onclick="downloadOverDriveItem('{$record.overDriveId}','ebook-overdrive','read')"/>
+					    <input class="button" type="button" value="Read" onclick="downloadOverDriveItem('{$record.overDriveId}','ebook-overdrive','read')"/>
+					{/if}
+					{if $record.streamingVideo == true}
+					    <input class="button" type="button" value="Watch" onclick="downloadOverDriveItem('{$record.overDriveId}','video-streaming','read')"/><img class="qtip-od-stream" src="/images/help_icon.png" />
 					{/if}
 				</div>
 			</div>
