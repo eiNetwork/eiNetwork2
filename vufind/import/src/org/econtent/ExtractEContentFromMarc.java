@@ -204,6 +204,7 @@ public class ExtractEContentFromMarc implements IMarcRecordProcessor, IRecordPro
 		overDriveFormatMap.put("Open PDF eBook", 450L);
 		overDriveFormatMap.put("Open EPUB eBook", 810L);
 		overDriveFormatMap.put("OverDrive Read", 610L);
+		overDriveFormatMap.put("Streaming Video", 635L);		
 		
 		try {
 			//Connect to the vufind database
@@ -355,10 +356,11 @@ public class ExtractEContentFromMarc implements IMarcRecordProcessor, IRecordPro
 			Long libraryId = getLibraryIdForOverDriveAccount(libraryName);
 			for (int i = 0; i < numProducts; i += batchSize){
 				logger.debug("Processing " + libraryName + " batch from " + i + " to " + (i + batchSize));
-				String batchUrl = mainProductUrl + "?offset=" + i + "&limit=" + batchSize;
+				//String batchUrl = mainProductUrl + "?offset=" + i + "&limit=" + batchSize;
+				String batchUrl = mainProductUrl + "?offset=" + i + "&limit=" + batchSize + "&sort=dateadded:asc";
 				JSONObject productBatchInfo = callOverDriveURL(batchUrl);
 				JSONArray products = productBatchInfo.getJSONArray("products");
-				for(int j = 0; j <products.length(); j++ ){
+				for(int j = 0; j < products.length(); j++ ){
 					JSONObject curProduct = products.getJSONObject(j);
 					OverDriveRecordInfo curRecord = loadOverDriveRecordFromJSON(libraryName, curProduct);
 					if (libraryId == -1){
@@ -390,7 +392,7 @@ public class ExtractEContentFromMarc implements IMarcRecordProcessor, IRecordPro
 	private OverDriveRecordInfo loadOverDriveRecordFromJSON(String libraryName, JSONObject curProduct) throws JSONException {
 		OverDriveRecordInfo curRecord = new OverDriveRecordInfo();
 		curRecord.setId(curProduct.getString("id"));
-		//logger.debug("Processing overdrive title " + curRecord.getId());
+		logger.debug("Processing overdrive title " + curRecord.getId());
 		//BA+++  sortTitle
 		curRecord.setTitle(curProduct.getString("title"));
 		curRecord.setSortTitle(curProduct.getString("sortTitle"));
@@ -403,9 +405,13 @@ public class ExtractEContentFromMarc implements IMarcRecordProcessor, IRecordPro
 			curRecord.setAuthor(curProduct.getJSONObject("primaryCreator").getString("name"));
 		}
 
-		for (int k = 0; k < curProduct.getJSONArray("formats").length(); k++){
-			curRecord.getFormats().add(curProduct.getJSONArray("formats").getJSONObject(k).getString("id"));
+		// If the search api does not return format information, we will get a json error.
+		if (curProduct.has("formats")) {		
+			for (int k = 0; k < curProduct.getJSONArray("formats").length(); k++){
+				curRecord.getFormats().add(curProduct.getJSONArray("formats").getJSONObject(k).getString("id"));
+			}
 		}
+		
 		if (curProduct.has("images") && curProduct.getJSONObject("images").has("thumbnail")){
 			curRecord.setCoverImage(curProduct.getJSONObject("images").getJSONObject("thumbnail").getString("href"));
 		}
