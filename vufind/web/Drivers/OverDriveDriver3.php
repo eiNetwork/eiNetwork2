@@ -41,7 +41,8 @@ class OverDriveDriver3 {
 		'audiobook-streaming' => 'Streaming Audiobook',
 		'music-wma' => 'OverDrive Music',
 		'video-wmv' => 'OverDrive Video',
-		'video-wmv-mobile' => 'OverDrive Video (mobile)'
+		'video-wmv-mobile' => 'OverDrive Video (mobile)',
+		'video-streaming' => 'Streaming Video'
 	);
 
 	/**
@@ -419,21 +420,30 @@ class OverDriveDriver3 {
 		global $configArray;
 		$url = $configArray['OverDrive']['patronApiUrl'] . '/v1/patrons/me/checkouts';
 		$response = $this->_callPatronUrl($user->cat_username, $user->cat_password, $url);
+		//echo "<pre>patronUrl response ";
 		//print_r($response);
+		//echo "</pre>";
 		$checkedOutTitles = array();
 		if (isset($response->checkouts)){
 			foreach ($response->checkouts as $curTitle){
+				//echo "<pre>curtitle ";
+				//print_r($curTitle);
+				//echo "</pre>";
+				
 				$bookshelfItem = array();
 				//Load data from api
 				$bookshelfItem['overDriveId'] = $curTitle->reserveId;
 				$bookshelfItem['expiresOn'] = $curTitle->expires;
 				$bookshelfItem['overdriveRead'] = false;
+				$bookshelfItem['streamingVideo'] = false;				
 				$bookshelfItem['formatSelected'] = ($curTitle->isFormatLockedIn == 1);
 				$bookshelfItem['formats'] = array();
 				if (isset($curTitle->formats)){
 					foreach ($curTitle->formats as $id => $format){
 						if ($format->formatType == 'ebook-overdrive'){
 							$bookshelfItem['overdriveRead'] = true;
+						}elseif ($format->formatType == 'video-streaming'){
+							$bookshelfItem['streamingVideo'] = true;
 						}else{
 							$bookshelfItem['selectedFormat'] = array(
 								'name' => $this->format_map[$format->formatType],
@@ -447,14 +457,24 @@ class OverDriveDriver3 {
 						if (isset($format->links->self)){
 							$curFormat['downloadUrl'] = $format->links->self->href . '/downloadlink';
 						}
-						if ($format->formatType != 'ebook-overdrive'){
-							$bookshelfItem['formats'][] = $curFormat;
-						}else{
+						// OverDrive Read - access online instead of download
+						if ($format->formatType == 'ebook-overdrive') {
 							if (isset($curFormat['downloadUrl'])){
 								$bookshelfItem['overdriveReadUrl'] = $curFormat['downloadUrl'];
 							}
+						// Streaming Video - access online instead of download
+						}elseif ($format->formatType == 'video-streaming') {
+							if (isset($curFormat['downloadUrl'])){
+								$bookshelfItem['streamingVideoUrl'] = $curFormat['downloadUrl'];
+							}
+						// Downloadable formats
+						} else {
+							$bookshelfItem['formats'][] = $curFormat;
 						}
 					}
+					//echo "<pre>bookshelfitem ";
+					//print_r($bookshelfItem);
+					//echo "</pre>";
 				}
 				if (isset($curTitle->actions->format) && !$bookshelfItem['formatSelected']){
 					//Get the options for the format which includes the valid formats
@@ -838,7 +858,10 @@ class OverDriveDriver3 {
 		if ($format == 'ebook-overdrive'){
 			$url .= '&odreadauthurl=' . urlencode($configArray['Site']['url'] . '/Help/OverDriveReadError');
 		}
-
+		if ($format == 'video-streaming'){
+			$url .= '&streamingauthurl=' . urlencode($configArray['Site']['url'] . '/Help/OverDriveReadError');
+		}
+		
 		$response = $this->_callPatronUrl($user->cat_username, $user->cat_password, $url);
 
 		$result = array();

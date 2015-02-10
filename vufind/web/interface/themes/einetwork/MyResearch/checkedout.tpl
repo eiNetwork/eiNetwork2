@@ -193,6 +193,8 @@
 				    <span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/AudioBookDownload.png"/ alt="Ebook Download"></span>
 				    {elseif $format eq "OverDrive Video"}
 				    <span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/VideoDownload.png"/ alt="Ebook Download"></span>
+				    {elseif $format eq "Streaming Video"}
+				    <span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/VideoDownload.png"/ alt="Ebook Download"></span>
 				    {/if}
 				    <span class="iconlabel" >{translate text=$format}</span>&nbsp;
 				{/foreach}
@@ -298,6 +300,8 @@
 				{elseif $format eq "OverDrive WMA Audiobook"}
 				<span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/AudioBookDownload.png"/ alt="Ebook Download"></span>
 				{elseif $format eq "OverDrive Video"}
+				<span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/VideoDownload.png"/ alt="Ebook Download"></span>
+				{elseif $format eq "Streaming Video"}
 				<span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/VideoDownload.png"/ alt="Ebook Download"></span>
 				{elseif $format eq "OverDrive Read"}
 				<span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/EbookDownload.png"/ alt="Ebook Download"></span>
@@ -419,6 +423,9 @@
 					{if $record.overdriveRead == true}
 					<input class="button" type="button" value="Read" onclick="downloadOverDriveItem('{$record.overDriveId}','ebook-overdrive','read')"/><img class="qtip-od-read" src="/images/help_icon.png" />
 					{/if}
+					{if $record.streamingVideo == true}
+					<input class="button" type="button" value="Watch" onclick="downloadOverDriveItem('{$record.overDriveId}','video-streaming','read')"/><img class="qtip-od-stream" src="/images/help_icon.png" />
+					{/if}
 				</div>
 			</div>
 			{/foreach}
@@ -481,9 +488,15 @@
 					</div>
 				</div>
 				<div class="item_status">
+					{if $record.expiresOn}
+					    Expires on&nbsp;{$record.expiresOn|date_format}
+					{/if}				    
 					<input class="button" type="button" value="Download" onclick="DownloadCheckedoutOverdrive({$record.recordId}{if $record.formatSelected},'{$record.selectedFormat.format}'{/if})"/>
 					{if $record.overdriveRead == true}
-					<input class="button" type="button" value="Read" onclick="downloadOverDriveItem('{$record.overDriveId}','ebook-overdrive','read')"/>
+					    <input class="button" type="button" value="Read" onclick="downloadOverDriveItem('{$record.overDriveId}','ebook-overdrive','read')"/>
+					{/if}
+					{if $record.streamingVideo == true}
+					    <input class="button" type="button" value="Watch" onclick="downloadOverDriveItem('{$record.overDriveId}','video-streaming','read')"/><img class="qtip-od-stream" src="/images/help_icon.png" />
 					{/if}
 				</div>
 			</div>
