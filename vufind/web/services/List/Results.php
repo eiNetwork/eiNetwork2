@@ -498,8 +498,10 @@ class Results extends Action {
 
 			// Big one - our results
 			$recordSet = $searchObject->getResultRecordHTML();
+			$recordCount = count($recordSet);
 
 			$interface->assign('recordSet', $recordSet);
+			$interface->assign('recordCount', $recordCount);
 			$page = isset($_REQUEST['page']) ? $_REQUEST['page'] : 1;
             $list_id = $_REQUEST['goToListID'];
  
