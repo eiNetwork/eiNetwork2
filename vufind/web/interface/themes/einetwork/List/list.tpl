@@ -81,16 +81,16 @@ while ($i < $bold_count){
 		<span><input type="button" value="Move All Physical Items to Book Cart" onclick="saveAllToBookCart()" class="button"></span>
 		<span  style="margin-left:10px;"><input type="button" value="Delete This List" onclick="getDeleteList('{$wishListID}')" class="button"></span>
 		{if $pageLinks.all}<div class="pagination">{$pageLinks.all}</div>{/if}
+		<hr></hr>
 	{/if}
 	{if $pageType eq 'BookCart'}
 	<div class="resulthead" style="font-size:16px;height:30px">
-			{$recordCount}		
 			{if count($recordSet)>5}
-				Items in your book cart.   Please note that Book Carts or Lists with more than 1,000 items will not display.
+				Please note that Book Carts or Lists with more than 1,000 items will not display.
 			{elseif count($recordSet) > 1}
-				Items in your book cart.
+				
 			{elseif count($recordSet) == 1}
-				Item in your book cart
+
 			{else}
 				Your book cart is empty
 			{/if}
@@ -108,7 +108,7 @@ while ($i < $bold_count){
 	{if $pageType eq 'BookCart'}
 	<form name='placeHoldForm' id='placeHoldForm' action="{$url}/MyResearch/HoldMultiple" method="post">
 	<div>
-		<div id="loginFormWrapper" style="border-bottom-color: rgb(238,238,238);border-bottom-style: solid;border-bottom-width: 1px;padding-bottom: 10px;padding-left: 2px;width: 638px;padding-top: 0px">
+		<div id="loginFormWrapper" style="border-bottom-color: rgb(238,238,238);border-bottom-style: solid;border-bottom-width: 0px;padding-bottom: 10px;padding-left: 2px;width: 638px;padding-top: 0px">
 			{foreach from=$ids item=id}
 				<input type="hidden" name="selected[{$id|escape:url}]" value="on" id="selected{$id|escape:url}" class="selected"/>
 			{/foreach}
@@ -151,13 +151,15 @@ while ($i < $bold_count){
 				</div>
 			</div>
 			<div></br></div>
-			{if $pageLinks.all}<div class="pagination">{$pageLinks.all}</div>{/if}
-			{if count($recordSet)>0}
-				<div class='loginFormRow'>
-					<input type="hidden" name="holdType" value="hold"/>
-				</div>
-			{/if}
 		</div>
+		{if $pageLinks.all}<div class="pagination" style="bordert-top: 0px; padding-top: 1px; border-bottom: 0px; padding-bottom:3px" >{$pageLinks.all}</div>{/if}
+		{if count($recordSet)>0}
+			<div class='loginFormRow'>
+				<input type="hidden" name="holdType" value="hold"/>
+			</div>
+		{/if}
+		<hr></hr>
+
 	</div>
 	</form>
 	{/if}
@@ -171,7 +173,7 @@ while ($i < $bold_count){
         {$pageContent}
       {/if}
       
-      {if $pageLinks.all}<div class="pagination">{$pageLinks.all}</div>{/if}
+      {if $pageLinks.all}</br><div class="pagination">{$pageLinks.all}</div>{/if}
       <b class="bbot"><b></b></b>
     </div>
     {* End Main Listing *}
