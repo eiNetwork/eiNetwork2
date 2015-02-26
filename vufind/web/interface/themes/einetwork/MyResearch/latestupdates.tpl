@@ -25,6 +25,7 @@ $(function() {
                 <ol class="decimal">
                     <li>Support for OverDrive's new streaming video format is added to the catalog.  After a user checks out and downloads a streaming video, the View and Renew Items page will have a button labeled Watch to allow the user watch the video online.</li>
                     <li>The loan expiration date for econtent items now appears for user that do not have any physical checked out items.</li>
+                    <li>The Age Group and Literary Form filters now allow you to select multiple values.</li>
                 </ol>
             </div>
  
