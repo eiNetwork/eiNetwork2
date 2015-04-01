@@ -57,7 +57,11 @@ class Profile extends MyResearch
 		}
 		
 		if (isset($_SESSION['profileUpdateErrors'])){
-			$interface->assign('profileUpdateErrors', $_SESSION['profileUpdateErrors']);
+			if( $_SESSION['profileUpdateErrors'] == $configArray['Constants']['PIN_MODIFICATION_SUCCESS']){
+				$interface->assign('showPinConfirmation', true);
+			}else{
+				$interface->assign('profileUpdateErrors', $_SESSION['profileUpdateErrors']);
+			}
 			unset($_SESSION['profileUpdateErrors']);
 		}
 

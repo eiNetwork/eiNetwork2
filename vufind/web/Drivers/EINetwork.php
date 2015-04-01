@@ -466,7 +466,7 @@ class EINetwork extends MillenniumDriver{
 				$user->password = $pin1;
 				$user->update();
 				UserAccount::updateSession($user);
-				return "Your pin number was updated sucessfully.";
+				return $configArray['Constants']['PIN_MODIFICATION_SUCCESS'];
 			}
 		}else{
 			return "Sorry, we could not update your pin number. Please try again later.";
