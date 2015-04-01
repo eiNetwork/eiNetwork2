@@ -488,6 +488,29 @@ class AJAX extends Action {
 	function getPinUpdateForm(){
 		global $user; 
 		global $interface;
+		// see if we've saved any pre-populated values for this popup
+		if( isset( $_SESSION["popupError"]) ){
+			$interface->assign('popupError', $_SESSION["popupError"]);
+			unset($_SESSION["popupError"]);
+		}
+		if( isset( $_SESSION["popupPin"]) ){
+			$interface->assign('popupPinValue', $_SESSION["popupPin"]);
+			unset($_SESSION["popupPin"]);
+		}else{
+			$interface->assign('popupPinValue','');
+		}
+		if( isset( $_SESSION["popupPin1"]) ){
+			$interface->assign('popupPin1Value', $_SESSION["popupPin1"]);
+			unset($_SESSION["popupPin1"]);
+		}else{
+			$interface->assign('popupPin1Value','');
+		}
+		if( isset( $_SESSION["popupPin2"]) ){
+			$interface->assign('popupPin2Value', $_SESSION["popupPin2"]);
+			unset($_SESSION["popupPin2"]);
+		}else{
+			$interface->assign('popupPin2Value','');
+		}
 		$interface->assign('popupTitle', 'Modify PIN number');
 		$pageContent = $interface->fetch('MyResearch/modifyPinPopup.tpl');
 		$interface->assign('popupContent', $pageContent);

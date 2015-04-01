@@ -77,7 +77,9 @@
 			ajaxLightbox('/MyResearch/AJAX?method=getPinConfirmation', false, false, '300px', false, '70px');
 		</script>
 		{elseif $profileUpdateErrors}
-		<div class="error">{$profileUpdateErrors}</div>
+		<script type="text/javascript">
+			ajaxLightbox('/MyResearch/AJAX?method=getPinUpdateForm', false, false, '400px', false, '250px');
+		</script>
 		{/if}
 		{if $user->cat_username}
 		<div><h2>Account Settings</h2></div>
