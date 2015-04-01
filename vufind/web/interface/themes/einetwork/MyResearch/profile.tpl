@@ -72,7 +72,11 @@
 
 
 	<div id="main-content">
-		{if $profileUpdateErrors}
+		{if $showPinConfirmation}
+		<script type="text/javascript">
+			ajaxLightbox('/MyResearch/AJAX?method=getPinConfirmation', false, false, '300px', false, '70px');
+		</script>
+		{elseif $profileUpdateErrors}
 		<div class="error">{$profileUpdateErrors}</div>
 		{/if}
 		{if $user->cat_username}

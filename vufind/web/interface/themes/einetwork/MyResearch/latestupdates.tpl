@@ -19,9 +19,19 @@ $(function() {
         <h3>We’re listening to you. The ongoing changes and planned enhancements are driven by the comments and feedback you submit when completing the new catalog survey.  We want to continue to hear from you and we appreciate your feedback.</h3>
         <br>
         <div id="accordion">
+        <h2 class="accordion-title">&nbsp;&nbsp;&nbsp;&nbsp;<span class="bold">Current Release version 4.3.1</span></h2>
+            <div>
+                Release date 2/16/2015
+                <ol class="decimal">
+                    <li>Support for OverDrive's new streaming video format is added to the catalog.  After a user checks out and downloads a streaming video, the View and Renew Items page will have a button labeled Watch to allow the user watch the video online.</li>
+                    <li>The loan expiration date for econtent items now appears for user that do not have any physical checked out items.</li>
+                    <li>The Age Group and Literary Form filters now allow you to select multiple values.</li>
+                </ol>
+            </div>
+ 
         <h2 class="accordion-title">&nbsp;&nbsp;&nbsp;&nbsp;<span class="bold">Current Release version 4.3</span></h2>
             <div>
-                Release date 1/5/2014
+                Release date 1/5/2015
                 <ol class="decimal">
                     <li>Users will now go directly to their Checked Out Items page when logging in to My Account.  Previously, users were directed to their Account Settings page upon login.  </li>
                     <li>The Checked Out Items list is now sorted by Due Date by default.  The previous default sort was by Title.  </li>

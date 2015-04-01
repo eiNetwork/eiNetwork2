@@ -23,7 +23,7 @@
 
         <p>To view items in your cart, click the <span class="bold">View Cart</span> button found in the upper right section of the page, below My Account.  From your cart, you can remove or request items you have added.  To request or remove a single item, choose <span class="bold">Request Now</span> or <span class="bold">Remove</span> from the menu to the right of the item.  It is also possible to request all of the items in your book cart at one time by choosing a pick up location in the drop down at the top of the page (if you have already indicated your <a href="#Preferred Libraries">preferred library</a> selection in your profile, this will be selected by default) and clicking <span class="bold">Request All</span>.</p> 
         
-        <p>Please note that online content cannot be added to your Book Cart.</p>
+        <p>Please note that online content cannot be added to your Book Cart.  Book Carts are limited to 300 items, and Lists are limited to 300 items for each list.</p>
         
       </dd>
       

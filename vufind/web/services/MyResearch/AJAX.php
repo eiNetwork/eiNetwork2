@@ -42,7 +42,7 @@ class AJAX extends Action {
 			header('Cache-Control: no-cache, must-revalidate'); // HTTP/1.1
 			header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
 			echo $this->$method();
-		}else if (in_array($method, array('LoginForm', 'getBulkAddToListForm', 'getPinUpdateForm','getLocations','getToUpdatePreferredBranches'))){
+		}else if (in_array($method, array('LoginForm', 'getBulkAddToListForm', 'getPinUpdateForm','getPinConfirmation','getLocations','getToUpdatePreferredBranches'))){
 			header('Content-type: text/html');
 			header('Cache-Control: no-cache, must-revalidate'); // HTTP/1.1
 			header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
@@ -490,6 +490,13 @@ class AJAX extends Action {
 		global $interface;
 		$interface->assign('popupTitle', 'Modify PIN number');
 		$pageContent = $interface->fetch('MyResearch/modifyPinPopup.tpl');
+		$interface->assign('popupContent', $pageContent);
+		return $interface->fetch('popup-wrapper.tpl');
+	}
+	function getPinConfirmation(){
+		global $user; 
+		global $interface;
+		$pageContent = $interface->fetch('MyResearch/successPinPopup.tpl');
 		$interface->assign('popupContent', $pageContent);
 		return $interface->fetch('popup-wrapper.tpl');
 	}
