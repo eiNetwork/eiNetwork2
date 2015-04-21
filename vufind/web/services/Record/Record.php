@@ -840,6 +840,13 @@ class Record extends Action
 				$similar = array();
 				$timer->logTime("Did not find any similar records");
 			}
+			for($i=0; $i<count($similar); $i++)
+			{
+				//Determine the cover to use
+				$bits = explode(" ", $similar[$i]['isbn'][0]);
+				$similar[$i]['bookCoverUrl'] = $configArray['Site']['coverUrl'] . "/bookcover.php?id=" . $similar[$i]['id'] . "&amp;isn=" . $bits[0];
+				//$similar[$i]['bookCoverUrl'] = $configArray['Site']['coverUrl'] . "/bookcover.php?id={$similar[$i]['id']}&amp;isn={$similar[$i]['isbn']}&amp;size=large&amp;upc={$similar[$i]['upc']}&amp;oclc={$this->oclc}&amp;category=" . urlencode($format_category) . "&amp;format=" . urlencode(isset($recordFormat[0]) ? $recordFormat[0] : '');
+			}
 			$memcache->set('similar_titles_' . $this->id, $similar, 0, $configArray['Caching']['similar_titles']);
 		}
 		$interface->assign('similarRecords', $similar);
