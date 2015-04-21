@@ -1151,6 +1151,29 @@ class MillenniumDriver implements DriverInterface
 
 	private $patronProfiles = array();
 	/**
+	 * Clean Patron Profile
+	 *
+	 * This will refresh a patron's profile by removing it from the cache.
+	 *
+	 * @param   array   $patron     The patron array
+	 * @access  public
+	 */
+	public function cleanMyProfile($patron)
+	{
+		global $memcache;
+		
+		if (is_object($patron)){
+			$patron = get_object_vars($patron);
+			$id2 = $this->_getBarcode();
+		}else{
+			$id2= $patron['id'];
+		}
+
+		// remove both of these
+		unset($this->patronProfiles[$id2]);
+		$memcache->delete("patron_dump_" . $id2);
+	}
+	/**
 	 * Get Patron Profile
 	 *
 	 * This is responsible for retrieving the profile for a specific patron.
@@ -1356,15 +1379,14 @@ class MillenniumDriver implements DriverInterface
 	 *
 	 * @param string $barcode the patron's barcode
 	 */
-	protected function _getPatronDump($barcode, $forceReload = false)
+	protected function _getPatronDump($barcode)
 	{
 		global $configArray;
 		global $memcache;
 		global $timer;
 		$patronDump = $memcache->get("patron_dump_$barcode");
 
-		if (!$patronDump || $forceReload){
-
+		if (!$patronDump){
 			$host=$configArray['OPAC']['patron_host'];
 			//Special processing to allow MCVSD Students to login
 			//with their student id.
