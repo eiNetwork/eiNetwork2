@@ -144,7 +144,7 @@
         </script>
     {/literal}
 
-    <p class="libraries-strong"><a href="http://www.pewinternet.org/quiz/library-typology/group/3200132" target="_blank" title="Library User Quiz"><img src="/images/new_survey1.png" alt="Library User Quiz" width="200" height="67" border="0" /></a></p>
+    
     
     <div class="prefer-branch" id="prefer-branch">
         <div id="description">
@@ -228,7 +228,10 @@
     	}
 	$interface->assign("Title5", $title5 );		
 		
-    {/php}    
+    {/php}
+    
+    <div class="separator"><hr/></div>
+    
     <div class="recommendations">
 	
 	<!-- What's New Queries display here -->
