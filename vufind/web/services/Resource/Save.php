@@ -91,8 +91,11 @@ class Save extends Action
 		$containingLists = array();
 		$containingListIds = array();
 		foreach($saved as $current) {
-			$containingLists[] = array('id' => $current->list_id,
-                'title' => $current->list_title);
+			if( $current->list_title != "Book Cart" )
+			{
+				$containingLists[] = array('id' => $current->list_id,
+					'title' => $current->list_title);
+			}
 			$containingListIds[] = $current->list_id;
 		}
 		$interface->assign('containingLists', $containingLists);
@@ -139,6 +142,12 @@ class Save extends Action
 				$list->insert();
 			}
 
+			// get the size of the list
+			$listMaximumSize = 300;
+			if (count($list->getResources(null)) >= $listMaximumSize) {
+				return array("problem" => ((($list->title == "Book Cart") ? "Your book cart" : $list->title) . " has reached the maximum size of " . $listMaximumSize . " items.  Please remove some elements from it and try again."));
+			}
+			
 			$resource = new Resource();
 			$resource->record_id = $_REQUEST['id'];
 			$resource->source = $_REQUEST['source'];

@@ -67,34 +67,42 @@ function performSaveToBookCart(id, source, strings, service, successCallback)
         var notes = '';
 	var url = path + "/SaveToBookCart/AJAX";
 	var params = "method=AddBookCartList&" +
-							 "mytags=" + encodeURIComponent(tags) + "&" +
-							 "notes=" + encodeURIComponent(notes) + "&" +
+							 //"mytags=" + encodeURIComponent(tags) + "&" +
+							 //"notes=" + encodeURIComponent(notes) + "&" +
 							 "id=" + id + "&" +
 							 "source=" + source;
 	$.ajax({
 		url: url+'?'+params,
 		dataType: "json",
-		success: function() {
-			disable(id);
-                    if($("#listId").val()!=null&&$("#listId").val()!=''){
-                        deleteItemInList(id,source);
-                    }
-                    getBookCartItemCount();
-		    document.body.style.cursor = 'default';
-		    var text = '<img alt="bad result" src="/interface/themes/einetwork/images/Art/ActionIcons/BadResult.png" class="resultAction_img"><span class="resultAction_span" >&nbsp;In Cart</span>';
-		    successCallback();
-			/*if(document.getElementById("add-to-cart")){
-				document.getElementById("add-to-cart").innerHTML = text;
-			}else{
-				document.getElementById("selected"+id.replace(/\./g,"")).innerHTML = text;
-				//document.getElementById("selected"+id.replace(/\./g,"")).onclick = alert();//"deleteItemInList("+id+",'VuFind')";
-			}*/
-	},
-	error: function() {
-			document.getElementById('popupbox').innerHTML = strings.error;
-			setTimeout("hideLightbox();", 3000);
-			document.body.style.cursor = 'default';
-	}
+		success: function(data) {
+			if (data.result && data.result != "Error") {
+                disable(id);
+                if($("#listId").val()!=null&&$("#listId").val()!=''){
+                    deleteItemInList(id,source);
+                }
+                getBookCartItemCount();
+                var text = '<img alt="bad result" src="/interface/themes/einetwork/images/Art/ActionIcons/BadResult.png" class="resultAction_img"><span class="resultAction_span" >&nbsp;In Cart</span>';
+                successCallback();
+                /*if(document.getElementById("add-to-cart")){
+                    document.getElementById("add-to-cart").innerHTML = text;
+                }else{
+                    document.getElementById("selected"+id.replace(/\./g,"")).innerHTML = text;
+                    //document.getElementById("selected"+id.replace(/\./g,"")).onclick = alert();//"deleteItemInList("+id+",'VuFind')";
+                }*/
+			} else {
+				showProcessingIndicator(data.problem ? data.problem : strings.error);
+				$('.lightboxLoadingImage').hide();
+				$('.lightboxLoadingMessage').before("<div class='api-icon-container'><img src='/images/api_failure.png' /></div>");
+				setTimeout("hideLightbox();", 3000);
+			}
+            document.body.style.cursor = 'default';
+        },
+        error: function(data) {
+            //document.getElementById('popupbox').innerHTML = strings.error;
+            showProcessingIndicator(data.problem ? data.problem : strings.error);
+            setTimeout("hideLightbox();", 3000);
+            document.body.style.cursor = 'default';
+        }
 	});
 }
 

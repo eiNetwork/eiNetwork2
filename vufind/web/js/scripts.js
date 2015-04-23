@@ -1033,36 +1033,34 @@ function performSaveRecord(id, source, formElem, strings, service, successCallba
 		url: url+'?'+params,
 		dataType: "json",
 		success: function(data) {
-			if (data.result) {
+			if (data.result && data.result != "Error") {
 				showProcessingIndicator('Item added to list.');
 				$('.lightboxLoadingMessage').before("<div class='close-button-container'><span onclick='hideLightbox()'><img class='close-button' src='/interface/themes/einetwork/images/closeHUDButton.png'></span></div>");	
 				$('.lightboxLoadingImage').hide();
-					$('.lightboxLoadingMessage').before("<div class='api-icon-container'><img src='/images/api_success.png' /></div>");
-					var value = data.result;
-					if (value == "Done") {
-							successCallback();
-							
-							if($("#listId").val()!=null&&$("#listId").val()!=""){
-								deleteItemInList(id,source);
-							}
-					} else {
-							getLightbox('Record', 'Save', id, null, strings.add);
+				$('.lightboxLoadingMessage').before("<div class='api-icon-container'><img src='/images/api_success.png' /></div>");
+				var value = data.result;
+				if (value == "Done") {
+					successCallback();
+					
+					if($("#listId").val()!=null&&$("#listId").val()!=""){
+						deleteItemInList(id,source);
 					}
+				} else {
+					getLightbox('Record', 'Save', id, null, strings.add);
+				}
 			} else {
-					$('.lightboxLoadingImage').hide();
-					$('.lightboxLoadingMessage').before("<div class='api-icon-container'><img src='/images/api_failure.png' /></div>");
-					showProcessingIndicator(strings.error);
-					document.getElementById('popupbox').innerHTML = strings.error;
-					setTimeout("hideLightbox();", 3000);
+				showProcessingIndicator(data.problem ? data.problem : strings.error);
+				$('.lightboxLoadingImage').hide();
+				$('.lightboxLoadingMessage').before("<div class='api-icon-container'><img src='/images/api_failure.png' /></div>");
+				setTimeout("hideLightbox();", 3000);
 			}
-			document.body.style.cursor = 'default';
-			
-	},
-	error: function() {
-			document.getElementById('popupbox').innerHTML = strings.error;
-			setTimeout("hideLightbox();", 3000);
-			document.body.style.cursor = 'default';
-	}
+			document.body.style.cursor = 'default';			
+		},
+		error: function(data) {
+				document.getElementById('popupbox').innerHTML = strings.error;
+				setTimeout("hideLightbox();", 3000);
+				document.body.style.cursor = 'default';
+		}
 	});
 }
 
