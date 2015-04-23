@@ -85,8 +85,7 @@ class Save extends Action
 		$containingLists = array();
 		$containingListIds = array();
 		foreach($saved as $current) {
-			$containingLists[] = array('id' => $current->list_id,
-                'title' => $current->list_title);
+			$containingLists[] = array('id' => $current->list_id,'title' => $current->list_title);
 			$containingListIds[] = $current->list_id;
 		}
 		$interface->assign('containingLists', $containingLists);

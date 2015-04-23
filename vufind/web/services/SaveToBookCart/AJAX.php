@@ -188,13 +188,14 @@ class AJAX extends Action {
 			$_REQUEST['title'] = 'Book Cart';
 			$_REQUEST['desc'] = '';
 			$_REQUEST['public'] = '';
+			$_REQUEST['createBookCart'] = 'true';
 			require_once 'services/MyResearch/ListEdit.php';
 			$return = array();
 			if (UserAccount::isLoggedIn()) {
 				$listService = new ListEdit();
-				$result = $listService->addList();
-				$_REQUEST['list'] = $result;
-				$this->SaveRecord();
+				$listResult = $listService->addList();
+				$_REQUEST['list'] = $listResult;
+				$result = $this->SaveRecord();
 				if (!PEAR::isError($result)) {
 					$return['result'] = 'Done';
 					$return['newId'] = $result;

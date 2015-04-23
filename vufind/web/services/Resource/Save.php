@@ -93,8 +93,7 @@ class Save extends Action
 		foreach($saved as $current) {
 			if( $current->list_title != "Book Cart" )
 			{
-				$containingLists[] = array('id' => $current->list_id,
-					'title' => $current->list_title);
+				$containingLists[] = array('id' => $current->list_id,'title' => $current->list_title);
 			}
 			$containingListIds[] = $current->list_id;
 		}
@@ -104,7 +103,7 @@ class Save extends Action
 		$lists = $this->user->getLists();
 		$nonContainingLists = array();
 		foreach($lists as $current) {
-			if (!in_array($current->id, $containingListIds)) {
+			if (!in_array($current->id, $containingListIds) && $current->title != "Book Cart") {
 				$nonContainingLists[] = array('id' => $current->id,
                     'title' => $current->title);
 			}

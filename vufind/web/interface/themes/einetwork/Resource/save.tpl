@@ -11,7 +11,7 @@
   <p>
   {if count($containingLists)>1}
     {translate text="This item is already part of the following lists"}:<br />
-  {elseif }
+  {else}
     {translate text="This item is already part of the following list"}:<br />
   {/if}
   {foreach from=$containingLists item="list"}
