@@ -26,17 +26,27 @@ class Action extends PEAR{
 
 	function __construct(){
 
+		global $configArray;
+		$this->catalog = new CatalogConnection($configArray['Catalog']['driver']);
+
+		$this->LoadNotifications();
+
+	}
+
+    function launch()
+    {
+    }
+
+	function LoadNotifications()
+	{
 		// until we add a class/schema for this, we will use the action.php to populate the notification center.
 		global $interface;
-		global $configArray;
 		global $user;
 
 		$notifications = array();
 		$notifications['messages'] = null;
 		$notifications['count'] = 0;
 		$notifications['state'] = 0;
-
-		$this->catalog = new CatalogConnection($configArray['Catalog']['driver']);
 
 		if ($user){
 			$patron = $this->catalog->patronLogin($user->cat_username, $user->cat_password);
@@ -56,14 +66,8 @@ class Action extends PEAR{
 			$notifications['state'] = isset($_SESSION['notification_popupstate']) ? $_SESSION['notification_popupstate'] : 0;
 
 			$interface->assign('notifications', $notifications);
-		}
-
+		}        
 	}
-
-    function launch()
-    {
-    }
-        
 }
 
 ?>

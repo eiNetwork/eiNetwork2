@@ -336,12 +336,7 @@
 			<div class="item_renew">
 			    {assign var=id value=$record.id scope="global"}
 			    {assign var=shortId value=$record.shortId scope="global"}
-			    {* disable renewals if the item is overdue *}  
-			    {if $record.overdue}
-<!--				<input type="checkbox" disabled="disabled" name="selected[{$record.renewIndicator}]" class="titleSelect" id="selected{$record.itemid}" />&nbsp;&nbsp;Renew&nbsp;			    
--->			    {else}
 				<input type="checkbox" name="selected[{$record.renewIndicator}]" class="titleSelect" id="selected{$record.itemid}" />&nbsp;&nbsp;Renew&nbsp;
-			    {/if}
 			    {if $record.renewMessage}
 				<div class='{if $record.renewResult == true}renewPassed{else}renewFailed{/if}' style="margin-top:10px">
 				{$record.renewMessage|escape}

@@ -1,5 +1,6 @@
 {if $notifications.count > 0}
 {literal}
+<script type="text/javascript" src="/js/right-bar.js"></script>
 <script type="text/javascript">
 
 	var user_id = {/literal}{$user->id}{literal}
@@ -7,7 +8,7 @@
 	$(document).ready(function(){
 
 		{/literal}{if $notifications.state == 0}{literal}
-			var t=setTimeout(function(){$('.notification-center').show('fast');},2000)
+			var t=setTimeout(function(){$('.notification-center').show('fast'{/literal}{if $notificationCenterAlert}{literal}, function () {flashNotificationCenter({r:255, g:0, b:0},150);}{/literal}{/if}{literal});},2000)
 		{/literal}{/if}{literal}
 
 		$('#notification-center-link').click(function(){
@@ -28,7 +29,6 @@
 
 			$('.notification-center').hide('slow');
 		})
-
 	});
 
 </script>

@@ -404,6 +404,19 @@ class CatalogConnection
 	}
 
 	/**
+	 * Clean Patron Profile
+	 *
+	 * This will refresh a patron's profile by removing it from the cache.
+	 *
+	 * @param   array   $patron     The patron array
+	 * @access  public
+	 */
+	public function cleanMyProfile($patron)
+	{
+		$this->driver->cleanMyProfile($patron);
+	}
+	
+	/**
 	 * Get Patron Profile
 	 *
 	 * This is responsible for retrieving the profile for a specific patron.

@@ -40,6 +40,11 @@ class CheckedOut extends MyResearch{
 		$renew_message = array();
 
 		if (isset($_GET['selected'])){
+			
+			$patron = $this->catalog->patronLogin($user->cat_username, $user->cat_password);
+			$profile = $this->catalog->getMyProfile($patron);
+			$finesBeforeRenewal = $profile['fines'];
+			$checkFinesAgain = false;
 
 			//Call the Millennium Driver method to renew the item
 			if (method_exists($this->catalog->driver, 'renewItem')) {
@@ -61,17 +66,32 @@ class CheckedOut extends MyResearch{
 					$data[$i]['itemIndex'] = $itemIndex;
 
 				}
-
+				
+				// see which items are currently overdue
+				$items = $this->catalog->getCheckedOutItems($patron);
+				$overdueItems = array();
+				foreach($items["transactions"] as $transaction)
+				{
+					if($transaction["overdue"])
+					{
+						$overdueItems[$transaction["itemid"]] = "true";
+					}
+				}
+				
 				if ($renewResult = $this->catalog->driver->renewItem($user->password, $data)){
-					
 					foreach($renewResult['items'] as $key => $value){
-
 						if ($this->checkItem($value['id'], $data)){
 
 							if ($value['renew_success']){
 								$renew_message['Renewed']++;
 							} else {
 								$renew_message['Unrenewed']++;
+							}
+							
+							if( isset($overdueItems[$value['id']]) && $value['renew_success'] )
+							{
+								$value['renew_message'] = "Overdue item renewed with fine applied";
+								$checkFinesAgain = true;
 							}
 
 							$renew_message[$value['id']] = array(
@@ -91,8 +111,25 @@ class CheckedOut extends MyResearch{
 
 			}
 
+			// see if we need to double check their fines.
+			if( $checkFinesAgain )
+			{
+				$this->catalog->cleanMyProfile($patron);
+				$patron = $this->catalog->patronLogin($user->cat_username, $user->cat_password);
+				$profile = $this->catalog->getMyProfile($patron);
+				$finesAfterRenewal = $profile['fines'];
+				if( (floatval(substr($finesAfterRenewal,1)) - floatval(substr($finesBeforeRenewal, 1))) > 0 )
+				{
+					// update the notifications
+					$this->LoadNotifications();
+					
+					// flash the notification center
+					$interface->assign('notificationCenterAlert',true);
+				}
+			}
 		}
 		
+						
 		// Get My Transactions
 		$oneOrMoreRenewableItems = false;
 		if ($this->catalog->status) {
