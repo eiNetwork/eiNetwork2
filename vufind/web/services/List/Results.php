@@ -174,9 +174,11 @@ class Results extends Action {
 			$n++;
 		}
 		if($bookCartID==null){
+			// making their book cart because they never had one prior to now
 			$_REQUEST['title'] = 'Book Cart';
 			$_REQUEST['desc'] = '';
 			$_REQUEST['public'] = '';
+			$_REQUEST['createBookCart'] = 'true';
 			require_once 'services/MyResearch/ListEdit.php';
 			$return = array();
 			if (UserAccount::isLoggedIn()) {

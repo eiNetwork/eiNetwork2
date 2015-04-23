@@ -126,7 +126,7 @@ class ListEdit extends Action
 		$list->find();
 		$list->fetch();
 		
-		$interface->assign('name', $list->title);
+		$interface->assign('name', ($list->title . (($list->title == "Book Cart") ? " " : "")));
 		$interface->assign('title', translate('Edit list'));
 		$interface->assign('popupTitle', 'Edit list');
 		$pageContent = $interface->fetch('List/editNameForm.tpl');
@@ -145,7 +145,7 @@ class ListEdit extends Action
 		if($list->title == $name){
 			return json_encode(array('result'=>'Please enter a new name'));
 		}
-		$list->title = $name;
+		$list->title = $name . (($name == "Book Cart") ? " " : "");
 		$list->update();
 		return json_encode(array('result'=>'Done'));
 	}

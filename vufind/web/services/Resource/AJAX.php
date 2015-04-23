@@ -60,7 +60,7 @@ class AJAX extends Action {
 		if (UserAccount::isLoggedIn()) {
 			$saveService = new Save();
 			$result = $saveService->saveRecord();
-			if (!PEAR::isError($result)) {
+			if (!PEAR::isError($result) && !isset($result['problem'])) {
 				$result['result'] = "Done";
 			} else {
 				$result['result'] = "Error";
