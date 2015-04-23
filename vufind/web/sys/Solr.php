@@ -442,7 +442,8 @@ class Solr implements IndexEngine {
 	function getMoreLikeThis($id)
 	{
 		// Query String Parameters
-		$options = array('q' => "id:$id", 'qt' => 'morelikethis');
+		//$options = array('q' => "id:$id", 'qt' => 'morelikethis');
+        $options = array('q' => "id:$id", 'qt' => 'morelikethis', 'mlt.fl' => 'target_audience,literary_form_full,topic_facet');
 		$result = $this->_select('GET', $options);
 		if (PEAR::isError($result)) {
 			PEAR::raiseError($result);
@@ -1179,6 +1180,7 @@ class Solr implements IndexEngine {
 			//https://github.com/mdnoble73/VuFind-Plus/commit/00e9794fb096af518eafa3f53d42648bdef65703 Fix Bib suppression logic
                         if (!isset($configArray['Index']['ignoreBibSuppression']) || $configArray['Index']['ignoreBibSuppression'] == false){
 				$filter[] = '-bib_suppression:suppressed';
+				//$filter[] = 'bib_suppression:notsuppressed';
 			}
 			$blacklistRecords = null;
 			if (isset($searchLocation) && strlen($searchLocation->recordsToBlackList) > 0){
