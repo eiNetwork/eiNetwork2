@@ -143,8 +143,42 @@
 					
 		</div>
 -->	
+
+		<div class="sidegroup" id="similarTitlesSidegroup" style="display:none">
+		 {if is_array($similarRecords)}
+			<dl class="narrowList navmenu narrowbegin">
+				<dt>{translate text='Similar Titles'}</dt>
+				{foreach from=$similarRecords item=similar}
+				<a class="rowlink" href="/Union/Search?basicType=id&lookfor={$similar.id}&clear=1">
+					<table>
+						<tbody>
+							<tr>
+								<td style="width:78px; text-align:center;">
+									<img alt="{translate text='Book Cover'}" class="recordcover" style="max-width:60px; margin-bottom:auto; height:auto;" src="{$similar.bookCoverUrl}" />
+								</td>
+								<td>
+									<a>{$similar.title|regex_replace:"/(\/|:)$/":""|escape} </a>
+									{* Display more information about the title*}
+									{if $similar.author}
+										<div class="recordAuthor">
+											<span class="resultLabel"></span>
+											<span class="resultValue"><a href="{$path}/Author/Home?author={$similar.author|escape:"url"}">{$similar.author|escape}</a></span>
+										</div>
+									{/if}
+									{**}
+								</td>
+							</tr>
+						</tbody>						
+					</table>		
+				</a>
+				{/foreach}
+			</dl>
+		 {/if}
+		</div>
+{**
 		<div class="sidegroup" id="similarTitlesSidegroup" style="display:none">
 		 {* Display either similar tiles from novelist or from the catalog*}
+{**
 		 <div id="similarTitlePlaceholder"></div>
 		 {if is_array($similarRecords)}
 		 <div id="relatedTitles">
@@ -168,6 +202,7 @@
 		 </div>
 		 {/if}
 		</div>
+{**}
 		
 		<div class="sidegroup" id="similarAuthorsSidegroup" style="display:none">
 			<div id="similarAuthorPlaceholder"></div>
@@ -194,8 +229,10 @@
 				{/foreach}
 		</div>
 		{/if}
+		{**
 		<script src="http://ltfl.librarything.com/forlibraries/widget.js?id=1875-2233438439" type="text/javascript"></script><noscript>This page contains enriched content visible when JavaScript is enabled or by clicking <a href="http://ltfl.librarything.com/forlibraries/noscript.php?id=1875-2233438439&accessibility=1">here</a>.</noscript>
 		<div id="ltfl_similars" class="ltfl"></div>
+		{**}
                 <div class="sidegroup">
 		{if $classicId}
 		<div id = "classicViewLink"><a href ="{$classicUrl}/record={$classicId|escape:"url"}" target="_blank">Classic View</a></div>
