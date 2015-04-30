@@ -144,7 +144,7 @@ class Save extends Action
 			// get the size of the list
 			$listMaximumSize = 300;
 			if (count($list->getResources(null)) >= $listMaximumSize) {
-				return array("problem" => ((($list->title == "Book Cart") ? "Your book cart" : $list->title) . " has reached the maximum size of " . $listMaximumSize . " items.  Please remove some elements from it and try again."));
+				return array("problem" => ((($list->title == "Book Cart") ? "Your book cart" : $list->title) . " has reached the maximum size of " . $listMaximumSize . " items.<br><br>To save this item, you must either create a new list or remove some elements from the current one and try again."));
 			}
 			
 			$resource = new Resource();
