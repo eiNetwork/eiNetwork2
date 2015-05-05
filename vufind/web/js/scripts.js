@@ -1052,13 +1052,13 @@ function performSaveRecord(id, source, formElem, strings, service, successCallba
 				showProcessingIndicator(data.problem ? data.problem : strings.error);
 				$('.lightboxLoadingImage').hide();
 				$('.lightboxLoadingMessage').before("<div class='api-icon-container'><img src='/images/api_failure.png' /></div>");
-				setTimeout("hideLightbox();", data.problem ? 6000 : 3000);
+				//setTimeout("hideLightbox();", data.problem ? 6000 : 3000);
 			}
 			document.body.style.cursor = 'default';			
 		},
 		error: function(data) {
 				document.getElementById('popupbox').innerHTML = strings.error;
-				setTimeout("hideLightbox();", 3000);
+				//setTimeout("hideLightbox();", 3000);
 				document.body.style.cursor = 'default';
 		}
 	});
