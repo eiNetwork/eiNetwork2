@@ -78,7 +78,7 @@ class AJAX extends Action {
 		if (UserAccount::isLoggedIn()) {
 			$saveService = new Save();
 			$result = $saveService->saveRecord();
-			if (!PEAR::isError($result)) {
+			if (!PEAR::isError($result) && !isset($result['problem'])) {
 				$result['result'] = "Done";
 			} else {
 				$result['result'] = "Error";
@@ -183,18 +183,19 @@ class AJAX extends Action {
 		
 		if($isBookCart){
 			$_REQUEST['list'] = $bookCartID;
-			$this->SaveRecord();
+			return $this->SaveRecord();
 		}else{
 			$_REQUEST['title'] = 'Book Cart';
 			$_REQUEST['desc'] = '';
 			$_REQUEST['public'] = '';
+			$_REQUEST['createBookCart'] = 'true';
 			require_once 'services/MyResearch/ListEdit.php';
 			$return = array();
 			if (UserAccount::isLoggedIn()) {
 				$listService = new ListEdit();
-				$result = $listService->addList();
-				$_REQUEST['list'] = $result;
-				$this->SaveRecord();
+				$listResult = $listService->addList();
+				$_REQUEST['list'] = $listResult;
+				$result = $this->SaveRecord();
 				if (!PEAR::isError($result)) {
 					$return['result'] = 'Done';
 					$return['newId'] = $result;
@@ -209,7 +210,7 @@ class AJAX extends Action {
 				$return['result'] = "Unauthorized";
 			}
 			
-			
+			return $return;
 		}
 		
 		

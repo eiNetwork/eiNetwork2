@@ -7,9 +7,13 @@
 <input type="hidden" name="submit" value="1" />
 <input type="hidden" name="record_id" value="{$id|escape}" />
 <input type="hidden" name="source" value="{$source|escape}" />
-{if !empty($containingLists)&&count($containingLists)>1}
+{if !empty($containingLists)&&count($containingLists)>0}
   <p>
-  {translate text='This item is already part of the following list/lists'}:<br />
+  {if count($containingLists)>1}
+    {translate text="This item is already part of the following lists"}:<br />
+  {else}
+    {translate text="This item is already part of the following list"}:<br />
+  {/if}
   {foreach from=$containingLists item="list"}
 	{if $list.title|escape:"html" neq "Book Cart"}
 		<a href="{$path}/MyResearch/MyList/{$list.id}">{$list.title|escape:"html"}</a><br />

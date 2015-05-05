@@ -93,6 +93,10 @@ class ListEdit extends Action
 			}
 			$list = new User_list();
 			$list->title = $_REQUEST['title'];
+			if( ($_REQUEST['createBookCart'] != "true") && ($_REQUEST['title'] == "Book Cart") )
+			{
+				$list->title .= " ";
+			}
 			//$list->description = $_REQUEST['desc'];
 			//$list->public = $_REQUEST['public'];
 			$list->user_id = $this->user->id;
