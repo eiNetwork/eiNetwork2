@@ -497,6 +497,18 @@ $( document ).ready(function() {
 	    }
 	})
 
+	$('.qtip-od-listen').qtip({ // Grab some elements to apply the tooltip to
+	    content: {
+	        text: 'Click Listen to listen your eContent checked out items online. <a id="qtip-link-od" href="/Help/Home?topic=onlinecontent">Read more...</a>'
+	    },
+	    hide: {
+	        delay: 1000
+	    },
+	    style: {
+	        classes: 'qtip-rounded'
+	    }
+	})
+
 	$('.qtip-od-stream').qtip({ // Grab some elements to apply the tooltip to
 	    content: {
 	        text: 'Click Watch to watch your eContent checked out streaming video online. <a id="qtip-link-od" href="/Help/Home?topic=onlinecontent">Read more...</a>'
