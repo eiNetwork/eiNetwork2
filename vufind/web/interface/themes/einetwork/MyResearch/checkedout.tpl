@@ -187,6 +187,8 @@
 				    <span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/AudioBookDownload.png"/ alt="Ebook Download"></span>
 				    {elseif $format eq "OverDrive MP3 Audiobook"}
 				    <span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/AudioBookDownload.png"/ alt="Ebook Download"></span>
+				    {elseif $format eq "OverDrive Listen"}
+				    <span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/AudioBookDownload.png"/ alt="Ebook Download"></span>
 				    {elseif $format eq "OverDrive Music"}
 				    <span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/MusicDownload.png"/ alt="Ebook Download"></span>
 				    {elseif $format eq "OverDrive WMA Audiobook"}
@@ -294,6 +296,8 @@
 				{elseif $format eq "WMA Video"}
 				<span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/AudioBookDownload.png"/ alt="Ebook Download"></span>
 				{elseif $format eq "OverDrive MP3 Audiobook"}
+				<span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/AudioBookDownload.png"/ alt="Ebook Download"></span>
+				{elseif $format eq "OverDrive Listen"}
 				<span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/AudioBookDownload.png"/ alt="Ebook Download"></span>
 				{elseif $format eq "OverDrive Music"}
 				<span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/MusicDownload.png"/ alt="Ebook Download"></span>
@@ -489,6 +493,9 @@
 					<input class="button" type="button" value="Download" onclick="DownloadCheckedoutOverdrive({$record.recordId}{if $record.formatSelected},'{$record.selectedFormat.format}'{/if})"/>
 					{if $record.overdriveRead == true}
 					    <input class="button" type="button" value="Read" onclick="downloadOverDriveItem('{$record.overDriveId}','ebook-overdrive','read')"/>
+					{/if}
+					{if $record.overdriveListen == true}
+					    <input class="button" type="button" value="Listen" onclick="downloadOverDriveItem('{$record.overDriveId}','audiobook-overdrive','read')"/>
 					{/if}
 					{if $record.streamingVideo == true}
 					    <input class="button" type="button" value="Watch" onclick="downloadOverDriveItem('{$record.overDriveId}','video-streaming','read')"/><img class="qtip-od-stream" src="/images/help_icon.png" />
