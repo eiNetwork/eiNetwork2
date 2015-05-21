@@ -96,6 +96,8 @@
     <span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/AudioBookDownload.png"/ alt="Ebook Download"></span>
     {elseif $format eq "OverDrive MP3 Audiobook"}
     <span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/AudioBookDownload.png"/ alt="Ebook Download"></span>
+    {elseif $format eq "OverDrive Listen"}
+    <span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/AudioBookDownload.png"/ alt="Ebook Download"></span>
     {elseif $format eq "OverDrive Music"}
     <span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/MusicDownload.png"/ alt="Music Download"></span>
     {elseif $format eq "OverDrive WMA Audiobook"}

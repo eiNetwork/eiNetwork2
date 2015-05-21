@@ -222,6 +222,8 @@ function redrawSaveStatus() {literal}{{/literal}
 		  <span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/AudioBookDownload.png"/ alt="Ebook Download"></span>
 		  {elseif $displayFormat eq "OverDrive MP3 Audiobook"}
 		  <span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/AudioBookDownload.png"/ alt="Ebook Download"></span>
+		  {elseif $displayFormat eq "OverDrive Listen"}
+		  <span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/AudioBookDownload.png"/ alt="Ebook Download"></span>
 		  {elseif $displayFormat eq "OverDrive Music"}
 		  <span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/MusicDownload.png"/ alt="Ebook Download"></span>
 		  {elseif $displayFormat eq "OverDrive WMA Audiobook"}
@@ -282,6 +284,8 @@ function redrawSaveStatus() {literal}{{/literal}
 		  {elseif $eContentRecord->format eq "WMA Video"}
 		  <span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/AudioBookDownload.png"/ alt="Ebook Download"></span>
 		  {elseif $eContentRecord->format eq "OverDrive MP3 Audiobook"}
+		  <span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/AudioBookDownload.png"/ alt="Ebook Download"></span>
+		  {elseif $eContentRecord->format eq "OverDrive Listen"}
 		  <span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/AudioBookDownload.png"/ alt="Ebook Download"></span>
 		  {elseif $eContentRecord->format eq "OverDrive Music"}
 		  <span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/MusicDownload.png"/ alt="Ebook Download"></span>
