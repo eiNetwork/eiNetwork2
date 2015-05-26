@@ -16,7 +16,7 @@
 	<tbody>
 	{foreach from=$holdings item=eContentItem key=index}
 		{if $eContentItem->item_type == 'overdrive'}
-			{if $eContentItem->externalFormatId != 'ebook-overdrive' }
+			{if $eContentItem->externalFormatId != 'ebook-overdrive' && $eContentItem->externalFormatId != 'audiobook-overdrive' }
 			<tr id="itemRow{$index}" style="height:30px">
 				<td>{$eContentItem->externalFormat}</td>
 				<td>OverDrive</td>
