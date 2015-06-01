@@ -19,6 +19,14 @@ $(function() {
         <h3>We’re listening to you. The ongoing changes and planned enhancements are driven by the comments and feedback you submit when completing the new catalog survey.  We want to continue to hear from you and we appreciate your feedback.</h3>
         <br>
         <div id="accordion">
+        <h2 class="accordion-title">&nbsp;&nbsp;&nbsp;&nbsp;<span class="bold">Current Release version 4.3.2</span></h2>
+            <div>
+                Release date 6/1/2015
+                <ol class="decimal">
+                    <li>Support for OverDrive's new Listen format is added to the catalog.  After a user checks out a book with OverDrive Listen, the View and Renew Items page will have a button labeled Listen to allow the user to listen to the book using streaming audio.</li>
+                </ol>
+            </div>
+            
         <h2 class="accordion-title">&nbsp;&nbsp;&nbsp;&nbsp;<span class="bold">Current Release version 4.3.1</span></h2>
             <div>
                 Release date 2/16/2015
