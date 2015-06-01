@@ -248,13 +248,13 @@
         </div>
 	
 	<!-- featured lists display here -->
-        <div id="title1">
+<!--        <div id="title1">
             <a href="{$url}/MyResearch/MyList/1">{$Title1}</a>
         </div>
         <div id="title2">
             <a href="{$url}/MyResearch/MyList/2">{$Title2}</a>
         </div>
-<!--	<div id="title3">
+	<div id="title3">
             <a href="{$url}/MyResearch/MyList/5924">{$Title3}</a>
         </div>
         <div id="title4">
