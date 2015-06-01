@@ -45,6 +45,8 @@
 		<span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/AudioBookDownload.png"/ alt="Ebook Download"></span>
 		{elseif $displayFormat eq "OverDrive MP3 Audiobook"}
 		<span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/AudioBookDownload.png"/ alt="Ebook Download"></span>
+		{elseif $displayFormat eq "OverDrive Listen"}
+		<span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/AudioBookDownload.png"/ alt="Ebook Download"></span>
 		{elseif $displayFormat eq "OverDrive Music"}
 		<span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/MusicDownload.png"/ alt="Ebook Download"></span>
 		{elseif $displayFormat eq "OverDrive WMA Audiobook"}
@@ -103,6 +105,8 @@
 		<span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/AudioBookDownload.png"/ alt="Ebook Download"></span>
 		{elseif $eContentRecord->format eq "OverDrive MP3 Audiobook"}
 		<span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/AudioBookDownload.png"/ alt="Ebook Download"></span>
+		{elseif $eContentRecord->format eq "OverDrive Listen"}
+		<span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/AudioBookDownload.png"/ alt="Ebook Download"></span>
 		{elseif $eContentRecord->format eq "OverDrive Music"}
 		<span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/MusicDownload.png"/ alt="Ebook Download"></span>
 		{elseif $eContentRecord->format eq "OverDrive WMA Audiobook"}
@@ -111,7 +115,7 @@
 		<span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/VideoDownload.png"/ alt="Ebook Download"></span>
 		{elseif $eContentRecord->format eq "Streaming Video"}
 		<span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/VideoDownload.png"/ alt="Ebook Download"></span>
-		{elseif $format eq "OverDrive Read"}
+		{elseif $eContentRecord->format eq "OverDrive Read"}
 		<span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/EbookDownload.png"/ alt="Ebook Download"></span>
 		{/if}
 		<span class="iconlabel {$eContentRecord->format()|lower|regex_replace:"/[^a-z0-9]/":""}">{translate text=$eContentRecord->format}</span>
