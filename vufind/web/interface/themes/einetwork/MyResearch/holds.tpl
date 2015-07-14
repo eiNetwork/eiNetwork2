@@ -366,7 +366,7 @@ while ($i < $bold_count){
 
 				{else}
 					{if $sectionKey=='unavailable'}
-						<div style="margin-left: 15px">{translate text='You do not have any physical request that are not available yet'}.</div>
+						<div style="margin-left: 15px">{translate text='You do not have any outstanding physical requests.'}.</div>
 					{/if}
 				{/if}
 			{/foreach}
@@ -587,7 +587,7 @@ while ($i < $bold_count){
 				    {/foreach}
 				</div>	
 			{else}
-			<div style="margin-left: 10px">{translate text="You do not have any eContent requests that are not available yet. "}</div>
+			<div style="margin-left: 10px">{translate text="You do not have any outstanding eContent requests. "}</div>
 			{/if}
 			{*****END Overdrive Holds*****}
 			
