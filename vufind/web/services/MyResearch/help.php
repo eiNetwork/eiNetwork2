@@ -44,3 +44,4 @@ class Latestupdates extends Action {
 	}
 
 }
+
