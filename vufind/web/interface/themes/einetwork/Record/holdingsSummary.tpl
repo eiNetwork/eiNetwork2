@@ -3,7 +3,7 @@
 		{if $holdingsSummary.callnumber}
 			<div class='callNumber'>
 				<span><img class="format_img" src="/interface/themes/einetwork/images/Art/AvailabilityIcons/Available.png"/ alt="Available"></span>
-				<a style="cursor:pointer" onclick="findInLibrary('{$holdingsSummary.recordId|escape:"url"}',false,'150px','570px','auto')">It's Here {$holdingsSummary.callnumber}</a>
+				<a style="cursor:pointer" onclick="findInLibrary('{$holdingsSummary.recordId|escape:"url"}',false,'150px','570px','auto')">It's Here!<br>{$holdingsSummary.location}<br>{$holdingsSummary.callnumber}</a>
 			</div>
 		{elseif $holdingsSummary.isDownloadable}
 			<div><span><img class="format_img" src="/interface/themes/einetwork/images/Art/AvailabilityIcons/Available.png"/ alt="Available"></span>
