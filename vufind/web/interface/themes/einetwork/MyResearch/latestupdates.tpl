@@ -19,7 +19,15 @@ $(function() {
         <h3>We’re listening to you. The ongoing changes and planned enhancements are driven by the comments and feedback you submit when completing the new catalog survey.  We want to continue to hear from you and we appreciate your feedback.</h3>
         <br>
         <div id="accordion">
-        <h2 class="accordion-title">&nbsp;&nbsp;&nbsp;&nbsp;<span class="bold">Current Release version 4.3.2</span></h2>
+        <h2 class="accordion-title">&nbsp;&nbsp;&nbsp;&nbsp;<span class="bold">Current Release version 4.3.3</span></h2>
+            <div>
+                Release date 7/29/2015
+                <ol class="decimal">
+                    <li>When using the catalog inside a library location, any items which are currently available in the building will now display both their call number and their shelving location.  This will make it easier for users to locate their desired materials.</li>
+                </ol>
+            </div>
+            
+        <h2 class="accordion-title">&nbsp;&nbsp;&nbsp;&nbsp;<span class="bold">Release version 4.3.2</span></h2>
             <div>
                 Release date 6/1/2015
                 <ol class="decimal">
@@ -27,7 +35,7 @@ $(function() {
                 </ol>
             </div>
             
-        <h2 class="accordion-title">&nbsp;&nbsp;&nbsp;&nbsp;<span class="bold">Current Release version 4.3.1</span></h2>
+        <h2 class="accordion-title">&nbsp;&nbsp;&nbsp;&nbsp;<span class="bold">Release version 4.3.1</span></h2>
             <div>
                 Release date 2/16/2015
                 <ol class="decimal">
@@ -37,7 +45,7 @@ $(function() {
                 </ol>
             </div>
  
-        <h2 class="accordion-title">&nbsp;&nbsp;&nbsp;&nbsp;<span class="bold">Current Release version 4.3</span></h2>
+        <h2 class="accordion-title">&nbsp;&nbsp;&nbsp;&nbsp;<span class="bold">Release version 4.3</span></h2>
             <div>
                 Release date 1/5/2015
                 <ol class="decimal">
