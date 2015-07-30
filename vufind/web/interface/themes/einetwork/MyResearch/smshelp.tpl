@@ -108,13 +108,13 @@ $(function() {
                     <dd>Hold pickup notices are sent when a requested item is available at your pickup location.</dd>
                     
                     <dt class="bold">Late Fee Notices</dt>
-                    <dd>If you opt in to late fee notices, you will receive notices when you owe $10 or more.  The first notice will be sent after an overdue item is checked in at the library.  Subsequent notices will be sent at 7 days, 14 days, and 28 days.</dd>
+                    <dd>If you opt in to late fee notices, you will receive notices the first notice when you owe $10 or more.  Subsequent notices will be sent at 7 days, 14 days, and 21 days.</dd>
                     
                     <dt class="bold">Renewal Notices</dt>
                     <dd>Renewal notices are sent 3 days before an item is due.</dd>
                     
                     <dt class="bold"> Overdue Notices</dt>
-                    <dd>The first overdue notice will be sent when the item is past due.  Subsequent overdue notices will be sent when an item is 7 days, 14 days, and 28 days overdue.</dd>
+                    <dd>The first overdue notice will be sent when the item is 7 days past due.  Subsequent overdue notices will be sent when an item is 14 days, 21 days, and 28 days overdue.</dd>
                     
                     <dt class="bold">Library Card Expiration Notices</dt>
                     <dd>Library card expiration notices are sent 30 days before your library card expires.</dd>
