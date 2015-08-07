@@ -114,7 +114,7 @@ $(function() {
                     <dd>Renewal notices are sent 3 days before an item is due.</dd>
                     
                     <dt class="bold"> Overdue Notices</dt>
-                    <dd>The first overdue notice will be sent when the item is 7 days past due.  Subsequent overdue notices will be sent when an item is 14 days, 21 days, and 28 days overdue.</dd>
+                    <dd>The first overdue notice will be sent when the item is past due.  Subsequent overdue notices will be sent when an item is 7 days, 14 days, and 21 days overdue.</dd>
                     
                     <dt class="bold">Library Card Expiration Notices</dt>
                     <dd>Library card expiration notices are sent 30 days before your library card expires.</dd>
