@@ -134,6 +134,32 @@ $( document ).ready(function() {
 		});
 	});
 
+	$('#qtip-link-fiction_nonfiction_full').live('click', function(e){
+		var hash = this.hash;
+		hash = hash.replace('#','');
+	    e.preventDefault();
+	    $("#dialog").html("");
+		$("#dialog").dialog("option", "title", "Loading...").dialog("open");
+		$("#dialog").load(this.href, function() {
+			$(this).dialog("option", "title", $(this).find("h1").text());
+			$(this).find("h1").remove();
+			document.getElementById(hash).scrollIntoView(true);
+		});
+	});
+
+	$('#qtip-link-time_since_added').live('click', function(e){
+		var hash = this.hash;
+		hash = hash.replace('#','');
+	    e.preventDefault();
+	    $("#dialog").html("");
+		$("#dialog").dialog("option", "title", "Loading...").dialog("open");
+		$("#dialog").load(this.href, function() {
+			$(this).dialog("option", "title", $(this).find("h1").text());
+			$(this).find("h1").remove();
+			document.getElementById(hash).scrollIntoView(true);
+		});
+	});
+
 	$('#qtip-link-topic_facet').live('click', function(e){
 		var hash = this.hash;
 		hash = hash.replace('#','');
@@ -368,7 +394,7 @@ $( document ).ready(function() {
 
 	$('.qtip-target_audience_full').qtip({ // Grab some elements to apply the tooltip to
 	    content: {
-	        text: 'To limit your search by <span class="bold">Age Group</span>, click on one of the four options below. <a id="qtip-link-target_audience_full" href="/Help/Home?topic=helppage#AgeGroup">Read More...</a>'
+	        text: 'To limit your search by <span class="bold">Age Group</span>, click on one of the three options below. <a id="qtip-link-target_audience_full" href="/Help/Home?topic=helppage#AgeGroup">Read More...</a>'
 	    },
 	    hide: {
 	        delay: 1000
@@ -378,9 +404,9 @@ $( document ).ready(function() {
 	    }
 	})
 
-	$('.qtip-literary_form_full').qtip({ // Grab some elements to apply the tooltip to
+	$('.qtip-fiction_nonfiction_full').qtip({ // Grab some elements to apply the tooltip to
 	    content: {
-	        text: 'To limit your search by <span class="bold">Literary Form</span>, click on an option below. <a id="qtip-link-literary_form_full" href="/Help/Home?topic=helppage#LiteraryForm">Read More...</a>'
+	        text: 'To limit your search by <span class="bold">Fiction or Non Fiction</span>, click on an option below. <a id="qtip-link-fiction_nonfiction_full" href="/Help/Home?topic=helppage#FictionNonFiction">Read More...</a>'
 	    },
 	    hide: {
 	        delay: 1000
@@ -437,6 +463,30 @@ $( document ).ready(function() {
 	    }
 	})
 	
+	$('.qtip-literary_form_full').qtip({ // Grab some elements to apply the tooltip to
+	    content: {
+	        text: 'To limit your search by <span class="bold">Literary Form</span>, click on an option below. <a id="qtip-link-literary_form_full" href="/Help/Home?topic=helppage#LiteraryForm">Read More...</a>'
+	    },
+	    hide: {
+	        delay: 1000
+	    },
+	    style: {
+	        classes: 'qtip-rounded'
+	    }
+	})
+
+	$('.qtip-time_since_added').qtip({ // Grab some elements to apply the tooltip to
+	    content: {
+	        text: 'To limit your search by <span class="bold">Time Added</span>, click on an option below. <a id="qtip-link-time_since_added" href="/Help/Home?topic=helppage#AddedInTheLast">Read More...</a>'
+	    },
+	    hide: {
+	        delay: 1000
+	    },
+	    style: {
+	        classes: 'qtip-rounded'
+	    }
+	})
+
 	$('.qtip-email').qtip({ // Grab some elements to apply the tooltip to
 	    content: {
 	        text: 'If your notification preference is email, you will receive email notices at this address for upcoming due date, hold pickups, and overdue items.  Please make sure your spam filtering allows email from librarycatalog@einetwork.net'

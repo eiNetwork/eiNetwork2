@@ -11,10 +11,12 @@
         <li><a class="help" href="#Location">Location</a></li>
         <li><a class="help" href="#MaterialType">Material Type</a></li>
         <li><a class="help" href="#AgeGroup">Age Group</a></li>
-        <li><a class="help" href="#LiteraryForm">Literary Form</a></li>
+        <li><a class="help" href="#FictionNonFiction">Fiction/Non Fiction</a></li>
         <li><a class="help" href="#Subject">Subject</a></li>
         <li><a class="help" href="#Author">Author</a></li>
         <li><a class="help" href="#Language">Language</a></li>
+        <li><a class="help" href="#LiteraryForm">Literary Form</a></li>
+        <li><a class="help" href="#AddedInTheLast">Added in the Last</a></li>
       </ul>
     </li>
     <li><a class="help" href="#OtherOptions">Other Options</a>
@@ -53,13 +55,13 @@ To select an entire group of material types, click on the heading for that group
 
       <dt id="AgeGroup"><span class="bold">Age Group</span></dt>
         <dd>
-          <p>Allows you to limit your search results to one of four age groups: General Interest, Children, Pre-teen, and Adult.  General Interest serves as the default category unless a more specific designation is provided in the Target Audience field of the bibliographic record for a resource.  Materials may also fall in to the General Interest category if they are not age-specific (for example, musical scores and recordings).  </p>
+          <p>Allows you to limit your search results to one of three age groups: Children, Teen, and Adult.  These groups are based on shelving locations, so items may fall into multiple categories due to differences in shelving by library locations.  
+Some items may not fall into any category if they are only shelved in general interest locations.  </p>
         </dd>
         
-      <dt id="LiteraryForm"><span class="bold">Literary Form</span></dt>
+      <dt id="FictionNonFiction"><span class="bold">Fiction/Non Fiction</span></dt>
         <dd>
-          <p>Allows you to filter your search results by selecting a Literary Form from the list of available options.  An item’s Literary Form is defined by its relationship to a genre of literature, even if the resource itself is manifested in a non-textual form.  For example, books on CD and films, which are generally based on literary works, fall in to this category.</p>  
-          <p>Materials not based on literary works may not have an associated Literary Form.  Recorded music, photographs and other non-textual images, as well as some maps and atlases are all examples of these types of resources.  In some cases, a resource may not appear in a Literary Form category simply because this information was not recorded in the bibliographic record.  </p>
+          <p>Allows you to limit your search results to either fiction or non fiction material, based on shelving location.  Since most of the items shelved specifically as fiction or non-fiction are print books, this filter is effective primarily for print books. Other types of material (i.e. music, video, magazines) are not usually shelved as fiction or non-fiction and are generally not included in this filter.</p>  
         </dd>
         
       <dt id="Subject"><span class="bold">Subject</span></dt>
@@ -76,6 +78,17 @@ To select an entire group of material types, click on the heading for that group
           <p>Limits your search results to materials available in a specified language based on your search term.</p>
         </dd>
 
+      <dt id="LiteraryForm"><span class="bold">Literary Form</span></dt>
+        <dd>
+          <p>Allows you to filter your search results by selecting a Literary Form from the list of available options.  An item’s Literary Form is defined by its relationship to a genre of literature, even if the resource itself is manifested in a non-textual form.  For example, books on CD and films, which are generally based on literary works, fall in to this category.</p>  
+          <p>Materials not based on literary works may not have an associated Literary Form.  Recorded music, photographs and other non-textual images, as well as some maps and atlases are all examples of these types of resources.  In some cases, a resource may not appear in a Literary Form category simply because this information was not recorded in the bibliographic record.  </p>
+        </dd>
+        
+      <dt id="AddedInTheLast"><span class="bold">Added in the Last</span></dt>
+        <dd>
+          <p>Allows you to filter your search results by date of addition to the Catalog.  You can limit to items added in the previous week, month, or two months.  </p>
+        </dd>
+        
     <h2 id="OtherOptions"><span class="bold">Other Options</span></h2>
       <dt id="UsingSortFunction"><span class="bold">Using the Sort Function</span></dt>
         <dd>
