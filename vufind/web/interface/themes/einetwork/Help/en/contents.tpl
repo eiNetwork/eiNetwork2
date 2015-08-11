@@ -31,10 +31,12 @@
                         <li><a class="help-contents-hash" href="/Help/Home?topic=helppage#Location">Location</a></li>
                         <li><a class="help-contents-hash" href="/Help/Home?topic=helppage#MaterialType">Material Type</a></li>
                         <li><a class="help-contents-hash" href="/Help/Home?topic=helppage#AgeGroup">Age Group</a></li>
-                        <li><a class="help-contents-hash" href="/Help/Home?topic=helppage#LiteraryForm">Literary Form</a></li>
+                        <li><a class="help-contents-hash" href="/Help/Home?topic=helppage#FictionNonFiction">Fiction/Non Fiction</a></li>
                         <li><a class="help-contents-hash" href="/Help/Home?topic=helppage#Subject">Subject</a></li>
                         <li><a class="help-contents-hash" href="/Help/Home?topic=helppage#Author">Author</a></li>
                         <li><a class="help-contents-hash" href="/Help/Home?topic=helppage#Language">Language</a></li>
+                        <li><a class="help-contents-hash" href="/Help/Home?topic=helppage#LiteraryForm">Literary Form</a></li>
+                        <li><a class="help-contents-hash" href="/Help/Home?topic=helppage#AddedInTheLast">Added in the Last</a></li>
                     </ul>
                 </li>
                 <li><a class="help-contents-hash" href="#OtherOptions">Other Options</a>
