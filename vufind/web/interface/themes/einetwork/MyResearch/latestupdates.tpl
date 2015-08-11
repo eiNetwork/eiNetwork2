@@ -19,7 +19,16 @@ $(function() {
         <h3>We’re listening to you. The ongoing changes and planned enhancements are driven by the comments and feedback you submit when completing the new catalog survey.  We want to continue to hear from you and we appreciate your feedback.</h3>
         <br>
         <div id="accordion">
-        <h2 class="accordion-title">&nbsp;&nbsp;&nbsp;&nbsp;<span class="bold">Current Release version 4.3.3</span></h2>
+        <h2 class="accordion-title">&nbsp;&nbsp;&nbsp;&nbsp;<span class="bold">Current Release version 4.3.4</span></h2>
+            <div>
+                Release date 8/12/2015
+                <ol class="decimal">
+                    <li>The Age Group filter is now based on where an item is shelved in the library.  For example, if an item is shelved in the Children's department, it will appear in search results filtered for the Children Age Group.  Since different libraries may shelve the same title differently, the same title may appear in the search results for multiple age groups.</li>
+                    <li>We have added a new filter for Fiction/Non Fiction.  This filter includes items that are shelved in locations identified as fiction or non-fiction.  Since most of the items shelved specifically as fiction or non-fiction are print books, this filter is effective primarily for print books.  Other types of material (i.e. music, video, magazines) are not usually shelved as fiction or non-fiction and are generally not included in this filter.</li>
+                </ol>
+            </div>
+            
+        <h2 class="accordion-title">&nbsp;&nbsp;&nbsp;&nbsp;<span class="bold">Release version 4.3.3</span></h2>
             <div>
                 Release date 7/29/2015
                 <ol class="decimal">
