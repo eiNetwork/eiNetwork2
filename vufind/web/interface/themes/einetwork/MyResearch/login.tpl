@@ -97,12 +97,10 @@
 {/literal}
 	<div class="loginHome-left"></div>
 	<div class="loginHome-center">
-		<div style="font-weight: bold; color: red; margin-top: -55px;">
-			<p>The catalog will be unavailable due to maintenance during the following times:</p>
-			<p>6:00 AM to 11:00 AM on Saturday, August 22</br>
-			9:00 PM on Saturday, August 22 to 10:00 AM on Sunday, August 23</p>
-			
-		</div>
+		<div style="font-weight: bold; color: red;">
+			<p>The catalog will be unavailable due to maintenance from 9:00 PM on Saturday, August 22 to 10:00 AM on Sunday, August 23.
+			We apologize for any inconvenience. </p>
+	    </div>
 		<div class="login">
 			<form id="loginForm" action="{$path}/MyResearch/Home" method="post" autocomplete="on">
 				<div><b>I have a Library Card</b></div>
