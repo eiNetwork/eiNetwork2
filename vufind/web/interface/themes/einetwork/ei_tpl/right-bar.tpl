@@ -100,8 +100,14 @@
 	<div id="latest-updates">
             <a id="help-contents-link" href="/Help/Home?topic=contents">Catalog Help</a>
         </div>
+	<div id="text-notices">
+            <a class="new_updates" href="/MyResearch/SMShelp">Text Notices Help</a><span><img class="qtip-sms-help help-icon" style="vertical-align:middle" src="/images/help_icon.png" /></span>
+        </div>
     </div>
     {literal}
+    <br>
+    <br>
+    <br>
     <br>
     <br>
     <br>
@@ -229,7 +235,7 @@
 	$interface->assign("Title5", $title5 );		
 		
     {/php}
-    
+    <div id="blank">&nbsp;</div>
     <div class="separator"><hr/></div>
     
     <div class="recommendations">
