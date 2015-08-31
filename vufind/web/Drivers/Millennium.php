@@ -822,12 +822,14 @@ class MillenniumDriver implements DriverInterface
 			//Only show a call number if the book is at the user's home library, one of their preferred libraries, or in the library they are in.
 			$showItsHere = ($library == null) ? true : ($library->showItsHere == 1);
 			if ($showItsHere && substr($holdingKey, 0, 1) == '1' && $holding['availability'] == 1){
-				//The item is available within the physical library.  Patron should go get it off the shelf
-				$summaryInformation['status'] = "It's here";
-				$summaryInformation['showPlaceHold'] = $canShowHoldButton;
-				$summaryInformation['class'] = 'here';
-				$summaryInformation['location'] = $holding['location'];
-                                $summaryInformation['callnumber'] = $holding['callnumber'];
+				if( $holding['status'] != "NONCIRCULATING" || !isset($summaryInformation['class']) ){
+					//The item is available within the physical library.  Patron should go get it off the shelf
+					$summaryInformation['status'] = "It's here";
+					$summaryInformation['showPlaceHold'] = $canShowHoldButton;
+					$summaryInformation['class'] = 'here';
+					$summaryInformation['location'] = $holding['location'];
+	                                $summaryInformation['callnumber'] = $holding['callnumber'];
+				}
  			}elseif ($showItsHere && !isset($summaryInformation['status']) && substr($holdingKey, 0, 1) >= 2 && (substr($holdingKey, 0, 1) <= 4) && $holding['availability'] == 1 ){
 				if (!isset($summaryInformation['class']) || $summaryInformation['class'] != 'here'){
 					//The item is at one of the patron's preferred branches.
