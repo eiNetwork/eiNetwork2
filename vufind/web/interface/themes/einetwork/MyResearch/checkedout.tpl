@@ -29,7 +29,6 @@
     {if $user->cat_username}
 	{if $transList}
 	<div class="new-alert-box-container">
-	    <p class="bold" style="color: red; text-align: center;">The catalog will be unavailable due to maintenance from 10:00 PM to 11:00 PM on Thursday, September 3.  <br>We apologize for any inconvenience.</p>
 	    <p class="bold" ><a href="/MyResearch/SMShelp" class="new_updates">Find out how to get notices and renew items from your cell phone!</a> </p>
 		<h2>{translate text='Renew Items'}</h2>
 	</div>

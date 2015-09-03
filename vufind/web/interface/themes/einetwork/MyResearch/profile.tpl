@@ -72,7 +72,6 @@
 
 
 	<div id="main-content">
-		<p class="bold" style="text-align: center; color: red;">The catalog will be unavailable due to maintenance from 10:00 PM to 11:00 PM on Thursday, September 3.<br>  We apologize for any inconvenience.</p>
 		
 		{if $profileUpdateErrors}
 		<div class="error">{$profileUpdateErrors}</div>

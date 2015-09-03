@@ -80,7 +80,6 @@ while ($i < $bold_count){
 			{/if}
 			
 			<div class="new-alert-box-container">
-				<p class="bold" style="color: red; text-align: center;">The catalog will be unavailable due to maintenance from 10:00 PM to 11:00 PM on Thursday, September 3. <br> We apologize for any inconvenience.</p>
 				<h2>{translate text='Requested Items'}</h2>
 				<ul class="new-alert-box">
 					<li>For items that you recently requested, it may take one minute for them to appear below.</li>

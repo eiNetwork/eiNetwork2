@@ -106,7 +106,6 @@
 	<div class="loginHome-left"></div>
 
 	<div class="loginHome-center">
-		<p class="bold" style="text-align: center; color: red; margin-top: -30px;">The catalog will be unavailable due to maintenance from 10:00 PM to 11:00 PM on Thursday, September 3.  <br>We apologize for any inconvenience.</p>
 		<div class="startMessage">
 			Get started by entering your search above.
 		</div>
