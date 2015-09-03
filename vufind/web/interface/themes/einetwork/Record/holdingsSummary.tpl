@@ -51,6 +51,11 @@
 			<span><img class="format_img" src="/interface/themes/einetwork/images/Art/AvailabilityIcons/CheckedOut.png"/ alt="CheckedOut"></span>
 			<span>No copies Available</span>
 		</div>
+	{elseif $holdingsSummary.status == 'Missing'}
+		<div>
+			<span><img class="format_img" src="/interface/themes/einetwork/images/Art/AvailabilityIcons/CheckedOut.png"/ alt="CheckedOut"></span>
+			<span style="cursor:pointer" onclick="findInLibrary('{$holdingsSummary.recordId|escape:"url"}',false,'150px','570px','auto')">Missing</span>
+		</div>
 	{elseif $holdingsSummary.class == 'reserve' or $holdingsSummary.numCopies == 0}
 		<div>
 			<span><img class="format_img" src="/interface/themes/einetwork/images/Art/AvailabilityIcons/CheckedOut.png"/ alt="CheckedOut"></span>
