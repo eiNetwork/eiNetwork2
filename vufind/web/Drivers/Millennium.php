@@ -821,26 +821,16 @@ class MillenniumDriver implements DriverInterface
 			}
 			//Only show a call number if the book is at the user's home library, one of their preferred libraries, or in the library they are in.
 			$showItsHere = ($library == null) ? true : ($library->showItsHere == 1);
-			if (in_array(substr($holdingKey, 0, 1), array('1', '2', '3', '4', '5')) && !isset($summaryInformation['callnumber'])){
-				//Try to get an available non reserver call number
-				if ($holding['availability'] == 1 && $holding['holdable'] == 1){
-					//echo("Including call number " . $holding['callnumber'] . " because is  holdable");
-					$summaryInformation['callnumber'] = $holding['callnumber'];
-				}else if (is_null($firstCallNumber)){
-					//echo("Skipping call number " . $holding['callnumber'] . " because it is holdable");
-					$firstCallNumber = $holding['callnumber'];
-				}else if (is_null($firstLocation)){
-					//echo("Skipping call number " . $holding['callnumber'] . " because it is holdable");
-					$firstLocation = $holding['location'];
-				}
-			}
 			if ($showItsHere && substr($holdingKey, 0, 1) == '1' && $holding['availability'] == 1){
-				//The item is available within the physical library.  Patron should go get it off the shelf
-				$summaryInformation['status'] = "It's here";
-				$summaryInformation['showPlaceHold'] = $canShowHoldButton;
-				$summaryInformation['class'] = 'here';
-				$summaryInformation['location'] = $holding['location'];
-			}elseif ($showItsHere && !isset($summaryInformation['status']) && substr($holdingKey, 0, 1) >= 2 && (substr($holdingKey, 0, 1) <= 4) && $holding['availability'] == 1 ){
+				if( $holding['status'] != "NONCIRCULATING" || !isset($summaryInformation['class']) ){
+					//The item is available within the physical library.  Patron should go get it off the shelf
+					$summaryInformation['status'] = "It's here";
+					$summaryInformation['showPlaceHold'] = $canShowHoldButton;
+					$summaryInformation['class'] = 'here';
+					$summaryInformation['location'] = $holding['location'];
+	                                $summaryInformation['callnumber'] = $holding['callnumber'];
+				}
+ 			}elseif ($showItsHere && !isset($summaryInformation['status']) && substr($holdingKey, 0, 1) >= 2 && (substr($holdingKey, 0, 1) <= 4) && $holding['availability'] == 1 ){
 				if (!isset($summaryInformation['class']) || $summaryInformation['class'] != 'here'){
 					//The item is at one of the patron's preferred branches.
 					$summaryInformation['status'] = "It's at " . $holding['location'];
@@ -869,6 +859,19 @@ class MillenniumDriver implements DriverInterface
 				$numCopiesOnOrder = $numCopiesOnOrder + $total_orders;
 				$numCopies--; //Don't increment number of copies for titles we don't have yet.
 			}
+                        if (in_array(substr($holdingKey, 0, 1), array('1', '2', '3', '4', '5')) && !isset($summaryInformation['callnumber'])){
+                                //Try to get an available non reserver call number
+                                if ($holding['availability'] == 1 && $holding['holdable'] == 1){
+                                        //echo("Including call number " . $holding['callnumber'] . " because is  holdable");
+                                        $summaryInformation['callnumber'] = $holding['callnumber'];
+                                }else if (is_null($firstCallNumber)){
+                                        //echo("Skipping call number " . $holding['callnumber'] . " because it is holdable");
+                                        $firstCallNumber = $holding['callnumber'];
+                                }else if (is_null($firstLocation)){
+                                        //echo("Skipping call number " . $holding['callnumber'] . " because it is holdable");
+                                        $firstLocation = $holding['location'];
+                                }
+                        }
 		}
 
 		//If all items are checked out the status will still be blank
