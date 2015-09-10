@@ -342,6 +342,50 @@ $( document ).ready(function() {
 	        classes: 'qtip-rounded'
 	    }
 	})
+        $('.qtip-selectreads').qtip({ // Grab some elements to apply the tooltip to
+	    content: {
+	        text: 'Get monthly newsletters!'
+	    },
+	    hide: {
+	        delay: 1000
+	    },
+	    style: {
+	        classes: 'qtip-rounded'
+	    }
+	})
+        $('.qtip-newbookalerts').qtip({ // Grab some elements to apply the tooltip to
+	    content: {
+	        text: 'Get alerts about new library materials!'
+	    },
+	    hide: {
+	        delay: 1000
+	    },
+	    style: {
+	        classes: 'qtip-rounded'
+	    }
+	})
+        $('.qtip-authorcheck').qtip({ // Grab some elements to apply the tooltip to
+	    content: {
+	        text: 'Get alerts about your favorite authors!'
+	    },
+	    hide: {
+	        delay: 1000
+	    },
+	    style: {
+	        classes: 'qtip-rounded'
+	    }
+	})
+        $('.qtip-novelist').qtip({ // Grab some elements to apply the tooltip to
+	    content: {
+	        text: 'Find your next book!'
+	    },
+	    hide: {
+	        delay: 1000
+	    },
+	    style: {
+	        classes: 'qtip-rounded'
+	    }
+	})
 	$('.qtip-preferred-libraries').qtip({ // Grab some elements to apply the tooltip to
 	    content: {
 	        text: 'Specifying Preferred Libraries sets your default pickup location for items requested online.<a id="qtip-link-building" href="/Help/Home?topic=myaccount#PreferredLibraries">Read More...</a>'

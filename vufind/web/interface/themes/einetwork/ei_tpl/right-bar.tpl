@@ -239,7 +239,36 @@
     <div id="blank">&nbsp;</div>
     <div class="separator"><hr/></div>
     <div class="recommendations">
+	<!-- SelectReads & NoveList links display here -->
 	
+	<div id="selectreads">
+		<a href="http://bookdb.nextgoodbook.com/signup/ml/f485432415b23a8962922e0b2d198227" target="_blank">
+			<img src="/interface/themes/einetwork/images/Selectreads/selectreads-block.png" alt="SelectReads logo" height="72" width="190" />
+		</a>
+		<img class="qtip-selectreads help-icon" style="vertical-align:top" src="/images/help_icon.png" /></span>
+		
+	</div>
+    
+    <div id="authorcheck">
+		<a href="http://authordb.nextgoodbook.com/landing/l/f485432415b23a8962922e0b2d198227" target="_blank">
+			<img src="/interface/themes/einetwork/images/Selectreads/authorchecklogo.png" alt="Author Check logo" height="65" width="150" />
+		</a>
+		<img class="qtip-authorcheck help-icon" style="vertical-align:top" src="/images/help_icon.png" />
+	</div>
+    
+    <div id="newbookalerts">
+		<a href="http://nextgoodbook.com/newsletter/landing/l/f485432415b23a8962922e0b2d198227/c/1000" target="_blank">
+			<img src="/interface/themes/einetwork/images/Selectreads/New-Book-Alerts190-sml.jpg" alt="New Book Alerts logo" height="52" width="160" />
+		</a>
+		<img class="qtip-newbookalerts help-icon" style="vertical-align:top" src="/images/help_icon.png" />
+	</div>
+	
+	<div id="novelist">
+		<a href="http://search.ebscohost.com/login.aspx?authtype=cpid&custid=s4663075&profile=novelist" target="_blank">
+			<img src="/interface/themes/einetwork/images/Selectreads/NoveList/novelist_button_150x75.gif" alt="NoveList logo" height="65" width="130" />
+		</a>
+		<img class="qtip-novelist help-icon" style="vertical-align:top" src="/images/help_icon.png" /></span>	
+	</div>
 	<!-- What's New Queries display here -->
 	<div id="newdvd">
             <a href="{$url}/Search/Results?lookfor=&type=Keyword&basicType=Keyword&filter[]=time_since_added%3A%22Week%22&Keyword&filter[]=time_since_added%3A%22Month%22&filter[]=format%3A%22DVD%22&sort=year&view=list&searchSource=local">New DVDs</a>
