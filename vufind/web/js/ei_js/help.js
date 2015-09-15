@@ -344,7 +344,7 @@ $( document ).ready(function() {
 	})
         $('.qtip-selectreads').qtip({ // Grab some elements to apply the tooltip to
 	    content: {
-	        text: 'Get monthly newsletters!'
+	        text: 'Get monthly lists of new titles, staff picks, and more!'
 	    },
 	    hide: {
 	        delay: 1000
