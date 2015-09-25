@@ -95,15 +95,18 @@
             <a onclick='getAccountSetting()'>Update Profile</a>
         </div>
 	<div id="latest-updates">
-            <a class="new_updates" href="/MyResearch/Latestupdates">Latest Website Updates</a>
+            <a href="/MyResearch/Latestupdates">Latest Website Updates</a>
         </div>
 	<div id="latest-updates">
             <a id="help-contents-link" href="/Help/Home?topic=contents">Catalog Help</a>
         </div>
 	<div id="text-notices">
-            <a class="new_updates" href="/MyResearch/SMShelp">Text Notices Help</a><span><img class="qtip-sms-help help-icon" style="vertical-align:middle" src="/images/help_icon.png" /></span>
+            <a href="/MyResearch/SMShelp">Text Notices Help</a><span><img class="qtip-sms-help help-icon" style="vertical-align:middle" src="/images/help_icon.png" /></span>
         </div>
-	
+	<div id="catalog-survey">
+            <img src="/interface/themes/einetwork/images/smartphone.png"  alt="smartphone" style="vertical-align:middle;margin-right:2px"/>
+            <a class="new_updates" href="https://www.surveymonkey.com/r/W8K9PFN" target="_blank">Help Test New Catalog</a>
+        </div>
     </div>
     {literal}
     <br>
@@ -235,7 +238,6 @@
 	$interface->assign("Title5", $title5 );		
 		
     {/php}
-    
     <div id="blank">&nbsp;</div>
     <div class="separator"><hr/></div>
     <div class="recommendations">
