@@ -37,7 +37,7 @@
 			{elseif $hold_message_data.successful == 'partial'}
 			<div class='hold_result partial'>Some hold requests could not be placed or need additional information.</div>
 			{else}
-			<div class='hold_result none'>Your hold request{if count($hold_message_data.titles) > 1}s{/if} could not be placed or needs additional information.</div>
+			<div class='hold_result none'>Your hold request{if count($hold_message_data.titles) > 1}s{/if} could not be placed or need{if count($hold_message_data.titles) <= 1}s{/if} additional information.</div>
 			{/if}
 		{/if}
 		<ul class='hold_result_details'>
