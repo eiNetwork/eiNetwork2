@@ -331,6 +331,50 @@ $( document ).ready(function() {
 	        classes: 'qtip-rounded'
 	    }
 	})
+        	$('.qtip-selectreads').qtip({ // Grab some elements to apply the tooltip to
+	    content: {
+	        text: 'Get monthly newsletters!'
+	    },
+	    hide: {
+	        delay: 1000
+	    },
+	    style: {
+	        classes: 'qtip-rounded'
+	    }
+	})
+        $('.qtip-newbookalerts').qtip({ // Grab some elements to apply the tooltip to
+	    content: {
+	        text: 'Get alerts about new library materials!'
+	    },
+	    hide: {
+	        delay: 1000
+	    },
+	    style: {
+	        classes: 'qtip-rounded'
+	    }
+	})
+        $('.qtip-authorcheck').qtip({ // Grab some elements to apply the tooltip to
+	    content: {
+	        text: 'Get alerts about your favorite authors!'
+	    },
+	    hide: {
+	        delay: 1000
+	    },
+	    style: {
+	        classes: 'qtip-rounded'
+	    }
+	})
+        $('.qtip-novelist').qtip({ // Grab some elements to apply the tooltip to
+	    content: {
+	        text: 'Find your next book!'
+	    },
+	    hide: {
+	        delay: 1000
+	    },
+	    style: {
+	        classes: 'qtip-rounded'
+	    }
+	})
         $('.qtip-sms-help').qtip({ // Grab some elements to apply the tooltip to
 	    content: {
 	        text: 'Find out how to get library notices on your cell phone!'

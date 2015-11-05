@@ -216,8 +216,7 @@ function doGetStatusSummaries()
 					}
 
 					//var SummaryDetails = $(data).find("class").text();
-
-					if (items[i].status == "It\'s here"){
+					if ((items[i].status == "It\'s here") && (items[i].localCirculating || !items[i].globalCirculating)){
 						$("#request-now" + elemId).css('background-color','rgb(192,192,192)');
 						$("#request-now" + elemId).css('background-color','rgb(192,192,192)');
 						$("#request-now" + elemId).css("color","rgb(248,248,248)");
