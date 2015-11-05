@@ -301,8 +301,10 @@ function GetHoldingsInfo(id) {
 				}
 			}
 			var SummaryDetails = $(data).find("class").text();
+			var LocalCirc = $(data).find("localCirc").text();
+			var GlobalCirc = $(data).find("globalCirc").text();
 			//alert(SummaryDetails);
-			if(SummaryDetails =="here"){
+			if(SummaryDetails =="here" && (LocalCirc == "1" || GlobalCirc == "0")){
 				var shortId=id.replace(".","");
 				$("#request-now"+shortId).css('background-color','rgb(192,192,192)');
 				$("#request-now"+shortId).css('background-color','rgb(192,192,192)');

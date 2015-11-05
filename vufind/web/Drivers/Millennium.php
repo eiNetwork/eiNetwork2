@@ -685,6 +685,8 @@ class MillenniumDriver implements DriverInterface
 		$summaryInformation['recordId'] = $id;
 		$summaryInformation['shortId'] = substr($id, 1);
 		$summaryInformation['isDownloadable'] = false; //Default value, reset later if needed.
+		$summaryInformation['localCirculating'] = false;
+		$summaryInformation['globalCirculating'] = false;
 
 		//Check to see if we are getting issue summaries or actual holdings
 		$isIssueSummary = false;
@@ -822,13 +824,14 @@ class MillenniumDriver implements DriverInterface
 			//Only show a call number if the book is at the user's home library, one of their preferred libraries, or in the library they are in.
 			$showItsHere = ($library == null) ? true : ($library->showItsHere == 1);
 			if ($showItsHere && substr($holdingKey, 0, 1) == '1' && $holding['availability'] == 1){
-				if( $holding['status'] != "NONCIRCULATING" || !isset($summaryInformation['class']) ){
+				if( strcmp($holding['status'], "NONCIRCULATING") != 0 || !isset($summaryInformation['class']) ){
 					//The item is available within the physical library.  Patron should go get it off the shelf
 					$summaryInformation['status'] = "It's here";
 					$summaryInformation['showPlaceHold'] = $canShowHoldButton;
 					$summaryInformation['class'] = 'here';
 					$summaryInformation['location'] = $holding['location'];
 	                                $summaryInformation['callnumber'] = $holding['callnumber'];
+					$summaryInformation['localCirculating'] |= (strcmp($holding['status'], "NONCIRCULATING") != 0);
 				}
  			}elseif ($showItsHere && !isset($summaryInformation['status']) && substr($holdingKey, 0, 1) >= 2 && (substr($holdingKey, 0, 1) <= 4) && $holding['availability'] == 1 ){
 				if (!isset($summaryInformation['class']) || $summaryInformation['class'] != 'here'){
@@ -859,6 +862,8 @@ class MillenniumDriver implements DriverInterface
 				$numCopiesOnOrder = $numCopiesOnOrder + $total_orders;
 				$numCopies--; //Don't increment number of copies for titles we don't have yet.
 			}
+			// check to see whether there is a circulating copy
+			$summaryInformation['globalCirculating'] |= (substr($holdingKey, 0, 1) >= 2) && (strcmp($holding['status'], "NONCIRCULATING") != 0);
                         if (in_array(substr($holdingKey, 0, 1), array('1', '2', '3', '4', '5')) && !isset($summaryInformation['callnumber'])){
                                 //Try to get an available non reserver call number
                                 if ($holding['availability'] == 1 && $holding['holdable'] == 1){
