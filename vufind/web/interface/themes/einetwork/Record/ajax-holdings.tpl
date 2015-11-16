@@ -20,6 +20,8 @@
 	<holdablecopies>{$holdingsSummary.holdableCopies|escape}</holdablecopies>
 	<numcopies>{$holdingsSummary.numCopies|escape}</numcopies>
 	<class>{$holdingsSummary.class|escape}</class>
+	<localCirc>{$holdingsSummary.localCirculating|escape}</localCirc>
+	<globalCirc>{$holdingsSummary.globalCirculating|escape}</globalCirc>
 	<isDownloadable>{$holdingsSummary.isDownloadable|escape}</isDownloadable>
 	<downloadLink>{$holdingsSummary.downloadLink|escape:'url'}</downloadLink>
 	<downloadText>{$holdingsSummary.downloadText|escape}</downloadText>
