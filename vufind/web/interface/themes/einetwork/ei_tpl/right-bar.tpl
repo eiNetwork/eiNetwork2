@@ -103,10 +103,6 @@
 	<div id="text-notices">
             <a href="/MyResearch/SMShelp">Text Notices Help</a><span><img class="qtip-sms-help help-icon" style="vertical-align:middle" src="/images/help_icon.png" /></span>
         </div>
-	<div id="catalog-survey">
-            <img src="/interface/themes/einetwork/images/smartphone.png"  alt="smartphone" style="vertical-align:middle;margin-right:2px"/>
-            <a class="new_updates" href="https://www.surveymonkey.com/r/W8K9PFN" target="_blank">Help Test New Catalog</a>
-        </div>
     </div>
     {literal}
     <br>
