@@ -272,7 +272,7 @@ class Results extends Action {
 			$numProspectorTitlesToLoad = 10;
 			$timer->logTime('no hits processing');
 
-		} /*else if ($searchObject->getResultTotal() == 1){
+		} else if (($searchObject->getResultTotal() == 1) && ($searchObject->getSearchIndex() == "ISN")){
 			//Redirect to the home page for the record
 			$recordSet = $searchObject->getResultRecordSet();
 			$record = reset($recordSet);
@@ -286,7 +286,7 @@ class Results extends Action {
 				header("Location: " . $interface->getUrl() . "/Record/{$record['id']}/Home?clear=1");
 			}
 			
-		}*/ else {
+		} else {
 			$timer->logTime('save search');
 			
 			if(isset($_REQUEST["iscart"])){
