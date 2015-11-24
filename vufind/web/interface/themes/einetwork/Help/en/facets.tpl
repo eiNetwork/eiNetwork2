@@ -102,6 +102,8 @@ Newspapers</p>
 <p> Print
 Magazine/Newspaper</p>
 
+<p> NOOK Periodical</p>
+
 <p>Images</p>
 
 <p>Print Image</p>
