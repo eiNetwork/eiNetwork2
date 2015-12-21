@@ -232,6 +232,8 @@ function redrawSaveStatus() {literal}{{/literal}
 		  <span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/VideoDownload.png"/ alt="Ebook Download"></span>
 		  {elseif $displayFormat eq "Streaming Video"}
 		  <span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/VideoDownload.png"/ alt="Ebook Download"></span>
+		  {elseif $displayFormat eq "NOOK Periodical"}
+		  <span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/Magazine_online.png"/ alt="Online Periodical"></span>
 		  {elseif $displayFormat eq "OverDrive Read"}
 		  <span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/EbookDownload.png"/ alt="Ebook Download"></span>
 		  {/if}		  
@@ -295,6 +297,8 @@ function redrawSaveStatus() {literal}{{/literal}
 		  <span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/VideoDownload.png"/ alt="Ebook Download"></span>
 		  {elseif $eContentRecord->format eq "Streaming Video"}
 		  <span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/VideoDownload.png"/ alt="Ebook Download"></span>
+		  {elseif $eContentRecord->format eq "NOOK Periodical"}
+		  <span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/Magazine_online.png"/ alt="Online Periodical"></span>
 		  {elseif $eContentRecord->format eq "OverDrive Read"}
 		  <span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/EbookDownload.png"/ alt="Ebook Download"></span>
 		  {/if}	

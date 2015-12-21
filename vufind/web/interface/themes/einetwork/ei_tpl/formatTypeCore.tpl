@@ -106,6 +106,8 @@
     <span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/VideoDownload.png"/ alt="Video Download"></span>
     {elseif $format eq "Streaming Video"}
     <span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/VideoDownload.png"/ alt="Streaming Video"></span>
+    {elseif $format eq "NOOK Periodical"}
+    <span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/Magazine_online.png"/ alt="Online Periodical"></span>
     {elseif $format eq "OverDrive Read"}
     <span><img class="format_img" src="/interface/themes/einetwork/images/Art/Materialicons/EbookDownload.png"/ alt="EBook Online"></span>
     {/if}

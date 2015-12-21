@@ -71,11 +71,12 @@ $(document).ready(function(){
 {assign var='music4' value="Music Score"}
 
 {*Image Type*}
-{assign var='imgae' value=["Printed Image","Digital Image"]}
+{assign var='image' value=["Printed Image","Digital Image"]}
 {assign var='image2' value="Digital Image"}
 
 {*Magazine Type*}
-{assign var='magazine' value=["Print Magazine/Newspaper"]}
+{assign var='magazine' value=["Print Magazine/Newspaper", "NOOK Periodical"]}
+{assign var='magazine2' value="NOOK Periodical"}
 
 {*Microfilm and Microfiche Type*}
 {assign var='micro' value=["Microfilm and Microfiche"]}
