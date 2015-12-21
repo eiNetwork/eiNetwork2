@@ -129,6 +129,13 @@ class CheckedOut extends MyResearch{
 			}
 		}
 		
+		// if they're coming from a Nook periodical download, return the title and tell them it worked
+		if( isset($_GET["nookDownloadID"]) ) {
+			require_once 'Drivers/OverDriveDriverFactory.php';
+			$odriver = OverDriveDriverFactory::getDriver();
+			$downloadMessage = $odriver->returnOverDriveItem($_GET["nookDownloadID"], null, $user);
+			$interface->assign('showNookAlert', true);
+		}
 						
 		// Get My Transactions
 		$oneOrMoreRenewableItems = false;
