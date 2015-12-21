@@ -531,3 +531,9 @@
     </div>
     
 </div>
+{if $showNookAlert}
+<script type="text/javascript">
+	showProcessingIndicator("This issue has been sent to your Nook account!");
+	$('.lightboxLoadingImage').hide();
+</script>
+{/if}

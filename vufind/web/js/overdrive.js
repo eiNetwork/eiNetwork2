@@ -174,10 +174,13 @@ function downloadOverDriveItem(overDriveId, formatId, read){
 				
 				if (data.result){
 
-					//window.location.href = data.downloadUrl;
-					window.open(data.downloadUrl, '_blank');
-					location.reload();
-					hideLightbox();
+					if( formatId == 'periodicals-nook' ) {
+						window.open(data.downloadUrl, '_self');
+					} else {
+						window.open(data.downloadUrl, '_blank');
+						location.reload(); 
+						hideLightbox();
+					}
 				    
 				}else{
 					alert(data.message);

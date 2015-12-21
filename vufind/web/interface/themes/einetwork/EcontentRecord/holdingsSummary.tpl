@@ -1,5 +1,5 @@
 <div id = "holdingsSummary"
-	{if $holdingsSummary.status == 'Available from OverDrive'}
+        {if $holdingsSummary.status == 'Available from OverDrive'}
 		class="holdingsSummary overdriveAvailable"
 	{elseif $holdingsSummary.status == 'Checked Out'}
 		class="holdingsSummary overdriveCheckedOut"
@@ -31,7 +31,7 @@
 				{if $holdingsSummary.holdQueueLength > 0}
 					{$holdingsSummary.holdQueueLength} {if $holdingsSummary.holdQueueLength == 1}person {else}people {/if} on waitlist for
 				{/if}
-				{if $holdingsSummary.totalCopies != 999999}{$holdingsSummary.totalCopies} total {if $holdingsSummary.totalCopies == 1}copy{else}copies{/if}{/if}{if $holdingsSummary.availableCopies}, {$holdingsSummary.availableCopies} available. {/if} 
+				{if $holdingsSummary.totalCopies != 999999}{$holdingsSummary.totalCopies} total {if $holdingsSummary.totalCopies == 1}copy{else}copies{/if}{if $holdingsSummary.availableCopies}, {$holdingsSummary.availableCopies} available. {/if}{else}Always Available{/if} 
 			{elseif $holdingsSummary.source == 'Freegal'}
 			        {$holdingsSummary.status}
 				Downloadable from Freegal.

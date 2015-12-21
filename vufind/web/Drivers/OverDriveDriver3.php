@@ -872,7 +872,10 @@ class OverDriveDriver3 {
 		if ($format == 'video-streaming'){
 			$url .= '&streamingauthurl=' . urlencode($configArray['Site']['url'] . '/Help/OverDriveReadError');
 		}
-		
+		if ($format == 'periodicals-nook'){
+			$url .= '&successurl=' . urlencode($configArray['Site']['url'] . '/MyResearch/CheckedOut?nookDownloadID=' . $overDriveId);
+		}
+
 		$response = $this->_callPatronUrl($user->cat_username, $user->cat_password, $url);
 
 		$result = array();

@@ -57,14 +57,24 @@
 {assign var=firstItem value=$holdings.0}
 {if strcasecmp($source, 'OverDrive') == 0}
 	<div id='overdriveMediaConsoleInfo' style="margin-left:8px">
-		<img src="{$path}/images/overdrive.png" width="125" height="42" alt="Powered by Overdrive" class="alignleft"/>
-		<p>This title requires the <a href="http://www.overdrive.com/software/omc/">OverDrive&reg; Media Console&trade;</a> to use the title.  
-		If you do not already have the OverDrive Media Console, you may download it <a href="http://www.overdrive.com/software/omc/">here</a>.</p>
-		<div class="clearer">&nbsp;</div> 
-		<p>Need help transferring a title to your device or want to know whether or not your device is compatible with a particular format?
-		Click <a href="http://help.overdrive.com">here</a> for more information. 
-		</p>
-		 
+		{if $firstItem->externalFormatId == 'periodicals-nook'}
+			<img src="{$path}/images/overdrive.png" width="125" height="42" alt="Powered by Overdrive" class="alignleft"/>
+			<p>This issue will be sent to your free <a href="https://nook.barnesandnoble.com/my_library/">NOOK account</a>.  If you do not already
+			have one, you will be prompted to create it during the download process.  If this is your first time downloading a NOOK periodical, 
+			you will need to grant access to your NOOK account to tie it to your catalog account.</p>
+			<div class="clearer">&nbsp;</div> 
+			<p>After the issue has been added to your NOOK account, you can view it using a compatible NOOK tablet or the free 
+			<a href="http://nook.barnesandnoble.com/u/nook-mobile-app/379003593">NOOK Reading App</a> for 
+			Android phone/tablet, Apple iPhone/iPad/iPod touch, or Windows 8+ computer/tablet.</p>
+		{else}
+			<img src="{$path}/images/overdrive.png" width="125" height="42" alt="Powered by Overdrive" class="alignleft"/>
+			<p>This title requires the <a href="http://www.overdrive.com/software/omc/">OverDrive&reg; Media Console&trade;</a> to use the title.  
+			If you do not already have the OverDrive Media Console, you may download it <a href="http://www.overdrive.com/software/omc/">here</a>.</p>
+			<div class="clearer">&nbsp;</div> 
+			<p>Need help transferring a title to your device or want to know whether or not your device is compatible with a particular format?
+			Click <a href="http://help.overdrive.com">here</a> for more information. 
+			</p>
+		{/if}		 
 	</div>
 {/if}
 </div>

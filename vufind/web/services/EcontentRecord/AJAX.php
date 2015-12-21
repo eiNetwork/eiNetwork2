@@ -62,7 +62,7 @@ class AJAX extends Action {
 				$showEContentNotes = true;
 			}
 			if ($holding instanceof OverdriveItem){
-			if (is_numeric($holding->size)){
+				if (is_numeric($holding->size)){
 					$showSize = true;
 				}
 			}else{
