@@ -48,7 +48,8 @@ class UInterface extends Smarty
 				// and store the result in a cookie so we don't waste time doing the
 				// detection routine on every page:
 			} else if (!isset($_COOKIE['ui'])) {
-				$_COOKIE['ui'] = mobile_device_detect() ? 'mobile' : 'standard';
+				// override this check to always show the standard interface instead of the mobile version
+				$_COOKIE['ui'] = (false && mobile_device_detect()) ? 'mobile' : 'standard';
 				setcookie('ui', $_COOKIE['ui'], null, '/');
 			}
 			// If we're mobile, override the standard theme with the mobile one:
