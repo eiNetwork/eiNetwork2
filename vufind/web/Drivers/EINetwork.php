@@ -361,7 +361,9 @@ class EINetwork extends MillenniumDriver{
 
 		//Should get Patron Information Updated on success
 		if (preg_match('/Patron information updated/', $sresult)){
-			$patronDump = $this->_getPatronDump($this->_getBarcode(), true);
+			// clear this info out of the cache
+			$this->cleanMyProfile(array('id' => $this->_getBarcode()));
+			$patronDump = $this->_getPatronDump($this->_getBarcode());
 			$user->phone = $_REQUEST['phone'];
 			$user->email = $_REQUEST['email'];
 			$user->update();
@@ -466,7 +468,7 @@ class EINetwork extends MillenniumDriver{
 				$user->password = $pin1;
 				$user->update();
 				UserAccount::updateSession($user);
-				return $configArray['Constants']['PIN_MODIFICATION_SUCCESS'];
+				return $configArray['Constants']['PIN_MODIFICATION_SUCCESS']; 
 			}
 		}else{
 			return "Sorry, we could not update your pin number. Please try again later.";

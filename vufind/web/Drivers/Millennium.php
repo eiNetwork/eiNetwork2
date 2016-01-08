@@ -2510,6 +2510,12 @@ class MillenniumDriver implements DriverInterface
 				if (strpos($responseText,'was successful') > 1 && strpos($responseText,'You will be notified when the status of this item says Ready For Pickup') > 0) {
 					$hold_result['result'] = true;
 					$hold_result['message'] = 'Your hold was placed successfully';
+					$patronDump = $this->_getPatronDump($this->_getBarcode());
+                                        if( $patronDump["NOTICE_PREF"] == "z" || $patronDump["NOTICE_PREF"] == "p") {
+						$hold_result['message'] .= '<br><br>You will receive ' . (($patronDump["NOTICE_PREF"] == "z") ? 
+						                           ('an email at ' . $patronDump["EMAIL_ADDR"]) : ('a phone call at ' . $patronDump["TELEPHONE"])) . ' when it is ready for pickup.';
+						$hold_result['message'] .= '<br>You may also receive a <a href="/MyResearch/SMShelp">Text Notification</a> if you are signed up for them.';
+					}
 					$reason = '';
 				//Check for reasons why a hold is not successful
 				} else {
@@ -2562,6 +2568,12 @@ class MillenniumDriver implements DriverInterface
 					$hold_result['result'] = true;
 					if (!isset($reason) || strlen($reason) == 0){
 						$hold_result['message'] = 'Your hold was placed successfully';
+						$patronDump = $this->_getPatronDump($this->_getBarcode());
+                                	        if( $patronDump["NOTICE_PREF"] == "z" || $patronDump["NOTICE_PREF"] == "p") {
+							$hold_result['message'] .= '<br><br>You will receive ' . (($patronDump["NOTICE_PREF"] == "z") ? 
+							                           ('an email at ' . $patronDump["EMAIL_ADDR"]) : ('a phone call at ' . $patronDump["TELEPHONE"])) . ' when it is ready for pickup.';
+							$hold_result['message'] .= '<br>You may also receive a <a href="/MyResearch/SMShelp">Text Notification</a> if you are signed up for them.';
+						}
 					}else{
 						$hold_result['message'] = $reason;
 					}
