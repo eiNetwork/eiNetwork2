@@ -111,7 +111,6 @@
     <br>
     <br>
     <br>
-    <br>
 	<script type="text/javascript">
 	    $("#my-item-PlaceHolder").ready(function(){
 		$.getJSON(path + '/MyResearch/AJAX?method=getAllItems', function (data){
@@ -238,6 +237,7 @@
     <div id="blank">&nbsp;</div>
     <div class="separator"><hr/></div>
     
+    <div class="recommendations">
     <!-- SelectReads & NoveList links display here -->
 	
 	<div id="selectreads">
@@ -268,7 +268,6 @@
 		</a>
 		<img class="qtip-novelist help-icon" style="vertical-align:top" src="/images/help_icon.png" /></span>	
 	</div>
-    <div class="recommendations">
 	
 	<!-- What's New Queries display here -->
 	<div id="newdvd">
