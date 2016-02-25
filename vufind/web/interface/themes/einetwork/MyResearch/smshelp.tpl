@@ -34,11 +34,11 @@ $(function() {
             <div>
                 <ol class="decimal">
                     <li>Add <span class="bold">einetwork@shoutbomb.com</span> to your cellphone contacts.  This is not required, but it is recommended.</li>
-                    <li>Simply text <span class="bold">SIGNUP+your-14-digit-barcode+PIN </span>to <span class="bold">einetwork@shoutbomb.com</span>.</li>
+                    <li>Simply text <span class="bold">SIGNUP+your-14-digit-barcode+PIN </span>to <span class="bold">einetwork@shoutbomb.com</span>.  You will receive a text message asking you to reply with your PIN.</li>
                 </ol>
                 
                 <p class="bold">Please note, you must include the plus signs (+) between each element of the text.</p>
-                <p>Once you sign up, you will receive texts confirming your successful sign up and asking if you want to supply an email address as an additional contact.  This is optional and will only be used to contact you in the event that your notices are undeliverable.</p>
+                <p>Once you sign up, you will receive two texts.  The first confirms your successful sign up and the second asks if you want to supply an email address as an additional contact.  This is optional.</p>
 
                 </ol>
             </div>
