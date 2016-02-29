@@ -1,6 +1,7 @@
 <div id="page-content" class="content">
 {literal}
 <script type="text/javascript">
+/*
 	$(document).ready(function(){
 		
 		if ($('select[name="notices"]').val() == 'p'){
@@ -31,22 +32,23 @@
 		}
 		
 	});
+*/
 	function checkWhenSubmit(){
 
 		var phone=$('input[name="phone"]').val();
-		phoneReg=/^[2-9]\d{9}$/;
+		phoneReg=/[0-9]{3}-[0-9]{3}-[0-9]{4}$/;
 		var email=$('input[name="email"]').val();
 		emailReg=/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
-		noSubmit = false;
+		noSubmit = (phone!='' && !phoneReg.test(phone));
 
-		$('#phoneError').text('');
+		$('#phoneError').text(noSubmit ? 'Phone numbers must be formatted as XXX-XXX-XXXX to be valid.' : '');
 		$('#emailError').text('');
 
 		if ($('select[name="notices"]').val() == 'p'){
 			if(phone=='' || !phoneReg.test(phone)){
 				noSubmit = true;
-				$('#phoneError').text('You chose to be notified by phone. Please enter a valid phone number');
+				$('#phoneError').text('You chose to be notified by phone. ' + $('#phoneError').text());
 			}
 		} else if ($('select[name="notices"]').val() == 'z'){
 			if(email=='' || !emailReg.test(email)){
@@ -163,13 +165,13 @@
 				<tr>
 					<td>
 						{if $edit == true}
-						<input id="phone" name='phone' class="text" value='{$profile.phone|regex_replace:"/\D/":""}' size='20' maxlength='10' />
+						<input id="phone" name='phone' class="text" value='{$profile.phone|escape}' size='20' maxlength='12' />
 						<span id="phoneError" class="error">&nbsp;</span>
 						{else}
 							{if $profile.phone}
-								{$profile.phone|regex_replace:"/\D/":""}
+								{$profile.phone|escape}
 							{else}
-								{$user->phone|regex_replace:"/\D/":""}
+								{$user->phone|escape}
 							{/if}
 						{/if}
 					</td>
