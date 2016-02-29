@@ -236,8 +236,9 @@
     {/php}
     <div id="blank">&nbsp;</div>
     <div class="separator"><hr/></div>
+    
     <div class="recommendations">
-	<!-- SelectReads & NoveList links display here -->
+    <!-- SelectReads & NoveList links display here -->
 	
 	<div id="selectreads">
 		<a href="http://bookdb.nextgoodbook.com/signup/ml/f485432415b23a8962922e0b2d198227" target="_blank">
@@ -267,7 +268,7 @@
 		</a>
 		<img class="qtip-novelist help-icon" style="vertical-align:top" src="/images/help_icon.png" /></span>	
 	</div>
-
+	
 	<!-- What's New Queries display here -->
 	<div id="newdvd">
             <a href="{$url}/Search/Results?lookfor=&type=Keyword&basicType=Keyword&filter[]=time_since_added%3A%22Week%22&Keyword&filter[]=time_since_added%3A%22Month%22&filter[]=format%3A%22DVD%22&sort=year&view=list&searchSource=local">New DVDs</a>

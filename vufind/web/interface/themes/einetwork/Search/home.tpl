@@ -1,57 +1,134 @@
 <div id="loginHome2">
+{literal}
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('input[title]').each(function(i) {
+			if ($(this).val() === "") {
+			    $(this).val($(this).attr('title'));
+			}
+		});
+		$('#loginForm').submit(function(){
+			var pin=$("#pin").val();
+			{/literal}{* var pinReg=/^[0-9]\d{3}$/; *}{literal}
+			var pinReg = /^[0-9]{0,8}$/;
+			var card=$("#card").val();
+			var cardReg=/^[1-9]\d{13}$/;
+			var cardReg1=/^[1-9]\d{6}$/;
+			if(card==""||!card||pin==""||!pin){
+				$('#cardError').html('&nbsp;');
+					return false;
+			}else{
+				if((cardReg.test(card)||cardReg1.test(card))&&pinReg.test(pin)){
+					$('#cardError').html('&nbsp;');
+					return true;
+				}else{
+					if(!(cardReg.test(card)||cardReg1.test(card))){
+						$('#cardError').text('*please enter a valid 14 or 7 digit card number');
+					}
+					if(!pinReg.test(pin)){
+						$('#pinError').text('*please enter a valid 4 digit PIN');
+					}
+					cardValid=false;
+					return false;
+				}
+			}
+		}); 
+	    $('#card').focusout(function(){
+			var card=$(this).val(),
+			    cardReg=/^[1-9]\d{13}$/;
+			cardReg1=/^[1-9]\d{6}$/;
+			if(card == ""){
+				$(this).val($(this).attr('title'));
+				$('#cardError').html('&nbsp;');
+				return false;
+			}else{
+				if(cardReg.test(card)||cardReg1.test(card)){
+					$('#cardError').html('&nbsp;');
+					return true;
+				}else{
+					$('#cardError').text('*please enter a valid 14 or 7 digit card number');
+					cardValid=false;
+					return false;
+				}
+			}
+	    });
+    	$('#card').focusin(function(){
+    		if($(this).val() == $(this).attr('title')){
+    			$(this).val("");
+    		}
+    	});
+	    $('#pin').focusout(function(){
+			var pin=$(this).val(),
+				pinReg = /^[0-9]{0,8}$/;
+			    {/literal}{*pinReg=/^[0-9]\d{3}$/;*}{literal}
+			if(pin==""){
+				$('#pinError').html('&nbsp;');
+				$(this).val($(this).attr('title'));
+				$(this).get(0).type = "text";
+				return false;
+			}else{
+				if(!pinReg.test(pin)){
+					$('#pinError').text('*please enter a valid 4 digit PIN');
+					pinValid=false;
+					return false;
+				}else{
+					$('#pinError').html('&nbsp;');
+					return true;
+				}
+			}
+		});
+		$('#pin').focusin(function(){
+			var pin=$(this).val();
+			if(pin == $(this).attr('title')){
+				$(this).val("");
+				$(this).get(0).type = "password";
+			}
+		});
+		$('[placeholder]').parents('form').submit(function() {
+			$(this).find('[placeholder]').each(function() {
+				var input = $(this);
+				if (input.val() == input.attr('placeholder')) {
+		 			input.val('');
+				}
+			});
+		});
+	});
+</script>
+    <script type="text/javascript" src="js/ei_js/jquery.nivo.slider.js"></script>
+    <script type="text/javascript">
+    $(window).load(function() {
+        $('#slider').nivoSlider();
+    });
+    </script>
+{/literal}
+
+
 	<div class="loginHome-left"></div>
+
 	<div class="loginHome-center">
 		<div class="startMessage">
 			Get started by entering your search above.
 		</div>
-		<div class="splashLinks">
-			<table class="splashTable"><tr>
-				<td style="width:35%">
-					<div id="selectreads">
-						<a href="http://bookdb.nextgoodbook.com/signup/ml/f485432415b23a8962922e0b2d198227" target="_blank">
-							<img src="/interface/themes/einetwork/images/Selectreads/selectreads-block.png" alt="SelectReads logo" height="72" width="190" />
-						</a>
-						<img class="qtip-selectreads help-icon" style="vertical-align:top" src="/images/help_icon.png" /></span>
-					</div>
-					<div id="authorcheck">
-						<a href="http://authordb.nextgoodbook.com/landing/l/f485432415b23a8962922e0b2d198227" target="_blank">
-							<img src="/interface/themes/einetwork/images/Selectreads/authorchecklogo.png" alt="Author Check logo" height="65" width="150" />
-						</a>
-						<img class="qtip-authorcheck help-icon" style="vertical-align:top" src="/images/help_icon.png" />
-					</div>
-				</td>
-    				<td style="width:30%" class="splashCenter">
-					<div id="newdvd">
-				            <a href="{$url}/Search/Results?lookfor=&type=Keyword&basicType=Keyword&filter[]=time_since_added%3A%22Week%22&Keyword&filter[]=time_since_added%3A%22Month%22&filter[]=format%3A%22DVD%22&sort=year&view=list&searchSource=local">New DVDs</a>
-				        </div><br>
-					<div id="newblu">
-				            <a href="{$url}/Search/Results?lookfor=&type=Keyword&basicType=Keyword&filter[]=time_since_added%3A%22Week%22&filter[]=time_since_added%3A%22Month%22&filter[]=format%3A%22Blu-Ray%22&sort=year&view=list&searchSource=local">New Blu-Rays</a>
-				        </div><br>
-					<div id="newebooks">
-				            <a href="{$url}/Search/Results?lookfor=&type=Keyword&basicType=Keyword&filter[]=time_since_added%3A%22Week%22&filter[]=time_since_added%3A%22Month%22&filter[]=format%3A%22Ebook+Download%22&filter[]=format%3A%22Adobe+EPUB%20eBook%22&filter[]=format%3A%22Kindle+Book%22&filter[]=format%3A%22Adobe+PDF%20eBook%22&filter[]=format%3A%22OverDrive+Read%22&sort=year&view=list&searchSource=0">New eBooks</a>
-				        </div><br>
-				        <div id="articles">
-				            <a href="http://erec.einetwork.net/">Databases and Articles</a>
-				        </div><br>
-				        <div id="interlibraryloan">
-				            <a href="http://illiad.carnegielibrary.org/illiad/logon.html">Interlibrary Loan</a>
-				        </div>	
-				</td>
-    				<td style="width:35%">
-					<div id="newbookalerts">
-						<a href="http://nextgoodbook.com/newsletter/landing/l/f485432415b23a8962922e0b2d198227/c/1000" target="_blank">
-							<img src="/interface/themes/einetwork/images/Selectreads/New-Book-Alerts190-sml.jpg" alt="New Book Alerts logo" height="52" width="160" />
-						</a>
-						<img class="qtip-newbookalerts help-icon" style="vertical-align:top" src="/images/help_icon.png" />
-					</div>
-					<div id="novelist">
-						<a href="http://search.ebscohost.com/login.aspx?authtype=cpid&custid=s4663075&profile=novelist" target="_blank">
-							<img src="/interface/themes/einetwork/images/Selectreads/NoveList/novelist_button_150x75.gif" alt="NoveList logo" height="65" width="130" />
-						</a>
-						<img class="qtip-novelist help-icon" style="vertical-align:top" src="/images/help_icon.png" /></span>	
-					</div>
-				</td>
-			</tr></table>
+		<div class="login-slider">
+		<div id="wrapper">
+			<div class="slider-wrapper theme-dark">
+				<div id="slider" class="nivoSlider">
+				<img src="/interface/themes/einetwork/images/Art/Slider/slider10.jpg"  data-transition="slideInLeft">
+				<img src="/interface/themes/einetwork/images/Art/Slider/slider11.jpg"  data-transition="slideInLeft">
+				<img src="/interface/themes/einetwork/images/Art/Slider/slider12.jpg"  data-transition="slideInLeft">
+				<img src="/interface/themes/einetwork/images/Art/Slider/slider14.jpg"  data-transition="slideInLeft">
+				<img src="/interface/themes/einetwork/images/Art/Slider/slider15.jpg"  data-transition="slideInLeft">
+				<img src="/interface/themes/einetwork/images/Art/Slider/slider16.jpg"  data-transition="slideInLeft">
+				<img src="/interface/themes/einetwork/images/Art/Slider/slider1.jpg"  data-transition="slideInLeft">
+				<img src="/interface/themes/einetwork/images/Art/Slider/slider2.jpg"  data-transition="slideInLeft">
+				<img src="/interface/themes/einetwork/images/Art/Slider/slider3.jpg"  data-transition="slideInLeft">
+				<img src="/interface/themes/einetwork/images/Art/Slider/slider4.jpg"  data-transition="slideInLeft">
+				<img src="/interface/themes/einetwork/images/Art/Slider/slider5.jpg"  data-transition="slideInLeft">
+				<img src="/interface/themes/einetwork/images/Art/Slider/slider6.jpg"  data-transition="slideInLeft">
+			        <img src="/interface/themes/einetwork/images/Art/Slider/slider7.jpg"  data-transition="slideInLeft">
+				</div>
+			</div>
+		</div>
 		</div>
 		<div class="login2">
 			<!--<form id="loginForm" action="{$path}/MyResearch/Home" method="post">-->

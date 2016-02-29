@@ -42,7 +42,7 @@ class AJAX extends Action {
 			header('Cache-Control: no-cache, must-revalidate'); // HTTP/1.1
 			header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
 			echo $this->$method();
-		}else if (in_array($method, array('LoginForm', 'getBulkAddToListForm', 'getPinUpdateForm','getPinConfirmation','getLocations','getToUpdatePreferredBranches'))){
+		}else if (in_array($method, array('LoginForm', 'getBulkAddToListForm', 'getPinUpdateForm','getLocations','getToUpdatePreferredBranches'))){
 			header('Content-type: text/html');
 			header('Cache-Control: no-cache, must-revalidate'); // HTTP/1.1
 			header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
@@ -488,38 +488,8 @@ class AJAX extends Action {
 	function getPinUpdateForm(){
 		global $user; 
 		global $interface;
-		// see if we've saved any pre-populated values for this popup
-		if( isset( $_SESSION["popupError"]) ){
-			$interface->assign('popupError', $_SESSION["popupError"]);
-			unset($_SESSION["popupError"]);
-		}
-		if( isset( $_SESSION["popupPin"]) ){
-			$interface->assign('popupPinValue', $_SESSION["popupPin"]);
-			unset($_SESSION["popupPin"]);
-		}else{
-			$interface->assign('popupPinValue','');
-		}
-		if( isset( $_SESSION["popupPin1"]) ){
-			$interface->assign('popupPin1Value', $_SESSION["popupPin1"]);
-			unset($_SESSION["popupPin1"]);
-		}else{
-			$interface->assign('popupPin1Value','');
-		}
-		if( isset( $_SESSION["popupPin2"]) ){
-			$interface->assign('popupPin2Value', $_SESSION["popupPin2"]);
-			unset($_SESSION["popupPin2"]);
-		}else{
-			$interface->assign('popupPin2Value','');
-		}
 		$interface->assign('popupTitle', 'Modify PIN number');
 		$pageContent = $interface->fetch('MyResearch/modifyPinPopup.tpl');
-		$interface->assign('popupContent', $pageContent);
-		return $interface->fetch('popup-wrapper.tpl');
-	}
-	function getPinConfirmation(){
-		global $user; 
-		global $interface;
-		$pageContent = $interface->fetch('MyResearch/successPinPopup.tpl');
 		$interface->assign('popupContent', $pageContent);
 		return $interface->fetch('popup-wrapper.tpl');
 	}
