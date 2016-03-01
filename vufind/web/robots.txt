@@ -8,3 +8,9 @@ Disallow: /MyResearch/
 Disallow: /images/fiveStar/
 Disallow: /bookcover.php
 Disallow: /vufind/
+Crawl-Delay: 18
+User-agent: SemrushBot
+Disallow: /
+User-agent: SemrushBot-SA
+Disallow: /
+
