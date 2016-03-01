@@ -43,6 +43,18 @@ class Profile extends MyResearch
 		}elseif (isset($_POST['updatePin'])) {
 			$result = $this->catalog->updatePin();
 			$_SESSION['profileUpdateErrors'] = $result;
+			$_SESSION['PINupdate'] = true;
+			if( $result == $configArray['Constants']['PIN_MODIFICATION_SUCCESS']){
+				unset($_SESSION["popupError"]);
+				unset($_SESSION["popupPin"]);
+				unset($_SESSION["popupPin1"]);
+				unset($_SESSION["popupPin2"]);
+			}else{
+				$_SESSION['popupError'] = $result;
+				$_SESSION['popupPin'] = $_REQUEST['pin'];
+				$_SESSION['popupPin1'] = $_REQUEST['pin1'];
+				$_SESSION['popupPin2'] = $_REQUEST['pin2'];
+			}
 			//sleep(5);
 			header("Location: " . $configArray['Site']['url'] . '/MyResearch/Profile');
 			exit();
@@ -57,8 +69,16 @@ class Profile extends MyResearch
 		}
 		
 		if (isset($_SESSION['profileUpdateErrors'])){
-			$interface->assign('profileUpdateErrors', $_SESSION['profileUpdateErrors']);
+			if( $_SESSION['profileUpdateErrors'] == $configArray['Constants']['PIN_MODIFICATION_SUCCESS']){
+				$interface->assign('showPinConfirmation', true);
+			}else{
+				$interface->assign('profileUpdateErrors', $_SESSION['profileUpdateErrors']);
+			}
 			unset($_SESSION['profileUpdateErrors']);
+			if( isset($_SESSION['PINupdate']) ) {
+				unset($_SESSION['PINupdate']);
+				$interface->assign('showPINupdate', true);
+			}
 		}
 
 		global $librarySingleton;
