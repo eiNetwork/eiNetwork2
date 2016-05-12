@@ -27,11 +27,11 @@
 <div id="page-content" class="content">
 	<div class="loginHome-left"></div>
 	<div class="loginHome-center">
-		<p>Please enter your barcode.   An email from helpdesk@einetwork.net will be sent to the email address in your patron record</p>
-		<p>with a link to reset your password.</p>
+		<p>Please enter your 14 digit library card number.   An email from helpdesk@einetwork.net will be sent to the email address in your patron record
+		with a link to reset your PIN.</p><p>If you don't have an email address on file, please contact your library staff to assign one to your record.</p>
 		<div class="login">
 			<form id="pinresetform" class="getacard" method="POST" action="{$path}/MyResearch/PinReset">
-				<div class="title">Barcode for PIN Reset</div>
+				<div class="title">Library Card number for PIN Reset</div>
 					<div id="barcode">
 						<div>
 							<input name="barcode" type="text" class="text"/>
