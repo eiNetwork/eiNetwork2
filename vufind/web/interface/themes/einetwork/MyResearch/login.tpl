@@ -98,6 +98,8 @@
 	<div class="loginHome-left"></div>
 	
 	<div class="loginHome-center">
+				<p class="bold new_updates">Please welcome Millvale Community Library to the county-wide library system! You can now choose this location for hold pickups and your preferred libraries.</p>
+
 		<div class="login">
 			<form id="loginForm" action="{$path}/MyResearch/Home" method="post" autocomplete="on">
 				<div><b>I have a Library Card</b></div>
