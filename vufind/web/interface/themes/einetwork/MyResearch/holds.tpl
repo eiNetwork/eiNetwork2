@@ -80,6 +80,7 @@ while ($i < $bold_count){
 			{/if}
 			
 			<div class="new-alert-box-container">
+			<p class="bold new_updates">Please welcome Millvale Community Library to the county-wide library system! You can now choose this location for hold pickups and your preferred libraries.</p>
 				<h2>{translate text='Requested Items'}</h2>
 				<ul class="new-alert-box">
 					<li>For items that you recently requested, it may take one minute for them to appear below.</li>
