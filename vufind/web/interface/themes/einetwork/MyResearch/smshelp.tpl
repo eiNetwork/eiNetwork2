@@ -82,10 +82,6 @@ $(function() {
                 <p>To renew individual items by list, text the keyword <span class="bold">RL</span>.</p>
                 <p>To renew all checked out items, text the keyword <span class="bold">RA</span>.</p>
             </div>
-            <h2 class="accordion-title">&nbsp;&nbsp;&nbsp;&nbsp;<span class="bold">Will I continue to receive library notices via email, US mail, or phone call?</span></h2>
-            <div>
-                <p>Yes. Text notifications are supplemental to existing notification methods (phone, email, regular mail) and you will continue to receive notices via these methods when you sign up for this service.</p>
-            </div>
             <h2 class="accordion-title">&nbsp;&nbsp;&nbsp;&nbsp;<span class="bold">Is there a fee to sign up for this service?</span></h2>
             <div>
                 <p>Text Notifications are a free service offered to anyone registered at an Allegheny County public library.  Depending on your cellular phone plan, additional per-message charges may be assessed by your carrier. Please call your carrier to inquire about any charges they might impose BEFORE subscribing.</p>
@@ -139,6 +135,25 @@ $(function() {
                         </ul>
                         </li>
                 </ul>
+            </div>
+			<h2 class="accordion-title">&nbsp;&nbsp;&nbsp;&nbsp;<span class="bold">How do I add an additional library card to my text notice account? </span></h2>
+            <div>
+                <p>To add additional cards, text <span class="bold">ADDCARD </span>to <span class="bold">einetwork@shoutbomb.com</span> and follow the prompts.</p>
+                <p>You will be asked to text the additional library card number you wish to add.  If this is a valid card number, you will then be prompted to text the PIN associated with this library card number.  If the PIN is valid you will receive a text confirming that you have successfully added the new card.</p>
+				
+				
+            </div>
+			<h2 class="accordion-title">&nbsp;&nbsp;&nbsp;&nbsp;<span class="bold">How do I remove a secondary card that I've added?</span></h2>
+            <div>
+                
+				<p>To remove a secondary card, text <span class="bold">DROPCARD </span>to <span class="bold">einetwork@shoutbomb.com</span> and follow the prompts.</p>
+				<ul>
+				<li>If only one secondary card was added with ADDCARD, that barcode will automatically be removed from the account.</li>
+				<li>If multiple secondary cards were added, you will receive a response that associates each card number with an item number (1, 2, 3, etc.).  Just respond with the item number associated with the barcode you wish to drop.</li>
+				</ul>
+				<p>You will receive a confirmation message indicating that you have successfully removed the card.</p>
+				
+				
             </div>
             
             <h2 class="accordion-title">&nbsp;&nbsp;&nbsp;&nbsp;<span class="bold">How do I unsubscribe from Text Notifications?</span></h2>
@@ -202,6 +217,14 @@ $(function() {
         <tr>
             <td>DROPEMAIL+your-14-digit-barcode</td>
             <td>Remove email from card.</td>
+        </tr>
+		<tr>
+            <td>ADDCARD+14-digit-barcode</td>
+            <td>Add an additional library barcode to your text notice account.</td>
+        </tr>
+		<tr>
+            <td>DROPCARD+14-digit-barcode</td>
+            <td>Remove any secondary library barcode from your text notice account.</td>
         </tr>
         <tr>
             <td>HELP</td>
