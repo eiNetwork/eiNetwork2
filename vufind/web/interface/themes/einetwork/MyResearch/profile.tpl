@@ -74,6 +74,8 @@
 
 
 	<div id="main-content">
+				
+
 		{if $showPinConfirmation}
 		<script type="text/javascript">
 			ajaxLightbox('/MyResearch/AJAX?method=getPinConfirmation', false, false, '300px', false, '70px');

@@ -98,6 +98,7 @@
 	<div class="loginHome-left"></div>
 	
 	<div class="loginHome-center">
+
 		<div class="login">
 			<form id="loginForm" action="{$path}/MyResearch/Home" method="post" autocomplete="on">
 				<div><b>I have a Library Card</b></div>

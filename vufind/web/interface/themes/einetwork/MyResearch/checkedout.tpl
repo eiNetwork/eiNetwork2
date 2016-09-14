@@ -29,7 +29,8 @@
     {if $user->cat_username}
 	{if $transList}
 	<div class="new-alert-box-container">
-	    <p class="bold" ><a href="/MyResearch/SMShelp" class="new_updates">Find out how to get notices and renew items from your cell phone!</a> </p>
+	    
+	    <p class="bold new_updates" >You can now get text notifications for multiple library cards.  <a href="/MyResearch/SMShelp" class="new_updates">Find out how!</a> </p>
 		<h2>{translate text='Renew Items'}</h2>
 	</div>
 	    

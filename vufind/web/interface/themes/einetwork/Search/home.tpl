@@ -1,6 +1,8 @@
 <div id="loginHome2">
 	<div class="loginHome-left"></div>
 	<div class="loginHome-center">
+				
+
 		<div class="startMessage">
 			Get started by entering your search above.
 		</div>
