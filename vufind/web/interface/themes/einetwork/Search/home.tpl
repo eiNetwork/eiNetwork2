@@ -1,7 +1,7 @@
 <div id="loginHome2">
 	<div class="loginHome-left"></div>
 	<div class="loginHome-center">
-				<p class="bold new_updates">Please welcome Millvale Community Library to the county-wide library system! You can now choose this location for hold pickups and your preferred libraries.</p>
+				
 
 		<div class="startMessage">
 			Get started by entering your search above.
