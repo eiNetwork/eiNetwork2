@@ -74,7 +74,7 @@
 
 
 	<div id="main-content">
-				<p class="bold new_updates">Please welcome Millvale Community Library to the county-wide library system! You can now choose this location for hold pickups and your preferred libraries.</p>
+				
 
 		{if $showPinConfirmation}
 		<script type="text/javascript">
