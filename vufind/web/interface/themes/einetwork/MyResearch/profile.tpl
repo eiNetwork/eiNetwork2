@@ -74,7 +74,7 @@
 
 
 	<div id="main-content">
-				<p style="color:orange; font-weight:bold;">A new mobile-friendly design is coming soon.  <a href="http://mcgrathk.vufindplus.einetwork.net/MyResearch/ComingSoon">Check it out!</a></p>
+				<p style="color:orange; font-weight:bold;">A new mobile-friendly design is coming soon.  <a href="http://librarycatalog.einetwork.net/MyResearch/ComingSoon">Check it out!</a></p>
 
 		{if $showPinConfirmation}
 		<script type="text/javascript">
