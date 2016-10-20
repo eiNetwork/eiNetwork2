@@ -14,7 +14,7 @@ html,body {
 }
 
 /* szheng: modified */
-#pageBody { /*width: 100%; 
+#pageBody { /*width: 100%;
 	min-width: 984px;*/
 	max-width: 1280px;
 	min-width: 1024px;
@@ -291,7 +291,7 @@ b.bbot b,b.gbot b {
 }
 
 .searchcontent {
-	margin: 0; 
+	margin: 0;
 }
 
 /* Matches Doc2 */
@@ -624,7 +624,7 @@ div.warning {
 	margin: 0px;
 	padding: 5px;
 	color: rgb(240,240,240);
-	
+
 }
 .popupLable{
 	height:25px;
@@ -866,7 +866,7 @@ ul.bulleted li {
 	display: inline-block;
 	width: 195px;
 	vertical-align: top;
-	
+
 }
 /*end left filters addition*/
 
@@ -1125,7 +1125,7 @@ table.datagrid tr.oddrow {
 
 /* Highlight for items already added to favorites */
 .savedFavorite { /* background-color:#ffffcc; */
-	
+
 }
 
 /* Icon Classes */
@@ -1371,7 +1371,7 @@ div.checkedout,span.checkedout {
 }
 
 .sensorimage {
-	
+
 }
 
 .audio {
@@ -1383,7 +1383,7 @@ div.checkedout,span.checkedout {
 }
 
 .physicalobject {
-	
+
 }
 
 .manuscript {
@@ -1639,11 +1639,11 @@ img.centered {
 }
 
 .browseNav a:hover {
-	
+
 }
 
 .browseNav .active {
-	
+
 }
 
 .browseNav .active a {
@@ -1747,7 +1747,7 @@ img.centered {
 
 table.holdingsTable td {
 	padding: 10px;
-	
+
 }
 
 #staffView,#fullViewLink,#classicViewLink {
@@ -2911,14 +2911,14 @@ a.dl-link:hover {
 
 .close-button-container {
 	display:inline-block;
-	text-align: right; 
-	width:100%; 
+	text-align: right;
+	width:100%;
 	margin:-10px 0 0 0;
 }
 
 .api-icon-container {
 	display:inline-block;
-	text-align: center; 
+	text-align: center;
 	width:100%;
 }
 
@@ -2950,7 +2950,7 @@ ul.new-alert-box li {
 	color:#606060;
 	font-weight: bold;
 	margin:0 0 10px 0;
-} 
+}
 
 #temp-changes {
 	background-color:#3c4d97;
@@ -2969,13 +2969,13 @@ ul.new-alert-box li {
 	float:right;
 	clear:left;
 	margin-top:20px;
-} 
+}
 
 .holdsUpdateBranchSelection-Large {
 	float:right;
 	clear:left;
 	margin-top:45px;
-} 
+}
 
 .requested_update_check {
 	float:right;
@@ -3032,8 +3032,8 @@ ul.new-alert-box li {
 }
 
 .header-filters-container {
-	display: block !important; 
-	clear:left !important; 
+	display: block !important;
+	clear:left !important;
 	margin:0 0 0 250px !important;
 }
 
@@ -3068,7 +3068,7 @@ ul.new-alert-box li {
 }
 
 .qtip-tipped {
-	
+
 }
 
 .qtip-rounded {
@@ -3088,11 +3088,11 @@ ul.new-alert-box li {
 ol.help {
     list-style-type: none;
     list-style-type: decimal !ie; /*IE 7- hack*/
-     
+
     margin: 0;
     margin-left: 3em;
     padding: 0;
-     
+
     counter-reset: li-counter;
 }
 ol.help > li{
@@ -3107,13 +3107,13 @@ ol.help > li:before {
     top: 0;
     left: -1em;
     width: 0.8em;
-     
+
     font-size: 3em;
     line-height: 1;
     font-weight: bold;
     text-align: right;
     color: #464646;
- 
+
     content: counter(li-counter);
     counter-increment: li-counter;
 }
@@ -3121,11 +3121,11 @@ ol.help > li:before {
 ol.helpcontent {
     list-style-type: none;
     list-style-type: decimal !ie; /*IE 7- hack*/
-     
+
     margin: 30px 0 0 0;
     margin-left: 3em;
     padding: 0;
-     
+
     counter-reset: li-counter;
 }
 ol.helpcontent > li{
@@ -3143,13 +3143,13 @@ ol.helpcontent > li:before {
     top: 0;
     left: -1em;
     width: 0.8em;
-     
+
     font-size: 3em;
     line-height: 1;
     font-weight: bold;
     text-align: right;
     color: #464646;
- 
+
     content: counter(li-counter);
     counter-increment: li-counter;
 }
@@ -3171,4 +3171,36 @@ a.link_blue:hover {
 }
 .new_updates {
 	color: #FF6600;
+}
+
+/*****Coming Soon page ******/
+
+
+.comingsoon {
+	text-align:center;
+	font-size:14px;
+}
+
+
+.message-box p{
+	background-color: LightGrey;
+	border-radius: 10px;
+	padding: 12px;
+	margin: 20px;
+	font-weight: bold;
+}
+
+.float h2 {
+	padding-top: 15px;
+}
+
+.message-box {
+	display: inline-block;
+	vertical-align: top;
+
+}
+
+.float {
+	border-top: thin solid grey;
+	margin: 3%;
 }

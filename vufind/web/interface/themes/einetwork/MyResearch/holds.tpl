@@ -80,6 +80,7 @@ while ($i < $bold_count){
 			{/if}
 			
 			<div class="new-alert-box-container">
+                <p style="color:orange; font-weight:bold;">A new mobile-friendly design is coming soon.  <a href="http://mcgrathk.vufindplus.einetwork.net/MyResearch/ComingSoon">Check it out!</a></p>
 			
 				<h2>{translate text='Requested Items'}</h2>
 				<ul class="new-alert-box">
