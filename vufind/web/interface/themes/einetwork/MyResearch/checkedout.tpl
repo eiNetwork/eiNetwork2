@@ -29,6 +29,7 @@
     {if $user->cat_username}
 	{if $transList}
 	<div class="new-alert-box-container">
+        <p style="color:orange; font-weight:bold;">A new mobile-friendly design is coming soon.  <a href="http://mcgrathk.vufindplus.einetwork.net/MyResearch/ComingSoon">Check it out!</a></p>
 	    
 	    <p class="bold new_updates" >You can now get text notifications for multiple library cards.  <a href="/MyResearch/SMShelp" class="new_updates">Find out how!</a> </p>
 		<h2>{translate text='Renew Items'}</h2>
