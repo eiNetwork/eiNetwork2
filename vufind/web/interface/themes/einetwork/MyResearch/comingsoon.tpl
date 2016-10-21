@@ -4,7 +4,7 @@
     <div id="main-content">
       	<h1>New Mobile-friendly Design Coming Soon!</h1>
 
-		<p>We've been busy creating a new responsive design for the Library Catalog that functions better on mobile devices.  The new design will go live sometime in mid- to late-November.  See the images below for a sneak peak and check back here for updates.</p>
+		<p>We've been busy creating a new responsive design for the Library Catalog that functions better on mobile devices.  The new design will go live sometime in mid- to late-November.  See the images below for a sneak peek and check back here for updates.</p>
 
 		<div class="screenshot" id="images">
 
@@ -120,7 +120,7 @@
 					<img src="/interface/themes/einetwork/images/catalogtest/landing-page.jpeg" alt="Landing Page" height="570" width="320">
 				</td>
 				<td class="message-box">
-					<p>You can now browse new materials by format on the Landing Page."
+					<p>You can now browse new materials by format on the Landing Page.</p>
 				</td>
 			</tr>
 		</table>
