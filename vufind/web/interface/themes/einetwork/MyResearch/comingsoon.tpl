@@ -28,7 +28,7 @@
 			<tr>
 				<td><img src="/interface/themes/einetwork/images/catalogtest/login.jpeg" alt="Login Page" height="570" width="320"></td>
 				<td class="message-box">
-						<p>Click the three-bar icon in the top right corner and select "Log In" to access My Account features such as holds, managing checked out items, and creating lists. If you don't have an account you can also register from this menu.</p>
+						<p>Log in to access My Account features such as holds, managing checked out items, and creating lists. If you don't have an account you can also register from this menu.</p>
 				</td>
 			</tr>
     </table>
