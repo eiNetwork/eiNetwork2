@@ -1460,7 +1460,7 @@ class MillenniumDriver implements DriverInterface
 					//Holds can be an array, treat them differently.
 					if ($patronDumpKey == 'HOLD'){
 						$patronDump[$patronDumpKey][] = isset($ret[1]) ? $ret[1] : '';
-					}else{
+					}else if (!isset($patronDump[$patronDumpKey]) || ($patronDumpKey != "PATRN_NAME")){
 						$patronDump[$patronDumpKey] = isset($ret[1]) ? $ret[1] : '';
 					}
 				}

@@ -200,7 +200,7 @@ function downloadOverDriveItem(overDriveId, formatId, read){
 		});
 	}else{
 		ajaxLogin(function(){
-			placeOverDriveHold(overDriveId, formatId);
+			downloadOverDriveItem(overDriveId, formatId, read);
 		});
 	}
 }
